@@ -11,11 +11,9 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/view/scene.fxml"));
-
+        Parent root = FXMLLoader.load(getClass().getResource("/view/main.fxml"));
         Scene scene = new Scene(root);
-
-        stage.setTitle("JavaFX and Gradle");
+        stage.setTitle("POS System");
         stage.setScene(scene);
         stage.show();
     }
