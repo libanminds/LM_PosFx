@@ -1,0 +1,17 @@
+JFXButton {
+    -fx-alignment: center-left;
+    -fx-background-radius: 0;
+    -fx-padding: 10 10 10 20;
+}
+
+JFXButton:hover {
+    -fx-background-color: #202126;
+}
+
+JFXButton.active {
+    -fx-background-color: #202126;
+}
+
+.active FontIcon {
+    -fx-icon-color: #489EE7;
+}

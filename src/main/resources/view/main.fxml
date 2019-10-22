@@ -1,22 +1,197 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-            prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.libanminds.controllers.MainController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.controllers.MainController">
     <left>
-        <VBox prefHeight="400.0" prefWidth="130.0" style="-fx-background-color: #373942;" BorderPane.alignment="CENTER">
+        <VBox style="-fx-background-color: #373942;">
             <children>
-                <JFXButton onAction="#goToDashboard" prefHeight="30.0" prefWidth="130.0" text="Dashboard"
-                           textFill="WHITE"/>
+                <JFXButton graphicTextGap="8.0" prefWidth="220.0" styleClass="active" text="Dashboard" textFill="WHITE">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                    <graphic>
+                        <FontIcon iconColor="WHITE" iconLiteral="ti-dashboard" iconSize="20" />
+                    </graphic>
+                    <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                    </padding>
+                </JFXButton>
+                <JFXButton graphicTextGap="8.0" prefWidth="220.0" text="Customers" textFill="WHITE">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                    <graphic>
+                        <FontIcon iconColor="WHITE" iconLiteral="ti-user" iconSize="20" />
+                    </graphic>
+                    <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                    </padding>
+                </JFXButton>
+                <JFXButton graphicTextGap="8.0" prefWidth="220.0" text="Suppliers" textFill="WHITE">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                    <graphic>
+                        <FontIcon iconColor="WHITE" iconLiteral="ti-cloud-down" iconSize="20" />
+                    </graphic>
+                    <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                    </padding>
+                </JFXButton>
+                <JFXButton graphicTextGap="8.0" prefWidth="220.0" text="Items" textFill="WHITE">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                    <graphic>
+                        <FontIcon iconColor="WHITE" iconLiteral="ti-harddrive" iconSize="20" />
+                    </graphic>
+                    <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                    </padding>
+                </JFXButton>
+                <JFXButton graphicTextGap="8.0" prefWidth="220.0" text="Reports" textFill="WHITE">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                    <graphic>
+                        <FontIcon iconColor="WHITE" iconLiteral="ti-bar-chart" iconSize="20" />
+                    </graphic>
+                    <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                    </padding>
+                </JFXButton>
+                <JFXButton graphicTextGap="8.0" prefWidth="220.0" text="Sales" textFill="WHITE">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                    <graphic>
+                        <FontIcon iconColor="WHITE" iconLiteral="ti-shopping-cart" iconSize="20" />
+                    </graphic>
+                    <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                    </padding>
+                </JFXButton>
+                <JFXButton graphicTextGap="8.0" prefWidth="220.0" text="Receiving" textFill="WHITE">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                    <graphic>
+                        <FontIcon iconColor="WHITE" iconLiteral="ti-download" iconSize="20" />
+                    </graphic>
+                    <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                    </padding>
+                </JFXButton>
+                <JFXButton graphicTextGap="8.0" prefWidth="220.0" text="Sales 2" textFill="WHITE">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                    <graphic>
+                        <FontIcon iconColor="WHITE" iconLiteral="ti-shopping-cart-full" iconSize="20" />
+                    </graphic>
+                    <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                    </padding>
+                </JFXButton>
+                <JFXButton graphicTextGap="8.0" prefWidth="220.0" text="Receiving 2" textFill="WHITE">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                    <graphic>
+                        <FontIcon iconColor="WHITE" iconLiteral="ti-import" iconSize="20" />
+                    </graphic>
+                    <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                    </padding>
+                </JFXButton>
+                <JFXButton graphicTextGap="8.0" prefWidth="220.0" text="Expenses" textFill="WHITE">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                    <graphic>
+                        <FontIcon iconColor="WHITE" iconLiteral="ti-money" iconSize="20" />
+                    </graphic>
+                    <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                    </padding>
+                </JFXButton>
+                <JFXButton graphicTextGap="8.0" prefWidth="220.0" text="Income" textFill="WHITE">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                    <graphic>
+                        <FontIcon iconColor="WHITE" iconLiteral="ti-stats-up" iconSize="20" />
+                    </graphic>
+                    <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                    </padding>
+                </JFXButton>
+                <JFXButton graphicTextGap="8.0" prefWidth="220.0" text="Appointments" textFill="WHITE">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                    <graphic>
+                        <FontIcon iconColor="WHITE" iconLiteral="ti-calendar" iconSize="20" />
+                    </graphic>
+                    <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                    </padding>
+                </JFXButton>
+                <JFXButton graphicTextGap="8.0" prefWidth="220.0" text="Employees" textFill="WHITE">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                    <graphic>
+                        <FontIcon iconColor="WHITE" iconLiteral="ti-id-badge" iconSize="20" />
+                    </graphic>
+                    <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                    </padding>
+                </JFXButton>
+                <JFXButton graphicTextGap="8.0" prefWidth="220.0" text="Settings" textFill="WHITE">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                    <graphic>
+                        <FontIcon iconColor="WHITE" iconLiteral="ti-settings" iconSize="20" />
+                    </graphic>
+                    <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                    </padding>
+                </JFXButton>
+                <JFXButton graphicTextGap="8.0" prefWidth="220.0" text="Notifications" textFill="WHITE">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                    <graphic>
+                        <FontIcon iconColor="WHITE" iconLiteral="ti-bell" iconSize="20" />
+                    </graphic>
+                    <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                    </padding>
+                </JFXButton>
+                <JFXButton graphicTextGap="8.0" prefWidth="220.0" text="Logout" textFill="WHITE">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                    <graphic>
+                        <FontIcon iconColor="WHITE" iconLiteral="ti-power-off" iconSize="20" />
+                    </graphic>
+                    <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                    </padding>
+                </JFXButton>
             </children>
         </VBox>
     </left>
     <center>
-        <Pane fx:id="body" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER"/>
+        <Pane fx:id="body" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
     </center>
 </BorderPane>
