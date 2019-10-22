@@ -12,6 +12,7 @@ dependencies {
     compile 'org.kordamp.ikonli:ikonli-javafx:11.3.4'
     compile 'org.kordamp.ikonli:ikonli-fontawesome5-pack:11.3.4'
     compile 'org.kordamp.ikonli:ikonli-themify-pack:11.3.4'
+    compile 'org.xerial:sqlite-jdbc:3.28.0'
 }
 
 javafx {
