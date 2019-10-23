@@ -1,6 +1,7 @@
 package com.libanminds;
 
-import com.libanminds.utils.DBConnection;
+import com.libanminds.controllers.LoginController;
+import com.libanminds.utils.Views;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,12 +15,14 @@ public class MainApp extends Application {
     public void start(Stage stage) throws Exception {
 
         //Initialize Database Connection
-        DBConnection.instance = new DBConnection();
-        DBConnection.instance.testConnection();
+//        DBConnection.instance = new DBConnection();
+//        DBConnection.instance.testConnection();
 
-        Parent root = FXMLLoader.load(getClass().getResource("/view/main.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.LOGIN));
+        Parent root = loader.load();
+        ((LoginController) loader.getController()).setStage(stage);
         Scene scene = new Scene(root);
-        stage.setTitle("POS System");
+        stage.setTitle("POS System - Login");
         stage.setScene(scene);
         stage.show();
     }

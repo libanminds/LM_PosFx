@@ -2,16 +2,17 @@ JFXButton {
     -fx-alignment: center-left;
     -fx-background-radius: 0;
     -fx-padding: 10 10 10 20;
+    -jfx-disable-visual-focus: true;
 }
 
 JFXButton:hover {
     -fx-background-color: #202126;
 }
 
-JFXButton.active {
+JFXButton:activeView {
     -fx-background-color: #202126;
 }
 
-.active FontIcon {
+JFXButton:activeView FontIcon {
     -fx-icon-color: #489EE7;
 }
