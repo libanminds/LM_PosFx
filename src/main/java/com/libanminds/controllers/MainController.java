@@ -76,7 +76,7 @@ public class MainController implements Initializable {
         menuEmployees.setOnAction(actionEvent -> onMenuClick(Views.EMPLOYEES));
         menuSettings.setOnAction(actionEvent -> onMenuClick(Views.SETTINGS));
         menuNotifications.setOnAction(actionEvent -> onMenuClick(Views.NOTIFICATIONS));
-        menuLogout.setOnAction(actionEvent -> onMenuClick(Views.LOGOUT));
+        menuLogout.setOnAction(event -> logout());
     }
 
     private void onMenuClick(String destination) {
@@ -86,14 +86,16 @@ public class MainController implements Initializable {
         toggleActiveCss(false); // deactivate current view button
         currentView = destination;
         toggleActiveCss(true);  // activate new view button
-        System.out.println(destination);
-//        body.getChildren().clear();
-//        try {
-//            body.getChildren().add(FXMLLoader.load(getClass().getResource(destination)));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        body.getChildren().clear();
+        try {
+            body.getChildren().add(FXMLLoader.load(getClass().getResource(destination)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    private void logout() {
+        //To implement
     }
 
     private void toggleActiveCss(Boolean val) {
