@@ -6,7 +6,7 @@ import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
@@ -16,7 +16,7 @@ public class MainController implements Initializable {
     private static final PseudoClass activeView = PseudoClass.getPseudoClass("activeView");
 
     @FXML
-    private Pane body;
+    private VBox body;
     @FXML
     private JFXButton menuDashboard;
     @FXML

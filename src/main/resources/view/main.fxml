@@ -2,16 +2,16 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.controllers.MainController">
-    <left>
-      <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" styleClass="bg-dark">
+
+<HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.controllers.MainController">
+   <children>
+      <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" minWidth="50.0" styleClass="bg-dark" HBox.hgrow="NEVER">
          <content>
-              <VBox styleClass="bg-dark">
+              <VBox fx:id="menu" styleClass="bg-dark">
                   <children>
                       <JFXButton fx:id="menuDashboard" graphicTextGap="8.0" text="Dashboard" textFill="WHITE">
                           <graphic>
@@ -87,12 +87,6 @@
               </VBox>
          </content>
       </ScrollPane>
-    </left>
-    <center>
-      <ScrollPane fitToHeight="true" fitToWidth="true" BorderPane.alignment="CENTER">
-         <content>
-              <Pane fx:id="body" />
-         </content>
-      </ScrollPane>
-    </center>
-</BorderPane>
+      <VBox fx:id="body" minWidth="100.0" HBox.hgrow="ALWAYS" />
+   </children>
+</HBox>

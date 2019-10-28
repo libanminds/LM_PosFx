@@ -1,4 +1,4 @@
-JFXButton {
+#menu JFXButton {
     -fx-alignment: center-left;
     -fx-background-radius: 0;
     -fx-padding: 8 10 8 20;
@@ -7,15 +7,15 @@ JFXButton {
     -fx-font-size: 16;
 }
 
-JFXButton:hover {
+#menu JFXButton:hover {
     -fx-background-color: #202126;
 }
 
-JFXButton:activeView {
+#menu JFXButton:activeView {
     -fx-background-color: #202126;
 }
 
-JFXButton:activeView FontIcon {
+#menu JFXButton:activeView FontIcon {
     -fx-icon-color: #489EE7;
 }
 
@@ -26,6 +26,7 @@ JFXButton:activeView FontIcon {
 .bg-dark {
     -fx-background-color: #373942;
 }
+
 .scroll-bar:horizontal .track,
 .scroll-bar:vertical .track {
     -fx-background-color: transparent;
@@ -56,4 +57,12 @@ JFXButton:activeView FontIcon {
     -fx-background-color: derive(black, 95%);
     -fx-background-insets: 2, 0, 0;
     -fx-background-radius: 2em;
+}
+
+.table-column {
+    -fx-min-width: 50;
+}
+
+.no-text {
+    -fx-font-size: 0;
 }
