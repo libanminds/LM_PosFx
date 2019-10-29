@@ -66,3 +66,15 @@
 .no-text {
     -fx-font-size: 0;
 }
+
+.menu-item .label {
+    -fx-font-size: 16;
+}
+
+.menu-item .graphic-container {
+    -fx-padding: 0em 1em 0em 0em;
+}
+
+.menu-item FontIcon {
+    -fx-icon-size: 20px;
+}

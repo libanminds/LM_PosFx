@@ -12,19 +12,19 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<ScrollPane fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.controllers.CustomersController">
+<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="600.0" prefWidth="600.0" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.controllers.CustomersController">
    <content>
       <VBox minHeight="600.0">
          <children>
             <HBox alignment="CENTER_LEFT" spacing="8.0">
                <children>
-                  <TextField prefWidth="300.0" promptText="Search">
+                  <TextField fx:id="searchField" prefWidth="300.0" promptText="Search Customers">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </TextField>
                   <Region HBox.hgrow="ALWAYS" />
-                  <Button graphicTextGap="8.0" mnemonicParsing="false" text="Add Customer">
+                  <Button fx:id="newCustomerBtn" graphicTextGap="8.0" mnemonicParsing="false" text="Add Customer">
                      <graphic>
                         <FontIcon iconLiteral="ti-plus" />
                      </graphic>
@@ -36,17 +36,23 @@
                <padding>
                   <Insets bottom="8.0" left="16.0" right="16.0" top="8.0" />
                </padding></HBox>
-            <TableView maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+            <TableView fx:id="customersTable" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
               <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
+                  <TableColumn prefWidth="75.0" text="Name" />
+                  <TableColumn prefWidth="75.0" text="First Name" visible="false" />
+                  <TableColumn prefWidth="75.0" text="Last Name" visible="false" />
+                <TableColumn prefWidth="75.0" text="Email" />
+                <TableColumn prefWidth="75.0" text="Phone" />
+                  <TableColumn prefWidth="75.0" text="Address" visible="false" />
+                  <TableColumn editable="false" prefWidth="75.0" text="Balance" visible="false" />
+                  <TableColumn editable="false" prefWidth="75.0" sortable="false" text="Actions" />
               </columns>
-               <columnResizePolicy>
-                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy>
                <VBox.margin>
                   <Insets bottom="8.0" left="16.0" right="16.0" top="8.0" />
                </VBox.margin>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
             </TableView>
          </children>
       </VBox>
