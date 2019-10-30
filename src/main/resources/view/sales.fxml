@@ -1,14 +1,232 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.CheckComboBox?>
+<?import org.controlsfx.control.ToggleSwitch?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.libanminds.controllers.SalesController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="600.0" prefWidth="600.0" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.controllers.SalesController">
+   <content>
+      <SplitPane dividerPositions="0.9">
+         <items>
+            <VBox spacing="8.0">
+               <children>
+                  <HBox spacing="12.0">
+                     <children>
+                        <VBox alignment="TOP_CENTER" prefWidth="500.0" spacing="8.0">
+                           <children>
+                              <HBox alignment="CENTER_LEFT" spacing="8.0">
+                                 <children>
+                                    <FontIcon iconLiteral="ti-user" iconSize="18">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </FontIcon>
+                                    <TextField promptText="Customer" HBox.hgrow="ALWAYS" />
+                                    <Button mnemonicParsing="false" text="+" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" spacing="8.0">
+                                 <children>
+                                    <FontIcon iconLiteral="ti-car" iconSize="18">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </FontIcon>
+                                    <CheckComboBox maxWidth="1.7976931348623157E308" showCheckedCount="true" title="Car(s)" HBox.hgrow="ALWAYS" />
+                                    <Button mnemonicParsing="false" text="+" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <VBox alignment="TOP_CENTER" prefWidth="400.0">
+                           <children>
+                              <ComboBox maxWidth="1.7976931348623157E308" promptText="Currency" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="TOP_CENTER" prefWidth="400.0" spacing="8.0">
+                           <children>
+                              <Label style="-fx-font-weight: bold;" text="Invoice #1" />
+                              <Region VBox.vgrow="ALWAYS" />
+                              <ToggleSwitch text="Unofficial" />
+                              <Region VBox.vgrow="ALWAYS" />
+                           </children>
+                        </VBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="BASELINE_LEFT" spacing="8.0">
+                     <children>
+                        <Label text="Item:" />
+                        <TextField promptText="Item Name / Code" HBox.hgrow="ALWAYS" />
+                        <Button mnemonicParsing="false" text="+" />
+                        <Label text="Quantity:">
+                           <HBox.margin>
+                              <Insets left="8.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="itemQtty" promptText="Quantity" text="1" />
+                        <Label text="Discount:">
+                           <HBox.margin>
+                              <Insets left="8.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="itemDiscount" promptText="Discount" text="0" />
+                     </children>
+                     <VBox.margin>
+                        <Insets left="8.0" right="8.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <TableView editable="true" VBox.vgrow="ALWAYS">
+                    <columns>
+                      <TableColumn editable="false" prefWidth="75.0" text="Code" />
+                      <TableColumn prefWidth="75.0" text="Name" />
+                        <TableColumn prefWidth="75.0" text="Quantity" />
+                        <TableColumn prefWidth="75.0" text="Price" />
+                        <TableColumn prefWidth="75.0" text="Discount" />
+                        <TableColumn prefWidth="75.0" text="Total" />
+                    </columns>
+                     <VBox.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </VBox.margin>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+                  <HBox alignment="TOP_RIGHT" spacing="16.0">
+                     <VBox.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" />
+                     </VBox.margin>
+                     <children>
+                        <VBox prefWidth="500.0" spacing="12.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <ComboBox maxWidth="1.7976931348623157E308" promptText="Taxes" />
+                              <TextField promptText="Discount">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </TextField>
+                           </children>
+                        </VBox>
+                        <Region disable="true" opacity="0.0" prefWidth="300.0" HBox.hgrow="ALWAYS" />
+                        <VBox minWidth="70.0">
+                           <children>
+                              <Label text="Subtotal:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Discount:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Taxes:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Total:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox minWidth="70.0">
+                           <children>
+                              <Label text="0000 L.L.">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label text="0000 L.L.">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label text="0000 L.L.">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label text="0000 L.L.">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" spacing="12.0">
+                     <children>
+                        <JFXButton buttonType="RAISED" graphicTextGap="8.0" maxWidth="200.0" style="-fx-border-color: #d11a2a; -fx-border-radius: 4;" text="Clear" textFill="#d11a2a">
+                           <graphic>
+                              <FontIcon iconColor="#d11a2a" iconLiteral="ti-trash" iconSize="18" />
+                           </graphic>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton buttonType="RAISED" graphicTextGap="8.0" maxWidth="400.0" style="-fx-background-color: #007e33;" text="Save" textFill="WHITE" HBox.hgrow="ALWAYS">
+                           <graphic>
+                              <FontIcon iconColor="WHITE" iconLiteral="ti-save" iconSize="18" />
+                           </graphic>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </JFXButton>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="8.0" left="12.0" right="12.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" maxWidth="400.0" minWidth="150.0" spacing="12.0">
+               <children>
+                  <Label text="Past Invoices">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField promptText="Search" />
+                  <TableView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                    <columns>
+                      <TableColumn editable="false" prefWidth="75.0" sortType="DESCENDING" text="Invoice #" />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+               </children>
+               <padding>
+                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+               </padding>
+            </VBox>
+         </items>
+      </SplitPane>
+   </content>
+</ScrollPane>
