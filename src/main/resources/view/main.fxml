@@ -73,11 +73,6 @@
                               <FontIcon iconColor="WHITE" iconLiteral="ti-settings" iconSize="20" />
                           </graphic>
                       </JFXButton>
-                      <JFXButton fx:id="menuNotifications" graphicTextGap="8.0" text="Notifications" textFill="WHITE">
-                          <graphic>
-                              <FontIcon iconColor="WHITE" iconLiteral="ti-bell" iconSize="20" />
-                          </graphic>
-                      </JFXButton>
                       <JFXButton fx:id="menuLogout" graphicTextGap="8.0" text="Logout" textFill="WHITE">
                           <graphic>
                               <FontIcon iconColor="WHITE" iconLiteral="ti-power-off" iconSize="20" />

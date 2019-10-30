@@ -42,8 +42,6 @@ public class MainController implements Initializable {
     @FXML
     private JFXButton menuSettings;
     @FXML
-    private JFXButton menuNotifications;
-    @FXML
     private JFXButton menuLogout;
 
     private String currentView;
@@ -75,7 +73,6 @@ public class MainController implements Initializable {
         menuAppointments.setOnAction(actionEvent -> onMenuClick(Views.APPOINTMENTS));
         menuEmployees.setOnAction(actionEvent -> onMenuClick(Views.EMPLOYEES));
         menuSettings.setOnAction(actionEvent -> onMenuClick(Views.SETTINGS));
-        menuNotifications.setOnAction(actionEvent -> onMenuClick(Views.NOTIFICATIONS));
         menuLogout.setOnAction(event -> logout());
     }
 
@@ -135,9 +132,6 @@ public class MainController implements Initializable {
                 break;
             case Views.SETTINGS:
                 menuSettings.pseudoClassStateChanged(activeView, val);
-                break;
-            case Views.NOTIFICATIONS:
-                menuNotifications.pseudoClassStateChanged(activeView, val);
                 break;
             default:
                 break;

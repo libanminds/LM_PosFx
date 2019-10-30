@@ -15,7 +15,6 @@ public final class Views {
     public static final String APPOINTMENTS = "/view/appointments.fxml";
     public static final String EMPLOYEES = "/view/employees.fxml";
     public static final String SETTINGS = "/view/settings.fxml";
-    public static final String NOTIFICATIONS = "/view/notifications.fxml";
 
     private Views(){
         throw new AssertionError("You are not allowed to instantiate this class");
