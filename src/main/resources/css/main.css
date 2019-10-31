@@ -1,3 +1,9 @@
+* {
+    -btn-blue-color: #1a2ad1;
+    -btn-red-color: #d11a2a;
+    -btn-green-color: #007e33;
+}
+
 #menu JFXButton {
     -fx-alignment: center-left;
     -fx-background-radius: 0;
@@ -20,7 +26,7 @@
 }
 
 #body {
-    -fx-background-color: #F0F0F0;
+    -fx-background-color: #e9ebee;
 }
 
 .bg-dark {
@@ -34,6 +40,7 @@
     -fx-background-radius: 2em;
     -fx-border-radius: 2em;
 }
+
 .scroll-bar:horizontal .increment-button,
 .scroll-bar:horizontal .decrement-button {
     -fx-background-color: transparent;
@@ -41,17 +48,20 @@
     -fx-padding: 0 0 10 0;
 
 }
+
 .scroll-bar:vertical .increment-button,
 .scroll-bar:vertical .decrement-button {
     -fx-background-color: transparent;
     -fx-background-radius: 2em;
     -fx-padding: 0 10 0 0;
 }
+
 .scroll-bar .increment-arrow,
 .scroll-bar .decrement-arrow {
     -fx-shape: " ";
     -fx-padding: 0;
 }
+
 .scroll-bar:horizontal .thumb,
 .scroll-bar:vertical .thumb {
     -fx-background-color: derive(black, 95%);
@@ -77,4 +87,79 @@
 
 .menu-item FontIcon {
     -fx-icon-size: 20px;
+}
+
+VBox.card {
+    -fx-background-color: #fff;
+    -fx-padding: 10;
+    -fx-border-insets: 10;
+    -fx-background-insets: 10;
+}
+
+.card-header {
+    -fx-background-color: #f9f9f9;
+    -fx-padding: 8;
+}
+
+.card-body {
+    -fx-padding: 12;
+}
+
+.green-btn {
+    -fx-background-color: -btn-green-color;
+    -fx-border-color: -btn-green-color;
+    -fx-border-radius: 4;
+    -fx-text-fill: white;
+}
+
+.red-btn {
+    -fx-background-color: -btn-red-color;
+    -fx-border-color: -btn-red-color;
+    -fx-border-radius: 4;
+    -fx-text-fill: white;
+}
+
+.blue-btn {
+    -fx-background-color: -btn-blue-color;
+    -fx-border-color: -btn-blue-color;
+    -fx-border-radius: 4;
+    -fx-text-fill: white;
+}
+
+.green-btn FontIcon, .red-btn FontIcon, .blue-btn FontIcon {
+    -fx-icon-color: white;
+}
+
+.green-btn-outline {
+    -fx-border-color: -btn-green-color;
+    -fx-border-radius: 4;
+    -fx-text-fill: -btn-green-color;
+}
+
+.green-btn-outline FontIcon {
+    -fx-icon-color: -btn-green-color;
+}
+
+.red-btn-outline {
+    -fx-border-color: -btn-red-color;
+    -fx-border-radius: 4;
+    -fx-text-fill: -btn-red-color;
+}
+
+.red-btn-outline FontIcon {
+    -fx-icon-color: -btn-red-color;
+}
+
+.blue-btn-outline {
+    -fx-border-color: -btn-blue-color;
+    -fx-border-radius: 4;
+    -fx-text-fill: -btn-blue-color;
+}
+
+.blue-btn-outline FontIcon {
+    -fx-icon-color: -btn-blue-color;
+}
+
+.btn-with-min-width {
+    -fx-min-width: 100;
 }

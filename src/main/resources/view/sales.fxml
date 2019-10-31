@@ -18,9 +18,9 @@
 <?import org.controlsfx.control.ToggleSwitch?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="600.0" prefWidth="600.0" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.controllers.SalesController">
+<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="600.0" prefWidth="600.0" stylesheets="@../css/main.css" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.controllers.SalesController">
    <content>
-      <SplitPane dividerPositions="0.9">
+      <SplitPane dividerPositions="0.9" minHeight="600.0" minWidth="600.0">
          <items>
             <VBox spacing="8.0">
                <children>
@@ -182,17 +182,17 @@
                   </HBox>
                   <HBox alignment="CENTER_RIGHT" spacing="12.0">
                      <children>
-                        <JFXButton buttonType="RAISED" graphicTextGap="8.0" maxWidth="200.0" style="-fx-border-color: #d11a2a; -fx-border-radius: 4;" text="Clear" textFill="#d11a2a">
+                        <JFXButton buttonType="RAISED" graphicTextGap="8.0" maxWidth="200.0" styleClass="red-btn-outline" text="Clear">
                            <graphic>
-                              <FontIcon iconColor="#d11a2a" iconLiteral="ti-trash" iconSize="18" />
+                              <FontIcon iconLiteral="ti-trash" iconSize="18" />
                            </graphic>
                            <font>
                               <Font size="14.0" />
                            </font>
                         </JFXButton>
-                        <JFXButton buttonType="RAISED" graphicTextGap="8.0" maxWidth="400.0" style="-fx-background-color: #007e33;" text="Save" textFill="WHITE" HBox.hgrow="ALWAYS">
+                        <JFXButton buttonType="RAISED" graphicTextGap="8.0" maxWidth="400.0" styleClass="green-btn" text="Save" HBox.hgrow="ALWAYS">
                            <graphic>
-                              <FontIcon iconColor="WHITE" iconLiteral="ti-save" iconSize="18" />
+                              <FontIcon iconLiteral="ti-save" iconSize="18" />
                            </graphic>
                            <font>
                               <Font size="14.0" />

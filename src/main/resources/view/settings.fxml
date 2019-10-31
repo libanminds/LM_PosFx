@@ -1,14 +1,304 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.libanminds.controllers.SettingsController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<TabPane prefHeight="600.0" prefWidth="600.0" stylesheets="@../css/main.css" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.controllers.SettingsController">
+  <tabs>
+    <Tab closable="false" text="General">
+      <content>
+            <ScrollPane fitToHeight="true" fitToWidth="true">
+               <content>
+                  <VBox>
+                     <children>
+                        <VBox styleClass="card">
+                           <children>
+                              <HBox styleClass="card-header">
+                                 <children>
+                                    <Label text="Label" />
+                                 </children>
+                              </HBox>
+                              <VBox styleClass="card-body">
+                                 <children>
+                                    <JFXCheckBox text="Flat Discount Also Discounts Tax " />
+                                 </children>
+                              </VBox>
+                              <HBox alignment="CENTER_RIGHT" spacing="8.0">
+                                 <children>
+                                    <JFXButton styleClass="red-btn-outline" text="Discard Changes" />
+                                    <JFXButton text="Save">
+                                       <styleClass>
+                                          <String fx:value="green-btn" />
+                                          <String fx:value="btn-with-min-width" />
+                                       </styleClass>
+                                    </JFXButton>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                 </padding>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
+      </content>
+    </Tab>
+    <Tab closable="false" text="Taxes">
+      <content>
+            <ScrollPane fitToHeight="true" fitToWidth="true">
+               <content>
+                  <VBox>
+                     <children>
+                        <VBox styleClass="card">
+                           <children>
+                              <HBox styleClass="card-header">
+                                 <children>
+                                    <Label text="Defaults" />
+                                 </children>
+                              </HBox>
+                              <VBox spacing="8.0" styleClass="card-body">
+                                 <children>
+                                    <JFXCheckBox text="Flat Discount Also Discounts Tax " />
+                                    <JFXCheckBox text="Prices Include Tax" />
+                                    <JFXCheckBox text="Charge Tax On Receivings" />
+                                 </children>
+                              </VBox>
+                              <HBox alignment="CENTER_RIGHT" spacing="8.0">
+                                 <children>
+                                    <JFXButton styleClass="red-btn-outline" text="Discard Changes" />
+                                    <JFXButton text="Save">
+                                       <styleClass>
+                                          <String fx:value="green-btn" />
+                                          <String fx:value="btn-with-min-width" />
+                                       </styleClass>
+                                    </JFXButton>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                 </padding>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <VBox styleClass="card">
+                           <children>
+                              <HBox styleClass="card-header">
+                                 <children>
+                                    <Label text="Tax types" />
+                                 </children>
+                              </HBox>
+                              <VBox>
+                                 <children>
+                                    <HBox alignment="CENTER_LEFT" spacing="12.0">
+                                       <children>
+                                          <Label text="Tax #">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField promptText="Tax Name" HBox.hgrow="ALWAYS" />
+                                          <TextField promptText="Tax Percentage" HBox.hgrow="ALWAYS" />
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </HBox>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+                                 </padding>
+                              </VBox>
+                              <HBox alignment="CENTER_RIGHT" spacing="8.0">
+                                 <children>
+                                    <JFXButton text="New Tax">
+                                       <styleClass>
+                                          <String fx:value="blue-btn" />
+                                          <String fx:value="btn-with-min-width" />
+                                       </styleClass>
+                                    </JFXButton>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                 </padding>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
+      </content>
+    </Tab>
+      <Tab closable="false" text="Currency">
+          <content>
+              <ScrollPane fitToHeight="true" fitToWidth="true">
+                  <content>
+                      <VBox>
+                          <children>
+                              <VBox styleClass="card">
+                                  <children>
+                                      <HBox styleClass="card-header">
+                                          <children>
+                                              <Label text="Label" />
+                                          </children>
+                                      </HBox>
+                                      <VBox styleClass="card-body">
+                                          <children>
+                                              <JFXCheckBox text="Flat Discount Also Discounts Tax " />
+                                          </children>
+                                      </VBox>
+                                      <HBox alignment="CENTER_RIGHT" spacing="8.0">
+                                          <children>
+                                              <JFXButton styleClass="red-btn-outline" text="Discard Changes" />
+                                              <JFXButton text="Save">
+                                                  <styleClass>
+                                                      <String fx:value="green-btn" />
+                                                      <String fx:value="btn-with-min-width" />
+                                                  </styleClass>
+                                              </JFXButton>
+                                          </children>
+                                          <padding>
+                                              <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                          </padding>
+                                      </HBox>
+                                  </children>
+                              </VBox>
+                          </children>
+                      </VBox>
+                  </content>
+              </ScrollPane>
+          </content>
+      </Tab>
+      <Tab closable="false" text="Payments">
+          <content>
+              <ScrollPane fitToHeight="true" fitToWidth="true">
+                  <content>
+                      <VBox>
+                          <children>
+                              <VBox styleClass="card">
+                                  <children>
+                                      <HBox styleClass="card-header">
+                                          <children>
+                                              <Label text="Label" />
+                                          </children>
+                                      </HBox>
+                                      <VBox styleClass="card-body">
+                                          <children>
+                                              <JFXCheckBox text="Flat Discount Also Discounts Tax " />
+                                          </children>
+                                      </VBox>
+                                      <HBox alignment="CENTER_RIGHT" spacing="8.0">
+                                          <children>
+                                              <JFXButton styleClass="red-btn-outline" text="Discard Changes" />
+                                              <JFXButton text="Save">
+                                                  <styleClass>
+                                                      <String fx:value="green-btn" />
+                                                      <String fx:value="btn-with-min-width" />
+                                                  </styleClass>
+                                              </JFXButton>
+                                          </children>
+                                          <padding>
+                                              <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                          </padding>
+                                      </HBox>
+                                  </children>
+                              </VBox>
+                          </children>
+                      </VBox>
+                  </content>
+              </ScrollPane>
+          </content>
+      </Tab>
+      <Tab closable="false" text="Receipt">
+          <content>
+              <ScrollPane fitToHeight="true" fitToWidth="true">
+                  <content>
+                      <VBox>
+                          <children>
+                              <VBox styleClass="card">
+                                  <children>
+                                      <HBox styleClass="card-header">
+                                          <children>
+                                              <Label text="Label" />
+                                          </children>
+                                      </HBox>
+                                      <VBox styleClass="card-body">
+                                          <children>
+                                              <JFXCheckBox text="Flat Discount Also Discounts Tax " />
+                                          </children>
+                                      </VBox>
+                                      <HBox alignment="CENTER_RIGHT" spacing="8.0">
+                                          <children>
+                                              <JFXButton styleClass="red-btn-outline" text="Discard Changes" />
+                                              <JFXButton text="Save">
+                                                  <styleClass>
+                                                      <String fx:value="green-btn" />
+                                                      <String fx:value="btn-with-min-width" />
+                                                  </styleClass>
+                                              </JFXButton>
+                                          </children>
+                                          <padding>
+                                              <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                          </padding>
+                                      </HBox>
+                                  </children>
+                              </VBox>
+                          </children>
+                      </VBox>
+                  </content>
+              </ScrollPane>
+          </content>
+      </Tab>
+      <Tab closable="false" text="Items">
+          <content>
+              <ScrollPane fitToHeight="true" fitToWidth="true">
+                  <content>
+                      <VBox>
+                          <children>
+                              <VBox styleClass="card">
+                                  <children>
+                                      <HBox styleClass="card-header">
+                                          <children>
+                                              <Label text="Label" />
+                                          </children>
+                                      </HBox>
+                                      <VBox styleClass="card-body">
+                                          <children>
+                                              <JFXCheckBox text="Flat Discount Also Discounts Tax " />
+                                          </children>
+                                      </VBox>
+                                      <HBox alignment="CENTER_RIGHT" spacing="8.0">
+                                          <children>
+                                              <JFXButton styleClass="red-btn-outline" text="Discard Changes" />
+                                              <JFXButton text="Save">
+                                                  <styleClass>
+                                                      <String fx:value="green-btn" />
+                                                      <String fx:value="btn-with-min-width" />
+                                                  </styleClass>
+                                              </JFXButton>
+                                          </children>
+                                          <padding>
+                                              <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                          </padding>
+                                      </HBox>
+                                  </children>
+                              </VBox>
+                          </children>
+                      </VBox>
+                  </content>
+              </ScrollPane>
+          </content>
+      </Tab>
+  </tabs>
+</TabPane>
