@@ -155,7 +155,7 @@
                         </HBox>
                         <HBox alignment="CENTER_RIGHT" spacing="12.0">
                             <children>
-                                <JFXButton buttonType="RAISED" graphicTextGap="8.0" maxWidth="200.0" styleClass="red-btn-outline" text="Clear">
+                                <JFXButton graphicTextGap="8.0" maxWidth="200.0" styleClass="red-btn-outline" text="Clear">
                                     <graphic>
                                         <FontIcon iconLiteral="ti-trash" iconSize="18" />
                                     </graphic>
@@ -163,7 +163,7 @@
                                         <Font size="14.0" />
                                     </font>
                                 </JFXButton>
-                                <JFXButton buttonType="RAISED" graphicTextGap="8.0" maxWidth="400.0" styleClass="green-btn" text="Save" HBox.hgrow="ALWAYS">
+                                <JFXButton graphicTextGap="8.0" maxWidth="400.0" styleClass="green-btn" text="Save" HBox.hgrow="ALWAYS">
                                     <graphic>
                                         <FontIcon iconLiteral="ti-save" iconSize="18" />
                                     </graphic>

@@ -58,11 +58,11 @@
                               <FontIcon iconColor="WHITE" iconLiteral="ti-stats-up" iconSize="20" />
                           </graphic>
                       </JFXButton>
-                      <JFXButton fx:id="menuAppointments" graphicTextGap="8.0" text="Appointments" textFill="WHITE">
-                          <graphic>
-                              <FontIcon iconColor="WHITE" iconLiteral="ti-calendar" iconSize="20" />
-                          </graphic>
-                      </JFXButton>
+<!--                      <JFXButton fx:id="menuAppointments" graphicTextGap="8.0" text="Appointments" textFill="WHITE">-->
+<!--                          <graphic>-->
+<!--                              <FontIcon iconColor="WHITE" iconLiteral="ti-calendar" iconSize="20" />-->
+<!--                          </graphic>-->
+<!--                      </JFXButton>-->
                       <JFXButton fx:id="menuEmployees" graphicTextGap="8.0" text="Employees" textFill="WHITE">
                           <graphic>
                               <FontIcon iconColor="WHITE" iconLiteral="ti-id-badge" iconSize="20" />

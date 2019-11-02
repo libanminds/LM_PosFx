@@ -163,3 +163,13 @@ VBox.card {
 .btn-with-min-width {
     -fx-min-width: 100;
 }
+
+
+.reports-panel JFXButton {
+    -fx-font-size: 14;
+    -fx-graphic-text-gap: 8;
+}
+
+.reports-panel JFXButton FontIcon {
+    -fx-icon-size: 20;
+}
