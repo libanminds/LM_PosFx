@@ -171,5 +171,5 @@ VBox.card {
 }
 
 .reports-panel JFXButton FontIcon {
-    -fx-icon-size: 20;
+    -fx-icon-size: 20px;
 }
