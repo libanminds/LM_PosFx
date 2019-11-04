@@ -1,6 +1,7 @@
 package com.libanminds;
 
 import com.libanminds.controllers.LoginController;
+import com.libanminds.utils.DBConnection;
 import com.libanminds.utils.Views;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -15,8 +16,8 @@ public class MainApp extends Application {
     public void start(Stage stage) throws Exception {
 
         //Initialize Database Connection
-//        DBConnection.instance = new DBConnection();
-//        DBConnection.instance.testConnection();
+        DBConnection.instance = new DBConnection();
+        DBConnection.instance.testConnection();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.LOGIN));
         Parent root = loader.load();

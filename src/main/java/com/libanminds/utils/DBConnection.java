@@ -15,7 +15,7 @@ public class DBConnection {
     }
 
     private Connection connect() {
-        String connect_string = "jdbc:sqlite:D:/TestDatabase.db";
+        String connect_string = "jdbc:sqlite:pos.db";
 
         Connection connectionInstance = null;
         try {
@@ -29,13 +29,13 @@ public class DBConnection {
     }
 
     public void testConnection() {
-        String sql = "SELECT Name FROM People";
+        String sql = "SELECT * FROM users";
 
         try {
             Statement stmt  = connection.createStatement();
             ResultSet rs    = stmt.executeQuery(sql);
             while (rs.next()) {
-                System.out.println(rs.getString("Name"));
+                System.out.println(rs.getString("username"));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
