@@ -14,8 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-
-<AnchorPane stylesheets="@../../css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane stylesheets="@../../css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.dialogs_controllers.AddCustomerController">
    <children>
       <GridPane alignment="CENTER" hgap="8.0" vgap="8.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -41,22 +40,22 @@
                </GridPane.margin>
             </Label>
             <Label text="First Name:" GridPane.rowIndex="1" />
-            <TextField promptText="First Name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="firstName" promptText="First Name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="Last Name:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <TextField promptText="Last Name" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <TextField fx:id="lastName" promptText="Last Name" GridPane.columnIndex="3" GridPane.rowIndex="1" />
             <Label text="Email:" GridPane.rowIndex="2" />
-            <TextField promptText="Email" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="email" promptText="Email" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label text="Phone Number:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <TextField promptText="Phone Number" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <TextField fx:id="phone" promptText="Phone Number" GridPane.columnIndex="3" GridPane.rowIndex="2" />
             <Label text="Company:" GridPane.rowIndex="3" />
-            <TextField promptText="(optional)" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="company" promptText="(optional)" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField promptText="(optional)" GridPane.columnIndex="3" GridPane.rowIndex="3" />
             <Label text="Comments:" GridPane.columnIndex="2" GridPane.rowIndex="3" />
             <Label text="Address:" GridPane.rowIndex="4" />
-            <TextArea prefRowCount="3" promptText="Address" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextArea fx:id="address" prefRowCount="3" promptText="Address" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <HBox alignment="BOTTOM_RIGHT" spacing="12.0" GridPane.columnIndex="2" GridPane.columnSpan="2147483647" GridPane.rowIndex="4">
                <children>
-                  <JFXButton graphicTextGap="8.0" styleClass="red-btn-outline" text="Cancel">
+                  <JFXButton fx:id="cancel" graphicTextGap="8.0" styleClass="red-btn-outline" text="Cancel">
                      <graphic>
                         <FontIcon iconLiteral="ti-close" iconSize="20" />
                      </graphic>
@@ -64,7 +63,7 @@
                         <Font size="14.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton graphicTextGap="8.0" text="Save">
+                  <JFXButton fx:id="save" graphicTextGap="8.0" text="Save">
                      <graphic>
                         <FontIcon iconLiteral="ti-save" iconSize="20" />
                      </graphic>

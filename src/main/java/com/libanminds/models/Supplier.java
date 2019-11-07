@@ -3,16 +3,18 @@ package com.libanminds.models;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public class Customer {
+public class Supplier {
 
     private SimpleStringProperty name;
+    private SimpleStringProperty company;
     private SimpleStringProperty email;
     private SimpleStringProperty phone;
     private SimpleStringProperty address;
     private SimpleDoubleProperty balance;
 
-    public Customer(String name, String email, String phone, String address, double balance) {
+    public Supplier(String name, String company, String email, String phone, String address, double balance) {
         this.name = new SimpleStringProperty(name);
+        this.company = new SimpleStringProperty(company);
         this.email = new SimpleStringProperty(email);
         this.phone = new SimpleStringProperty(phone);
         this.address = new SimpleStringProperty(address);
@@ -25,6 +27,14 @@ public class Customer {
 
     public void setName(String val) {
         name.set(val);
+    }
+
+    public String getCompany() {
+        return company.get();
+    }
+
+    public void setCompany(String val) {
+        company.set(val);
     }
 
     public String getEmail() {

@@ -28,14 +28,22 @@ public class DBConnection {
         return connectionInstance;
     }
 
+    public Statement getStatement() {
+        try {
+            return connection.createStatement();
+        }catch (SQLException e) {
+            return null;
+        }
+    }
+
     public void testConnection() {
-        String sql = "SELECT * FROM users";
+        String sql = "SELECT * FROM customers";
 
         try {
             Statement stmt  = connection.createStatement();
             ResultSet rs    = stmt.executeQuery(sql);
             while (rs.next()) {
-                System.out.println(rs.getString("username"));
+                System.out.println(rs.getString("first_name"));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

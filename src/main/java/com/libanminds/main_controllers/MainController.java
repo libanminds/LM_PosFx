@@ -1,4 +1,4 @@
-package com.libanminds.controllers;
+package com.libanminds.main_controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.libanminds.utils.Views;

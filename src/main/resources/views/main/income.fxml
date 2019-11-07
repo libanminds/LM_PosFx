@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="600.0" prefWidth="600.0" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.controllers.IncomeController">
+<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="600.0" prefWidth="600.0" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.main_controllers.IncomeController">
     <content>
         <VBox minHeight="600.0">
             <children>

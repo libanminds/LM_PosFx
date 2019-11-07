@@ -6,7 +6,6 @@
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
@@ -15,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="600.0" prefWidth="600.0" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.controllers.ItemsController">
+<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="600.0" prefWidth="600.0" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.main_controllers.ItemsController">
     <content>
         <VBox minHeight="600.0">
             <children>
@@ -56,19 +55,6 @@
                         <Insets bottom="8.0" left="16.0" right="16.0" top="8.0" />
                     </padding></HBox>
                 <TableView fx:id="itemsTable" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
-                    <columns>
-                        <TableColumn prefWidth="75.0" sortable="false" text="Image" />
-                        <TableColumn prefWidth="75.0" text="Code" visible="false" />
-                        <TableColumn prefWidth="75.0" text="Name" />
-                        <TableColumn prefWidth="75.0" text="Category" />
-                        <TableColumn prefWidth="75.0" text="Price" />
-                        <TableColumn prefWidth="75.0" text="Stock" />
-                        <TableColumn prefWidth="75.0" text="Supplier" visible="false" />
-                        <TableColumn prefWidth="75.0" text="Description" visible="false" />
-                        <TableColumn prefWidth="75.0" sortable="false" text="Prices Include Tax" visible="false" />
-                  <TableColumn prefWidth="75.0" sortable="false" text="Is Service" visible="false" />
-                  <TableColumn prefWidth="75.0" sortable="false" text="Last Modified" visible="false" />
-                    </columns>
                     <VBox.margin>
                         <Insets bottom="8.0" left="16.0" right="16.0" top="8.0" />
                     </VBox.margin>

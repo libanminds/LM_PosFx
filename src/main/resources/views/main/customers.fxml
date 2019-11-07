@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
@@ -12,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="600.0" prefWidth="600.0" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.controllers.CustomersController">
+<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="600.0" prefWidth="600.0" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.main_controllers.CustomersController">
    <content>
       <VBox minHeight="600.0">
          <children>
@@ -37,16 +36,6 @@
                   <Insets bottom="8.0" left="16.0" right="16.0" top="8.0" />
                </padding></HBox>
             <TableView fx:id="customersTable" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
-              <columns>
-                  <TableColumn prefWidth="75.0" text="Name" />
-                  <TableColumn prefWidth="75.0" text="First Name" visible="false" />
-                  <TableColumn prefWidth="75.0" text="Last Name" visible="false" />
-                <TableColumn prefWidth="75.0" text="Email" />
-                <TableColumn prefWidth="75.0" text="Phone" />
-                  <TableColumn prefWidth="75.0" text="Address" visible="false" />
-                  <TableColumn editable="false" prefWidth="75.0" text="Balance" visible="false" />
-                  <TableColumn editable="false" prefWidth="75.0" sortable="false" text="Actions" />
-              </columns>
                <VBox.margin>
                   <Insets bottom="8.0" left="16.0" right="16.0" top="8.0" />
                </VBox.margin>

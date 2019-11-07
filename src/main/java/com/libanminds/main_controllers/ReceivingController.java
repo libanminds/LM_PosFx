@@ -1,4 +1,4 @@
-package com.libanminds.controllers;
+package com.libanminds.main_controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -7,7 +7,7 @@ import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class SalesController implements Initializable {
+public class ReceivingController implements Initializable {
 
     @FXML
     private TextField itemQtty;
@@ -21,4 +21,5 @@ public class SalesController implements Initializable {
         itemQtty.setOnMouseClicked(e -> itemQtty.selectAll());
         itemDiscount.setOnMouseClicked(e -> itemDiscount.selectAll());
     }
+
 }

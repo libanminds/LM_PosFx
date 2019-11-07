@@ -1,6 +1,6 @@
 package com.libanminds;
 
-import com.libanminds.controllers.LoginController;
+import com.libanminds.main_controllers.LoginController;
 import com.libanminds.utils.DBConnection;
 import com.libanminds.utils.Views;
 import javafx.application.Application;

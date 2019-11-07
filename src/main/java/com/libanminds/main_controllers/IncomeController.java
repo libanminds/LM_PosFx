@@ -1,4 +1,4 @@
-package com.libanminds.controllers;
+package com.libanminds.main_controllers;
 
 import javafx.fxml.Initializable;
 
