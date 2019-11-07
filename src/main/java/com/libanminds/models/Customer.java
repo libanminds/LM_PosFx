@@ -5,14 +5,16 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class Customer {
 
-    private SimpleStringProperty name;
+    private SimpleStringProperty firstName;
+    private SimpleStringProperty lastName;
     private SimpleStringProperty email;
     private SimpleStringProperty phone;
     private SimpleStringProperty address;
     private SimpleDoubleProperty balance;
 
-    public Customer(String name, String email, String phone, String address, double balance) {
-        this.name = new SimpleStringProperty(name);
+    public Customer(String firstName,String lastName, String email, String phone, String address, double balance) {
+        this.firstName = new SimpleStringProperty(firstName);
+        this.lastName = new SimpleStringProperty(lastName);
         this.email = new SimpleStringProperty(email);
         this.phone = new SimpleStringProperty(phone);
         this.address = new SimpleStringProperty(address);
@@ -20,11 +22,12 @@ public class Customer {
     }
 
     public String getName() {
-        return name.get();
+        return firstName.get() + " " +lastName.get();
     }
 
-    public void setName(String val) {
-        name.set(val);
+    public void setName(String fName, String lName) {
+        firstName.set(fName);
+        firstName.set(lName);
     }
 
     public String getEmail() {

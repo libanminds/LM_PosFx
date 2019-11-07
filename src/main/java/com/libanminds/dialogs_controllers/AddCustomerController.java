@@ -34,9 +34,6 @@ public class AddCustomerController implements Initializable {
     private TextField phone;
 
     @FXML
-    private TextField company;
-
-    @FXML
     private TextArea address;
 
     @FXML
@@ -50,14 +47,20 @@ public class AddCustomerController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         initSaveButton();
     }
-// String name, String email, String phone, String address, double balance
+
     private void initSaveButton() {
         save.setOnMouseClicked(new EventHandler<Event>() {
             @Override
             public void handle(Event event) {
-                //CustomersRepository.addCustomer(new Customer());
+                CustomersRepository.addCustomer(new Customer(
+                        firstName.getText(),
+                        lastName.getText(),
+                        email.getText(),
+                        phone.getText(),
+                        address.getText(),
+                        0
+                ));
             }
         });
     }
-
 }

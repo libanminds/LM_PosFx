@@ -38,7 +38,8 @@ public class CustomersRepository {
             ResultSet rs    = statement.executeQuery(query);
             while (rs.next()) {
                 data.add(new Customer(
-                        rs.getString("first_name") + " " + rs.getString("last_name"),
+                        rs.getString("first_name"),
+                        rs.getString("last_name"),
                         rs.getString("email"),
                         rs.getString("phone"),
                         rs.getString("address"),
