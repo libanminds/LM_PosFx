@@ -138,4 +138,4 @@ gradle-app.setting
 # End of https://www.gitignore.io/api/java,gradle,intellij
 
 ## Extra
-pos.db
+#pos.db
