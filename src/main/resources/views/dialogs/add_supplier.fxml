@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane stylesheets="@../../css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.dialogs_controllers.AddCustomerController">
+<AnchorPane stylesheets="@../../css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.dialogs_controllers.AddSupplierController">
    <children>
       <GridPane alignment="CENTER" hgap="8.0" vgap="8.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -31,7 +31,7 @@
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Add Customer" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER">
+            <Label text="Add Supplier" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>

@@ -18,6 +18,7 @@ public final class Views {
 
     //Dialogs
     public static final String ADD_CUSTOMER = "/views/dialogs/add_customer.fxml";
+    public static final String ADD_SUPPLIER = "/views/dialogs/add_supplier.fxml";
 
     private Views(){
         throw new AssertionError("You are not allowed to instantiate this class");

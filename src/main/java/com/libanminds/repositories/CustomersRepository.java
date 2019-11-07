@@ -5,6 +5,7 @@ import com.libanminds.utils.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -26,8 +27,23 @@ public class CustomersRepository {
         return getCustomersFromQuery(query);
     }
 
-    public static void addCustomer(Customer customer) {
-
+    public static boolean addCustomer(Customer customer) {
+        String query = "INSERT INTO customers(first_name,last_name,email,phone,address,company,notes) VALUES (?,?,?,?,?,?,?)";
+        PreparedStatement statement = DBConnection.instance.getPreparedStatement(query);
+        try {
+            statement.setString(1, customer.getFirstName());
+            statement.setString(2, customer.getLastName());
+            statement.setString(3, customer.getEmail());
+            statement.setString(4, customer.getPhone());
+            statement.setString(5, customer.getAddress());
+            statement.setString(6, customer.getCompany());
+            statement.setString(7, customer.getNotes());
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     private static ObservableList<Customer> getCustomersFromQuery(String query) {
@@ -43,6 +59,8 @@ public class CustomersRepository {
                         rs.getString("email"),
                         rs.getString("phone"),
                         rs.getString("address"),
+                        rs.getString("company"),
+                        rs.getString("notes"),
                         0
                         //rs.getDouble("balance")
                 ));

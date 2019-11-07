@@ -45,16 +45,19 @@ public class CustomersController implements Initializable {
             public void handle(Event event) {
                 try{
                     Parent root;
-                    Stage primaryStage = new Stage();
+                    Stage addCustomerStage = new Stage();
                     root = FXMLLoader.load(getClass().getResource(Views.ADD_CUSTOMER));
                     Scene scene = new Scene(root);
-                    primaryStage.initModality(Modality.APPLICATION_MODAL);
-                    primaryStage.setScene(scene);
-                    primaryStage.show();
+                    addCustomerStage.initModality(Modality.APPLICATION_MODAL);
+                    addCustomerStage.setScene(scene);
+                    addCustomerStage.show();
+                    addCustomerStage.setOnHidden(e -> {
+                        customersTable.setItems(CustomersRepository.getCustomers());
+                    });
                 }
                 catch(Exception e){
                     System.out.println(e.getMessage());
-                };
+                }
             }
         });
     }
@@ -66,19 +69,19 @@ public class CustomersController implements Initializable {
     }
 
     private void initializeTable() {
-        TableColumn<Customer,String> nameCol = new TableColumn<Customer,String>("Name");
-        TableColumn<Customer,String> emailCol = new TableColumn<Customer,String>("Email");
-        TableColumn<Customer,String> phoneCol = new TableColumn<Customer,String>("Phone");
-        TableColumn<Customer,String> addressCol = new TableColumn<Customer,String>("Address");
-        TableColumn<Customer,Double> balanceCol = new TableColumn<Customer,Double>("Balance");
+        TableColumn<Customer,String> nameCol = new TableColumn<>("Name");
+        TableColumn<Customer,String> emailCol = new TableColumn<>("Email");
+        TableColumn<Customer,String> phoneCol = new TableColumn<>("Phone");
+        TableColumn<Customer,String> addressCol = new TableColumn<>("Address");
+        TableColumn<Customer,Double> balanceCol = new TableColumn<>("Balance");
 
         customersTable.getColumns().addAll(nameCol,emailCol,phoneCol,addressCol,balanceCol);
 
-        nameCol.setCellValueFactory(new PropertyValueFactory<Customer,String>("name"));
-        emailCol.setCellValueFactory(new PropertyValueFactory<Customer,String>("email"));
-        phoneCol.setCellValueFactory(new PropertyValueFactory<Customer,String>("phone"));
-        addressCol.setCellValueFactory(new PropertyValueFactory<Customer,String>("address"));
-        balanceCol.setCellValueFactory(new PropertyValueFactory<Customer,Double>("balance"));
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
+        phoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
+        balanceCol.setCellValueFactory(new PropertyValueFactory<>("balance"));
 
         customersTable.setItems(CustomersRepository.getCustomers());
     }

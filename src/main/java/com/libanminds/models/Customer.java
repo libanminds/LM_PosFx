@@ -10,15 +10,27 @@ public class Customer {
     private SimpleStringProperty email;
     private SimpleStringProperty phone;
     private SimpleStringProperty address;
+    private SimpleStringProperty company;
+    private SimpleStringProperty notes;
     private SimpleDoubleProperty balance;
 
-    public Customer(String firstName,String lastName, String email, String phone, String address, double balance) {
+    public Customer(String firstName,String lastName, String email, String phone, String address,String company, String notes, double balance) {
         this.firstName = new SimpleStringProperty(firstName);
         this.lastName = new SimpleStringProperty(lastName);
         this.email = new SimpleStringProperty(email);
         this.phone = new SimpleStringProperty(phone);
         this.address = new SimpleStringProperty(address);
+        this.company = new SimpleStringProperty(company);
+        this.notes = new SimpleStringProperty(notes);
         this.balance = new SimpleDoubleProperty(balance);
+    }
+
+    public String getFirstName() {
+        return firstName.get();
+    }
+
+    public String getLastName() {
+        return lastName.get();
     }
 
     public String getName() {
@@ -52,6 +64,22 @@ public class Customer {
 
     public void setAddress(String val) {
         address.set(val);
+    }
+
+    public String getCompany() {
+        return company.get();
+    }
+
+    public void setCompany(String val) {
+        company.set(val);
+    }
+
+    public String getNotes() {
+        return notes.get();
+    }
+
+    public void setNotes(String val) {
+        notes.set(val);
     }
 
     public double getBalance() {

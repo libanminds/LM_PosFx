@@ -1,28 +1,35 @@
 package com.libanminds.models;
 
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public class Supplier {
+public class User {
 
+    private SimpleStringProperty username;
     private SimpleStringProperty firstName;
     private SimpleStringProperty lastName;
-    private SimpleStringProperty company;
+    private SimpleStringProperty password;
     private SimpleStringProperty email;
     private SimpleStringProperty phone;
+    private SimpleStringProperty role;
     private SimpleStringProperty address;
-    private SimpleStringProperty notes;
-    private SimpleDoubleProperty balance;
 
-    public Supplier(String firstName,String lastName, String company, String email, String phone, String address, String notes, double balance) {
+    public User(String username, String firstName, String lastName, String password, String email, String phone, String role, String address) {
+        this.username = new SimpleStringProperty(username);
         this.firstName = new SimpleStringProperty(firstName);
         this.lastName = new SimpleStringProperty(lastName);
-        this.company = new SimpleStringProperty(company);
+        this.password = new SimpleStringProperty(password);
         this.email = new SimpleStringProperty(email);
         this.phone = new SimpleStringProperty(phone);
+        this.role = new SimpleStringProperty(role);
         this.address = new SimpleStringProperty(address);
-        this.notes = new SimpleStringProperty(notes);
-        this.balance = new SimpleDoubleProperty(balance);
+    }
+
+    public String getUsername() {
+        return username.get();
+    }
+
+    public void setUsername(String val) {
+        username.set(val);
     }
 
     public String getName() {
@@ -45,12 +52,12 @@ public class Supplier {
         lastName.set(val);
     }
 
-    public String getCompany() {
-        return company.get();
+    public String getPassword() {
+        return password.get();
     }
 
-    public void setCompany(String val) {
-        company.set(val);
+    public void setPassword(String val) {
+        password.set(val);
     }
 
     public String getEmail() {
@@ -69,27 +76,19 @@ public class Supplier {
         phone.set(val);
     }
 
+    public String getRole() {
+        return role.get();
+    }
+
+    public void setRole(String val) {
+        role.set(val);
+    }
+
     public String getAddress() {
         return address.get();
     }
 
     public void setAddress(String val) {
         address.set(val);
-    }
-
-    public String getNotes() {
-        return notes.get();
-    }
-
-    public void setNotes(String val) {
-        notes.set(val);
-    }
-
-    public double getBalance() {
-        return balance.get();
-    }
-
-    public void setBalance(double val) {
-        balance.set(val);
     }
 }

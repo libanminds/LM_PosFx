@@ -36,18 +36,12 @@ public class DBConnection {
         }
     }
 
-    public void testConnection() {
-        String sql = "SELECT * FROM customers";
-
+    public PreparedStatement getPreparedStatement(String query) {
         try {
-            Statement stmt  = connection.createStatement();
-            ResultSet rs    = stmt.executeQuery(sql);
-            while (rs.next()) {
-                System.out.println(rs.getString("first_name"));
-            }
-        } catch (SQLException e) {
+            return connection.prepareStatement(query);
+        }catch (SQLException e) {
             System.out.println(e.getMessage());
+            return null;
         }
     }
-
 }

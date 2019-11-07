@@ -17,7 +17,6 @@ public class MainApp extends Application {
 
         //Initialize Database Connection
         DBConnection.instance = new DBConnection();
-        DBConnection.instance.testConnection();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.LOGIN));
         Parent root = loader.load();

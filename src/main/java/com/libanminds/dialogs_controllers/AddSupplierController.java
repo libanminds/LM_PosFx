@@ -1,8 +1,8 @@
 package com.libanminds.dialogs_controllers;
 
 import com.jfoenix.controls.JFXButton;
-import com.libanminds.models.Customer;
-import com.libanminds.repositories.CustomersRepository;
+import com.libanminds.models.Supplier;
+import com.libanminds.repositories.SupplierRepository;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -10,11 +10,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AddCustomerController implements Initializable {
+public class AddSupplierController implements Initializable {
 
     @FXML
     private TextField firstName;
@@ -52,13 +51,13 @@ public class AddCustomerController implements Initializable {
 
     private void initSaveButton() {
         save.setOnMouseClicked((EventHandler<Event>) event -> {
-            boolean successful = CustomersRepository.addCustomer(new Customer(
+            boolean successful = SupplierRepository.addSupplier(new Supplier(
                     firstName.getText(),
                     lastName.getText(),
+                    company.getText(),
                     email.getText(),
                     phone.getText(),
                     address.getText(),
-                    company.getText(),
                     comments.getText(),
                     0
             ));
