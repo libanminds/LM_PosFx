@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class Supplier {
 
+    private int id;
     private SimpleStringProperty firstName;
     private SimpleStringProperty lastName;
     private SimpleStringProperty company;
@@ -14,7 +15,8 @@ public class Supplier {
     private SimpleStringProperty notes;
     private SimpleDoubleProperty balance;
 
-    public Supplier(String firstName,String lastName, String company, String email, String phone, String address, String notes, double balance) {
+    public Supplier(int id,String firstName,String lastName, String company, String email, String phone, String address, String notes, double balance) {
+        this.id = id;
         this.firstName = new SimpleStringProperty(firstName);
         this.lastName = new SimpleStringProperty(lastName);
         this.company = new SimpleStringProperty(company);
@@ -23,6 +25,10 @@ public class Supplier {
         this.address = new SimpleStringProperty(address);
         this.notes = new SimpleStringProperty(notes);
         this.balance = new SimpleDoubleProperty(balance);
+    }
+
+    public int getID() {
+        return id;
     }
 
     public String getName() {

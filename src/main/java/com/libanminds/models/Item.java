@@ -4,40 +4,67 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+import java.io.FileInputStream;
 
 public class Item {
-    private SimpleStringProperty imageUrl;
+    private int id;
+    private String  imageUrl;
+    private ImageView image;
     private SimpleIntegerProperty code;
     private SimpleStringProperty name;
     private SimpleStringProperty category;
+    private SimpleDoubleProperty cost;
     private SimpleDoubleProperty price;
     private SimpleIntegerProperty stock;
     private SimpleStringProperty supplier;
     private SimpleStringProperty description;
-    private SimpleDoubleProperty priceIncludingTax;
+    private SimpleBooleanProperty priceIncludesTax;
     private SimpleBooleanProperty isService;
     private SimpleStringProperty lastModified;
 
-    public Item(String imageUrl, int code, String name, String category, double price, int stock, String supplier, String description, double priceIncludingTax, boolean isService, String lastModified) {
-        this.imageUrl = new SimpleStringProperty(imageUrl);
+    public Item(int id, String imageUrl, int code, String name, String category,double cost, double price, int stock, String supplier, String description, boolean priceIncludesTax, boolean isService, String lastModified) {
+        try{
+            Image imageFile = new Image(new FileInputStream(imageUrl));
+            image = new ImageView(imageFile);
+            image.setFitHeight(50);
+            image.setFitWidth(50);
+            image.setPreserveRatio(true);
+        }catch(Exception e) {
+            image = null;
+        }
+
+        this.id = id;
+        this.imageUrl = imageUrl;
         this.code = new SimpleIntegerProperty(code);
         this.name = new SimpleStringProperty(name);
         this.category = new SimpleStringProperty(category);
+        this.cost = new SimpleDoubleProperty(cost);
         this.price = new SimpleDoubleProperty(price);
         this.stock = new SimpleIntegerProperty(stock);
         this.supplier = new SimpleStringProperty(supplier);
         this.description = new SimpleStringProperty(description);
-        this.priceIncludingTax = new SimpleDoubleProperty(priceIncludingTax);
+        this.priceIncludesTax = new SimpleBooleanProperty(priceIncludesTax);
         this.isService = new SimpleBooleanProperty(isService);
         this.lastModified = new SimpleStringProperty(lastModified);
     }
 
-    public String getImageUrl() {
-        return imageUrl.get();
+    public int getID() {
+        return id;
     }
 
-    public void setImageUrl(String val) {
-        imageUrl.set(val);
+    public void setImage(ImageView value) {
+        image = value;
+    }
+
+    public ImageView getImage() {
+        return image;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 
     public int getCode() {
@@ -64,6 +91,13 @@ public class Item {
         category.set(val);
     }
 
+    public double getCost() {
+        return cost.get();
+    }
+
+    public void setCost(double val) {
+        cost.set(val);
+    }
 
     public double getPrice() {
         return price.get();
@@ -97,12 +131,12 @@ public class Item {
         description.set(val);
     }
 
-    public double getPriceIncludingTax() {
-        return priceIncludingTax.get();
+    public boolean getPriceIncludesTax() {
+        return priceIncludesTax.get();
     }
 
-    public void setPriceIncludingTax(double val) {
-        priceIncludingTax.set(val);
+    public void setPriceIncludesTax(boolean val) {
+        priceIncludesTax.set(val);
     }
 
     public boolean getIsService() {

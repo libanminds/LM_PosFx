@@ -46,6 +46,38 @@ public class CustomersRepository {
         }
     }
 
+    public static boolean updateCustomer(Customer customer) {
+        String query = "UPDATE customers SET first_name = ? , last_name = ? , email = ?, phone = ?, address = ? , company = ?, notes = ? where id = ?";
+
+        PreparedStatement statement = DBConnection.instance.getPreparedStatement(query);
+        try {
+            statement.setString(1, customer.getFirstName());
+            statement.setString(2, customer.getLastName());
+            statement.setString(3, customer.getEmail());
+            statement.setString(4, customer.getPhone());
+            statement.setString(5, customer.getAddress());
+            statement.setString(6, customer.getCompany());
+            statement.setString(7, customer.getNotes());
+            statement.setInt(8, customer.getID());
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean deleteCustomer(Customer customer) {
+        try {
+            String query = "DELETE FROM customers where id = " + customer.getID();
+            Statement statement  = DBConnection.instance.getStatement();
+            statement.executeUpdate(query);
+            return true;
+        }catch (Exception e) {
+            return false;
+        }
+    }
+
     private static ObservableList<Customer> getCustomersFromQuery(String query) {
         ObservableList<Customer> data = FXCollections.observableArrayList();
 
@@ -54,6 +86,7 @@ public class CustomersRepository {
             ResultSet rs    = statement.executeQuery(query);
             while (rs.next()) {
                 data.add(new Customer(
+                        rs.getInt("id"),
                         rs.getString("first_name"),
                         rs.getString("last_name"),
                         rs.getString("email"),

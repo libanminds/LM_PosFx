@@ -1,24 +1,23 @@
 package com.libanminds.main_controllers;
 
+import com.libanminds.dialogs_controllers.CustomerDialogController;
 import com.libanminds.models.Customer;
 import com.libanminds.repositories.CustomersRepository;
 import com.libanminds.utils.Views;
+import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class CustomersController implements Initializable {
@@ -27,39 +26,91 @@ public class CustomersController implements Initializable {
     private TextField searchField;
 
     @FXML
+    private Button deleteCustomer;
+
+    @FXML
+    private Button editCustomer;
+
+    @FXML
     private Button newCustomerBtn;
 
     @FXML
     private TableView<Customer> customersTable;
 
+    private Customer selectedCustomer;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        initNewCustomer();
+        initButtons();
         initSearch();
         initializeTable();
+        setTableListener();
     }
 
-    private void initNewCustomer() {
+    private void initializeVariables() {
+        selectedCustomer = null;
+    }
+
+    private void initButtons() {
         newCustomerBtn.setOnMouseClicked(new EventHandler<Event>() {
             @Override
             public void handle(Event event) {
-                try{
-                    Parent root;
-                    Stage addCustomerStage = new Stage();
-                    root = FXMLLoader.load(getClass().getResource(Views.ADD_CUSTOMER));
-                    Scene scene = new Scene(root);
-                    addCustomerStage.initModality(Modality.APPLICATION_MODAL);
-                    addCustomerStage.setScene(scene);
-                    addCustomerStage.show();
-                    addCustomerStage.setOnHidden(e -> {
-                        customersTable.setItems(CustomersRepository.getCustomers());
-                    });
-                }
-                catch(Exception e){
-                    System.out.println(e.getMessage());
-                }
+                showCustomerDialog(null);
             }
         });
+
+        editCustomer.setOnMouseClicked(new EventHandler<Event>() {
+            @Override
+            public void handle(Event event) {
+                showCustomerDialog(selectedCustomer);
+            }
+        });
+
+        deleteCustomer.setOnMouseClicked(new EventHandler<Event>() {
+            @Override
+            public void handle(Event event) {
+                showDeleteConfirmationDialog();
+            }
+        });
+
+        deleteCustomer.setDisable(selectedCustomer == null);
+        editCustomer.setDisable(selectedCustomer == null);
+    }
+
+    private void showCustomerDialog(Customer customer) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.ADD_CUSTOMER));
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(loader.load()));
+            CustomerDialogController controller = loader.getController();
+            controller.initData(customer);
+            stage.show();
+            stage.setOnHidden(e -> {
+                customersTable.setItems(CustomersRepository.getCustomers());
+            });
+        }catch (Exception e){}
+    }
+
+    private void showDeleteConfirmationDialog() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete Confirmation");
+        alert.setHeaderText("Are you sure you want to delele "+ selectedCustomer.getName() + "?");
+
+        ButtonType yesButton = new ButtonType("Yes");
+        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(yesButton, buttonTypeCancel);
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.get() == yesButton) {
+            boolean successful = CustomersRepository.deleteCustomer(selectedCustomer);
+            if(successful)
+                customersTable.getItems().remove(selectedCustomer);
+        } else {
+            alert.close();
+        }
     }
 
     private void initSearch() {
@@ -84,5 +135,13 @@ public class CustomersController implements Initializable {
         balanceCol.setCellValueFactory(new PropertyValueFactory<>("balance"));
 
         customersTable.setItems(CustomersRepository.getCustomers());
+    }
+
+    private void setTableListener() {
+        customersTable.selectionModelProperty().get().selectedItemProperty().addListener((ChangeListener) (observable, oldValue, newValue) -> {
+            selectedCustomer = (Customer)newValue;
+            deleteCustomer.setDisable(selectedCustomer == null);
+            editCustomer.setDisable(selectedCustomer == null);
+        });
     }
 }

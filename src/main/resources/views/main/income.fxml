@@ -42,6 +42,8 @@
                             </graphic>
                         </MenuButton>
                         <Region HBox.hgrow="ALWAYS" />
+                  <Button fx:id="deleteIncome" mnemonicParsing="false" text="Delete Income" />
+                  <Button fx:id="editIncome" mnemonicParsing="false" text="Edit Income" />
                         <Button fx:id="addIncomeButton" graphicTextGap="8.0" mnemonicParsing="false" text="Add Income">
                             <graphic>
                                 <FontIcon iconLiteral="ti-plus" />

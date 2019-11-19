@@ -13,7 +13,7 @@
 
 <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="600.0" prefWidth="600.0" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.main_controllers.CustomersController">
    <content>
-      <VBox minHeight="600.0">
+      <VBox minHeight="600.0" prefHeight="600.0" prefWidth="644.0">
          <children>
             <HBox alignment="CENTER_LEFT" spacing="8.0">
                <children>
@@ -23,6 +23,8 @@
                      </font>
                   </TextField>
                   <Region HBox.hgrow="ALWAYS" />
+                  <Button fx:id="deleteCustomer" mnemonicParsing="false" text="Delete Customer" />
+                  <Button fx:id="editCustomer" mnemonicParsing="false" text="Edit Customer" />
                   <Button fx:id="newCustomerBtn" graphicTextGap="8.0" mnemonicParsing="false" text="Add Customer">
                      <graphic>
                         <FontIcon iconLiteral="ti-plus" />

@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Income {
+    private int id;
     private SimpleStringProperty type;
     private SimpleStringProperty description;
     private SimpleDoubleProperty amount;
@@ -12,7 +13,8 @@ public class Income {
     private SimpleStringProperty from;
     private SimpleStringProperty notes;
 
-    public Income(String type,String description,double amount,String currency,String paymentType,String recipient, String notes) {
+    public Income(int id,String type,String description,double amount,String currency,String paymentType,String recipient, String notes) {
+        this.id = id;
         this.type = new SimpleStringProperty(type);
         this.description = new SimpleStringProperty(description);
         this.amount = new SimpleDoubleProperty(amount);
@@ -20,6 +22,10 @@ public class Income {
         this.paymentType = new SimpleStringProperty(paymentType);
         this.from = new SimpleStringProperty(recipient);
         this.notes = new SimpleStringProperty(notes);
+    }
+
+    public int getID() {
+        return id;
     }
 
     public String getType() {

@@ -42,6 +42,8 @@
                      </graphic>
                   </MenuButton>
                         <Region HBox.hgrow="ALWAYS" />
+                  <Button fx:id="deleteExpenses" mnemonicParsing="false" text="Delete Expenses" />
+                  <Button fx:id="editExpenses" mnemonicParsing="false" text="Edit Expenses" />
                         <Button fx:id="addExpenseButton" graphicTextGap="8.0" mnemonicParsing="false" text="Add Expense">
                             <graphic>
                                 <FontIcon iconLiteral="ti-plus" />

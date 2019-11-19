@@ -47,6 +47,38 @@ public class SupplierRepository {
         }
     }
 
+    public static boolean updateSupplier(Supplier supplier) {
+        String query = "UPDATE suppliers SET first_name = ? , last_name = ? , email = ?, phone = ?, company = ? , address = ?, notes = ? where id = ?";
+
+        PreparedStatement statement = DBConnection.instance.getPreparedStatement(query);
+        try {
+            statement.setString(1, supplier.getFirstName());
+            statement.setString(2, supplier.getLastName());
+            statement.setString(3, supplier.getEmail());
+            statement.setString(4, supplier.getPhone());
+            statement.setString(5, supplier.getCompany());
+            statement.setString(6, supplier.getAddress());
+            statement.setString(7, supplier.getNotes());
+            statement.setInt(8, supplier.getID());
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean deleteSupplier(Supplier supplier) {
+        try {
+            String query = "DELETE FROM suppliers where id = " + supplier.getID();
+            Statement statement  = DBConnection.instance.getStatement();
+            statement.executeUpdate(query);
+            return true;
+        }catch (Exception e) {
+            return false;
+        }
+    }
+
     private static ObservableList<Supplier> getCustomersFromQuery(String query) {
         ObservableList<Supplier> data = FXCollections.observableArrayList();
         try {
@@ -54,6 +86,7 @@ public class SupplierRepository {
             ResultSet rs    = statement.executeQuery(query);
             while (rs.next()) {
                 data.add(new Supplier(
+                        rs.getInt("id"),
                         rs.getString("first_name"),
                         rs.getString("last_name"),
                         rs.getString("company"),

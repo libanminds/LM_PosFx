@@ -6,6 +6,7 @@ import com.libanminds.utils.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -27,6 +28,57 @@ public class IncomesRepository {
         return getIncomesFromQuery(query);
     }
 
+    public static boolean addIncome(Income income, int typeID) {
+        String query = "INSERT INTO incomes(type_id,description,amount,currency,payment_type,taken_from,notes) VALUES (?,?,?,?,?,?,?)";
+        PreparedStatement statement = DBConnection.instance.getPreparedStatement(query);
+        try {
+            statement.setInt(1, typeID);
+            statement.setString(2, income.getDescription());
+            statement.setDouble(3, income.getAmount());
+            statement.setString(4, income.getCurrency());
+            statement.setString(5, income.getPaymentType());
+            statement.setString(6, income.getFrom());
+            statement.setString(7, income.getNotes());
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean updateIncome(Income income, int typeID) {
+        String query = "UPDATE incomes SET type_id = ? , description = ? , amount = ?, currency = ?, payment_type = ? , taken_from = ?, notes = ? where id = ?";
+
+        PreparedStatement statement = DBConnection.instance.getPreparedStatement(query);
+        try {
+            statement.setInt(1, typeID);
+            statement.setString(2, income.getDescription());
+            statement.setDouble(3, income.getAmount());
+            statement.setString(4, income.getCurrency());
+            statement.setString(5, income.getPaymentType());
+            statement.setString(6, income.getFrom());
+            statement.setString(7, income.getNotes());
+            statement.setInt(8, income.getID());
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean deleteIncome(Income income) {
+        try {
+            String query = "DELETE FROM incomes where id = " + income.getID();
+            Statement statement  = DBConnection.instance.getStatement();
+            statement.executeUpdate(query);
+            return true;
+        }catch (Exception e) {
+            return false;
+        }
+    }
+
     private static ObservableList<Income> getIncomesFromQuery(String query) {
         ObservableList<Income> data = FXCollections.observableArrayList();
         try {
@@ -35,6 +87,7 @@ public class IncomesRepository {
 
             while (rs.next()) {
                 data.add(new Income(
+                        rs.getInt("id"),
                         "Type goes here",
                         rs.getString("description"),
                         rs.getDouble("amount"),

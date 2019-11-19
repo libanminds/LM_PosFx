@@ -1,8 +1,8 @@
 package com.libanminds.dialogs_controllers;
 
 import com.jfoenix.controls.JFXButton;
-import com.libanminds.models.Supplier;
-import com.libanminds.repositories.SupplierRepository;
+import com.libanminds.models.Customer;
+import com.libanminds.repositories.CustomersRepository;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -10,10 +10,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AddSupplierController implements Initializable {
+public class CustomerDialogController implements Initializable {
 
     @FXML
     private TextField firstName;
@@ -42,6 +43,7 @@ public class AddSupplierController implements Initializable {
     @FXML
     private JFXButton save;
 
+    private int customerID;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -49,18 +51,50 @@ public class AddSupplierController implements Initializable {
         initCancelButton();
     }
 
+    public void initData(Customer customer) {
+        if (customer != null) {
+            customerID = customer.getID() ;
+            firstName.setText(customer.getFirstName());
+            lastName.setText(customer.getLastName());
+            email.setText(customer.getEmail());
+            phone.setText(customer.getPhone());
+            address.setText(customer.getAddress());
+            company.setText(customer.getCompany());
+            comments.setText(customer.getNotes());
+        } else
+            customerID = -1;
+    }
+
+
     private void initSaveButton() {
         save.setOnMouseClicked((EventHandler<Event>) event -> {
-            boolean successful = SupplierRepository.addSupplier(new Supplier(
+
+            boolean successful;
+
+            if(customerID == -1)
+            successful = CustomersRepository.addCustomer(new Customer(
+                    customerID,
                     firstName.getText(),
                     lastName.getText(),
-                    company.getText(),
                     email.getText(),
                     phone.getText(),
                     address.getText(),
+                    company.getText(),
                     comments.getText(),
                     0
             ));
+            else
+                successful = CustomersRepository.updateCustomer(new Customer(
+                        customerID,
+                        firstName.getText(),
+                        lastName.getText(),
+                        email.getText(),
+                        phone.getText(),
+                        address.getText(),
+                        company.getText(),
+                        comments.getText(),
+                        0
+                ));
 
             if(successful) {
                 Stage currentStage = (Stage) save.getScene().getWindow();

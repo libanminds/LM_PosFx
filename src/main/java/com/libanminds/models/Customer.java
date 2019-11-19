@@ -1,10 +1,12 @@
 package com.libanminds.models;
 
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Customer {
 
+    private int id;
     private SimpleStringProperty firstName;
     private SimpleStringProperty lastName;
     private SimpleStringProperty email;
@@ -14,7 +16,8 @@ public class Customer {
     private SimpleStringProperty notes;
     private SimpleDoubleProperty balance;
 
-    public Customer(String firstName,String lastName, String email, String phone, String address,String company, String notes, double balance) {
+    public Customer(int id,String firstName,String lastName, String email, String phone, String address,String company, String notes, double balance) {
+        this.id = id;
         this.firstName = new SimpleStringProperty(firstName);
         this.lastName = new SimpleStringProperty(lastName);
         this.email = new SimpleStringProperty(email);
@@ -23,6 +26,10 @@ public class Customer {
         this.company = new SimpleStringProperty(company);
         this.notes = new SimpleStringProperty(notes);
         this.balance = new SimpleDoubleProperty(balance);
+    }
+
+    public int getID() {
+        return id;
     }
 
     public String getFirstName() {

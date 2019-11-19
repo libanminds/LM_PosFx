@@ -28,6 +28,8 @@
                   <ComboBox prefWidth="150.0" promptText="Search Field" />
                   <ComboBox prefWidth="100.0" promptText="Category" />
                         <Region HBox.hgrow="ALWAYS" />
+                  <Button fx:id="deleteItem" mnemonicParsing="false" text="Delete Item" />
+                  <Button fx:id="editItem" mnemonicParsing="false" text="Edit Item" />
                         <Button fx:id="newItemBtn" graphicTextGap="8.0" mnemonicParsing="false" text="Add Item">
                             <graphic>
                                 <FontIcon iconLiteral="ti-plus" />
