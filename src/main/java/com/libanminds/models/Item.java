@@ -12,6 +12,7 @@ import java.io.FileInputStream;
 public class Item {
     private int id;
     private String  imageUrl;
+    private String  currency;
     private ImageView image;
     private SimpleIntegerProperty code;
     private SimpleStringProperty name;
@@ -25,7 +26,7 @@ public class Item {
     private SimpleBooleanProperty isService;
     private SimpleStringProperty lastModified;
 
-    public Item(int id, String imageUrl, int code, String name, String category,double cost, double price, int stock, String supplier, String description, boolean priceIncludesTax, boolean isService, String lastModified) {
+    public Item(int id, String imageUrl, int code, String name, String category,double cost, double price, String currency, int stock, String supplier, String description, boolean priceIncludesTax, boolean isService, String lastModified) {
         try{
             Image imageFile = new Image(new FileInputStream(imageUrl));
             image = new ImageView(imageFile);
@@ -43,6 +44,7 @@ public class Item {
         this.category = new SimpleStringProperty(category);
         this.cost = new SimpleDoubleProperty(cost);
         this.price = new SimpleDoubleProperty(price);
+        this.currency = currency;
         this.stock = new SimpleIntegerProperty(stock);
         this.supplier = new SimpleStringProperty(supplier);
         this.description = new SimpleStringProperty(description);
@@ -101,6 +103,15 @@ public class Item {
 
     public double getPrice() {
         return price.get();
+    }
+
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String val) {
+        currency = val;
     }
 
     public void setPrice(double val) {

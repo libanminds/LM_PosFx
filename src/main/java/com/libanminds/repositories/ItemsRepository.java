@@ -37,7 +37,7 @@ public class ItemsRepository {
             statement.setInt(4, 0); // category id
             statement.setDouble(5, item.getCost()); // cost
             statement.setDouble(6, item.getPrice()); // price
-            statement.setString(7, "Currency"); //currency
+            statement.setString(7, item.getCurrency()); //currency
             statement.setInt(8, 3); //quantity
             statement.setString(9, item.getDescription()); //description
             statement.setInt(10, 5); // min stock
@@ -61,7 +61,7 @@ public class ItemsRepository {
             statement.setInt(4, 0); // category id
             statement.setDouble(5, item.getCost()); // cost
             statement.setDouble(6, item.getPrice()); // price
-            statement.setString(7, "Currency"); //currency
+            statement.setString(7, item.getCurrency()); //currency
             statement.setInt(8, 3); //quantity
             statement.setString(9, item.getDescription()); //description
             statement.setInt(10, 5); // min stock
@@ -71,6 +71,18 @@ public class ItemsRepository {
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean deleteItem(Item item) {
+        try {
+            String query = "DELETE FROM items where id = " + item.getID();
+            Statement statement  = DBConnection.instance.getStatement();
+            statement.executeUpdate(query);
+            return true;
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
             return false;
         }
     }
@@ -89,6 +101,7 @@ public class ItemsRepository {
                         "Category",
                         rs.getDouble("cost"),
                         rs.getDouble("price"),
+                        rs.getString("currency"),
                         rs.getInt("quantity"),
                         "Jack Sparrow",
                         //rs.getString("supplier"),

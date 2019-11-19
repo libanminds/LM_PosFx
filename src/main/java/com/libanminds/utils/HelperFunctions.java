@@ -8,8 +8,8 @@ public class HelperFunctions {
         String name = file.getName();
         int lastIndexOf = name.lastIndexOf(".");
         if (lastIndexOf == -1) {
-            return ".jpg";
+            return "jpg";
         }
-        return name.substring(lastIndexOf - 1);
+        return name.substring(lastIndexOf + 1);
     }
 }

@@ -3,10 +3,12 @@ package com.libanminds.dialogs_controllers;
 import com.jfoenix.controls.JFXButton;
 import com.libanminds.models.Expense;
 import com.libanminds.models.Item;
+import com.libanminds.models.Type;
 import com.libanminds.repositories.ExpensesRepository;
 import com.libanminds.repositories.ItemsRepository;
 import com.libanminds.utils.Constants;
 import com.libanminds.utils.HelperFunctions;
+import javafx.collections.FXCollections;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,13 +18,16 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -47,7 +52,7 @@ public class ItemDialogController implements Initializable {
     private JFXButton save;
 
     @FXML
-    private ChoiceBox<?> currency;
+    private ChoiceBox<String> currency;
 
     @FXML
     private TextField quantity;
@@ -67,29 +72,40 @@ public class ItemDialogController implements Initializable {
     @FXML
     private Button chooseImage;
 
+    @FXML
+    private ImageView imageDisplay;
+
     private File itemImage;
 
     private int itemID;
 
-    boolean itemImageChanged;
-    String imagePath;
+    private boolean itemImageChanged;
+    private String imagePath;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initSaveButton();
         initCancelButton();
+        initChoiceBoxes();
         initImagePicker();
     }
 
     public void initData(Item item) {
         if (item != null) {
             itemID = item.getID();
-            //Do something with the image.
+
+            try {
+                imageDisplay.setImage(new Image(new File(item.getImageUrl()).toURI().toString()));
+            }catch (Exception e) {
+                System.out.println("Image not working: " + e.getMessage());
+            }
+
             code.setText(item.getCode() + "");
             name.setText(item.getName());
             //category.setText(item.getName());
             cost.setText(item.getCost() + "");
             price.setText(item.getPrice() + "");
+            currency.setValue(item.getCurrency());
             quantity.setText(item.getStock() + "");
             //name.setText(item.getName());
             description.setText(item.getDescription());
@@ -98,6 +114,11 @@ public class ItemDialogController implements Initializable {
             imagePath = item.getImageUrl();
         } else
             itemID = -1;
+    }
+
+    private void initChoiceBoxes() {
+        String[] currencies = { "$", "LL" };
+        currency.setItems(FXCollections.observableArrayList(currencies));
     }
 
     private void initSaveButton() {
@@ -114,6 +135,7 @@ public class ItemDialogController implements Initializable {
                         "Category",
                         Double.parseDouble(cost.getText()),
                         Double.parseDouble(price.getText()),
+                        currency.getValue(),
                         Integer.parseInt(quantity.getText()),
                         "Supplier",
                         description.getText(),
@@ -123,14 +145,7 @@ public class ItemDialogController implements Initializable {
                 ));
             else {
                 if(itemImageChanged) {
-                    System.out.println(imagePath);
-                    File file = new File(imagePath);
-                    if(file.exists()) {
-                        System.out.println("Joker here");
-                        boolean deleted = file.delete();
-                        System.out.println("file deleted: " + deleted);
-                    }
-
+                    deleteFile(imagePath);
                     imagePath = saveImageOnDevice(itemImage);
                 }
 
@@ -142,6 +157,7 @@ public class ItemDialogController implements Initializable {
                         "Category",
                         Double.parseDouble(cost.getText()),
                         Double.parseDouble(price.getText()),
+                        currency.getValue(),
                         Integer.parseInt(quantity.getText()),
                         "Supplier",
                         description.getText(),
@@ -158,6 +174,14 @@ public class ItemDialogController implements Initializable {
                 //TODO : DO SOMETHING
             }
         });
+    }
+
+    private boolean deleteFile(String filePath) {
+        File file = new File(filePath);
+            if(file.exists())
+                return file.delete();
+
+        return false;
     }
 
     private void initCancelButton() {
@@ -177,6 +201,11 @@ public class ItemDialogController implements Initializable {
                 fileChooser.getExtensionFilters().add(extFilter);
                 itemImage = fileChooser.showOpenDialog(currentStage);
                 itemImageChanged = itemImage != null;
+                try {
+                    imageDisplay.setImage(new Image(itemImage.toURI().toString()));
+                }catch (Exception e) {
+
+                }
             }
         });
     }
@@ -185,8 +214,10 @@ public class ItemDialogController implements Initializable {
         String imagePath = "";
         try {
             BufferedImage bufferedImage = ImageIO.read(imageFile);
+            String fileExtension= HelperFunctions.getFileExtension(imageFile);
+            System.out.println("File extension : " + fileExtension);
             File outputFile = new File(getImagePath(imageFile));
-            ImageIO.write(bufferedImage, "jpg", outputFile);
+            ImageIO.write(bufferedImage, fileExtension, outputFile);
             imagePath = outputFile.getAbsolutePath();
         }catch (Exception e) {
             System.out.println(e.getMessage());
@@ -196,6 +227,6 @@ public class ItemDialogController implements Initializable {
     }
 
     private String getImagePath(File file) {
-        return Constants.ITEMS_IMAGES_FOLDER_PATH + "image_" + System.currentTimeMillis() + HelperFunctions.getFileExtension(file);
+        return Constants.ITEMS_IMAGES_FOLDER_PATH + System.currentTimeMillis() + file.getName();//"." + HelperFunctions.getFileExtension(file);
     }
 }

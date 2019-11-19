@@ -3,6 +3,7 @@ package com.libanminds.main_controllers;
 import com.libanminds.dialogs_controllers.ItemDialogController;
 import com.libanminds.models.Item;
 import com.libanminds.repositories.ItemsRepository;
+import com.libanminds.repositories.UsersRepository;
 import com.libanminds.utils.Views;
 import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
@@ -12,16 +13,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ItemsController implements Initializable {
@@ -65,6 +64,13 @@ public class ItemsController implements Initializable {
             }
         });
 
+        deleteItem.setOnMouseClicked(new EventHandler<Event>() {
+            @Override
+            public void handle(Event event) {
+                showDeleteConfirmationDialog();
+            }
+        });
+
         deleteItem.setDisable(selectedItem == null);
         editItem.setDisable(selectedItem == null);
     }
@@ -82,6 +88,27 @@ public class ItemsController implements Initializable {
                 itemsTable.setItems(ItemsRepository.getItems());
             });
         }catch (Exception e){}
+    }
+
+    private void showDeleteConfirmationDialog() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete Confirmation");
+        alert.setHeaderText("Are you sure you want to delete " + selectedItem.getName());
+
+        ButtonType yesButton = new ButtonType("Yes");
+        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(yesButton, buttonTypeCancel);
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.get() == yesButton) {
+            boolean successful = ItemsRepository.deleteItem(selectedItem);
+            if(successful)
+                itemsTable.getItems().remove(selectedItem);
+        } else {
+            alert.close();
+        }
     }
 
     private void initSearch() {
