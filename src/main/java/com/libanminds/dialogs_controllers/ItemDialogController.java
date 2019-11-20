@@ -3,12 +3,15 @@ package com.libanminds.dialogs_controllers;
 import com.jfoenix.controls.JFXButton;
 import com.libanminds.models.Expense;
 import com.libanminds.models.Item;
+import com.libanminds.models.ItemCategory;
 import com.libanminds.models.Type;
 import com.libanminds.repositories.ExpensesRepository;
+import com.libanminds.repositories.ItemsCategoriesRepository;
 import com.libanminds.repositories.ItemsRepository;
 import com.libanminds.utils.Constants;
 import com.libanminds.utils.HelperFunctions;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -67,7 +70,7 @@ public class ItemDialogController implements Initializable {
     private CheckBox includesTax;
 
     @FXML
-    private ChoiceBox<?> category;
+    private ChoiceBox<ItemCategory> category;
 
     @FXML
     private Button chooseImage;
@@ -99,15 +102,14 @@ public class ItemDialogController implements Initializable {
             }catch (Exception e) {
                 System.out.println("Image not working: " + e.getMessage());
             }
-
             code.setText(item.getCode() + "");
             name.setText(item.getName());
-            //category.setText(item.getName());
+            category.setValue(item.getItemCategory());
             cost.setText(item.getCost() + "");
             price.setText(item.getPrice() + "");
             currency.setValue(item.getCurrency());
             quantity.setText(item.getStock() + "");
-            //name.setText(item.getName());
+            limit.setText(item.getMinStock() + "");
             description.setText(item.getDescription());
             includesTax.setSelected(item.getPriceIncludesTax());
             itemImageChanged = false;
@@ -119,6 +121,10 @@ public class ItemDialogController implements Initializable {
     private void initChoiceBoxes() {
         String[] currencies = { "$", "LL" };
         currency.setItems(FXCollections.observableArrayList(currencies));
+
+        ObservableList<ItemCategory> categories = ItemsCategoriesRepository.getItemsCategories();
+
+        category.setItems(FXCollections.observableList(categories));
     }
 
     private void initSaveButton() {
@@ -132,11 +138,12 @@ public class ItemDialogController implements Initializable {
                         saveImageOnDevice(itemImage),
                         Integer.parseInt(code.getText()),
                         name.getText(),
-                        "Category",
+                        category.getValue(),
                         Double.parseDouble(cost.getText()),
                         Double.parseDouble(price.getText()),
                         currency.getValue(),
                         Integer.parseInt(quantity.getText()),
+                        Integer.parseInt(limit.getText()),
                         "Supplier",
                         description.getText(),
                         includesTax.isSelected(),
@@ -145,7 +152,7 @@ public class ItemDialogController implements Initializable {
                 ));
             else {
                 if(itemImageChanged) {
-                    deleteFile(imagePath);
+                    //deleteFile(imagePath);
                     imagePath = saveImageOnDevice(itemImage);
                 }
 
@@ -154,11 +161,12 @@ public class ItemDialogController implements Initializable {
                         imagePath,
                         Integer.parseInt(code.getText()),
                         name.getText(),
-                        "Category",
+                        category.getValue(),
                         Double.parseDouble(cost.getText()),
                         Double.parseDouble(price.getText()),
                         currency.getValue(),
                         Integer.parseInt(quantity.getText()),
+                        Integer.parseInt(limit.getText()),
                         "Supplier",
                         description.getText(),
                         includesTax.isSelected(),
@@ -176,6 +184,7 @@ public class ItemDialogController implements Initializable {
         });
     }
 
+    //Be super careful when using this function (Though it's not working yet, maybe because the image is being used by the program)
     private boolean deleteFile(String filePath) {
         File file = new File(filePath);
             if(file.exists())
@@ -192,20 +201,17 @@ public class ItemDialogController implements Initializable {
     }
 
     private void initImagePicker() {
-        chooseImage.setOnMouseClicked(new EventHandler<Event>() {
-            @Override
-            public void handle(Event event) {
-                Stage currentStage = (Stage) save.getScene().getWindow();
-                FileChooser fileChooser = new FileChooser();
-                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg");
-                fileChooser.getExtensionFilters().add(extFilter);
-                itemImage = fileChooser.showOpenDialog(currentStage);
-                itemImageChanged = itemImage != null;
-                try {
-                    imageDisplay.setImage(new Image(itemImage.toURI().toString()));
-                }catch (Exception e) {
+        chooseImage.setOnMouseClicked((EventHandler<Event>) event -> {
+            Stage currentStage = (Stage) save.getScene().getWindow();
+            FileChooser fileChooser = new FileChooser();
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg");
+            fileChooser.getExtensionFilters().add(extFilter);
+            itemImage = fileChooser.showOpenDialog(currentStage);
+            itemImageChanged = itemImage != null;
+            try {
+                imageDisplay.setImage(new Image(itemImage.toURI().toString()));
+            }catch (Exception e) {
 
-                }
             }
         });
     }
@@ -215,7 +221,6 @@ public class ItemDialogController implements Initializable {
         try {
             BufferedImage bufferedImage = ImageIO.read(imageFile);
             String fileExtension= HelperFunctions.getFileExtension(imageFile);
-            System.out.println("File extension : " + fileExtension);
             File outputFile = new File(getImagePath(imageFile));
             ImageIO.write(bufferedImage, fileExtension, outputFile);
             imagePath = outputFile.getAbsolutePath();
@@ -227,6 +232,6 @@ public class ItemDialogController implements Initializable {
     }
 
     private String getImagePath(File file) {
-        return Constants.ITEMS_IMAGES_FOLDER_PATH + System.currentTimeMillis() + file.getName();//"." + HelperFunctions.getFileExtension(file);
+        return Constants.ITEMS_IMAGES_FOLDER_PATH + System.currentTimeMillis() + file.getName();
     }
 }

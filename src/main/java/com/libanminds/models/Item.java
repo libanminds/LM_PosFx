@@ -13,10 +13,11 @@ public class Item {
     private int id;
     private String  imageUrl;
     private String  currency;
+    private int minStock;
     private ImageView image;
     private SimpleIntegerProperty code;
     private SimpleStringProperty name;
-    private SimpleStringProperty category;
+    private ItemCategory category;
     private SimpleDoubleProperty cost;
     private SimpleDoubleProperty price;
     private SimpleIntegerProperty stock;
@@ -26,7 +27,7 @@ public class Item {
     private SimpleBooleanProperty isService;
     private SimpleStringProperty lastModified;
 
-    public Item(int id, String imageUrl, int code, String name, String category,double cost, double price, String currency, int stock, String supplier, String description, boolean priceIncludesTax, boolean isService, String lastModified) {
+    public Item(int id, String imageUrl, int code, String name, ItemCategory category,double cost, double price, String currency, int stock, int minStock, String supplier, String description, boolean priceIncludesTax, boolean isService, String lastModified) {
         try{
             Image imageFile = new Image(new FileInputStream(imageUrl));
             image = new ImageView(imageFile);
@@ -39,9 +40,10 @@ public class Item {
 
         this.id = id;
         this.imageUrl = imageUrl;
+        this.minStock = minStock;
         this.code = new SimpleIntegerProperty(code);
         this.name = new SimpleStringProperty(name);
-        this.category = new SimpleStringProperty(category);
+        this.category = category;
         this.cost = new SimpleDoubleProperty(cost);
         this.price = new SimpleDoubleProperty(price);
         this.currency = currency;
@@ -55,6 +57,10 @@ public class Item {
 
     public int getID() {
         return id;
+    }
+
+    public ItemCategory getItemCategory() {
+        return category;
     }
 
     public void setImage(ImageView value) {
@@ -86,11 +92,11 @@ public class Item {
     }
 
     public String getCategory() {
-        return category.get();
+        return category.getName();
     }
 
     public void setCategory(String val) {
-        category.set(val);
+        category.setName(val);
     }
 
     public double getCost() {
@@ -104,7 +110,6 @@ public class Item {
     public double getPrice() {
         return price.get();
     }
-
 
     public String getCurrency() {
         return currency;
@@ -124,6 +129,14 @@ public class Item {
 
     public void setStock(int val) {
         stock.set(val);
+    }
+
+    public int getMinStock() {
+        return minStock;
+    }
+
+    public void setMinStock(int val) {
+        minStock  = val;
     }
 
     public String getSupplier() {

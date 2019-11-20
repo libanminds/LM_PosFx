@@ -2,6 +2,7 @@ package com.libanminds.repositories;
 
 import com.libanminds.models.Expense;
 import com.libanminds.models.Income;
+import com.libanminds.models.Type;
 import com.libanminds.utils.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,25 +15,26 @@ import java.sql.Statement;
 public class IncomesRepository {
 
     public static ObservableList<Income> getIncomes() {
-        String query = "SELECT * FROM incomes";
+        String query = "SELECT * FROM incomes LEFT JOIN income_types ON incomes.type_id = income_types.id";
 
         return getIncomesFromQuery(query);
     }
 
     public static ObservableList<Income> getIncomesLike(String value) {
-        String query = "SELECT * FROM incomes where" +
+        String query = "SELECT * FROM incomes LEFT JOIN income_types ON incomes.type_id = income_types.id where" +
                 " description like '%" + value + "%' or" +
                 " taken_from like '%" + value + "%' or" +
+                " name like '%" + value + "%' or" +
                 " notes like '%"+ value + "%'";
 
         return getIncomesFromQuery(query);
     }
 
-    public static boolean addIncome(Income income, int typeID) {
+    public static boolean addIncome(Income income) {
         String query = "INSERT INTO incomes(type_id,description,amount,currency,payment_type,taken_from,notes) VALUES (?,?,?,?,?,?,?)";
         PreparedStatement statement = DBConnection.instance.getPreparedStatement(query);
         try {
-            statement.setInt(1, typeID);
+            statement.setInt(1, income.getTypeObject().getID());
             statement.setString(2, income.getDescription());
             statement.setDouble(3, income.getAmount());
             statement.setString(4, income.getCurrency());
@@ -47,12 +49,12 @@ public class IncomesRepository {
         }
     }
 
-    public static boolean updateIncome(Income income, int typeID) {
+    public static boolean updateIncome(Income income) {
         String query = "UPDATE incomes SET type_id = ? , description = ? , amount = ?, currency = ?, payment_type = ? , taken_from = ?, notes = ? where id = ?";
 
         PreparedStatement statement = DBConnection.instance.getPreparedStatement(query);
         try {
-            statement.setInt(1, typeID);
+            statement.setInt(1, income.getTypeObject().getID());
             statement.setString(2, income.getDescription());
             statement.setDouble(3, income.getAmount());
             statement.setString(4, income.getCurrency());
@@ -87,8 +89,8 @@ public class IncomesRepository {
 
             while (rs.next()) {
                 data.add(new Income(
-                        rs.getInt("id"),
-                        "Type goes here",
+                        rs.getInt(1),
+                        new Type(rs.getInt("type_id"),rs.getString("name")),
                         rs.getString("description"),
                         rs.getDouble("amount"),
                         rs.getString("currency"),

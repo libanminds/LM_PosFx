@@ -37,7 +37,7 @@
                         </Button>
                   <MenuButton mnemonicParsing="false" text="...">
                     <items>
-                      <MenuItem mnemonicParsing="false" text="Manage Categories">
+                      <MenuItem fx:id="manageCategories" mnemonicParsing="false" text="Manage Categories">
                            <graphic>
                               <FontIcon iconLiteral="ti-files" />
                            </graphic>

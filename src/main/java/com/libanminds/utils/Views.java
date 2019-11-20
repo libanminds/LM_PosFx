@@ -23,6 +23,14 @@ public final class Views {
     public static final String ADD_INCOME = "/views/dialogs/add_income.fxml";
     public static final String ADD_EMPLOYEE = "/views/dialogs/add_employee.fxml";
     public static final String ADD_ITEM = "/views/dialogs/add_item.fxml";
+    public static final String ADD_ITEM_CATEGORY = "/views/dialogs/add_item_category.fxml";
+    public static final String ADD_INCOME_TYPE = "/views/dialogs/add_income_type.fxml";
+    public static final String ADD_EXPENSE_TYPE = "/views/dialogs/add_expense_type.fxml";
+
+    //Categories Controllers
+    public static final String ITEMS_CATEGORIES = "/views/main/item_categories.fxml";
+    public static final String INCOME_TYPES = "/views/main/income_types.fxml";
+    public static final String EXPENSE_TYPES = "/views/main/expense_types.fxml";
 
     private Views(){
         throw new AssertionError("You are not allowed to instantiate this class");

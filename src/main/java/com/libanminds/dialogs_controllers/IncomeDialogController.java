@@ -4,9 +4,12 @@ import com.jfoenix.controls.JFXButton;
 import com.libanminds.models.Expense;
 import com.libanminds.models.Income;
 import com.libanminds.models.Type;
+import com.libanminds.repositories.ExpenseTypesRepository;
 import com.libanminds.repositories.ExpensesRepository;
+import com.libanminds.repositories.IncomeTypesRepository;
 import com.libanminds.repositories.IncomesRepository;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -49,7 +52,7 @@ public class IncomeDialogController implements Initializable {
     @FXML
     private ChoiceBox<String> paymentType;
 
-    int incomeID;
+    private int incomeID;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -62,7 +65,7 @@ public class IncomeDialogController implements Initializable {
         if (income != null) {
             incomeID = income.getID();
 
-            //typeChoiceBox.setValue();
+            typeChoiceBox.setValue(income.getTypeObject());
             description.setText(income.getDescription());
             amount.setText(income.getAmount() + "");
             currency.setValue(income.getCurrency());
@@ -74,30 +77,13 @@ public class IncomeDialogController implements Initializable {
     }
 
     private void initChoiceBoxes() {
-        Type[] types = {
-                new Type(1,"Type1")
-        };
+        ObservableList<Type> types = IncomeTypesRepository.getIncomeTypes();
         String[] currencies = { "$", "LL" };
         String[] payments = { "Cash", "Cheque", "Credit Card" };
 
-        typeChoiceBox.setItems(FXCollections.observableArrayList(types));
+        typeChoiceBox.setItems(FXCollections.observableList(types));
         currency.setItems(FXCollections.observableArrayList(currencies));
         paymentType.setItems(FXCollections.observableArrayList(payments));
-
-        //This statements makes sure that the string 'name' is displayed in the UI.
-        typeChoiceBox.setConverter(new StringConverter<>() {
-
-            @Override
-            public String toString(Type object) {
-                return object.getName();
-            }
-
-            @Override
-            public Type fromString(String val) {
-                return typeChoiceBox.getItems().stream().filter(ap ->
-                        ap.getName().equals(val)).findFirst().orElse(null);
-            }
-        });
     }
 
     private void initSaveButton() {
@@ -107,25 +93,25 @@ public class IncomeDialogController implements Initializable {
             if(incomeID == -1)
                 successful = IncomesRepository.addIncome(new Income(
                         incomeID,
-                        typeChoiceBox.getValue().getName(),
+                        typeChoiceBox.getValue(),
                         description.getText(),
                         Double.parseDouble(amount.getText()),
                         currency.getValue(),
                         paymentType.getValue(),
                         from.getText(),
                         notes.getText()
-                ),typeChoiceBox.getValue().getID());
+                ));
             else
                 successful = IncomesRepository.updateIncome(new Income(
                         incomeID,
-                        typeChoiceBox.getValue().getName(),
+                        typeChoiceBox.getValue(),
                         description.getText(),
                         Double.parseDouble(amount.getText()),
                         currency.getValue(),
                         paymentType.getValue(),
                         from.getText(),
                         notes.getText()
-                ),typeChoiceBox.getValue().getID());
+                ));
 
             if(successful) {
                 Stage currentStage = (Stage) save.getScene().getWindow();

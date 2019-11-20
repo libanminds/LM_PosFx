@@ -3,7 +3,6 @@ package com.libanminds.main_controllers;
 import com.libanminds.dialogs_controllers.ItemDialogController;
 import com.libanminds.models.Item;
 import com.libanminds.repositories.ItemsRepository;
-import com.libanminds.repositories.UsersRepository;
 import com.libanminds.utils.Views;
 import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
@@ -11,7 +10,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -37,6 +35,9 @@ public class ItemsController implements Initializable {
     private Button newItemBtn;
 
     @FXML
+    private MenuItem manageCategories;
+
+    @FXML
     private TableView<Item> itemsTable;
 
     Item selectedItem;
@@ -57,22 +58,24 @@ public class ItemsController implements Initializable {
             }
         });
 
-        editItem.setOnMouseClicked(new EventHandler<Event>() {
-            @Override
-            public void handle(Event event) {
-                showItemDialog(selectedItem);
-            }
-        });
-
-        deleteItem.setOnMouseClicked(new EventHandler<Event>() {
-            @Override
-            public void handle(Event event) {
-                showDeleteConfirmationDialog();
-            }
-        });
+        editItem.setOnMouseClicked((EventHandler<Event>) event -> showItemDialog(selectedItem));
+        deleteItem.setOnMouseClicked((EventHandler<Event>) event -> showDeleteConfirmationDialog());
+        manageCategories.setOnAction(t ->  showCategoriesDialog());
 
         deleteItem.setDisable(selectedItem == null);
         editItem.setDisable(selectedItem == null);
+    }
+
+    private void showCategoriesDialog() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.ITEMS_CATEGORIES));
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(loader.load()));
+            stage.show();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     private void showItemDialog(Item item) {
@@ -87,7 +90,9 @@ public class ItemsController implements Initializable {
             stage.setOnHidden(e -> {
                 itemsTable.setItems(ItemsRepository.getItems());
             });
-        }catch (Exception e){}
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     private void showDeleteConfirmationDialog() {

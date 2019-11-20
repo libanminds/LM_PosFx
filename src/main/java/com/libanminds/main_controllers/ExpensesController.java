@@ -40,6 +40,9 @@ public class ExpensesController implements Initializable {
     private Button addExpenseButton;
 
     @FXML
+    private MenuItem manageTypes;
+
+    @FXML
     private TableView<Expense> expensesTable;
 
     private Expense selectedExpense;
@@ -74,8 +77,22 @@ public class ExpensesController implements Initializable {
             }
         });
 
+        manageTypes.setOnAction(t ->  showExpenseTypesDialog());
+
         deleteExpenses.setDisable(selectedExpense == null);
         editExpenses.setDisable(selectedExpense == null);
+    }
+
+    private void showExpenseTypesDialog() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.EXPENSE_TYPES));
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(loader.load()));
+            stage.show();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     private void showCustomerDialog(Expense expense) {

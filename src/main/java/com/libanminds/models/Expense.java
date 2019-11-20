@@ -6,7 +6,7 @@ import javafx.beans.property.SimpleStringProperty;
 public class Expense {
 
     private int id;
-    private SimpleStringProperty type;
+    private Type type;
     private SimpleStringProperty description;
     private SimpleDoubleProperty amount;
     private SimpleStringProperty currency;
@@ -14,9 +14,9 @@ public class Expense {
     private SimpleStringProperty recipient;
     private SimpleStringProperty notes;
 
-    public Expense(int id,String type,String description,double amount,String currency,String paymentType,String recipient, String notes) {
+    public Expense(int id,Type type,String description,double amount,String currency,String paymentType,String recipient, String notes) {
         this.id = id;
-        this.type = new SimpleStringProperty(type);
+        this.type = type;
         this.description = new SimpleStringProperty(description);
         this.amount = new SimpleDoubleProperty(amount);
         this.currency = new SimpleStringProperty(currency);
@@ -25,16 +25,18 @@ public class Expense {
         this.notes = new SimpleStringProperty(notes);
     }
 
+    public Type getTypeObject() {return type;}
+
     public int getID() {
         return id;
     }
 
     public String getType() {
-        return type.get();
+        return type.getName();
     }
 
     public void setType(String val) {
-        type.set(val);
+        type.setName(val);
     }
 
     public String getDescription() {

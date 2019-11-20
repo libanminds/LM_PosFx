@@ -3,10 +3,14 @@ package com.libanminds.dialogs_controllers;
 import com.jfoenix.controls.JFXButton;
 import com.libanminds.models.Customer;
 import com.libanminds.models.Expense;
+import com.libanminds.models.ItemCategory;
 import com.libanminds.models.Type;
 import com.libanminds.repositories.CustomersRepository;
+import com.libanminds.repositories.ExpenseTypesRepository;
 import com.libanminds.repositories.ExpensesRepository;
+import com.libanminds.repositories.ItemsCategoriesRepository;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -62,7 +66,7 @@ public class ExpenseDialogController implements Initializable {
         if (expense != null) {
             expenseID = expense.getID();
 
-            //typeChoiceBox.setValue();
+            typeChoiceBox.setValue(expense.getTypeObject());
             description.setText(expense.getDescription());
             amount.setText(expense.getAmount() + "");
             currency.setValue(expense.getCurrency());
@@ -74,30 +78,13 @@ public class ExpenseDialogController implements Initializable {
     }
 
     private void initChoiceBoxes() {
-        Type[] types = {
-                new Type(1,"Type1")
-        };
+        ObservableList<Type> types = ExpenseTypesRepository.getExpenseTypes();
         String[] currencies = { "$", "LL" };
         String[] payments = { "Cash", "Cheque", "Credit Card" };
 
-        typeChoiceBox.setItems(FXCollections.observableArrayList(types));
+        typeChoiceBox.setItems(FXCollections.observableList(types));
         currency.setItems(FXCollections.observableArrayList(currencies));
         paymentType.setItems(FXCollections.observableArrayList(payments));
-
-        //This statements makes sure that the string 'name' is displayed in the UI.
-        typeChoiceBox.setConverter(new StringConverter<>() {
-
-            @Override
-            public String toString(Type object) {
-                return object.getName();
-            }
-
-            @Override
-            public Type fromString(String val) {
-                return typeChoiceBox.getItems().stream().filter(ap ->
-                        ap.getName().equals(val)).findFirst().orElse(null);
-            }
-        });
     }
 
     private void initSaveButton() {
@@ -107,25 +94,25 @@ public class ExpenseDialogController implements Initializable {
             if(expenseID == -1)
                 successful = ExpensesRepository.addExpense(new Expense(
                         expenseID,
-                        typeChoiceBox.getValue().getName(),
+                        typeChoiceBox.getValue(),
                         description.getText(),
                         Double.parseDouble(amount.getText()),
                         currency.getValue(),
                         paymentType.getValue(),
                         recipient.getText(),
                         notes.getText()
-                ),typeChoiceBox.getValue().getID());
+                ));
             else
                 successful = ExpensesRepository.updateExpense(new Expense(
                         expenseID,
-                        typeChoiceBox.getValue().getName(),
+                        typeChoiceBox.getValue(),
                         description.getText(),
                         Double.parseDouble(amount.getText()),
                         currency.getValue(),
                         paymentType.getValue(),
                         recipient.getText(),
                         notes.getText()
-                ),typeChoiceBox.getValue().getID());
+                ));
 
             if(successful) {
                 Stage currentStage = (Stage) save.getScene().getWindow();

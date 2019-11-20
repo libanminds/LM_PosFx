@@ -11,21 +11,21 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="600.0" prefWidth="600.0" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.categories_controllers.ItemsCategoriesController">
+<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="600.0" prefWidth="600.0" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.categories_controllers.IncomeTypesController">
     <content>
         <VBox minHeight="600.0">
             <children>
                 <HBox alignment="CENTER_LEFT" spacing="8.0">
                     <children>
-                        <TextField fx:id="searchField" prefHeight="30.0" prefWidth="223.0" promptText="Search Categories">
+                        <TextField fx:id="searchField" prefHeight="30.0" prefWidth="223.0" promptText="Search Income Types">
                             <font>
                                 <Font size="14.0" />
                             </font>
                         </TextField>
                         <Region HBox.hgrow="ALWAYS" />
-                  <Button fx:id="deleteCategory" mnemonicParsing="false" text="Delete Category" />
-                  <Button fx:id="editCategory" mnemonicParsing="false" text="Edit Category" />
-                        <Button fx:id="addCategory" graphicTextGap="8.0" mnemonicParsing="false" text="Add Category">
+                  <Button fx:id="deleteType" mnemonicParsing="false" text="Delete Type" />
+                  <Button fx:id="editType" mnemonicParsing="false" text="Edit Type" />
+                        <Button fx:id="addType" graphicTextGap="8.0" mnemonicParsing="false" text="Add Type">
                             <graphic>
                                 <FontIcon iconLiteral="ti-plus" />
                             </graphic>
@@ -37,7 +37,7 @@
                     <padding>
                         <Insets bottom="8.0" left="16.0" right="16.0" top="8.0" />
                     </padding></HBox>
-                <TableView fx:id="categoriesTable" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
+                <TableView fx:id="typesTable" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
                     <VBox.margin>
                         <Insets bottom="8.0" left="16.0" right="16.0" top="8.0" />
                     </VBox.margin>

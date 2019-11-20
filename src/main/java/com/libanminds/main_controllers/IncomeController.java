@@ -39,6 +39,9 @@ public class IncomeController implements Initializable {
     private Button addIncomeButton;
 
     @FXML
+    private MenuItem manageTypes;
+
+    @FXML
     private TableView<Income> incomesTable;
 
     Income selectedIncome;
@@ -52,29 +55,25 @@ public class IncomeController implements Initializable {
     }
 
     private void initNewIncome() {
-        addIncomeButton.setOnMouseClicked(new EventHandler<Event>() {
-            @Override
-            public void handle(Event event) {
-                showIncomeDialog(null);
-            }
-        });
-
-        editIncome.setOnMouseClicked(new EventHandler<Event>() {
-            @Override
-            public void handle(Event event) {
-                showIncomeDialog(selectedIncome);
-            }
-        });
-
-        deleteIncome.setOnMouseClicked(new EventHandler<Event>() {
-            @Override
-            public void handle(Event event) {
-                showDeleteConfirmationDialog();
-            }
-        });
+        addIncomeButton.setOnMouseClicked((EventHandler<Event>) event -> showIncomeDialog(null));
+        editIncome.setOnMouseClicked((EventHandler<Event>) event -> showIncomeDialog(selectedIncome));
+        deleteIncome.setOnMouseClicked((EventHandler<Event>) event -> showDeleteConfirmationDialog());
+        manageTypes.setOnAction(t ->  showIncomeTypesDialog());
 
         deleteIncome.setDisable(selectedIncome == null);
         editIncome.setDisable(selectedIncome == null);
+    }
+
+    private void showIncomeTypesDialog() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.INCOME_TYPES));
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(loader.load()));
+            stage.show();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     private void showIncomeDialog(Income income) {
