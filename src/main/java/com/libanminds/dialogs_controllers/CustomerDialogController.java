@@ -45,10 +45,16 @@ public class CustomerDialogController implements Initializable {
 
     private int customerID;
 
+    private SelectCustomerDialogController hostController;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initSaveButton();
         initCancelButton();
+    }
+
+    public void setHostController(SelectCustomerDialogController controller) {
+        hostController = controller;
     }
 
     public void initData(Customer customer) {
@@ -71,8 +77,8 @@ public class CustomerDialogController implements Initializable {
 
             boolean successful;
 
-            if(customerID == -1)
-            successful = CustomersRepository.addCustomer(new Customer(
+
+            Customer newCustomer = new Customer(
                     customerID,
                     firstName.getText(),
                     lastName.getText(),
@@ -82,21 +88,17 @@ public class CustomerDialogController implements Initializable {
                     company.getText(),
                     comments.getText(),
                     0
-            ));
+            );
+
+            if(customerID == -1)
+            successful = CustomersRepository.addCustomer(newCustomer);
             else
-                successful = CustomersRepository.updateCustomer(new Customer(
-                        customerID,
-                        firstName.getText(),
-                        lastName.getText(),
-                        email.getText(),
-                        phone.getText(),
-                        address.getText(),
-                        company.getText(),
-                        comments.getText(),
-                        0
-                ));
+                successful = CustomersRepository.updateCustomer(newCustomer);
 
             if(successful) {
+                if(hostController != null) {
+                    hostController.setSelectedCustomer(newCustomer);
+                }
                 Stage currentStage = (Stage) save.getScene().getWindow();
                 currentStage.close();
             }else {

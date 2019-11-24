@@ -35,7 +35,12 @@
                                           <Insets />
                                        </HBox.margin>
                                     </FontIcon>
-                                    <TextField promptText="Customer" HBox.hgrow="ALWAYS" />
+                                    <Label fx:id="customerName" text="Guest">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="selectCustomerBtn" mnemonicParsing="false" text="Select Customer" />
                                     <Button mnemonicParsing="false" text="+" />
                                  </children>
                                  <VBox.margin>

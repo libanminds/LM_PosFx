@@ -1,0 +1,119 @@
+package com.libanminds.dialogs_controllers;
+
+import com.libanminds.main_controllers.SalesController;
+import com.libanminds.models.Customer;
+import com.libanminds.repositories.CustomersRepository;
+import com.libanminds.utils.Views;
+import javafx.beans.value.ChangeListener;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class SelectCustomerDialogController implements Initializable {
+
+    @FXML
+    private TextField searchField;
+
+    @FXML
+    private Button newCustomerBtn;
+
+    @FXML
+    private Button selectBtn;
+
+    @FXML
+    private TableView<Customer> customersTable;
+
+    private Customer selectedCustomer;
+
+    private SalesController hostController;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        initButtons();
+        initSearch();
+        initializeTable();
+        setTableListener();
+    }
+
+    public void setHostController (SalesController controller) {
+        hostController = controller;
+    }
+
+    private void initButtons() {
+        newCustomerBtn.setOnMouseClicked((EventHandler<Event>) event -> showNewCustomerDialog(null));
+        selectBtn.setOnMouseClicked((EventHandler<Event>) event -> {
+            sendDataBackToHost();
+            Stage currentStage = (Stage) selectBtn.getScene().getWindow();
+            currentStage.close();
+        });
+
+        selectBtn.setDisable(selectedCustomer == null);
+    }
+
+    private void showNewCustomerDialog(Customer customer) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.ADD_CUSTOMER));
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(loader.load()));
+            CustomerDialogController controller = loader.getController();
+            controller.setHostController(this);
+            stage.show();
+            stage.setOnHidden(e -> {
+                sendDataBackToHost();
+                Stage currentStage = (Stage) selectBtn.getScene().getWindow();
+                currentStage.close();
+            });
+        }catch (Exception e){}
+    }
+
+    public void setSelectedCustomer(Customer customer) {
+        selectedCustomer = customer;
+    }
+
+    private void initSearch() {
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            customersTable.setItems(CustomersRepository.getCustomersLike(newValue));
+        });
+    }
+
+    private void initializeTable() {
+        TableColumn<Customer,String> nameCol = new TableColumn<>("Name");
+        TableColumn<Customer,String> emailCol = new TableColumn<>("Email");
+        TableColumn<Customer,String> phoneCol = new TableColumn<>("Phone");
+        TableColumn<Customer,String> addressCol = new TableColumn<>("Address");
+        TableColumn<Customer,Double> balanceCol = new TableColumn<>("Balance");
+
+        customersTable.getColumns().addAll(nameCol,emailCol,phoneCol,addressCol,balanceCol);
+
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
+        phoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
+        balanceCol.setCellValueFactory(new PropertyValueFactory<>("balance"));
+
+        customersTable.setItems(CustomersRepository.getCustomers());
+    }
+
+
+    private void setTableListener() {
+        customersTable.selectionModelProperty().get().selectedItemProperty().addListener((ChangeListener) (observable, oldValue, newValue) -> {
+            selectedCustomer = (Customer)newValue;
+            selectBtn.setDisable(selectedCustomer == null);
+        });
+    }
+
+    private void sendDataBackToHost() {
+        hostController.setSelectedCustomer(selectedCustomer);
+    }
+}

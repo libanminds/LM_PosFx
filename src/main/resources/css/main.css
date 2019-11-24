@@ -173,3 +173,15 @@ VBox.card {
 .reports-panel JFXButton FontIcon {
     -fx-icon-size: 20px;
 }
+
+.curved-edges {
+    -fx-background-radius: 5;
+}
+
+.curved-edges-left {
+    -fx-background-radius: 5 0 0 5;
+}
+
+.bold-text {
+    -fx-font-weight: bold;
+}
