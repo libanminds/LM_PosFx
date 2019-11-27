@@ -1,20 +1,17 @@
 package com.libanminds.models;
 
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
+import com.libanminds.utils.GlobalSettings;
+import com.libanminds.utils.HelperFunctions;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.io.FileInputStream;
 
 public class Item {
-    private int id;
-    private String  imageUrl;
-    private String  currency;
-    private int minStock;
-    private ImageView image;
+    private SimpleDoubleProperty initialPrice;
+
     private SimpleIntegerProperty code;
     private SimpleStringProperty name;
     private ItemCategory category;
@@ -27,6 +24,20 @@ public class Item {
     private SimpleBooleanProperty isService;
     private SimpleStringProperty lastModified;
 
+    private int id;
+    private String  imageUrl;
+    private String  currency;
+    private int minStock;
+    private ImageView image;
+
+    //These are used in the sales tab.
+    private IntegerProperty saleQuantity = new SimpleIntegerProperty(1);
+    private SimpleStringProperty saleCurrency = new SimpleStringProperty("LL");
+    private DoubleProperty discount = new SimpleDoubleProperty(0);
+    private DoubleProperty total = new SimpleDoubleProperty(0);
+    private StringProperty totalWithCurrency = new SimpleStringProperty("0 LL");
+    private StringProperty priceWithCurrency;
+
     public Item(int id, String imageUrl, int code, String name, ItemCategory category,double cost, double price, String currency, int stock, int minStock, String supplier, String description, boolean priceIncludesTax, boolean isService, String lastModified) {
         try{
             Image imageFile = new Image(new FileInputStream(imageUrl));
@@ -37,7 +48,6 @@ public class Item {
         }catch(Exception e) {
             image = null;
         }
-
         this.id = id;
         this.imageUrl = imageUrl;
         this.minStock = minStock;
@@ -45,7 +55,7 @@ public class Item {
         this.name = new SimpleStringProperty(name);
         this.category = category;
         this.cost = new SimpleDoubleProperty(cost);
-        this.price = new SimpleDoubleProperty(price);
+        this.initialPrice =  new SimpleDoubleProperty(price);
         this.currency = currency;
         this.stock = new SimpleIntegerProperty(stock);
         this.supplier = new SimpleStringProperty(supplier);
@@ -53,6 +63,75 @@ public class Item {
         this.priceIncludesTax = new SimpleBooleanProperty(priceIncludesTax);
         this.isService = new SimpleBooleanProperty(isService);
         this.lastModified = new SimpleStringProperty(lastModified);
+        this.price = new SimpleDoubleProperty(0);
+        calculatePrice();
+        priceWithCurrency = new SimpleStringProperty(price + currency);
+
+        this.total.bind(this.price.multiply(this.saleQuantity).subtract(this.discount));
+        //this.priceWithCurrency.bind(Bindings.concat(this.price, " ",this.saleCurrency));
+        //this.totalWithCurrency.bind(Bindings.concat(this.total, " ",this.saleCurrency));
+        this.priceWithCurrency.bind(Bindings.createStringBinding( () -> HelperFunctions.getDecimalFormatter().format(this.price.getValue()) + " " + this.saleCurrency.getValue(),this.price,this.saleCurrency));
+        this.totalWithCurrency.bind(Bindings.createStringBinding( () -> HelperFunctions.getDecimalFormatter().format(this.total.getValue()) + " " + this.saleCurrency.getValue(),this.total,this.saleCurrency));
+    }
+
+    public String getSaleCurrency() {
+        return saleCurrency.getValue();
+    }
+
+    public void setSaleCurrency(String val) {
+        saleCurrency.setValue(val);
+        calculatePrice();
+    }
+
+    private void calculatePrice() {
+        if(currency.equals(saleCurrency.getValue())) {
+            price.setValue(initialPrice.getValue());
+        } else {
+            if(currency.equals("$"))
+                price.setValue(initialPrice.getValue() * GlobalSettings.CONVERSION_RATE_FROM_DOLLAR);
+            else
+                price.setValue(initialPrice.getValue() / GlobalSettings.CONVERSION_RATE_FROM_DOLLAR);
+        }
+    }
+
+    public String getSalePrice() {
+        return price.getValue() + " " + saleCurrency.getValue();
+    }
+
+    public String getSaleQuantity() {
+        return saleQuantity.getValue() + "";
+    }
+
+    public int getSaleQuantityValue() {
+        return saleQuantity.getValue();
+    }
+
+    public void setSaleQuantity(int val) {
+        saleQuantity.set(val);
+    }
+
+    public String getDiscount() {
+        return discount.getValue() + "";
+    }
+
+    public double getDiscountValue() {
+        return discount.getValue();
+    }
+
+    public double getTotal() {
+        return total.getValue();
+    }
+
+    public StringProperty getTotalWithCurrencyProperty() {
+        return totalWithCurrency;
+    }
+
+    public StringProperty getPriceWithCurrencyProperty() {
+        return priceWithCurrency;
+    }
+
+    public void setDiscount(double val) {
+        discount.setValue(val);
     }
 
     public int getID() {

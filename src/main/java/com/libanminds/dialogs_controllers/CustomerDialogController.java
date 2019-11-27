@@ -43,7 +43,7 @@ public class CustomerDialogController implements Initializable {
     @FXML
     private JFXButton save;
 
-    private int customerID;
+    private int customerID = -1;
 
     private SelectCustomerDialogController hostController;
 
@@ -67,10 +67,8 @@ public class CustomerDialogController implements Initializable {
             address.setText(customer.getAddress());
             company.setText(customer.getCompany());
             comments.setText(customer.getNotes());
-        } else
-            customerID = -1;
+        }
     }
-
 
     private void initSaveButton() {
         save.setOnMouseClicked((EventHandler<Event>) event -> {
@@ -104,7 +102,6 @@ public class CustomerDialogController implements Initializable {
             }else {
                 //TODO : DO SOMETHING
             }
-
         });
     }
 

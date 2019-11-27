@@ -28,7 +28,6 @@
                         <FontIcon iconLiteral="ti-plus" />
                      </graphic>
                   </Button>
-                  <Button fx:id="selectBtn" mnemonicParsing="false" text="Select" />
                </children>
                <VBox.margin>
                   <Insets />

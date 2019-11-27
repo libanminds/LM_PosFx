@@ -28,9 +28,6 @@ public class SelectCustomerDialogController implements Initializable {
     private Button newCustomerBtn;
 
     @FXML
-    private Button selectBtn;
-
-    @FXML
     private TableView<Customer> customersTable;
 
     private Customer selectedCustomer;
@@ -42,7 +39,6 @@ public class SelectCustomerDialogController implements Initializable {
         initButtons();
         initSearch();
         initializeTable();
-        setTableListener();
     }
 
     public void setHostController (SalesController controller) {
@@ -51,13 +47,6 @@ public class SelectCustomerDialogController implements Initializable {
 
     private void initButtons() {
         newCustomerBtn.setOnMouseClicked((EventHandler<Event>) event -> showNewCustomerDialog(null));
-        selectBtn.setOnMouseClicked((EventHandler<Event>) event -> {
-            sendDataBackToHost();
-            Stage currentStage = (Stage) selectBtn.getScene().getWindow();
-            currentStage.close();
-        });
-
-        selectBtn.setDisable(selectedCustomer == null);
     }
 
     private void showNewCustomerDialog(Customer customer) {
@@ -71,7 +60,7 @@ public class SelectCustomerDialogController implements Initializable {
             stage.show();
             stage.setOnHidden(e -> {
                 sendDataBackToHost();
-                Stage currentStage = (Stage) selectBtn.getScene().getWindow();
+                Stage currentStage = (Stage) newCustomerBtn.getScene().getWindow();
                 currentStage.close();
             });
         }catch (Exception e){}
@@ -102,15 +91,21 @@ public class SelectCustomerDialogController implements Initializable {
         addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
         balanceCol.setCellValueFactory(new PropertyValueFactory<>("balance"));
 
-        customersTable.setItems(CustomersRepository.getCustomers());
-    }
-
-
-    private void setTableListener() {
-        customersTable.selectionModelProperty().get().selectedItemProperty().addListener((ChangeListener) (observable, oldValue, newValue) -> {
-            selectedCustomer = (Customer)newValue;
-            selectBtn.setDisable(selectedCustomer == null);
+        customersTable.setRowFactory( tv -> {
+            TableRow<Customer> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() >= 2 && (! row.isEmpty()) ) {
+                    Customer customer = row.getItem();
+                    setSelectedCustomer(customer);
+                    sendDataBackToHost();
+                    Stage currentStage = (Stage) newCustomerBtn.getScene().getWindow();
+                    currentStage.close();
+                }
+            });
+            return row ;
         });
+
+        customersTable.setItems(CustomersRepository.getCustomers());
     }
 
     private void sendDataBackToHost() {

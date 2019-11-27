@@ -80,10 +80,12 @@ public class ItemDialogController implements Initializable {
 
     private File itemImage;
 
-    private int itemID;
+    private int itemID = -1;
 
     private boolean itemImageChanged;
     private String imagePath;
+
+    private SelectItemDialogController hostController;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -91,6 +93,10 @@ public class ItemDialogController implements Initializable {
         initCancelButton();
         initChoiceBoxes();
         initImagePicker();
+    }
+
+    public void setHostController(SelectItemDialogController controller) {
+        hostController = controller;
     }
 
     public void initData(Item item) {
@@ -114,8 +120,7 @@ public class ItemDialogController implements Initializable {
             includesTax.setSelected(item.getPriceIncludesTax());
             itemImageChanged = false;
             imagePath = item.getImageUrl();
-        } else
-            itemID = -1;
+        }
     }
 
     private void initChoiceBoxes() {
@@ -132,50 +137,39 @@ public class ItemDialogController implements Initializable {
 
             boolean successful;
 
+            Item newItem = new Item(
+                    itemID,
+                    itemID == -1 ? saveImageOnDevice(itemImage) : imagePath,
+                    Integer.parseInt(code.getText()),
+                    name.getText(),
+                    category.getValue(),
+                    Double.parseDouble(cost.getText()),
+                    Double.parseDouble(price.getText()),
+                    currency.getValue(),
+                    Integer.parseInt(quantity.getText()),
+                    Integer.parseInt(limit.getText()),
+                    "Supplier",
+                    description.getText(),
+                    includesTax.isSelected(),
+                    false,
+                    ""
+            );
+
             if(itemID == -1)
-                successful = ItemsRepository.addItem(new Item(
-                        itemID,
-                        saveImageOnDevice(itemImage),
-                        Integer.parseInt(code.getText()),
-                        name.getText(),
-                        category.getValue(),
-                        Double.parseDouble(cost.getText()),
-                        Double.parseDouble(price.getText()),
-                        currency.getValue(),
-                        Integer.parseInt(quantity.getText()),
-                        Integer.parseInt(limit.getText()),
-                        "Supplier",
-                        description.getText(),
-                        includesTax.isSelected(),
-                        false,
-                        ""
-                ));
+                successful = ItemsRepository.addItem(newItem);
             else {
                 if(itemImageChanged) {
                     //deleteFile(imagePath);
                     imagePath = saveImageOnDevice(itemImage);
                 }
 
-                successful = ItemsRepository.updateItem(new Item(
-                        itemID,
-                        imagePath,
-                        Integer.parseInt(code.getText()),
-                        name.getText(),
-                        category.getValue(),
-                        Double.parseDouble(cost.getText()),
-                        Double.parseDouble(price.getText()),
-                        currency.getValue(),
-                        Integer.parseInt(quantity.getText()),
-                        Integer.parseInt(limit.getText()),
-                        "Supplier",
-                        description.getText(),
-                        includesTax.isSelected(),
-                        false,
-                        ""
-                ));
+                successful = ItemsRepository.updateItem(newItem);
             }
 
             if(successful) {
+                if(hostController != null) {
+                    hostController.setSelectedItem(newItem);
+                }
                 Stage currentStage = (Stage) save.getScene().getWindow();
                 currentStage.close();
             }else {

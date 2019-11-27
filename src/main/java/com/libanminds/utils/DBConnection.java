@@ -38,7 +38,16 @@ public class DBConnection {
 
     public PreparedStatement getPreparedStatement(String query) {
         try {
-            return connection.prepareStatement(query);
+            return connection.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+        }catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public PreparedStatement getPreparedStatement(String query, int getGeneratedKeys) {
+        try {
+            return connection.prepareStatement(query,getGeneratedKeys);
         }catch (SQLException e) {
             System.out.println(e.getMessage());
             return null;

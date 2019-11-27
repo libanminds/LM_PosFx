@@ -27,6 +27,7 @@ public final class Views {
     public static final String ADD_INCOME_TYPE = "/views/dialogs/add_income_type.fxml";
     public static final String ADD_EXPENSE_TYPE = "/views/dialogs/add_expense_type.fxml";
     public static final String SELECT_CUSTOMER = "/views/dialogs/select_customer.fxml";
+    public static final String SELECT_ITEM = "/views/dialogs/select_item.fxml";
 
     //Categories Controllers
     public static final String ITEMS_CATEGORIES = "/views/main/item_categories.fxml";

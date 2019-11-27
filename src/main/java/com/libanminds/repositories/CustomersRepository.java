@@ -78,6 +78,17 @@ public class CustomersRepository {
         }
     }
 
+    public static boolean updateBalance(int customerID, double balance) {
+        try {
+            String query = "UPDATE customers SET balance = "+ balance + " WHERE id = " + customerID;
+            Statement statement  = DBConnection.instance.getStatement();
+            statement.executeUpdate(query);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     private static ObservableList<Customer> getCustomersFromQuery(String query) {
         ObservableList<Customer> data = FXCollections.observableArrayList();
 
@@ -94,7 +105,7 @@ public class CustomersRepository {
                         rs.getString("address"),
                         rs.getString("company"),
                         rs.getString("notes"),
-                        0
+                        rs.getDouble("balance")
                         //rs.getDouble("balance")
                 ));
             }
