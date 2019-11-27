@@ -1,5 +1,6 @@
 package com.libanminds.dialogs_controllers;
 
+import com.libanminds.main_controllers.ReceivingController;
 import com.libanminds.main_controllers.SalesController;
 import com.libanminds.models.Customer;
 import com.libanminds.models.Item;
@@ -35,7 +36,8 @@ public class SelectItemDialogController implements Initializable {
 
     private Item selectedItem;
 
-    private SalesController hostController;
+    private SalesController hostControllerSale;
+    private ReceivingController hostControllerReceiving;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -44,8 +46,9 @@ public class SelectItemDialogController implements Initializable {
         initSearch();
     }
 
-    public void setHostController (SalesController controller) {
-        hostController = controller;
+    public void setHostController (SalesController controllerSales, ReceivingController controllerReceivings) {
+        hostControllerSale = controllerSales;
+        hostControllerReceiving = controllerReceivings;
     }
 
     private void initButtons() {
@@ -63,8 +66,8 @@ public class SelectItemDialogController implements Initializable {
             selectedItem = null;
             stage.show();
             stage.setOnHidden(e -> {
-                sendDataBackToHost();
                 if(selectedItem != null) {
+                    sendDataBackToHost();
                     Stage currentStage = (Stage) newItemBtn.getScene().getWindow();
                     currentStage.close();
                 }
@@ -123,7 +126,11 @@ public class SelectItemDialogController implements Initializable {
     }
 
     private void sendDataBackToHost() {
-        hostController.setSelectedItem(selectedItem);
+        if(hostControllerSale != null)
+            hostControllerSale.setSelectedItem(selectedItem);
+
+        if(hostControllerReceiving != null)
+            hostControllerReceiving.setSelectedItem(selectedItem);
     }
 
     public void setSelectedItem(Item item) {

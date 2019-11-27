@@ -68,6 +68,19 @@ public class SupplierRepository {
         }
     }
 
+
+    public static boolean updateBalance(int supplierID, double balance) {
+        try {
+            String query = "UPDATE suppliers SET balance = "+ balance + " WHERE id = " + supplierID;
+            Statement statement  = DBConnection.instance.getStatement();
+            statement.executeUpdate(query);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+
     public static boolean deleteSupplier(Supplier supplier) {
         try {
             String query = "DELETE FROM suppliers where id = " + supplier.getID();
@@ -94,7 +107,7 @@ public class SupplierRepository {
                         rs.getString("phone"),
                         rs.getString("address"),
                         rs.getString("notes"),
-                        0
+                        rs.getDouble("balance")
                 ));
             }
         } catch (SQLException e) {

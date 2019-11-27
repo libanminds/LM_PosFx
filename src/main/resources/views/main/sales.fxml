@@ -41,7 +41,6 @@
                                        </font>
                                     </Label>
                                     <Button fx:id="selectCustomerBtn" mnemonicParsing="false" text="Select Customer" />
-                                    <Button mnemonicParsing="false" text="+" />
                                  </children>
                                  <VBox.margin>
                                     <Insets />
@@ -55,7 +54,6 @@
                                        </HBox.margin>
                                     </FontIcon>
                                     <CheckComboBox maxWidth="1.7976931348623157E308" showCheckedCount="true" title="Car(s)" HBox.hgrow="ALWAYS" />
-                                    <Button mnemonicParsing="false" text="+" />
                                  </children>
                                  <VBox.margin>
                                     <Insets />
@@ -84,8 +82,7 @@
                   <HBox alignment="BASELINE_LEFT" spacing="8.0">
                      <children>
                         <Button fx:id="selectItemBtn" mnemonicParsing="false" text="Add Item" />
-                        <Button mnemonicParsing="false" text="+" />
-                        <Button fx:id="deleteItem" mnemonicParsing="false" text="Delete" />
+                        <Button fx:id="deleteItem" mnemonicParsing="false" text="Delete Item" />
                      </children>
                      <VBox.margin>
                         <Insets left="8.0" right="8.0" />

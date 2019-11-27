@@ -49,14 +49,14 @@ public class SalesRepository {
             return false;
         }
 
-        for(int i = 0; i < items.size(); i++) {
+        for (Item item : items) {
             query = "INSERT INTO sale_items(item_id,sale_id,quantity,discount) VALUES (?,?,?,?)";
             PreparedStatement statement = DBConnection.instance.getPreparedStatement(query);
             try {
-                statement.setInt(1, items.get(i).getID());
+                statement.setInt(1, item.getID());
                 statement.setDouble(2, saleID);
-                statement.setInt(3, items.get(i).getSaleQuantityValue());
-                statement.setDouble(4, items.get(i).getDiscountValue());
+                statement.setInt(3, item.getSaleQuantityValue());
+                statement.setDouble(4, item.getDiscountValue());
                 statement.executeUpdate();
 
                 statement.close();
@@ -69,9 +69,7 @@ public class SalesRepository {
 
         double balance = (totalAmount - paidAmount);
 
-            return  balance > 0 ?
-                    CustomersRepository.updateBalance(customer.getID(), balance)
-                    : true;
+        return !(balance > 0) || CustomersRepository.updateBalance(customer.getID(), balance);
 
     }
 

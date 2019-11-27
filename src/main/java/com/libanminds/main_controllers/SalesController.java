@@ -165,7 +165,7 @@ public class SalesController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(loader.load()));
             SelectItemDialogController controller = loader.getController();
-            controller.setHostController(this);
+            controller.setHostController(this, null);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -282,7 +282,6 @@ public class SalesController implements Initializable {
 
     public void setSelectedCustomer(Customer customer) {
         selectedCustomer = customer;
-        customerName.setText(selectedCustomer == null ? "Guest" : selectedCustomer.getName());
         if(selectedCustomer != null) {
             customerName.setText(selectedCustomer.getName());
             pastInvoicesTable.setItems(SalesRepository.getCompactSalesOfCustomer(selectedCustomer.getID()));
@@ -357,6 +356,4 @@ public class SalesController implements Initializable {
         totalText.setText(formatter.format(totalAmount) + " " + currencyChoiceBox.getValue());
         remainingAmountLabel.setText(formatter.format(remainingAmount) + " " + currencyChoiceBox.getValue());
     }
-
-
 }

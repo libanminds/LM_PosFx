@@ -42,12 +42,18 @@ public class SupplierDialogController implements Initializable {
     @FXML
     private JFXButton save;
 
-    private int supplierID;
+    private int supplierID = -1;
+
+    private SelectSupplierDialogController hostController;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initSaveButton();
         initCancelButton();
+    }
+
+    public void setHostController(SelectSupplierDialogController controller) {
+        hostController = controller;
     }
 
     public void initData(Supplier supplier) {
@@ -60,8 +66,7 @@ public class SupplierDialogController implements Initializable {
             phone.setText(supplier.getPhone());
             address.setText(supplier.getAddress());
             comments.setText(supplier.getNotes());
-        } else
-            supplierID = -1;
+        }
     }
 
     private void initSaveButton() {
@@ -69,32 +74,28 @@ public class SupplierDialogController implements Initializable {
 
             boolean successful;
 
+            Supplier supplier = new Supplier(
+                    supplierID,
+                    firstName.getText(),
+                    lastName.getText(),
+                    company.getText(),
+                    email.getText(),
+                    phone.getText(),
+                    address.getText(),
+                    comments.getText(),
+                    0
+            );
+
             if(supplierID == -1)
-                successful = SupplierRepository.addSupplier(new Supplier(
-                        supplierID,
-                        firstName.getText(),
-                        lastName.getText(),
-                        company.getText(),
-                        email.getText(),
-                        phone.getText(),
-                        address.getText(),
-                        comments.getText(),
-                        0
-            ));
+                successful = SupplierRepository.addSupplier(supplier);
             else
-                successful = SupplierRepository.updateSupplier(new Supplier(
-                        supplierID,
-                        firstName.getText(),
-                        lastName.getText(),
-                        company.getText(),
-                        email.getText(),
-                        phone.getText(),
-                        address.getText(),
-                        comments.getText(),
-                        0
-                ));
+                successful = SupplierRepository.updateSupplier(supplier);
 
             if(successful) {
+                if(hostController != null) {
+                    hostController.setSelectedSupplier(supplier);
+                }
+
                 Stage currentStage = (Stage) save.getScene().getWindow();
                 currentStage.close();
             }else {

@@ -46,10 +46,10 @@ public class SelectCustomerDialogController implements Initializable {
     }
 
     private void initButtons() {
-        newCustomerBtn.setOnMouseClicked((EventHandler<Event>) event -> showNewCustomerDialog(null));
+        newCustomerBtn.setOnMouseClicked((EventHandler<Event>) event -> showNewCustomerDialog());
     }
 
-    private void showNewCustomerDialog(Customer customer) {
+    private void showNewCustomerDialog() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.ADD_CUSTOMER));
             Stage stage = new Stage();
@@ -59,9 +59,11 @@ public class SelectCustomerDialogController implements Initializable {
             controller.setHostController(this);
             stage.show();
             stage.setOnHidden(e -> {
-                sendDataBackToHost();
-                Stage currentStage = (Stage) newCustomerBtn.getScene().getWindow();
-                currentStage.close();
+                if(selectedCustomer != null) {
+                    sendDataBackToHost();
+                    Stage currentStage = (Stage) newCustomerBtn.getScene().getWindow();
+                    currentStage.close();
+                }
             });
         }catch (Exception e){}
     }
