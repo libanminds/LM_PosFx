@@ -16,6 +16,21 @@ import java.util.List;
 
 public class SalesRepository {
 
+    public static ObservableList<Sale> getSales() {
+        String query = "SELECT * FROM sales LEFT JOIN customers on sales.customer_id = customers.id";
+
+        return getSalesFromQuery(query,false);
+    }
+
+    public static ObservableList<Sale> getSalesLike(String value) {
+        String query = "SELECT * FROM sales LEFT JOIN customers on sales.customer_id = customers.id where" +
+                " first_name like '%" + value + "%' or" +
+                " last_name like '%" + value + "%' or" +
+                " type like '%"+ value + "%'";
+
+        return getSalesFromQuery(query,false);
+    }
+
     public static boolean createSale(List<Item> items, Customer customer, double discount, double totalAmount, String currency, double paidAmount, boolean isOfficial, String paymentType) {
 
         String query = "INSERT INTO sales(customer_id,discount,tax_id,conversion_rate, total_amount,currency, paid_amount,is_official,type) VALUES (?,?,?,?,?,?,?,?,?)";
@@ -77,22 +92,34 @@ public class SalesRepository {
 
         String query = "SELECT id, total_amount, paid_amount, currency, (total_amount - paid_amount) AS balance FROM sales where customer_id = " + customerID + " ORDER BY balance DESC";
 
-        return getSalesFromQuery(query);
+        return getSalesFromQuery(query,true);
     }
 
-    private static ObservableList<Sale> getSalesFromQuery(String query) {
+    private static ObservableList<Sale> getSalesFromQuery(String query, boolean isCompact) {
         ObservableList<Sale> data = FXCollections.observableArrayList();
 
         try {
             Statement statement  = DBConnection.instance.getStatement();
             ResultSet rs    = statement.executeQuery(query);
             while (rs.next()) {
-                data.add(new Sale(
+                data.add(isCompact ? new Sale(
                         rs.getInt(1),
                         rs.getDouble(2),
                         rs.getDouble(3),
                         rs.getString(4)
-                ));
+                ):new Sale(
+                        rs.getInt(1),
+                        rs.getInt("customer_id"),
+                        rs.getString("first_name") + rs.getString("last_name"),
+                        rs.getDouble("discount"),
+                        rs.getInt("tax_id"),
+                        rs.getDouble("conversion_rate"),
+                        rs.getDouble("total_amount"),
+                        rs.getString("currency"),
+                        rs.getDouble("paid_amount"),
+                        rs.getBoolean("is_official"),
+                        rs.getString("type"))
+                );
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

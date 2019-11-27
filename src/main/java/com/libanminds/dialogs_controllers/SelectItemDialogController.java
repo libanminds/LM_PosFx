@@ -1,12 +1,10 @@
 package com.libanminds.dialogs_controllers;
 
-import com.libanminds.main_controllers.ReceivingController;
-import com.libanminds.main_controllers.SalesController;
-import com.libanminds.models.Customer;
+import com.libanminds.main_controllers.NewReceivingController;
+import com.libanminds.main_controllers.NewSaleController;
 import com.libanminds.models.Item;
 import com.libanminds.repositories.ItemsRepository;
 import com.libanminds.utils.Views;
-import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -20,7 +18,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class SelectItemDialogController implements Initializable {
@@ -36,8 +33,8 @@ public class SelectItemDialogController implements Initializable {
 
     private Item selectedItem;
 
-    private SalesController hostControllerSale;
-    private ReceivingController hostControllerReceiving;
+    private NewSaleController hostControllerSale;
+    private NewReceivingController hostControllerReceiving;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -46,7 +43,7 @@ public class SelectItemDialogController implements Initializable {
         initSearch();
     }
 
-    public void setHostController (SalesController controllerSales, ReceivingController controllerReceivings) {
+    public void setHostController (NewSaleController controllerSales, NewReceivingController controllerReceivings) {
         hostControllerSale = controllerSales;
         hostControllerReceiving = controllerReceivings;
     }

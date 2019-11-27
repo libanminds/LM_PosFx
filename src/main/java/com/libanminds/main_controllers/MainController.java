@@ -30,6 +30,8 @@ public class MainController implements Initializable {
     @FXML
     private JFXButton menuSales;
     @FXML
+    private JFXButton menuNewSale;
+    @FXML
     private JFXButton menuReceiving;
     @FXML
     private JFXButton menuExpenses;
@@ -67,6 +69,7 @@ public class MainController implements Initializable {
         menuItems.setOnAction(actionEvent -> onMenuClick(Views.ITEMS));
         menuReports.setOnAction(actionEvent -> onMenuClick(Views.REPORTS));
         menuSales.setOnAction(actionEvent -> onMenuClick(Views.SALES));
+        menuNewSale.setOnAction(actionEvent -> onMenuClick(Views.NEW_SALE));
         menuReceiving.setOnAction(actionEvent -> onMenuClick(Views.RECEIVING));
         menuExpenses.setOnAction(actionEvent -> onMenuClick(Views.EXPENSES));
         menuIncome.setOnAction(actionEvent -> onMenuClick(Views.INCOME));
@@ -114,6 +117,8 @@ public class MainController implements Initializable {
                 break;
             case Views.SALES:
                 menuSales.pseudoClassStateChanged(activeView, val);
+            case Views.NEW_SALE:
+                menuNewSale.pseudoClassStateChanged(activeView, val);
                 break;
             case Views.RECEIVING:
                 menuReceiving.pseudoClassStateChanged(activeView, val);

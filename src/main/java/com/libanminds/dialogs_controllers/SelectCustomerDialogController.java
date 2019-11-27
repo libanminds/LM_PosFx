@@ -1,10 +1,9 @@
 package com.libanminds.dialogs_controllers;
 
-import com.libanminds.main_controllers.SalesController;
+import com.libanminds.main_controllers.NewSaleController;
 import com.libanminds.models.Customer;
 import com.libanminds.repositories.CustomersRepository;
 import com.libanminds.utils.Views;
-import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -32,7 +31,7 @@ public class SelectCustomerDialogController implements Initializable {
 
     private Customer selectedCustomer;
 
-    private SalesController hostController;
+    private NewSaleController hostController;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -41,7 +40,7 @@ public class SelectCustomerDialogController implements Initializable {
         initializeTable();
     }
 
-    public void setHostController (SalesController controller) {
+    public void setHostController (NewSaleController controller) {
         hostController = controller;
     }
 

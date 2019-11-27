@@ -9,7 +9,8 @@ public final class Views {
     public static final String ITEMS = "/views/main/items.fxml";
     public static final String REPORTS = "/views/main/reports.fxml";
     public static final String SALES = "/views/main/sales.fxml";
-    public static final String RECEIVING = "/views/main/receiving.fxml";
+    public static final String NEW_SALE = "/views/main/new_sale.fxml";
+    public static final String RECEIVING = "/views/main/new_receiving.fxml";
     public static final String EXPENSES = "/views/main/expenses.fxml";
     public static final String INCOME = "/views/main/income.fxml";
 //    public static final String APPOINTMENTS = "/views/main/appointments.fxml";

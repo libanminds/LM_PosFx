@@ -6,7 +6,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-
 <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.main_controllers.MainController">
    <children>
       <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" minWidth="50.0" styleClass="bg-dark" HBox.hgrow="NEVER">
@@ -38,7 +37,12 @@
                               <FontIcon iconColor="WHITE" iconLiteral="ti-bar-chart" iconSize="20" />
                           </graphic>
                       </JFXButton>
-                      <JFXButton fx:id="menuSales" graphicTextGap="8.0" text="Sales" textFill="WHITE">
+                  <JFXButton fx:id="menuSales" graphicTextGap="8.0" layoutX="10.0" layoutY="215.0" text="Sales" textFill="WHITE">
+                     <graphic>
+                        <FontIcon iconColor="WHITE" iconLiteral="ti-shopping-cart" iconSize="20" />
+                     </graphic>
+                  </JFXButton>
+                      <JFXButton fx:id="menuNewSale" graphicTextGap="8.0" text="New Sale" textFill="WHITE">
                           <graphic>
                               <FontIcon iconColor="WHITE" iconLiteral="ti-shopping-cart" iconSize="20" />
                           </graphic>

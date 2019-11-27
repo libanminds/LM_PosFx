@@ -9,6 +9,7 @@ import javafx.beans.property.SimpleStringProperty;
 public class Sale {
     private SimpleIntegerProperty saleID;
     private SimpleIntegerProperty customerID;
+    private SimpleStringProperty customerName;
     private SimpleDoubleProperty discount;
     private SimpleIntegerProperty taxID;
     private SimpleDoubleProperty conversionRate;
@@ -18,10 +19,10 @@ public class Sale {
     private SimpleBooleanProperty isOfficial;
     private SimpleStringProperty paymentType;
 
-    public Sale(int saleID, int customerID, double discount, int taxID, double conversionRate, double totalAmount, String currency, double paidAmount, boolean isOfficial, String paymentType) {
+    public Sale(int saleID, int customerID, String customerName, double discount, int taxID, double conversionRate, double totalAmount, String currency, double paidAmount, boolean isOfficial, String paymentType) {
         this.saleID = new SimpleIntegerProperty(saleID);
         this.customerID = new SimpleIntegerProperty(customerID);
-        this.customerID = new SimpleIntegerProperty(customerID);
+        this.customerName = new SimpleStringProperty(customerName);
         this.discount = new SimpleDoubleProperty(discount);
         this.taxID = new SimpleIntegerProperty(taxID);
         this.conversionRate = new SimpleDoubleProperty(conversionRate);
@@ -41,6 +42,18 @@ public class Sale {
 
     public String getFormattedBalance() {
         return HelperFunctions.getDecimalFormatter().format(totalAmount.getValue() - paidAmount.getValue())+ " " + currency.getValue();
+    }
+
+    public String getCustomerName() {
+        return customerName.get();
+    }
+
+    public String getRemainingAmountFormatted() {
+        return "Replace this with something useful";
+    }
+
+    public boolean isComplete() {
+        return paidAmount.get() == totalAmount.get();
     }
 
     public String getFormattedTotalAmount() {
