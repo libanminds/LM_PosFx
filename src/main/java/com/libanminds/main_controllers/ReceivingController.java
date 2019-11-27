@@ -321,8 +321,13 @@ public class ReceivingController implements Initializable {
 
     private void addItemToList() {
         if (selectedItem != null) {
-            selectedItem.setSaleCurrency(currencyChoiceBox.getValue());
-            itemsTable.getItems().add(selectedItem);
+            if(itemsTable.getItems().contains(selectedItem)) {
+                itemsTable.getItems().get(itemsTable.getItems().indexOf(selectedItem)).incrementSaleQuantity();
+                itemsTable.refresh();
+            } else {
+                selectedItem.setSaleCurrency(currencyChoiceBox.getValue());
+                itemsTable.getItems().add(selectedItem);
+            }
             calculateSubtotal();
             recalculateNumbers();
             setSelectedItem(null);

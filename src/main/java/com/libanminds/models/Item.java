@@ -74,6 +74,16 @@ public class Item {
         this.totalWithCurrency.bind(Bindings.createStringBinding( () -> HelperFunctions.getDecimalFormatter().format(this.total.getValue()) + " " + this.saleCurrency.getValue(),this.total,this.saleCurrency));
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true ;
+
+        if (! (other instanceof Item)) return false ;
+
+        Item otherItem = (Item) other ;
+        return this.id == otherItem.id;
+    }
+
     public String getSaleCurrency() {
         return saleCurrency.getValue();
     }
@@ -108,6 +118,10 @@ public class Item {
 
     public void setSaleQuantity(int val) {
         saleQuantity.set(val);
+    }
+
+    public void incrementSaleQuantity() {
+        saleQuantity.set(saleQuantity.get() + 1);
     }
 
     public String getDiscount() {
