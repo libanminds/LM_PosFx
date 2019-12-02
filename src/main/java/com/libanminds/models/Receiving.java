@@ -9,6 +9,7 @@ import javafx.beans.property.SimpleStringProperty;
 public class Receiving {
     private SimpleIntegerProperty receivingID;
     private SimpleIntegerProperty supplierID;
+    private SimpleStringProperty supplierName;
     private SimpleDoubleProperty discount;
     private SimpleIntegerProperty taxID;
     private SimpleDoubleProperty conversionRate;
@@ -18,10 +19,10 @@ public class Receiving {
     private SimpleBooleanProperty isOfficial;
     private SimpleStringProperty paymentType;
 
-    public Receiving(int receivingID, int supplierID, double discount, int taxID, double conversionRate, double totalAmount, String currency, double paidAmount, boolean isOfficial, String paymentType) {
+    public Receiving(int receivingID, int supplierID, String supplierName, double discount, int taxID, double conversionRate, double totalAmount, String currency, double paidAmount, boolean isOfficial, String paymentType) {
         this.receivingID = new SimpleIntegerProperty(receivingID);
         this.supplierID = new SimpleIntegerProperty(supplierID);
-        this.supplierID = new SimpleIntegerProperty(supplierID);
+        this.supplierName = new SimpleStringProperty(supplierName);
         this.discount = new SimpleDoubleProperty(discount);
         this.taxID = new SimpleIntegerProperty(taxID);
         this.conversionRate = new SimpleDoubleProperty(conversionRate);
@@ -37,6 +38,14 @@ public class Receiving {
         this.totalAmount = new SimpleDoubleProperty(totalAmount);
         this.paidAmount = new SimpleDoubleProperty(paidAmount);
         this.currency = new SimpleStringProperty(currency);
+    }
+
+    public String getRemainingAmountFormatted() {
+        return HelperFunctions.getDecimalFormatter().format(totalAmount.get() - paidAmount.get()) + " " + getCurrency();
+    }
+
+    public boolean isComplete() {
+        return paidAmount.get() == totalAmount.get();
     }
 
     public String getFormattedBalance() {
@@ -55,12 +64,24 @@ public class Receiving {
         return supplierID;
     }
 
+    public String getSupplierName() {
+        return supplierName.get();
+    }
+
+    public void setSupplierName(String supplierName) {
+        this.supplierName.set(supplierName);
+    }
+
     public void setSupplierID(int supplierID) {
         this.supplierID.set(supplierID);
     }
 
     public double getDiscount() {
         return discount.get();
+    }
+
+    public String getDiscountFormatted() {
+        return HelperFunctions.getDecimalFormatter().format(discount.get()) + " " + currency.get();
     }
 
     public void setDiscount(double discount) {
@@ -87,6 +108,10 @@ public class Receiving {
         return totalAmount.get();
     }
 
+    public String getTotalAmountFormatted() {
+        return HelperFunctions.getDecimalFormatter().format(totalAmount.get()) + " " + currency.get();
+    }
+
     public void setTotalAmount(double totalAmount) {
         this.totalAmount.set(totalAmount);
     }
@@ -101,6 +126,10 @@ public class Receiving {
 
     public double getPaidAmount() {
         return paidAmount.get();
+    }
+
+    public String getPaidAmountFormatted() {
+        return HelperFunctions.getDecimalFormatter().format(paidAmount.get()) + " " + currency.get();
     }
 
     public void setPaidAmount(double paidAmount) {

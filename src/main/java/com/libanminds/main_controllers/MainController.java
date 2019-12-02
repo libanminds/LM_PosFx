@@ -32,7 +32,9 @@ public class MainController implements Initializable {
     @FXML
     private JFXButton menuNewSale;
     @FXML
-    private JFXButton menuReceiving;
+    private JFXButton menuReceivings;
+    @FXML
+    private JFXButton menuNewReceiving;
     @FXML
     private JFXButton menuExpenses;
     @FXML
@@ -70,7 +72,8 @@ public class MainController implements Initializable {
         menuReports.setOnAction(actionEvent -> onMenuClick(Views.REPORTS));
         menuSales.setOnAction(actionEvent -> onMenuClick(Views.SALES));
         menuNewSale.setOnAction(actionEvent -> onMenuClick(Views.NEW_SALE));
-        menuReceiving.setOnAction(actionEvent -> onMenuClick(Views.RECEIVING));
+        menuReceivings.setOnAction(actionEvent -> onMenuClick(Views.RECEIVINGS));
+        menuNewReceiving.setOnAction(actionEvent -> onMenuClick(Views.NEW_RECEIVING));
         menuExpenses.setOnAction(actionEvent -> onMenuClick(Views.EXPENSES));
         menuIncome.setOnAction(actionEvent -> onMenuClick(Views.INCOME));
 //        menuAppointments.setOnAction(actionEvent -> onMenuClick(Views.APPOINTMENTS));
@@ -117,11 +120,15 @@ public class MainController implements Initializable {
                 break;
             case Views.SALES:
                 menuSales.pseudoClassStateChanged(activeView, val);
+                break;
             case Views.NEW_SALE:
                 menuNewSale.pseudoClassStateChanged(activeView, val);
                 break;
-            case Views.RECEIVING:
-                menuReceiving.pseudoClassStateChanged(activeView, val);
+            case Views.RECEIVINGS:
+                menuReceivings.pseudoClassStateChanged(activeView, val);
+                break;
+            case Views.NEW_RECEIVING:
+                menuNewReceiving.pseudoClassStateChanged(activeView, val);
                 break;
             case Views.EXPENSES:
                 menuExpenses.pseudoClassStateChanged(activeView, val);

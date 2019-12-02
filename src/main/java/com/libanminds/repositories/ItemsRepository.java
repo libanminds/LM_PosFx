@@ -3,6 +3,7 @@ package com.libanminds.repositories;
 import com.libanminds.models.Income;
 import com.libanminds.models.Item;
 import com.libanminds.models.ItemCategory;
+import com.libanminds.models.Sale;
 import com.libanminds.utils.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,6 +29,13 @@ public class ItemsRepository {
 
         return getItemsFromQuery(query);
     }
+
+    public static ObservableList<Item> getItemsOfSale(Sale sale) {
+        String query = "SELECT * FROM items INNER JOIN sale_items ON items.id = sale_items.item_id where sale_id = + "+ sale.getID();
+
+        return getItemsOfSaleFromQuery(query, sale);
+    }
+
 
     public static boolean addItem(Item item) {
         String query = "INSERT INTO items(code,image,name,category_id,cost,price,currency,quantity,description,min_stock,ttc) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
@@ -113,6 +121,43 @@ public class ItemsRepository {
                         false,
                         rs.getString("created_at")
                 ));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+        return data;
+    }
+
+    private static ObservableList<Item> getItemsOfSaleFromQuery(String query, Sale sale) {
+        ObservableList<Item> data = FXCollections.observableArrayList();
+        try {
+            Statement statement  = DBConnection.instance.getStatement();
+            ResultSet rs    = statement.executeQuery(query);
+            while (rs.next()) {
+
+                Item item = new Item(
+                        rs.getInt(1),
+                        rs.getString("image"),
+                        rs.getInt("code"),
+                        rs.getString(4),
+                        new ItemCategory(rs.getInt("category_id"),rs.getString(16)),
+                        rs.getDouble("cost"),
+                        rs.getDouble("price"),
+                        rs.getString("currency"),
+                        rs.getInt("quantity"),
+                        rs.getInt("min_stock"),
+                        "Jack Sparrow",
+                        rs.getString("description"),
+                        true,
+                        false,
+                        rs.getString("created_at")
+                );
+                item.setSaleQuantity(rs.getInt(18));
+                item.setDiscount(rs.getInt("discount"));
+                item.setCurrency(sale.getCurrency());
+
+                data.add(item);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

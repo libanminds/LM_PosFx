@@ -10,7 +10,8 @@ public final class Views {
     public static final String REPORTS = "/views/main/reports.fxml";
     public static final String SALES = "/views/main/sales.fxml";
     public static final String NEW_SALE = "/views/main/new_sale.fxml";
-    public static final String RECEIVING = "/views/main/new_receiving.fxml";
+    public static final String NEW_RECEIVING = "/views/main/new_receiving.fxml";
+    public static final String RECEIVINGS = "/views/main/receivings.fxml";
     public static final String EXPENSES = "/views/main/expenses.fxml";
     public static final String INCOME = "/views/main/income.fxml";
 //    public static final String APPOINTMENTS = "/views/main/appointments.fxml";
@@ -30,6 +31,7 @@ public final class Views {
     public static final String SELECT_CUSTOMER = "/views/dialogs/select_customer.fxml";
     public static final String SELECT_ITEM = "/views/dialogs/select_item.fxml";
     public static final String SELECT_SUPPLIER = "/views/dialogs/select_supplier.fxml";
+    public static final String COMPLETE_SALE = "/views/dialogs/complete_sale.fxml";
 
     //Categories Controllers
     public static final String ITEMS_CATEGORIES = "/views/main/item_categories.fxml";

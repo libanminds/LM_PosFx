@@ -334,7 +334,6 @@ public class NewReceivingController implements Initializable {
         }
     }
 
-
     private void calculateSubtotal() {
         subtotal = 0;
         for (int i = 0; i < itemsTable.getItems().size(); i++)

@@ -44,14 +44,19 @@
                   </JFXButton>
                       <JFXButton fx:id="menuNewSale" graphicTextGap="8.0" text="New Sale" textFill="WHITE">
                           <graphic>
-                              <FontIcon iconColor="WHITE" iconLiteral="ti-shopping-cart" iconSize="20" />
+                              <FontIcon iconColor="WHITE" iconLiteral="ti-plus" iconSize="20" />
                           </graphic>
                       </JFXButton>
-                      <JFXButton fx:id="menuReceiving" graphicTextGap="8.0" text="Receiving" textFill="WHITE">
+                      <JFXButton fx:id="menuReceivings" graphicTextGap="8.0" text="Receivings" textFill="WHITE">
                           <graphic>
                               <FontIcon iconColor="WHITE" iconLiteral="ti-import" iconSize="20" />
                           </graphic>
                       </JFXButton>
+                  <JFXButton fx:id="menuNewReceiving" graphicTextGap="8.0" layoutX="10.0" layoutY="297.0" text="New Receiving" textFill="WHITE">
+                     <graphic>
+                        <FontIcon iconColor="WHITE" iconLiteral="ti-plus" iconSize="20" />
+                     </graphic>
+                  </JFXButton>
                       <JFXButton fx:id="menuExpenses" graphicTextGap="8.0" text="Expenses" textFill="WHITE">
                           <graphic>
                               <FontIcon iconColor="WHITE" iconLiteral="ti-money" iconSize="20" />

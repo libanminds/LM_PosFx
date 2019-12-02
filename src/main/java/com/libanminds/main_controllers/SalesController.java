@@ -48,7 +48,8 @@ public class SalesController implements Initializable {
         completePayment.setOnMouseClicked(new EventHandler<Event>() {
             @Override
             public void handle(Event event) {
-                //TODO: Show some dialog
+                System.out.println("JOKER");
+                showCompleteSaleDialog(selectedSale);
             }
         });
 
@@ -59,6 +60,25 @@ public class SalesController implements Initializable {
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             salesTable.setItems(SalesRepository.getSalesLike(newValue));
         });
+    }
+
+    private void showCompleteSaleDialog(Sale sale) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.COMPLETE_SALE));
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(loader.load()));
+            CompleteSaleController controller = loader.getController();
+            controller.setSale(sale);
+            stage.show();
+            stage.setOnHidden(e -> {
+                salesTable.setItems(SalesRepository.getSales());
+            });
+        }catch (Exception e){
+            System.out.println(e.getCause());
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     private void initializeTable() {
@@ -72,19 +92,18 @@ public class SalesController implements Initializable {
         salesTable.getColumns().addAll(customerName,totalAmount,paidAmount,discount,remainingAmount,paymentType);
 
         customerName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
-        totalAmount.setCellValueFactory(new PropertyValueFactory<>("totalAmount"));
-        paidAmount.setCellValueFactory(new PropertyValueFactory<>("paidAmount"));
-        discount.setCellValueFactory(new PropertyValueFactory<>("discount"));
+        totalAmount.setCellValueFactory(new PropertyValueFactory<>("totalAmountFormatted"));
+        paidAmount.setCellValueFactory(new PropertyValueFactory<>("paidAmountFormatted"));
+        discount.setCellValueFactory(new PropertyValueFactory<>("discountFormatted"));
         remainingAmount.setCellValueFactory(new PropertyValueFactory<>("remainingAmountFormatted"));
         paymentType.setCellValueFactory(new PropertyValueFactory<>("paymentType"));
 
         salesTable.setItems(SalesRepository.getSales());
     }
-
     private void setTableListener() {
         salesTable.selectionModelProperty().get().selectedItemProperty().addListener((ChangeListener) (observable, oldValue, newValue) -> {
             selectedSale = (Sale)newValue;
-            completePayment.setDisable(selectedSale == null && selectedSale.isComplete());
+            completePayment.setDisable(selectedSale == null || selectedSale.isComplete());
         });
     }
 }

@@ -49,7 +49,15 @@ public class Sale {
     }
 
     public String getRemainingAmountFormatted() {
-        return "Replace this with something useful";
+        return HelperFunctions.getDecimalFormatter().format(totalAmount.get() - paidAmount.get()) + " " + getCurrency();
+    }
+
+    public int getID() {
+        return saleID.get();
+    }
+
+    public void setSaleID(int saleID) {
+        this.saleID.set(saleID);
     }
 
     public boolean isComplete() {
@@ -76,6 +84,10 @@ public class Sale {
         return discount.get();
     }
 
+    public String getDiscountFormatted() {
+        return HelperFunctions.getDecimalFormatter().format(discount.get()) + " " + currency.get();
+    }
+
     public void setDiscount(double discount) {
         this.discount.set(discount);
     }
@@ -100,6 +112,10 @@ public class Sale {
         return totalAmount.get();
     }
 
+    public String getTotalAmountFormatted() {
+        return HelperFunctions.getDecimalFormatter().format(totalAmount.get()) + " " + currency.get();
+    }
+
     public void setTotalAmount(double totalAmount) {
         this.totalAmount.set(totalAmount);
     }
@@ -114,6 +130,10 @@ public class Sale {
 
     public double getPaidAmount() {
         return paidAmount.get();
+    }
+
+    public String getPaidAmountFormatted() {
+        return HelperFunctions.getDecimalFormatter().format(paidAmount.get()) + " " + currency.get();
     }
 
     public void setPaidAmount(double paidAmount) {

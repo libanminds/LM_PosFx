@@ -31,6 +31,25 @@ public class SalesRepository {
         return getSalesFromQuery(query,false);
     }
 
+    public static boolean completeSalePayment(int saleID,double discount, double totalAmount, double paidAmount) {
+
+        String query = "UPDATE sales SET discount = ?, total_amount = ?, paid_amount = ? where id = ?";
+        PreparedStatement salesStatement = DBConnection.instance.getPreparedStatement(query);
+
+        try {
+            salesStatement.setDouble(1, discount);
+            salesStatement.setDouble(2, totalAmount);
+            salesStatement.setDouble(3, paidAmount);
+            salesStatement.setInt(4, saleID);
+            salesStatement.executeUpdate();
+            salesStatement.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public static boolean createSale(List<Item> items, Customer customer, double discount, double totalAmount, String currency, double paidAmount, boolean isOfficial, String paymentType) {
 
         String query = "INSERT INTO sales(customer_id,discount,tax_id,conversion_rate, total_amount,currency, paid_amount,is_official,type) VALUES (?,?,?,?,?,?,?,?,?)";
