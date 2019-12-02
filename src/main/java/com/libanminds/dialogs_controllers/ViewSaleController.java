@@ -1,4 +1,4 @@
-package com.libanminds.main_controllers;
+package com.libanminds.dialogs_controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.libanminds.models.Item;
@@ -18,16 +18,10 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
-public class CompleteSaleController implements Initializable {
+public class ViewSaleController implements Initializable {
 
     @FXML
     private TableView<Item> itemsTable;
-
-    @FXML
-    private TextField saleDiscountTextField;
-
-    @FXML
-    private CheckBox markAsDiscount;
 
     @FXML
     private Label subtotalText;
@@ -45,30 +39,19 @@ public class CompleteSaleController implements Initializable {
     private Label amountPaidText;
 
     @FXML
-    private TextField newPaymentField;
-
-    @FXML
     private Label remainingAmountLabel;
-
-    @FXML
-    private JFXButton saveSale;
 
     private double subtotal;
     private double salesDiscount;
-    private double newSalesDiscount;
     private double taxes;
     private double totalAmount;
     private double amountPaid;
-    private double newPayment;
     private double remainingAmount;
 
     private Sale sale;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        initButtonsClicks();
-        setTextFieldsListeners();
-    }
+    public void initialize(URL location, ResourceBundle resources) {}
 
     public void setSale(Sale sale) {
         this.sale = sale;
@@ -85,22 +68,6 @@ public class CompleteSaleController implements Initializable {
         remainingAmount = totalAmount - amountPaid;
     }
 
-    private void initButtonsClicks() {
-        saveSale.setOnMouseClicked((EventHandler<Event>) event -> updateSale());
-    }
-
-    private void updateSale() {
-        SalesRepository.completeSalePayment(
-                sale.getID(),
-                markAsDiscount.isSelected()? salesDiscount + newSalesDiscount + remainingAmount : salesDiscount + newSalesDiscount,
-                markAsDiscount.isSelected() ? totalAmount - remainingAmount : totalAmount,
-                amountPaid + newPayment
-        );
-
-        Stage currentStage = (Stage) saveSale.getScene().getWindow();
-        currentStage.close();
-    }
-
     private void initializeTable() {
         TableColumn<Item, String> codeCol = new TableColumn<>("Code");
         TableColumn<Item, String> nameCol = new TableColumn<>("Name");
@@ -114,36 +81,17 @@ public class CompleteSaleController implements Initializable {
         codeCol.setCellValueFactory(new PropertyValueFactory<>("code"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         saleQuantityCol.setCellValueFactory(new PropertyValueFactory<>("saleQuantity"));
-        priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-        saleDiscountCol.setCellValueFactory(new PropertyValueFactory<>("discount"));
-        totalPriceCol.setCellValueFactory(new PropertyValueFactory<>("total"));
+        priceCol.setCellValueFactory(new PropertyValueFactory<>("formattedPrice"));
+        saleDiscountCol.setCellValueFactory(new PropertyValueFactory<>("formattedDiscount"));
+        totalPriceCol.setCellValueFactory(new PropertyValueFactory<>("formattedTotal"));
 
         itemsTable.setItems(ItemsRepository.getItemsOfSale(sale));
-    }
-
-    private void setTextFieldsListeners() {
-        newPaymentField.textProperty().addListener((observable, oldValue, newValue) -> {
-            newPayment = (newValue.isEmpty() ? 0 : Double.parseDouble(newValue));
-            recalculateNumbers();
-        });
-
-        saleDiscountTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            newSalesDiscount = (newValue.isEmpty() ? 0 : Double.parseDouble(newValue));
-            recalculateNumbers();
-        });
-    }
-
-    private void recalculateNumbers() {
-        totalAmount = subtotal - salesDiscount + taxes - newSalesDiscount;
-        remainingAmount = totalAmount - amountPaid - newPayment;
-
-        updateNumbersUI();
     }
 
     private void updateNumbersUI() {
         DecimalFormat formatter = HelperFunctions.getDecimalFormatter();
         subtotalText.setText( formatter.format(subtotal) + " " + sale.getCurrency());
-        discountText.setText(formatter.format(salesDiscount + newSalesDiscount) + " " + sale.getCurrency());
+        discountText.setText(formatter.format(salesDiscount) + " " + sale.getCurrency());
         taxesText.setText(formatter.format(taxes) + " " + sale.getCurrency());
         amountPaidText.setText(formatter.format(amountPaid) + " " + sale.getCurrency());
         totalText.setText(formatter.format(totalAmount) + " " + sale.getCurrency());

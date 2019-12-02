@@ -1,12 +1,10 @@
 package com.libanminds.main_controllers;
 
-import com.libanminds.dialogs_controllers.CustomerDialogController;
-import com.libanminds.models.Customer;
+import com.libanminds.dialogs_controllers.CompleteSaleController;
+import com.libanminds.dialogs_controllers.ViewSaleController;
 import com.libanminds.models.Sale;
-import com.libanminds.repositories.CustomersRepository;
 import com.libanminds.repositories.SalesRepository;
 import com.libanminds.utils.Views;
-import com.sun.javafx.menu.MenuItemBase;
 import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -20,7 +18,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class SalesController implements Initializable {
@@ -30,6 +27,9 @@ public class SalesController implements Initializable {
 
     @FXML
     private Button completePayment;
+
+    @FXML
+    private Button viewSaleBtn;
 
     @FXML
     private TableView<Sale> salesTable;
@@ -48,11 +48,17 @@ public class SalesController implements Initializable {
         completePayment.setOnMouseClicked(new EventHandler<Event>() {
             @Override
             public void handle(Event event) {
-                System.out.println("JOKER");
                 showCompleteSaleDialog(selectedSale);
             }
-        });
 
+        });
+        viewSaleBtn.setOnMouseClicked(new EventHandler<Event>() {
+            @Override
+            public void handle(Event event) {
+                showViewSaleDialog(selectedSale);
+            }
+        });
+        viewSaleBtn.setDisable(true);
         completePayment.setDisable(true);
     }
 
@@ -60,6 +66,25 @@ public class SalesController implements Initializable {
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             salesTable.setItems(SalesRepository.getSalesLike(newValue));
         });
+    }
+
+    private void showViewSaleDialog(Sale sale) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.VIEW_SALE));
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(loader.load()));
+            ViewSaleController controller = loader.getController();
+            controller.setSale(sale);
+            stage.show();
+            stage.setOnHidden(e -> {
+                salesTable.setItems(SalesRepository.getSales());
+            });
+        }catch (Exception e){
+            System.out.println(e.getCause());
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     private void showCompleteSaleDialog(Sale sale) {
@@ -100,10 +125,12 @@ public class SalesController implements Initializable {
 
         salesTable.setItems(SalesRepository.getSales());
     }
+
     private void setTableListener() {
         salesTable.selectionModelProperty().get().selectedItemProperty().addListener((ChangeListener) (observable, oldValue, newValue) -> {
             selectedSale = (Sale)newValue;
             completePayment.setDisable(selectedSale == null || selectedSale.isComplete());
+            viewSaleBtn.setDisable(selectedSale == null);
         });
     }
 }

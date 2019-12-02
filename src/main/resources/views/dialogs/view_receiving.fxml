@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="600.0" prefWidth="600.0" stylesheets="@../../css/main.css" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.dialogs_controllers.CompleteSaleController">
+<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="600.0" prefWidth="600.0" stylesheets="@../../css/main.css" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.dialogs_controllers.ViewReceivingController">
    <content>
       <VBox spacing="8.0">
          <children>
@@ -35,7 +31,6 @@
                   <Insets bottom="8.0" left="8.0" right="8.0" />
                </VBox.margin>
                <children>
-                  <TextField fx:id="saleDiscountTextField" prefHeight="25.0" prefWidth="271.0" promptText="Discount" />
                   <Region disable="true" opacity="0.0" prefWidth="300.0" HBox.hgrow="ALWAYS" />
                   <VBox minWidth="120.0">
                      <children>
@@ -64,17 +59,11 @@
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label layoutX="10.0" layoutY="90.0" prefHeight="20.0" prefWidth="114.0" text="New Payment">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                        </Label>
                         <Label prefHeight="20.0" prefWidth="114.0" text="Ramaining">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <CheckBox fx:id="markAsDiscount" mnemonicParsing="false" prefHeight="17.0" prefWidth="135.0" text="Mark as discount" />
                      </children>
                   </VBox>
                   <VBox minWidth="80.0">
@@ -104,7 +93,6 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="newPaymentField" />
                         <Label fx:id="remainingAmountLabel" text="0000 L.L.">
                            <font>
                               <Font size="14.0" />
@@ -115,24 +103,6 @@
                </children>
             </HBox>
             <HBox alignment="CENTER_RIGHT" spacing="12.0">
-               <children>
-                  <JFXButton graphicTextGap="8.0" maxWidth="200.0" styleClass="red-btn-outline" text="Clear">
-                     <graphic>
-                        <FontIcon iconLiteral="ti-trash" iconSize="18" />
-                     </graphic>
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </JFXButton>
-                  <JFXButton fx:id="saveSale" graphicTextGap="8.0" maxWidth="400.0" styleClass="green-btn" text="Save" HBox.hgrow="ALWAYS">
-                     <graphic>
-                        <FontIcon iconLiteral="ti-save" iconSize="18" />
-                     </graphic>
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </JFXButton>
-               </children>
                <VBox.margin>
                   <Insets bottom="8.0" left="12.0" right="12.0" />
                </VBox.margin>

@@ -29,6 +29,25 @@ public class ReceivingsRepository {
         return getReceivingsFromQuery(query,false);
     }
 
+    public static boolean completeReceivingPayment(int receivingID,double discount, double totalAmount, double paidAmount) {
+
+        String query = "UPDATE purchases SET discount = ?, total_amount = ?, paid_amount = ? where id = ?";
+        PreparedStatement salesStatement = DBConnection.instance.getPreparedStatement(query);
+
+        try {
+            salesStatement.setDouble(1, discount);
+            salesStatement.setDouble(2, totalAmount);
+            salesStatement.setDouble(3, paidAmount);
+            salesStatement.setInt(4, receivingID);
+            salesStatement.executeUpdate();
+            salesStatement.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public static boolean createReceiving(List<Item> items, Supplier supplier, double discount, double totalAmount, String currency, double paidAmount, boolean isOfficial, String paymentType) {
 
         String query = "INSERT INTO purchases(supplier_id,discount,tax_id,conversion_rate, total_amount,currency, paid_amount,is_official,type) VALUES (?,?,?,?,?,?,?,?,?)";

@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="600.0" prefWidth="600.0" stylesheets="@../../css/main.css" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.dialogs_controllers.CompleteSaleController">
+<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="600.0" prefWidth="600.0" stylesheets="@../../css/main.css" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.dialogs_controllers.CompleteReceivingController">
    <content>
       <VBox spacing="8.0">
          <children>
@@ -35,7 +35,7 @@
                   <Insets bottom="8.0" left="8.0" right="8.0" />
                </VBox.margin>
                <children>
-                  <TextField fx:id="saleDiscountTextField" prefHeight="25.0" prefWidth="271.0" promptText="Discount" />
+                  <TextField fx:id="receivingDiscountTextField" prefHeight="25.0" prefWidth="271.0" promptText="Discount" />
                   <Region disable="true" opacity="0.0" prefWidth="300.0" HBox.hgrow="ALWAYS" />
                   <VBox minWidth="120.0">
                      <children>
@@ -124,7 +124,7 @@
                         <Font size="14.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton fx:id="saveSale" graphicTextGap="8.0" maxWidth="400.0" styleClass="green-btn" text="Save" HBox.hgrow="ALWAYS">
+                  <JFXButton fx:id="saveBtn" graphicTextGap="8.0" maxWidth="400.0" styleClass="green-btn" text="Save" HBox.hgrow="ALWAYS">
                      <graphic>
                         <FontIcon iconLiteral="ti-save" iconSize="18" />
                      </graphic>

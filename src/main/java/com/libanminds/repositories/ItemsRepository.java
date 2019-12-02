@@ -1,8 +1,8 @@
 package com.libanminds.repositories;
 
-import com.libanminds.models.Income;
 import com.libanminds.models.Item;
 import com.libanminds.models.ItemCategory;
+import com.libanminds.models.Receiving;
 import com.libanminds.models.Sale;
 import com.libanminds.utils.DBConnection;
 import javafx.collections.FXCollections;
@@ -33,9 +33,14 @@ public class ItemsRepository {
     public static ObservableList<Item> getItemsOfSale(Sale sale) {
         String query = "SELECT * FROM items INNER JOIN sale_items ON items.id = sale_items.item_id where sale_id = + "+ sale.getID();
 
-        return getItemsOfSaleFromQuery(query, sale);
+        return getItemsOfSAPFromQuery(query, sale.getCurrency());
     }
 
+    public static ObservableList<Item> getItemsOfReceiving(Receiving receiving) {
+        String query = "SELECT * FROM items INNER JOIN purchase_items ON items.id = purchase_items.item_id where receiving_id = + "+ receiving.getID();
+
+        return getItemsOfSAPFromQuery(query, receiving.getCurrency());
+    }
 
     public static boolean addItem(Item item) {
         String query = "INSERT INTO items(code,image,name,category_id,cost,price,currency,quantity,description,min_stock,ttc) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
@@ -129,7 +134,7 @@ public class ItemsRepository {
         return data;
     }
 
-    private static ObservableList<Item> getItemsOfSaleFromQuery(String query, Sale sale) {
+    private static ObservableList<Item> getItemsOfSAPFromQuery(String query, String currency) {
         ObservableList<Item> data = FXCollections.observableArrayList();
         try {
             Statement statement  = DBConnection.instance.getStatement();
@@ -155,7 +160,7 @@ public class ItemsRepository {
                 );
                 item.setSaleQuantity(rs.getInt(18));
                 item.setDiscount(rs.getInt("discount"));
-                item.setCurrency(sale.getCurrency());
+                item.setCurrency(currency);
 
                 data.add(item);
             }

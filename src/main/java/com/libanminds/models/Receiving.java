@@ -7,6 +7,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Receiving {
+
     private SimpleIntegerProperty receivingID;
     private SimpleIntegerProperty supplierID;
     private SimpleStringProperty supplierName;
@@ -38,6 +39,18 @@ public class Receiving {
         this.totalAmount = new SimpleDoubleProperty(totalAmount);
         this.paidAmount = new SimpleDoubleProperty(paidAmount);
         this.currency = new SimpleStringProperty(currency);
+    }
+
+    public int getID() {
+        return receivingID.get();
+    }
+
+    public SimpleIntegerProperty receivingIDProperty() {
+        return receivingID;
+    }
+
+    public void setReceivingID(int receivingID) {
+        this.receivingID.set(receivingID);
     }
 
     public String getRemainingAmountFormatted() {

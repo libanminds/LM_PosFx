@@ -66,10 +66,7 @@ public class Item {
         this.price = new SimpleDoubleProperty(0);
         calculatePrice();
         priceWithCurrency = new SimpleStringProperty(price + currency);
-
         this.total.bind(this.price.multiply(this.saleQuantity).subtract(this.discount));
-        //this.priceWithCurrency.bind(Bindings.concat(this.price, " ",this.saleCurrency));
-        //this.totalWithCurrency.bind(Bindings.concat(this.total, " ",this.saleCurrency));
         this.priceWithCurrency.bind(Bindings.createStringBinding( () -> HelperFunctions.getDecimalFormatter().format(this.price.getValue()) + " " + this.saleCurrency.getValue(),this.price,this.saleCurrency));
         this.totalWithCurrency.bind(Bindings.createStringBinding( () -> HelperFunctions.getDecimalFormatter().format(this.total.getValue()) + " " + this.saleCurrency.getValue(),this.total,this.saleCurrency));
     }
@@ -102,6 +99,18 @@ public class Item {
             else
                 price.setValue(initialPrice.getValue() / GlobalSettings.CONVERSION_RATE_FROM_DOLLAR);
         }
+    }
+
+    public String getFormattedTotal() {
+        return totalWithCurrency.get();
+    }
+
+    public String getFormattedPrice() {
+        return priceWithCurrency.get();
+    }
+
+    public String getFormattedDiscount() {
+        return HelperFunctions.getDecimalFormatter().format(discount.get()) + " " + saleCurrency.getValue();
     }
 
     public String getSalePrice() {

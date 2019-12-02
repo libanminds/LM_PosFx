@@ -1,19 +1,28 @@
 package com.libanminds.main_controllers;
 
+import com.libanminds.dialogs_controllers.CompleteReceivingController;
+import com.libanminds.dialogs_controllers.CompleteSaleController;
+import com.libanminds.dialogs_controllers.ViewReceivingController;
+import com.libanminds.dialogs_controllers.ViewSaleController;
 import com.libanminds.models.Receiving;
 import com.libanminds.models.Sale;
 import com.libanminds.repositories.ReceivingsRepository;
 import com.libanminds.repositories.SalesRepository;
+import com.libanminds.utils.Views;
 import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -25,6 +34,9 @@ public class ReceivingsController implements Initializable {
 
     @FXML
     private Button completePayment;
+
+    @FXML
+    private Button viewReceiving;
 
     @FXML
     private TableView<Receiving> receivingsTable;
@@ -41,10 +53,49 @@ public class ReceivingsController implements Initializable {
 
     private void initButtons() {
         completePayment.setOnMouseClicked((EventHandler<Event>) event -> {
-            //TODO: Show some dialog
+            showCompleteSaleDialog(selectedReceiving);
         });
 
+        viewReceiving.setOnMouseClicked((EventHandler<Event>) event -> {
+            showViewReceivingDialog(selectedReceiving);
+        });
+        viewReceiving.setDisable(true);
         completePayment.setDisable(true);
+    }
+
+    private void showViewReceivingDialog(Receiving receiving) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.VIEW_RECEIVING));
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(loader.load()));
+            ViewReceivingController controller = loader.getController();
+            controller.setReceiving(receiving);
+            stage.show();
+            stage.setOnHidden(e -> {
+                receivingsTable.setItems(ReceivingsRepository.getReceivings());
+            });
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showCompleteSaleDialog(Receiving receiving) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.COMPLETE_RECEIVING));
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(loader.load()));
+            CompleteReceivingController controller = loader.getController();
+            controller.setReceiving(receiving);
+            stage.show();
+            stage.setOnHidden(e -> {
+                receivingsTable.setItems(ReceivingsRepository.getReceivings());
+            });
+        }catch (Exception e){
+
+            e.printStackTrace();
+        }
     }
 
     private void initSearch() {
@@ -77,6 +128,7 @@ public class ReceivingsController implements Initializable {
         receivingsTable.selectionModelProperty().get().selectedItemProperty().addListener((ChangeListener) (observable, oldValue, newValue) -> {
             selectedReceiving = (Receiving) newValue;
             completePayment.setDisable(selectedReceiving == null || selectedReceiving.isComplete());
+            viewReceiving.setDisable(selectedReceiving == null);
         });
     }
 }
