@@ -1,15 +1,12 @@
 package com.libanminds.main_controllers;
 
 import com.jfoenix.controls.JFXButton;
-import com.libanminds.dialogs_controllers.SelectCustomerDialogController;
 import com.libanminds.dialogs_controllers.SelectItemDialogController;
 import com.libanminds.dialogs_controllers.SelectSupplierDialogController;
 import com.libanminds.models.Item;
 import com.libanminds.models.Receiving;
-import com.libanminds.models.Sale;
 import com.libanminds.models.Supplier;
 import com.libanminds.repositories.ReceivingsRepository;
-import com.libanminds.repositories.SalesRepository;
 import com.libanminds.utils.EditingCell;
 import com.libanminds.utils.HelperFunctions;
 import com.libanminds.utils.Views;
@@ -280,8 +277,8 @@ public class NewReceivingController implements Initializable {
 
         codeCol.setCellValueFactory(new PropertyValueFactory<>("code"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        priceCol.setCellValueFactory(cellData -> cellData.getValue().getPriceWithCurrencyProperty());
-        totalPriceCol.setCellValueFactory(cellData -> cellData.getValue().getTotalWithCurrencyProperty());
+        priceCol.setCellValueFactory(cellData -> cellData.getValue().getFormattedPriceProperty());
+        totalPriceCol.setCellValueFactory(cellData -> cellData.getValue().getFormattedTotalProperty());
         //ITEMS TABLE ENDS
 
         //PAST INVOICES TABLE STARTS

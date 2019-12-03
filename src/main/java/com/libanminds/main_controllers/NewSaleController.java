@@ -5,13 +5,10 @@ import com.libanminds.dialogs_controllers.SelectItemDialogController;
 import com.libanminds.models.Customer;
 import com.libanminds.models.Item;
 import com.libanminds.models.Sale;
-import com.libanminds.repositories.CustomersRepository;
-import com.libanminds.repositories.ItemsRepository;
 import com.libanminds.repositories.SalesRepository;
 import com.libanminds.utils.EditingCell;
 import com.libanminds.utils.HelperFunctions;
 import com.libanminds.utils.Views;
-import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -23,8 +20,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -32,10 +27,6 @@ import org.controlsfx.control.ToggleSwitch;
 
 import java.net.URL;
 import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
-import java.util.Currency;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -234,8 +225,8 @@ public class NewSaleController implements Initializable {
 
         codeCol.setCellValueFactory(new PropertyValueFactory<>("code"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        priceCol.setCellValueFactory(cellData -> cellData.getValue().getPriceWithCurrencyProperty());
-        totalPriceCol.setCellValueFactory(cellData -> cellData.getValue().getTotalWithCurrencyProperty());
+        priceCol.setCellValueFactory(cellData -> cellData.getValue().getFormattedPriceProperty());
+        totalPriceCol.setCellValueFactory(cellData -> cellData.getValue().getFormattedTotalProperty());
         //ITEMS TABLE ENDS
 
         //PAST INVOICES TABLE STARTS

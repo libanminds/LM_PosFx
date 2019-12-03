@@ -11,13 +11,13 @@ import java.io.FileInputStream;
 
 public class Item {
 
+    private SimpleIntegerProperty itemID;
     private SimpleDoubleProperty initialPrice;
     private SimpleIntegerProperty itemPropertiesID;
     private SimpleIntegerProperty code;
     private SimpleStringProperty name;
     private ItemCategory category;
     private SimpleDoubleProperty cost;
-    private SimpleDoubleProperty price;
     private SimpleIntegerProperty stock;
     private SimpleStringProperty supplier;
     private SimpleStringProperty description;
@@ -25,21 +25,22 @@ public class Item {
     private SimpleBooleanProperty isService;
     private SimpleStringProperty lastModified;
 
-    private int id;
-    private String  imageUrl;
-    private String  currency;
-    private int minStock;
+
+    private SimpleStringProperty  imageUrl;
+    private SimpleStringProperty  currency;
+    private SimpleIntegerProperty minStock;
     private ImageView image;
 
     //These are used in the sales tab.
+    private SimpleDoubleProperty price;
     private IntegerProperty saleQuantity = new SimpleIntegerProperty(1);
     private SimpleStringProperty saleCurrency = new SimpleStringProperty("LL");
     private DoubleProperty discount = new SimpleDoubleProperty(0);
     private DoubleProperty total = new SimpleDoubleProperty(0);
-    private StringProperty totalWithCurrency = new SimpleStringProperty("0 LL");
-    private StringProperty priceWithCurrency;
+    private StringProperty formattedTotal = new SimpleStringProperty("0 LL");
+    private StringProperty formattedPrice;
 
-    public Item(int id, String imageUrl, int code, int itemPropertiesID, String name, ItemCategory category,double cost, double price, String currency, int stock, int minStock, String supplier, String description, boolean priceIncludesTax, boolean isService, String lastModified) {
+    public Item(int itemID, String imageUrl, int code, int itemPropertiesID, String name, ItemCategory category, double cost, double price, String currency, int stock, int minStock, String supplier, String description, boolean priceIncludesTax, boolean isService, String lastModified) {
         try{
             Image imageFile = new Image(new FileInputStream(imageUrl));
             image = new ImageView(imageFile);
@@ -49,16 +50,16 @@ public class Item {
         }catch(Exception e) {
             image = null;
         }
-        this.id = id;
-        this.imageUrl = imageUrl;
-        this.minStock = minStock;
+        this.itemID = new SimpleIntegerProperty(itemID);
+        this.imageUrl = new SimpleStringProperty(imageUrl);
+        this.minStock = new SimpleIntegerProperty(minStock);
         this.code = new SimpleIntegerProperty(code);
         this.itemPropertiesID = new SimpleIntegerProperty(itemPropertiesID);
         this.name = new SimpleStringProperty(name);
         this.category = category;
         this.cost = new SimpleDoubleProperty(cost);
         this.initialPrice =  new SimpleDoubleProperty(price);
-        this.currency = currency;
+        this.currency = new SimpleStringProperty(currency);
         this.stock = new SimpleIntegerProperty(stock);
         this.supplier = new SimpleStringProperty(supplier);
         this.description = new SimpleStringProperty(description);
@@ -67,10 +68,10 @@ public class Item {
         this.lastModified = new SimpleStringProperty(lastModified);
         this.price = new SimpleDoubleProperty(0);
         calculatePrice();
-        priceWithCurrency = new SimpleStringProperty(price + currency);
+        formattedPrice = new SimpleStringProperty(price + currency);
         this.total.bind(this.price.multiply(this.saleQuantity).subtract(this.discount));
-        this.priceWithCurrency.bind(Bindings.createStringBinding( () -> HelperFunctions.getDecimalFormatter().format(this.price.getValue()) + " " + this.saleCurrency.getValue(),this.price,this.saleCurrency));
-        this.totalWithCurrency.bind(Bindings.createStringBinding( () -> HelperFunctions.getDecimalFormatter().format(this.total.getValue()) + " " + this.saleCurrency.getValue(),this.total,this.saleCurrency));
+        this.formattedPrice.bind(Bindings.createStringBinding( () -> HelperFunctions.getDecimalFormatter().format(this.price.getValue()) + " " + this.saleCurrency.getValue(),this.price,this.saleCurrency));
+        this.formattedTotal.bind(Bindings.createStringBinding( () -> HelperFunctions.getDecimalFormatter().format(this.total.getValue()) + " " + this.saleCurrency.getValue(),this.total,this.saleCurrency));
     }
 
     @Override
@@ -80,7 +81,7 @@ public class Item {
         if (! (other instanceof Item)) return false ;
 
         Item otherItem = (Item) other ;
-        return this.id == otherItem.id;
+        return this.itemID == otherItem.itemID;
     }
 
     public String getSaleCurrency() {
@@ -110,10 +111,10 @@ public class Item {
     }
 
     private void calculatePrice() {
-        if(currency.equals(saleCurrency.getValue())) {
+        if(currency.get().equals(saleCurrency.getValue())) {
             price.setValue(initialPrice.getValue());
         } else {
-            if(currency.equals("$"))
+            if(currency.get().equals("$"))
                 price.setValue(initialPrice.getValue() * GlobalSettings.CONVERSION_RATE_FROM_DOLLAR);
             else
                 price.setValue(initialPrice.getValue() / GlobalSettings.CONVERSION_RATE_FROM_DOLLAR);
@@ -121,11 +122,11 @@ public class Item {
     }
 
     public String getFormattedTotal() {
-        return totalWithCurrency.get();
+        return formattedTotal.get();
     }
 
     public String getFormattedPrice() {
-        return priceWithCurrency.get();
+        return formattedPrice.get();
     }
 
     public String getFormattedDiscount() {
@@ -164,12 +165,12 @@ public class Item {
         return total.getValue();
     }
 
-    public StringProperty getTotalWithCurrencyProperty() {
-        return totalWithCurrency;
+    public StringProperty getFormattedTotalProperty() {
+        return formattedTotal;
     }
 
-    public StringProperty getPriceWithCurrencyProperty() {
-        return priceWithCurrency;
+    public StringProperty getFormattedPriceProperty() {
+        return formattedPrice;
     }
 
     public void setDiscount(double val) {
@@ -177,7 +178,7 @@ public class Item {
     }
 
     public int getID() {
-        return id;
+        return itemID.get();
     }
 
     public ItemCategory getItemCategory() {
@@ -193,7 +194,7 @@ public class Item {
     }
 
     public String getImageUrl() {
-        return imageUrl;
+        return imageUrl.get();
     }
 
     public int getCode() {
@@ -233,11 +234,11 @@ public class Item {
     }
 
     public String getCurrency() {
-        return currency;
+        return currency.get();
     }
 
     public void setCurrency(String val) {
-        currency = val;
+        currency.set(val);
     }
 
     public void setPrice(double val) {
@@ -253,11 +254,11 @@ public class Item {
     }
 
     public int getMinStock() {
-        return minStock;
+        return minStock.get();
     }
 
     public void setMinStock(int val) {
-        minStock  = val;
+        minStock.set(val);
     }
 
     public String getSupplier() {
