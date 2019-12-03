@@ -82,13 +82,14 @@ public class ReceivingsRepository {
         }
 
         for (Item item : items) {
-            query = "INSERT INTO purchase_items(item_id,receiving_id,quantity,discount) VALUES (?,?,?,?)";
+            query = "INSERT INTO purchase_items(item_id,item_properties_id,receiving_id,quantity,discount) VALUES (?,?,?,?,?)";
             PreparedStatement statement = DBConnection.instance.getPreparedStatement(query);
             try {
                 statement.setInt(1, item.getID());
-                statement.setDouble(2, receivingID);
-                statement.setInt(3, item.getSaleQuantityValue());
-                statement.setDouble(4, item.getDiscountValue());
+                statement.setInt(2, item.getItemPropertiesID());
+                statement.setDouble(3, receivingID);
+                statement.setInt(4, item.getSaleQuantityValue());
+                statement.setDouble(5, item.getDiscountValue());
                 statement.executeUpdate();
 
                 statement.close();

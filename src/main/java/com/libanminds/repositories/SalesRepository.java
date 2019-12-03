@@ -84,13 +84,14 @@ public class SalesRepository {
         }
 
         for (Item item : items) {
-            query = "INSERT INTO sale_items(item_id,sale_id,quantity,discount) VALUES (?,?,?,?)";
+            query = "INSERT INTO sale_items(item_id,item_properties_id,sale_id,quantity,discount) VALUES (?,?,?,?,?)";
             PreparedStatement statement = DBConnection.instance.getPreparedStatement(query);
             try {
                 statement.setInt(1, item.getID());
-                statement.setDouble(2, saleID);
-                statement.setInt(3, item.getSaleQuantityValue());
-                statement.setDouble(4, item.getDiscountValue());
+                statement.setInt(2, item.getItemPropertiesID());
+                statement.setDouble(3, saleID);
+                statement.setInt(4, item.getSaleQuantityValue());
+                statement.setDouble(5, item.getDiscountValue());
                 statement.executeUpdate();
 
                 statement.close();
