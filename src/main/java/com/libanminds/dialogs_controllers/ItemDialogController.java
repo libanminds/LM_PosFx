@@ -81,6 +81,7 @@ public class ItemDialogController implements Initializable {
     private File itemImage;
 
     private int itemID = -1;
+    private int itemPropertiesID = -1;
 
     private boolean itemImageChanged;
     private String imagePath;
@@ -112,7 +113,7 @@ public class ItemDialogController implements Initializable {
             name.setText(item.getName());
             category.setValue(item.getItemCategory());
             cost.setText(item.getCost() + "");
-            price.setText(item.getPrice() + "");
+            price.setText(item.getInitialPrice() + "");
             currency.setValue(item.getCurrency());
             quantity.setText(item.getStock() + "");
             limit.setText(item.getMinStock() + "");
@@ -120,6 +121,7 @@ public class ItemDialogController implements Initializable {
             includesTax.setSelected(item.getPriceIncludesTax());
             itemImageChanged = false;
             imagePath = item.getImageUrl();
+            itemPropertiesID = item.getItemPropertiesID();
         }
     }
 
@@ -141,6 +143,7 @@ public class ItemDialogController implements Initializable {
                     itemID,
                     itemID == -1 ? saveImageOnDevice(itemImage) : imagePath,
                     Integer.parseInt(code.getText()),
+                    itemPropertiesID,
                     name.getText(),
                     category.getValue(),
                     Double.parseDouble(cost.getText()),

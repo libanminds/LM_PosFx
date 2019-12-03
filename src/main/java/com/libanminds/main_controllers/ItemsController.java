@@ -141,7 +141,7 @@ public class ItemsController implements Initializable {
         codeCol.setCellValueFactory(new PropertyValueFactory<Item,String>("code"));
         nameCol.setCellValueFactory(new PropertyValueFactory<Item,String>("name"));
         categoryCol.setCellValueFactory(new PropertyValueFactory<Item,String>("category"));
-        priceCol.setCellValueFactory(new PropertyValueFactory<Item,String>("price"));
+        priceCol.setCellValueFactory(new PropertyValueFactory<Item,String>("initialPrice"));
         stockCol.setCellValueFactory(new PropertyValueFactory<Item,Double>("stock"));
         supplierCol.setCellValueFactory(new PropertyValueFactory<Item,String>("supplier"));
         descriptionCol.setCellValueFactory(new PropertyValueFactory<Item,String>("description"));

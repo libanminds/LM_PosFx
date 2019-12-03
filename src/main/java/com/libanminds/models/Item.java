@@ -10,8 +10,9 @@ import javafx.scene.image.ImageView;
 import java.io.FileInputStream;
 
 public class Item {
-    private SimpleDoubleProperty initialPrice;
 
+    private SimpleDoubleProperty initialPrice;
+    private SimpleIntegerProperty itemPropertiesID;
     private SimpleIntegerProperty code;
     private SimpleStringProperty name;
     private ItemCategory category;
@@ -38,7 +39,7 @@ public class Item {
     private StringProperty totalWithCurrency = new SimpleStringProperty("0 LL");
     private StringProperty priceWithCurrency;
 
-    public Item(int id, String imageUrl, int code, String name, ItemCategory category,double cost, double price, String currency, int stock, int minStock, String supplier, String description, boolean priceIncludesTax, boolean isService, String lastModified) {
+    public Item(int id, String imageUrl, int code, int itemPropertiesID, String name, ItemCategory category,double cost, double price, String currency, int stock, int minStock, String supplier, String description, boolean priceIncludesTax, boolean isService, String lastModified) {
         try{
             Image imageFile = new Image(new FileInputStream(imageUrl));
             image = new ImageView(imageFile);
@@ -52,6 +53,7 @@ public class Item {
         this.imageUrl = imageUrl;
         this.minStock = minStock;
         this.code = new SimpleIntegerProperty(code);
+        this.itemPropertiesID = new SimpleIntegerProperty(itemPropertiesID);
         this.name = new SimpleStringProperty(name);
         this.category = category;
         this.cost = new SimpleDoubleProperty(cost);
@@ -88,6 +90,23 @@ public class Item {
     public void setSaleCurrency(String val) {
         saleCurrency.setValue(val);
         calculatePrice();
+    }
+
+
+    public int getItemPropertiesID() {
+        return itemPropertiesID.get();
+    }
+
+    public void setItemPropertiesID(int itemPropertiesID) {
+        this.itemPropertiesID.set(itemPropertiesID);
+    }
+
+    public double getInitialPrice() {
+        return initialPrice.get();
+    }
+
+    public void setInitialPrice(double initialPrice) {
+        this.initialPrice.set(initialPrice);
     }
 
     private void calculatePrice() {
