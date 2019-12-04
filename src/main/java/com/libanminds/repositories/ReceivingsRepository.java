@@ -17,19 +17,19 @@ public class ReceivingsRepository {
     public static ObservableList<Receiving> getReceivings() {
         String query = "SELECT * FROM purchases LEFT JOIN suppliers on purchases.supplier_id = suppliers.id";
 
-        return getReceivingsFromQuery(query,false);
+        return getReceivingsFromQuery(query, false);
     }
 
     public static ObservableList<Receiving> getReceivingsLike(String value) {
         String query = "SELECT * FROM purchases LEFT JOIN suppliers on purchases.supplier_id = suppliers.id where" +
                 " first_name like '%" + value + "%' or" +
                 " last_name like '%" + value + "%' or" +
-                " type like '%"+ value + "%'";
+                " type like '%" + value + "%'";
 
-        return getReceivingsFromQuery(query,false);
+        return getReceivingsFromQuery(query, false);
     }
 
-    public static boolean completeReceivingPayment(int receivingID,double discount, double totalAmount, double paidAmount) {
+    public static boolean completeReceivingPayment(int receivingID, double discount, double totalAmount, double paidAmount) {
 
         String query = "UPDATE purchases SET discount = ?, total_amount = ?, paid_amount = ? where id = ?";
         PreparedStatement salesStatement = DBConnection.instance.getPreparedStatement(query);
@@ -70,7 +70,7 @@ public class ReceivingsRepository {
 
             ResultSet rs = receivingsStatement.getGeneratedKeys();
 
-            if(rs.next())
+            if (rs.next())
                 receivingID = rs.getInt(1);
 
             rs.close();
@@ -102,41 +102,41 @@ public class ReceivingsRepository {
 
         double balance = (totalAmount - paidAmount);
 
-            return !(balance > 0) || SupplierRepository.updateBalance(supplier.getID(), balance);
+        return !(balance > 0) || SupplierRepository.updateBalance(supplier.getID(), balance);
     }
 
     public static ObservableList<Receiving> getCompactReceivingOfCustomer(int supplierID) {
 
         String query = "SELECT id, total_amount, paid_amount, currency, (total_amount - paid_amount) AS balance FROM purchases where supplier_id = " + supplierID + " ORDER BY balance DESC";
 
-        return getReceivingsFromQuery(query,true);
+        return getReceivingsFromQuery(query, true);
     }
 
     private static ObservableList<Receiving> getReceivingsFromQuery(String query, boolean isCompact) {
         ObservableList<Receiving> data = FXCollections.observableArrayList();
 
         try {
-            Statement statement  = DBConnection.instance.getStatement();
-            ResultSet rs    = statement.executeQuery(query);
+            Statement statement = DBConnection.instance.getStatement();
+            ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
-                data.add(isCompact ?  new Receiving(
-                        rs.getInt(1),
-                        rs.getDouble(2),
-                        rs.getDouble(3),
-                        rs.getString(4)
-                ): new Receiving(
-                        rs.getInt(1),
-                        rs.getInt("supplier_id"),
-                        rs.getString("first_name") + rs.getString("last_name"),
-                        rs.getDouble("discount"),
-                        rs.getInt("tax_id"),
-                        rs.getDouble("conversion_rate"),
-                        rs.getDouble("total_amount"),
-                        rs.getString("currency"),
-                        rs.getDouble("paid_amount"),
-                        rs.getBoolean("is_official"),
-                        rs.getString("type"))
-                        );
+                data.add(isCompact ? new Receiving(
+                                rs.getInt(1),
+                                rs.getDouble(2),
+                                rs.getDouble(3),
+                                rs.getString(4)
+                        ) : new Receiving(
+                                rs.getInt(1),
+                                rs.getInt("supplier_id"),
+                                rs.getString("first_name") + rs.getString("last_name"),
+                                rs.getDouble("discount"),
+                                rs.getInt("tax_id"),
+                                rs.getDouble("conversion_rate"),
+                                rs.getDouble("total_amount"),
+                                rs.getString("currency"),
+                                rs.getDouble("paid_amount"),
+                                rs.getBoolean("is_official"),
+                                rs.getString("type"))
+                );
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

@@ -1,6 +1,7 @@
 package com.libanminds.main_controllers;
 
 import com.libanminds.dialogs_controllers.CompleteSaleController;
+import com.libanminds.dialogs_controllers.ReturnSaleItemsController;
 import com.libanminds.dialogs_controllers.ViewSaleController;
 import com.libanminds.models.Sale;
 import com.libanminds.repositories.SalesRepository;
@@ -32,6 +33,9 @@ public class SalesController implements Initializable {
     private Button viewSaleBtn;
 
     @FXML
+    private Button returnItems;
+
+    @FXML
     private TableView<Sale> salesTable;
 
     private Sale selectedSale;
@@ -58,8 +62,17 @@ public class SalesController implements Initializable {
                 showViewSaleDialog(selectedSale);
             }
         });
+
+        returnItems.setOnMouseClicked(new EventHandler<Event>() {
+            @Override
+            public void handle(Event event) {
+                showReturnItemsDialog(selectedSale);
+            }
+        });
+
         viewSaleBtn.setDisable(true);
         completePayment.setDisable(true);
+        returnItems.setDisable(true);
     }
 
     private void initSearch() {
@@ -75,6 +88,25 @@ public class SalesController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(loader.load()));
             ViewSaleController controller = loader.getController();
+            controller.setSale(sale);
+            stage.show();
+            stage.setOnHidden(e -> {
+                salesTable.setItems(SalesRepository.getSales());
+            });
+        }catch (Exception e){
+            System.out.println(e.getCause());
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void showReturnItemsDialog(Sale sale) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.RETURN_SALE_ITEMS));
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(loader.load()));
+            ReturnSaleItemsController controller = loader.getController();
             controller.setSale(sale);
             stage.show();
             stage.setOnHidden(e -> {
@@ -131,6 +163,7 @@ public class SalesController implements Initializable {
             selectedSale = (Sale)newValue;
             completePayment.setDisable(selectedSale == null || selectedSale.isComplete());
             viewSaleBtn.setDisable(selectedSale == null);
+            returnItems.setDisable(selectedSale == null);
         });
     }
 }

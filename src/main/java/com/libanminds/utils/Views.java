@@ -35,6 +35,7 @@ public final class Views {
     public static final String VIEW_SALE = "/views/dialogs/view_sale.fxml";
     public static final String COMPLETE_RECEIVING = "/views/dialogs/complete_receiving.fxml";
     public static final String VIEW_RECEIVING = "/views/dialogs/view_receiving.fxml";
+    public static final String RETURN_SALE_ITEMS = "/views/dialogs/return_sale_items.fxml";
 
     //Categories Controllers
     public static final String ITEMS_CATEGORIES = "/views/main/item_categories.fxml";

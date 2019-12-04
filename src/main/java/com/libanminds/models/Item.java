@@ -34,6 +34,8 @@ public class Item {
     //These are used in the sales tab.
     private SimpleDoubleProperty price;
     private IntegerProperty saleQuantity = new SimpleIntegerProperty(1);
+    private IntegerProperty returnedQuantity = new SimpleIntegerProperty(0);
+    private IntegerProperty totalQuantity = new SimpleIntegerProperty(saleQuantity.get());
     private SimpleStringProperty saleCurrency = new SimpleStringProperty("LL");
     private DoubleProperty discount = new SimpleDoubleProperty(0);
     private DoubleProperty total = new SimpleDoubleProperty(0);
@@ -151,6 +153,18 @@ public class Item {
 
     public void incrementSaleQuantity() {
         saleQuantity.set(saleQuantity.get() + 1);
+    }
+
+    public void decrementSaleQuantity() {
+        saleQuantity.set(saleQuantity.get() - 1);
+    }
+
+    public int getReturnedQuantity() {
+        return returnedQuantity.get();
+    }
+
+    public void setReturnedQuantity(int returnedQuantity) {
+        this.returnedQuantity.set(returnedQuantity);
     }
 
     public String getDiscount() {

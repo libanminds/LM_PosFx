@@ -23,6 +23,7 @@
                   </TextField>
                   <Region HBox.hgrow="ALWAYS" />
                   <Button fx:id="viewSaleBtn" mnemonicParsing="false" text="View Sale" />
+                  <Button fx:id="returnItems" mnemonicParsing="false" text="Return Items" />
                   <Button fx:id="completePayment" mnemonicParsing="false" text="Complete Payment" />
                </children>
                <VBox.margin>
