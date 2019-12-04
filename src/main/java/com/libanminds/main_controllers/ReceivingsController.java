@@ -1,9 +1,6 @@
 package com.libanminds.main_controllers;
 
-import com.libanminds.dialogs_controllers.CompleteReceivingController;
-import com.libanminds.dialogs_controllers.CompleteSaleController;
-import com.libanminds.dialogs_controllers.ViewReceivingController;
-import com.libanminds.dialogs_controllers.ViewSaleController;
+import com.libanminds.dialogs_controllers.*;
 import com.libanminds.models.Receiving;
 import com.libanminds.models.Sale;
 import com.libanminds.repositories.ReceivingsRepository;
@@ -39,6 +36,9 @@ public class ReceivingsController implements Initializable {
     private Button viewReceiving;
 
     @FXML
+    private Button returnItems;
+
+    @FXML
     private TableView<Receiving> receivingsTable;
 
     private Receiving selectedReceiving;
@@ -59,8 +59,13 @@ public class ReceivingsController implements Initializable {
         viewReceiving.setOnMouseClicked((EventHandler<Event>) event -> {
             showViewReceivingDialog(selectedReceiving);
         });
+
+        returnItems.setOnMouseClicked((EventHandler<Event>) event -> {
+            showReturnItemsDialog(selectedReceiving);
+        });
         viewReceiving.setDisable(true);
         completePayment.setDisable(true);
+        returnItems.setDisable(true);
     }
 
     private void showViewReceivingDialog(Receiving receiving) {
@@ -76,6 +81,25 @@ public class ReceivingsController implements Initializable {
                 receivingsTable.setItems(ReceivingsRepository.getReceivings());
             });
         }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showReturnItemsDialog(Receiving receiving) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.RETURN_RECEIVING_ITEMS));
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(loader.load()));
+            ReturnReceivingItemsController controller = loader.getController();
+            controller.setReceiving(receiving);
+            stage.show();
+            stage.setOnHidden(e -> {
+                receivingsTable.setItems(ReceivingsRepository.getReceivings());
+            });
+        }catch (Exception e){
+            System.out.println(e.getCause());
+            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -129,6 +153,7 @@ public class ReceivingsController implements Initializable {
             selectedReceiving = (Receiving) newValue;
             completePayment.setDisable(selectedReceiving == null || selectedReceiving.isComplete());
             viewReceiving.setDisable(selectedReceiving == null);
+            returnItems.setDisable(selectedReceiving == null);
         });
     }
 }

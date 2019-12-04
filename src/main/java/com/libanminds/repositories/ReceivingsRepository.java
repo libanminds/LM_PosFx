@@ -105,6 +105,42 @@ public class ReceivingsRepository {
         return !(balance > 0) || SupplierRepository.updateBalance(supplier.getID(), balance);
     }
 
+
+    public static boolean returnReceivedItems(Receiving receiving, List<Item> items) {
+        String query = "UPDATE purchases SET discount = ?, total_amount = ?, paid_amount = ? where id = ?";
+        PreparedStatement purchasesStatement = DBConnection.instance.getPreparedStatement(query);
+
+        try {
+            purchasesStatement.setDouble(1, receiving.getDiscount());
+            purchasesStatement.setDouble(2, receiving.getTotalAmount());
+            purchasesStatement.setDouble(3, receiving.getPaidAmount());
+            purchasesStatement.setInt(4, receiving.getID());
+            purchasesStatement.executeUpdate();
+            purchasesStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        for (Item item : items) {
+            query = "UPDATE purchase_items SET returned_quantity = ? where receiving_id = ? AND item_id = ?";
+            PreparedStatement itemStatement = DBConnection.instance.getPreparedStatement(query);
+
+            try {
+                itemStatement.setInt(1, item.getPreviouslyReturnedQuantity() + item.getReturnedQuantityValue());
+                itemStatement.setInt(2, receiving.getID());
+                itemStatement.setInt(3, item.getID());
+                itemStatement.executeUpdate();
+                itemStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public static ObservableList<Receiving> getCompactReceivingOfCustomer(int supplierID) {
 
         String query = "SELECT id, total_amount, paid_amount, currency, (total_amount - paid_amount) AS balance FROM purchases where supplier_id = " + supplierID + " ORDER BY balance DESC";

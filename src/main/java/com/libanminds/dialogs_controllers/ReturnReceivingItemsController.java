@@ -2,8 +2,9 @@ package com.libanminds.dialogs_controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.libanminds.models.Item;
-import com.libanminds.models.Sale;
+import com.libanminds.models.Receiving;
 import com.libanminds.repositories.ItemsRepository;
+import com.libanminds.repositories.ReceivingsRepository;
 import com.libanminds.repositories.SalesRepository;
 import com.libanminds.utils.EditingCell;
 import com.libanminds.utils.HelperFunctions;
@@ -20,10 +21,10 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
-public class ReturnSaleItemsController implements Initializable {
+public class ReturnReceivingItemsController implements Initializable {
 
     @FXML
-    private TableView<Item> soldItemsTable;
+    private TableView<Item> receivedItemsTable;
 
     @FXML
     private TableView<Item> returnedItemsTable;
@@ -53,9 +54,9 @@ public class ReturnSaleItemsController implements Initializable {
     private TextField discountField;
 
     @FXML
-    private JFXButton saveSale;
+    private JFXButton saveReceiving;
 
-    private Sale sale;
+    private Receiving receiving;
 
     private double subtotal;
     private double salesDiscount;
@@ -70,20 +71,20 @@ public class ReturnSaleItemsController implements Initializable {
         initButtonsClicks();
     }
 
-    public void setSale(Sale sale) {
-        this.sale = sale;
+    public void setReceiving(Receiving receiving) {
+        this.receiving = receiving;
         initNumbers();
         updateNumbersUI();
         initializeTables();
     }
 
     private void initButtonsClicks() {
-        saveSale.setOnMouseClicked((EventHandler<Event>) event -> SaveChanges());
+        saveReceiving.setOnMouseClicked((EventHandler<Event>) event -> SaveChanges());
     }
 
     private void initializeTables() {
 
-        //SOLD ITEMS TABLE START
+        //RECEIVED ITEMS TABLE START
         TableColumn<Item, String> codeCol = new TableColumn<>("Code");
         TableColumn<Item, String> nameCol = new TableColumn<>("Name");
         TableColumn<Item, String> saleQuantityCol = new TableColumn<>("Quantity");
@@ -91,7 +92,7 @@ public class ReturnSaleItemsController implements Initializable {
         TableColumn<Item, String> saleDiscountCol = new TableColumn<>("Discount");
         TableColumn<Item, String> totalPriceCol = new TableColumn<>("Total");
 
-        soldItemsTable.getColumns().addAll(codeCol, nameCol, saleQuantityCol, priceCol, saleDiscountCol, totalPriceCol);
+        receivedItemsTable.getColumns().addAll(codeCol, nameCol, saleQuantityCol, priceCol, saleDiscountCol, totalPriceCol);
 
         codeCol.setCellValueFactory(new PropertyValueFactory<>("code"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -101,7 +102,7 @@ public class ReturnSaleItemsController implements Initializable {
         totalPriceCol.setCellValueFactory(new PropertyValueFactory<>("formattedTotal"));
 
 
-        soldItemsTable.setRowFactory( tv -> {
+        receivedItemsTable.setRowFactory(tv -> {
             TableRow<Item> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() >= 2 && (! row.isEmpty()) ) {
@@ -110,18 +111,18 @@ public class ReturnSaleItemsController implements Initializable {
                         item.incrementReturnedQuantity();
                     }else {
                         item.incrementReturnedQuantity();
-                        soldItemsTable.refresh();
+                        receivedItemsTable.refresh();
                         returnedItemsTable.getItems().add(item);
                     }
                     returnedItemsTable.refresh();
-                    soldItemsTable.refresh();
+                    receivedItemsTable.refresh();
                     recalculateNumbers();
                 }
             });
             return row ;
         });
 
-        soldItemsTable.setItems(ItemsRepository.getItemsOfSale(sale));
+        receivedItemsTable.setItems(ItemsRepository.getItemsOfReceiving(receiving));
 
         //RETURNED ITEMS TABLE START
         codeCol = new TableColumn<>("Code");
@@ -143,7 +144,7 @@ public class ReturnSaleItemsController implements Initializable {
                             t.getTablePosition().getRow()).setReturnedQuantity(Integer.parseInt(t.getNewValue()));
 
                     returnedItemsTable.refresh();
-                    soldItemsTable.refresh();
+                    receivedItemsTable.refresh();
                     recalculateNumbers();
                 }
         );
@@ -153,19 +154,19 @@ public class ReturnSaleItemsController implements Initializable {
     }
 
     private void SaveChanges() {
-        sale.setDiscount(salesDiscount);
-        sale.setPaidAmount(amountPaid - amountToRefund);
-        sale.setTotalAmount(totalAmount);
-        SalesRepository.returnSoldItems(sale, returnedItemsTable.getItems());
-        Stage currentStage = (Stage) saveSale.getScene().getWindow();
+        receiving.setDiscount(salesDiscount);
+        receiving.setPaidAmount(amountPaid - amountToRefund);
+        receiving.setTotalAmount(totalAmount);
+        ReceivingsRepository.returnReceivedItems(receiving, returnedItemsTable.getItems());
+        Stage currentStage = (Stage) saveReceiving.getScene().getWindow();
         currentStage.close();
     }
 
     private void initNumbers() {
-        subtotal = sale.getTotalAmount() + sale.getDiscount();
-        salesDiscount = sale.getDiscount();
-        totalAmount = sale.getTotalAmount();
-        amountPaid = sale.getPaidAmount();
+        subtotal = receiving.getTotalAmount() + receiving.getDiscount();
+        salesDiscount = receiving.getDiscount();
+        totalAmount = receiving.getTotalAmount();
+        amountPaid = receiving.getPaidAmount();
         amountToRefund = 0;
         remainingAmount = totalAmount - amountPaid;
         discountField.setText(salesDiscount + "");
@@ -174,8 +175,8 @@ public class ReturnSaleItemsController implements Initializable {
     private void recalculateNumbers() {
 
         subtotal = 0;
-        for (int i = 0; i < soldItemsTable.getItems().size(); i++) {
-            subtotal += soldItemsTable.getItems().get(i).getTotal();
+        for (int i = 0; i < receivedItemsTable.getItems().size(); i++) {
+            subtotal += receivedItemsTable.getItems().get(i).getTotal();
         }
 
         totalAmount = subtotal - salesDiscount + taxes;
@@ -191,12 +192,12 @@ public class ReturnSaleItemsController implements Initializable {
 
     private void updateNumbersUI() {
         DecimalFormat formatter = HelperFunctions.getDecimalFormatter();
-        subtotalText.setText( formatter.format(subtotal) + " " + sale.getCurrency());
-        discountCurrencyText.setText(sale.getCurrency());
-        taxesText.setText(formatter.format(taxes) + " " + sale.getCurrency());
-        totalText.setText(formatter.format(totalAmount) + " " + sale.getCurrency());
-        amountPaidText.setText(formatter.format(amountPaid) + " " + sale.getCurrency());
-        refundAmountText.setText(formatter.format(amountToRefund) + " " + sale.getCurrency());
-        remainingAmountLabel.setText(formatter.format(remainingAmount) + " " + sale.getCurrency());
+        subtotalText.setText( formatter.format(subtotal) + " " + receiving.getCurrency());
+        discountCurrencyText.setText(receiving.getCurrency());
+        taxesText.setText(formatter.format(taxes) + " " + receiving.getCurrency());
+        totalText.setText(formatter.format(totalAmount) + " " + receiving.getCurrency());
+        amountPaidText.setText(formatter.format(amountPaid) + " " + receiving.getCurrency());
+        refundAmountText.setText(formatter.format(amountToRefund) + " " + receiving.getCurrency());
+        remainingAmountLabel.setText(formatter.format(remainingAmount) + " " + receiving.getCurrency());
     }
 }

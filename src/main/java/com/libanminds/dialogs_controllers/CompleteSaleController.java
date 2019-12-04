@@ -133,6 +133,7 @@ public class CompleteSaleController implements Initializable {
         });
     }
 
+
     private void recalculateNumbers() {
         totalAmount = subtotal - salesDiscount + taxes - newSalesDiscount;
         remainingAmount = totalAmount - amountPaid - newPayment;

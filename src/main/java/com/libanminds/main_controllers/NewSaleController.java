@@ -193,14 +193,13 @@ public class NewSaleController implements Initializable {
                 p -> new EditingCell();
 
         saleQuantityCol.setCellValueFactory(
-                new PropertyValueFactory<Item, String>("saleQuantity"));
+                new PropertyValueFactory<Item, String>("totalQuantity"));
         saleQuantityCol.setCellFactory(cellFactory);
 
         saleQuantityCol.setOnEditCommit(
                 (EventHandler<TableColumn.CellEditEvent<Item, String>>) t -> {
-                    ((Item) t.getTableView().getItems().get(
-                            t.getTablePosition().getRow())
-                    ).setSaleQuantity(Integer.parseInt(t.getNewValue()));
+                    t.getTableView().getItems().get(
+                            t.getTablePosition().getRow()).setTotalQuantity(Integer.parseInt(t.getNewValue()));
 
                     calculateSubtotal();
                     recalculateNumbers();
@@ -213,9 +212,8 @@ public class NewSaleController implements Initializable {
 
         saleDiscountCol.setOnEditCommit(
                 (EventHandler<TableColumn.CellEditEvent<Item, String>>) t -> {
-                    ((Item) t.getTableView().getItems().get(
-                            t.getTablePosition().getRow())
-                    ).setDiscount(t.getNewValue().isEmpty() ? 0 : Double.parseDouble(t.getNewValue()));
+                    t.getTableView().getItems().get(
+                            t.getTablePosition().getRow()).setDiscount(t.getNewValue().isEmpty() ? 0 : Double.parseDouble(t.getNewValue()));
 
                     calculateSubtotal();
                     recalculateNumbers();
@@ -264,7 +262,7 @@ public class NewSaleController implements Initializable {
     private void addItemToList() {
         if (selectedItem != null) {
             if(itemsTable.getItems().contains(selectedItem)) {
-                itemsTable.getItems().get(itemsTable.getItems().indexOf(selectedItem)).incrementSaleQuantity();
+                itemsTable.getItems().get(itemsTable.getItems().indexOf(selectedItem)).incrementTotalQuantity();
                 itemsTable.refresh();
             } else {
                 selectedItem.setSaleCurrency(currencyChoiceBox.getValue());

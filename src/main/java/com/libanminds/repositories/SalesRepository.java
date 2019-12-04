@@ -108,6 +108,43 @@ public class SalesRepository {
 
     }
 
+    public static boolean returnSoldItems(Sale sale, List<Item> items) {
+        String query = "UPDATE sales SET discount = ?, total_amount = ?, paid_amount = ? where id = ?";
+        PreparedStatement salesStatement = DBConnection.instance.getPreparedStatement(query);
+
+        try {
+            salesStatement.setDouble(1, sale.getDiscount());
+            salesStatement.setDouble(2, sale.getTotalAmount());
+            salesStatement.setDouble(3, sale.getPaidAmount());
+            salesStatement.setInt(4, sale.getID());
+            salesStatement.executeUpdate();
+            salesStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        for (Item item : items) {
+            System.out.println("Sale ID: " + sale.getID());
+            System.out.println("Item ID: " + item.getID());
+            query = "UPDATE sale_items SET returned_quantity = ? where sale_id = ? AND item_id = ?";
+            PreparedStatement itemStatement = DBConnection.instance.getPreparedStatement(query);
+
+            try {
+                itemStatement.setInt(1, item.getPreviouslyReturnedQuantity() + item.getReturnedQuantityValue());
+                itemStatement.setInt(2, sale.getID());
+                itemStatement.setInt(3, item.getID());
+                itemStatement.executeUpdate();
+                itemStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public static ObservableList<Sale> getCompactSalesOfCustomer(int customerID) {
 
         String query = "SELECT id, total_amount, paid_amount, currency, (total_amount - paid_amount) AS balance FROM sales where customer_id = " + customerID + " ORDER BY balance DESC";

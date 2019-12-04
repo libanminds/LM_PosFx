@@ -34,6 +34,7 @@ public class Item {
     //These are used in the sales tab.
     private SimpleDoubleProperty price;
     private IntegerProperty saleQuantity = new SimpleIntegerProperty(1);
+    private IntegerProperty previouslyReturnedQuantity = new SimpleIntegerProperty(0);
     private IntegerProperty returnedQuantity = new SimpleIntegerProperty(0);
     private IntegerProperty totalQuantity = new SimpleIntegerProperty(saleQuantity.get());
     private SimpleStringProperty saleCurrency = new SimpleStringProperty("LL");
@@ -71,6 +72,7 @@ public class Item {
         this.price = new SimpleDoubleProperty(0);
         calculatePrice();
         formattedPrice = new SimpleStringProperty(price + currency);
+        this.saleQuantity.bind(this.totalQuantity.subtract(this.previouslyReturnedQuantity).subtract(this.returnedQuantity));
         this.total.bind(this.price.multiply(this.saleQuantity).subtract(this.discount));
         this.formattedPrice.bind(Bindings.createStringBinding( () -> HelperFunctions.getDecimalFormatter().format(this.price.getValue()) + " " + this.saleCurrency.getValue(),this.price,this.saleCurrency));
         this.formattedTotal.bind(Bindings.createStringBinding( () -> HelperFunctions.getDecimalFormatter().format(this.total.getValue()) + " " + this.saleCurrency.getValue(),this.total,this.saleCurrency));
@@ -83,7 +85,7 @@ public class Item {
         if (! (other instanceof Item)) return false ;
 
         Item otherItem = (Item) other ;
-        return this.itemID == otherItem.itemID;
+        return this.getID() == otherItem.getID();
     }
 
     public String getSaleCurrency() {
@@ -151,20 +153,40 @@ public class Item {
         saleQuantity.set(val);
     }
 
-    public void incrementSaleQuantity() {
-        saleQuantity.set(saleQuantity.get() + 1);
+    public void incrementTotalQuantity() {
+        totalQuantity.set(totalQuantity.get() + 1);
     }
 
-    public void decrementSaleQuantity() {
-        saleQuantity.set(saleQuantity.get() - 1);
+    public String getReturnedQuantity() {
+        return returnedQuantity.getValue() + "";
     }
 
-    public int getReturnedQuantity() {
-        return returnedQuantity.get();
+    public int getPreviouslyReturnedQuantity() {
+        return previouslyReturnedQuantity.get();
+    }
+
+    public void setPreviouslyReturnedQuantity(int previouslyReturnedQuantity) {
+        this.previouslyReturnedQuantity.set(previouslyReturnedQuantity);
+    }
+
+    public int getReturnedQuantityValue() {
+        return returnedQuantity.getValue();
     }
 
     public void setReturnedQuantity(int returnedQuantity) {
         this.returnedQuantity.set(returnedQuantity);
+    }
+
+    public void incrementReturnedQuantity() {
+        returnedQuantity.set(returnedQuantity.get() + 1);
+    }
+
+    public String getTotalQuantity() {
+        return totalQuantity.getValue() + "";
+    }
+
+    public void setTotalQuantity(int totalQuantity) {
+        this.totalQuantity.set(totalQuantity);
     }
 
     public String getDiscount() {

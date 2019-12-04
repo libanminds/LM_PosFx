@@ -267,7 +267,8 @@ public class ItemsRepository {
                         false,
                         rs.getString("created_at")
                 );
-                item.setSaleQuantity(rs.getInt(17));
+                item.setTotalQuantity(rs.getInt(17));
+                item.setPreviouslyReturnedQuantity(rs.getInt("returned_quantity"));
                 item.setDiscount(rs.getInt("discount"));
                 item.setCurrency(currency);
 

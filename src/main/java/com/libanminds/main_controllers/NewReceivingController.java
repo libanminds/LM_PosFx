@@ -319,7 +319,7 @@ public class NewReceivingController implements Initializable {
     private void addItemToList() {
         if (selectedItem != null) {
             if(itemsTable.getItems().contains(selectedItem)) {
-                itemsTable.getItems().get(itemsTable.getItems().indexOf(selectedItem)).incrementSaleQuantity();
+                itemsTable.getItems().get(itemsTable.getItems().indexOf(selectedItem)).incrementTotalQuantity();
                 itemsTable.refresh();
             } else {
                 selectedItem.setSaleCurrency(currencyChoiceBox.getValue());
