@@ -253,7 +253,7 @@ public class NewReceivingController implements Initializable {
                 (EventHandler<TableColumn.CellEditEvent<Item, String>>) t -> {
                     ((Item) t.getTableView().getItems().get(
                             t.getTablePosition().getRow())
-                    ).setSaleQuantity(Integer.parseInt(t.getNewValue()));
+                    ).setTotalQuantity(Integer.parseInt(t.getNewValue()));
 
                     calculateSubtotal();
                     recalculateNumbers();

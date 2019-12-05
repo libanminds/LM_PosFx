@@ -51,12 +51,7 @@ public class ItemsController implements Initializable {
     }
 
     private void initButtons() {
-        newItemBtn.setOnMouseClicked(new EventHandler<Event>() {
-            @Override
-            public void handle(Event event) {
-                showItemDialog(null);
-            }
-        });
+        newItemBtn.setOnMouseClicked((EventHandler<Event>) event -> showItemDialog(null));
 
         editItem.setOnMouseClicked((EventHandler<Event>) event -> showItemDialog(selectedItem));
         deleteItem.setOnMouseClicked((EventHandler<Event>) event -> showDeleteConfirmationDialog());

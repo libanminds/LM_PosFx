@@ -2,11 +2,11 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.AreaChart?>
+<?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -25,7 +25,7 @@
          <children>
             <AreaChart fx:id="salesChart">
               <xAxis>
-                 <NumberAxis fx:id="salesChartX" />
+                 <CategoryAxis fx:id="salesChartX" />
               </xAxis>
               <yAxis>
                  <NumberAxis fx:id="salesChartY" />
@@ -75,7 +75,7 @@
                            <children>
                               <VBox prefHeight="126.0" prefWidth="266.0">
                                  <children>
-                                    <Label styleClass="bold-text" text="10,000 $" textFill="WHITE" VBox.vgrow="ALWAYS">
+                                    <Label fx:id="salesOfToday" styleClass="bold-text" text="10,000 $" textFill="WHITE" VBox.vgrow="ALWAYS">
                                        <font>
                                           <Font size="40.0" />
                                        </font>
@@ -100,7 +100,7 @@
                            <children>
                               <VBox prefHeight="126.0" prefWidth="266.0">
                                  <children>
-                                    <Label prefHeight="58.0" prefWidth="260.0" styleClass="bold-text" text="500$" textFill="WHITE" VBox.vgrow="ALWAYS">
+                                    <Label fx:id="expenseOfToday" prefHeight="58.0" prefWidth="260.0" styleClass="bold-text" text="500$" textFill="WHITE" VBox.vgrow="ALWAYS">
                                        <font>
                                           <Font size="40.0" />
                                        </font>
@@ -124,7 +124,7 @@
                            <children>
                               <VBox prefHeight="126.0" prefWidth="267.0">
                                  <children>
-                                    <Label prefHeight="58.0" prefWidth="262.0" styleClass="bold-text" text="1201$" textFill="WHITE" VBox.vgrow="ALWAYS">
+                                    <Label fx:id="incomesOfToday" prefHeight="58.0" prefWidth="262.0" styleClass="bold-text" text="1201$" textFill="WHITE" VBox.vgrow="ALWAYS">
                                        <font>
                                           <Font size="40.0" />
                                        </font>
@@ -148,7 +148,7 @@
                            <children>
                               <VBox prefHeight="126.0" prefWidth="265.0">
                                  <children>
-                                    <Label prefHeight="58.0" prefWidth="270.0" styleClass="bold-text" text="3571$" textFill="WHITE" VBox.vgrow="ALWAYS">
+                                    <Label fx:id="revenueOfToday" prefHeight="58.0" prefWidth="270.0" styleClass="bold-text" text="3571$" textFill="WHITE" VBox.vgrow="ALWAYS">
                                        <font>
                                           <Font size="40.0" />
                                        </font>
@@ -181,7 +181,7 @@
                               <HBox alignment="CENTER_LEFT" prefHeight="90.0" prefWidth="516.0">
                                  <children>
                                     <Region prefHeight="100.0" prefWidth="20.0" style="-fx-background-color: f00;" styleClass="curved-edges-left" />
-                                    <Label prefHeight="100.0" prefWidth="498.0" text="Start a New Sale" wrapText="true">
+                                    <Label fx:id="startNewSale" prefHeight="100.0" prefWidth="498.0" text="Start a New Sale" wrapText="true">
                                        <font>
                                           <Font size="24.0" />
                                        </font>
@@ -201,7 +201,7 @@
                               <HBox alignment="CENTER_LEFT" prefHeight="90.0" prefWidth="516.0">
                                  <children>
                                     <Region prefHeight="100.0" prefWidth="20.0" style="-fx-background-color: #00f;" styleClass="curved-edges-left" />
-                                    <Label prefHeight="90.0" prefWidth="498.0" text="Add a new Customer" wrapText="true">
+                                    <Label fx:id="addNewPurchase" prefHeight="90.0" prefWidth="498.0" text="Add a new Purchase" wrapText="true">
                                        <font>
                                           <Font size="24.0" />
                                        </font>
@@ -224,7 +224,7 @@
                               <HBox alignment="CENTER_LEFT" prefHeight="90.0" prefWidth="516.0">
                                  <children>
                                     <Region prefHeight="100.0" prefWidth="20.0" style="-fx-background-color: #800080;" styleClass="curved-edges-left" />
-                                    <Label prefHeight="90.0" prefWidth="498.0" text="View Reports" wrapText="true">
+                                    <Label fx:id="viewReports" prefHeight="90.0" prefWidth="498.0" text="View Reports" wrapText="true">
                                        <font>
                                           <Font size="24.0" />
                                        </font>
@@ -263,7 +263,7 @@
                         <Font size="28.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="18.0" prefWidth="602.0" text="Revenue over the last 7 days" textFill="#797979" GridPane.columnIndex="1">
+                  <Label alignment="CENTER" prefHeight="18.0" prefWidth="602.0" text="Top items in the last 7 days" textFill="#797979" GridPane.columnIndex="1">
                      <font>
                         <Font size="28.0" />
                      </font>
@@ -285,11 +285,10 @@
                   <Insets bottom="20.0" left="20.0" right="20.0" />
                </VBox.margin>
                <children>
-                  <TableView prefHeight="200.0" prefWidth="200.0">
-                    <columns>
-                      <TableColumn prefWidth="239.19999313354492" text="C1" />
-                      <TableColumn prefWidth="302.4000244140625" text="C2" />
-                    </columns>
+                  <TableView fx:id="regularCustomersTable" prefHeight="200.0" prefWidth="200.0">
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
                   </TableView>
                   <PieChart fx:id="pieChart" GridPane.columnIndex="1" />
                </children>

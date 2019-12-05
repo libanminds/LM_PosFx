@@ -15,16 +15,16 @@ import java.util.List;
 public class ReceivingsRepository {
 
     public static ObservableList<Receiving> getReceivings() {
-        String query = "SELECT * FROM purchases LEFT JOIN suppliers on purchases.supplier_id = suppliers.id";
+        String query = "SELECT * FROM purchases LEFT JOIN suppliers on purchases.supplier_id = suppliers.id WHERE total_amount != 0";
 
         return getReceivingsFromQuery(query, false);
     }
 
     public static ObservableList<Receiving> getReceivingsLike(String value) {
-        String query = "SELECT * FROM purchases LEFT JOIN suppliers on purchases.supplier_id = suppliers.id where" +
+        String query = "SELECT * FROM purchases LEFT JOIN suppliers on purchases.supplier_id = suppliers.id where  total_amount != 0 and (" +
                 " first_name like '%" + value + "%' or" +
                 " last_name like '%" + value + "%' or" +
-                " type like '%" + value + "%'";
+                " type like '%" + value + "%')";
 
         return getReceivingsFromQuery(query, false);
     }
@@ -98,6 +98,20 @@ public class ReceivingsRepository {
                 e.printStackTrace();
                 return false;
             }
+
+            query = "UPDATE items SET quantity = quantity + ? WHERE id = ?";
+            statement = DBConnection.instance.getPreparedStatement(query);
+            try {
+                statement.setInt(1, item.getSaleQuantityValue());
+                statement.setInt(2,  item.getID());
+                statement.executeUpdate();
+
+                statement.close();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
         }
 
         double balance = (totalAmount - paidAmount);
@@ -136,8 +150,21 @@ public class ReceivingsRepository {
                 e.printStackTrace();
                 return false;
             }
-        }
 
+            query = "UPDATE items SET quantity = quantity - ? WHERE id = ?";
+            itemStatement = DBConnection.instance.getPreparedStatement(query);
+            try {
+                itemStatement.setInt(1, item.getReturnedQuantityValue());
+                itemStatement.setInt(2,  item.getID());
+                itemStatement.executeUpdate();
+
+                itemStatement.close();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
         return true;
     }
 

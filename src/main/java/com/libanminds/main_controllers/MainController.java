@@ -50,9 +50,11 @@ public class MainController implements Initializable {
 
     private String currentView;
 
+    public static MainController instance;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        instance = this;
         try {
             body.getChildren().add(FXMLLoader.load(getClass().getResource(Views.DASHBOARD)));
             currentView = Views.DASHBOARD;
@@ -82,7 +84,7 @@ public class MainController implements Initializable {
         menuLogout.setOnAction(event -> logout());
     }
 
-    private void onMenuClick(String destination) {
+    public void onMenuClick(String destination) {
         if (destination.equals(currentView)) {
             return;
         }

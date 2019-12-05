@@ -17,21 +17,21 @@ import java.util.List;
 public class SalesRepository {
 
     public static ObservableList<Sale> getSales() {
-        String query = "SELECT * FROM sales LEFT JOIN customers on sales.customer_id = customers.id";
+        String query = "SELECT * FROM sales LEFT JOIN customers on sales.customer_id = customers.id WHERE total_amount != 0";
 
-        return getSalesFromQuery(query,false);
+        return getSalesFromQuery(query, false);
     }
 
     public static ObservableList<Sale> getSalesLike(String value) {
-        String query = "SELECT * FROM sales LEFT JOIN customers on sales.customer_id = customers.id where" +
+        String query = "SELECT * FROM sales LEFT JOIN customers on sales.customer_id = customers.id where  total_amount != 0 and (" +
                 " first_name like '%" + value + "%' or" +
                 " last_name like '%" + value + "%' or" +
-                " type like '%"+ value + "%'";
+                " type like '%" + value + "%')";
 
-        return getSalesFromQuery(query,false);
+        return getSalesFromQuery(query, false);
     }
 
-    public static boolean completeSalePayment(int saleID,double discount, double totalAmount, double paidAmount) {
+    public static boolean completeSalePayment(int saleID, double discount, double totalAmount, double paidAmount) {
 
         String query = "UPDATE sales SET discount = ?, total_amount = ?, paid_amount = ? where id = ?";
         PreparedStatement salesStatement = DBConnection.instance.getPreparedStatement(query);
@@ -72,7 +72,7 @@ public class SalesRepository {
 
             ResultSet rs = salesStatement.getGeneratedKeys();
 
-            if(rs.next())
+            if (rs.next())
                 saleID = rs.getInt(1);
 
             rs.close();
@@ -100,6 +100,21 @@ public class SalesRepository {
                 e.printStackTrace();
                 return false;
             }
+
+            query = "UPDATE items SET quantity = quantity - ? WHERE id = ?";
+            statement = DBConnection.instance.getPreparedStatement(query);
+            try {
+                statement.setInt(1, item.getSaleQuantityValue());
+                statement.setInt(2, item.getID());
+                statement.executeUpdate();
+
+                statement.close();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
+
         }
 
         double balance = (totalAmount - paidAmount);
@@ -125,8 +140,6 @@ public class SalesRepository {
         }
 
         for (Item item : items) {
-            System.out.println("Sale ID: " + sale.getID());
-            System.out.println("Item ID: " + item.getID());
             query = "UPDATE sale_items SET returned_quantity = ? where sale_id = ? AND item_id = ?";
             PreparedStatement itemStatement = DBConnection.instance.getPreparedStatement(query);
 
@@ -140,6 +153,20 @@ public class SalesRepository {
                 e.printStackTrace();
                 return false;
             }
+
+            query = "UPDATE items SET quantity = quantity + ? WHERE id = ?";
+            itemStatement = DBConnection.instance.getPreparedStatement(query);
+            try {
+                itemStatement.setInt(1, item.getReturnedQuantityValue());
+                itemStatement.setInt(2,  item.getID());
+                itemStatement.executeUpdate();
+
+                itemStatement.close();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
         }
 
         return true;
@@ -149,33 +176,33 @@ public class SalesRepository {
 
         String query = "SELECT id, total_amount, paid_amount, currency, (total_amount - paid_amount) AS balance FROM sales where customer_id = " + customerID + " ORDER BY balance DESC";
 
-        return getSalesFromQuery(query,true);
+        return getSalesFromQuery(query, true);
     }
 
     private static ObservableList<Sale> getSalesFromQuery(String query, boolean isCompact) {
         ObservableList<Sale> data = FXCollections.observableArrayList();
 
         try {
-            Statement statement  = DBConnection.instance.getStatement();
-            ResultSet rs    = statement.executeQuery(query);
+            Statement statement = DBConnection.instance.getStatement();
+            ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
                 data.add(isCompact ? new Sale(
-                        rs.getInt(1),
-                        rs.getDouble(2),
-                        rs.getDouble(3),
-                        rs.getString(4)
-                ):new Sale(
-                        rs.getInt(1),
-                        rs.getInt("customer_id"),
-                        rs.getString("first_name") + rs.getString("last_name"),
-                        rs.getDouble("discount"),
-                        rs.getInt("tax_id"),
-                        rs.getDouble("conversion_rate"),
-                        rs.getDouble("total_amount"),
-                        rs.getString("currency"),
-                        rs.getDouble("paid_amount"),
-                        rs.getBoolean("is_official"),
-                        rs.getString("type"))
+                                rs.getInt(1),
+                                rs.getDouble(2),
+                                rs.getDouble(3),
+                                rs.getString(4)
+                        ) : new Sale(
+                                rs.getInt(1),
+                                rs.getInt("customer_id"),
+                                rs.getString("first_name") + rs.getString("last_name"),
+                                rs.getDouble("discount"),
+                                rs.getInt("tax_id"),
+                                rs.getDouble("conversion_rate"),
+                                rs.getDouble("total_amount"),
+                                rs.getString("currency"),
+                                rs.getDouble("paid_amount"),
+                                rs.getBoolean("is_official"),
+                                rs.getString("type"))
                 );
             }
         } catch (SQLException e) {
