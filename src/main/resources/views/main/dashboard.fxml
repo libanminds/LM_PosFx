@@ -1,23 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.AreaChart?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.chart.PieChart?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <ScrollPane fitToWidth="true" stylesheets="@../../css/main.css" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.main_controllers.DashboardController">
    <content>
@@ -75,9 +63,9 @@
                            <children>
                               <VBox prefHeight="126.0" prefWidth="266.0">
                                  <children>
-                                    <Label fx:id="salesOfToday" styleClass="bold-text" text="10,000 $" textFill="WHITE" VBox.vgrow="ALWAYS">
+                                    <Label fx:id="salesOfToday" text="10,000 $" textFill="WHITE" VBox.vgrow="ALWAYS">
                                        <font>
-                                          <Font size="40.0" />
+                                          <Font name="System Bold" size="40.0" />
                                        </font>
                                        <VBox.margin>
                                           <Insets left="5.0" top="5.0" />
@@ -100,9 +88,9 @@
                            <children>
                               <VBox prefHeight="126.0" prefWidth="266.0">
                                  <children>
-                                    <Label fx:id="expenseOfToday" prefHeight="58.0" prefWidth="260.0" styleClass="bold-text" text="500$" textFill="WHITE" VBox.vgrow="ALWAYS">
+                                    <Label fx:id="expenseOfToday" prefHeight="58.0" prefWidth="260.0" text="500$" textFill="WHITE" VBox.vgrow="ALWAYS">
                                        <font>
-                                          <Font size="40.0" />
+                                          <Font name="System Bold" size="40.0" />
                                        </font>
                                        <VBox.margin>
                                           <Insets left="5.0" top="5.0" />
@@ -124,9 +112,9 @@
                            <children>
                               <VBox prefHeight="126.0" prefWidth="267.0">
                                  <children>
-                                    <Label fx:id="incomesOfToday" prefHeight="58.0" prefWidth="262.0" styleClass="bold-text" text="1201$" textFill="WHITE" VBox.vgrow="ALWAYS">
+                                    <Label fx:id="incomesOfToday" prefHeight="58.0" prefWidth="262.0" text="1201$" textFill="WHITE" VBox.vgrow="ALWAYS">
                                        <font>
-                                          <Font size="40.0" />
+                                          <Font name="System Bold" size="40.0" />
                                        </font>
                                        <VBox.margin>
                                           <Insets left="5.0" top="5.0" />
@@ -148,9 +136,9 @@
                            <children>
                               <VBox prefHeight="126.0" prefWidth="265.0">
                                  <children>
-                                    <Label fx:id="revenueOfToday" prefHeight="58.0" prefWidth="270.0" styleClass="bold-text" text="3571$" textFill="WHITE" VBox.vgrow="ALWAYS">
+                                    <Label fx:id="revenueOfToday" prefHeight="58.0" prefWidth="270.0" text="3571$" textFill="WHITE" VBox.vgrow="ALWAYS">
                                        <font>
-                                          <Font size="40.0" />
+                                          <Font name="System Bold" size="40.0" />
                                        </font>
                                        <VBox.margin>
                                           <Insets left="5.0" top="5.0" />
