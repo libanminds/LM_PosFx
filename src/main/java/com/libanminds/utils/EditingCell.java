@@ -10,7 +10,11 @@ public class EditingCell extends TableCell<Item, String> {
 
     private TextField textField;
 
-    public EditingCell() {}
+    private boolean isInteger = false;
+
+    public EditingCell(boolean isInteger) {
+        this.isInteger = isInteger;
+    }
 
     @Override
     public void startEdit() {
@@ -54,6 +58,7 @@ public class EditingCell extends TableCell<Item, String> {
 
     private void createTextField() {
         textField = new TextField(getString());
+        textField.setTextFormatter(isInteger ? HelperFunctions.getUnsignedIntegerFilter() : HelperFunctions.getUnsignedNumberFilter());
         textField.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
         textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override

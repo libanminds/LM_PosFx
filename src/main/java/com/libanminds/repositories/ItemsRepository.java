@@ -222,7 +222,7 @@ public class ItemsRepository {
                         rs.getInt("code"),
                         rs.getInt("item_properties_id"),
                         rs.getString(5),
-                        new ItemCategory(rs.getInt("category_id"), rs.getString(16)),
+                        new ItemCategory(rs.getInt("category_id"), rs.getString(15)),
                         rs.getDouble("cost"),
                         rs.getDouble("price"),
                         rs.getString("currency"),

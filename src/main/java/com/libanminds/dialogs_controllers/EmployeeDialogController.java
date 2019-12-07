@@ -5,6 +5,8 @@ import com.libanminds.models.*;
 import com.libanminds.repositories.CustomersRepository;
 import com.libanminds.repositories.ExpensesRepository;
 import com.libanminds.repositories.UsersRepository;
+import com.libanminds.utils.Constants;
+import com.libanminds.utils.GlobalSettings;
 import javafx.collections.FXCollections;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -75,26 +77,10 @@ public class EmployeeDialogController implements Initializable {
     }
 
     private void initRoles() {
-        Role[] roles = {
-                new Role(1,"Admin")
-        };
+        Role[] roles = Constants.ROLES;
 
         role.setItems(FXCollections.observableArrayList(roles));
-
-        //This statements makes sure that the string 'name' is displayed in the UI.
-        role.setConverter(new StringConverter<>() {
-
-            @Override
-            public String toString(Role object) {
-                return object.getName();
-            }
-
-            @Override
-            public Role fromString(String val) {
-                return role.getItems().stream().filter(ap ->
-                        ap.getName().equals(val)).findFirst().orElse(null);
-            }
-        });
+        role.setValue(GlobalSettings.DEFAULT_USER_ROLE);
     }
 
     private void initSaveButton() {

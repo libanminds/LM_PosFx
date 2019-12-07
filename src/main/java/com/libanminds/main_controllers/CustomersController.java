@@ -89,7 +89,9 @@ public class CustomersController implements Initializable {
             stage.setOnHidden(e -> {
                 customersTable.setItems(CustomersRepository.getCustomers());
             });
-        }catch (Exception e){}
+        }catch (Exception e){
+            System.out.println(e.getCause());
+        }
     }
 
     private void showDeleteConfirmationDialog() {

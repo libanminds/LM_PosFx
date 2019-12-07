@@ -7,11 +7,8 @@ import com.libanminds.models.Item;
 import com.libanminds.models.Receiving;
 import com.libanminds.models.Supplier;
 import com.libanminds.repositories.ReceivingsRepository;
-import com.libanminds.utils.EditingCell;
-import com.libanminds.utils.HelperFunctions;
-import com.libanminds.utils.Views;
+import com.libanminds.utils.*;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -93,7 +90,7 @@ public class NewReceivingController implements Initializable {
     private Item selectedReceivingItem;
 
     private double subtotal;
-    private double salesDiscount;
+    private double receivingDiscount;
     private double taxes;
     private double amountPaid;
     private double totalAmount;
@@ -106,6 +103,12 @@ public class NewReceivingController implements Initializable {
         initChoiceBoxes();
         setTableListener();
         setTextFieldsListeners();
+        initFilters();
+    }
+
+    private void initFilters() {
+        receivingsDiscountField.setTextFormatter(HelperFunctions.getUnsignedNumberFilter());
+        amountPaidField.setTextFormatter(HelperFunctions.getUnsignedNumberFilter());
     }
 
     private void initButtonsClicks() {
@@ -158,6 +161,8 @@ public class NewReceivingController implements Initializable {
 
         if (result.get() == yesButton) {
             itemsTable.getItems().remove(selectedReceivingItem);
+            receivingsDiscountField.setText((receivingDiscount = 0) + "");
+            amountPaidField.setText((amountPaid = 0) + "");
             calculateSubtotal();
             recalculateNumbers();
         } else {
@@ -169,7 +174,7 @@ public class NewReceivingController implements Initializable {
         ReceivingsRepository.createReceiving(
                 itemsTable.getItems(),
                 selectedSupplier,
-                markAsDiscount.isSelected() ? remainingAmount + salesDiscount : salesDiscount,
+                markAsDiscount.isSelected() ? remainingAmount + receivingDiscount : receivingDiscount,
                 markAsDiscount.isSelected() ? totalAmount - remainingAmount : totalAmount,
                 currencyChoiceBox.getValue(),
                 amountPaid,
@@ -181,7 +186,7 @@ public class NewReceivingController implements Initializable {
 
     private void clearChanges() {
         subtotal = 0;
-        salesDiscount = 0;
+        receivingDiscount = 0;
         taxes = 0;
         amountPaid = 0;
         totalAmount = 0;
@@ -210,16 +215,10 @@ public class NewReceivingController implements Initializable {
     }
 
     private void initChoiceBoxes() {
-        String[] currencies = {"$", "LL"};
+        String[] currencies = {Constants.DOLLAR_CURRENCY, Constants.LIRA_CURRENCY};
         currencyChoiceBox.setItems(FXCollections.observableArrayList(currencies));
-        currencyChoiceBox.setValue("LL"); // Default here, get it from settings.
-
-        currencyChoiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldIndex, Number newIndex) {
-                changeCurrency(currencyChoiceBox.getItems().get((Integer) newIndex));
-            }
-        });
+        currencyChoiceBox.setValue(GlobalSettings.DEFAULT_CURRENCY);
+        currencyChoiceBox.getSelectionModel().selectedIndexProperty().addListener((observableValue, oldIndex, newIndex) -> changeCurrency(currencyChoiceBox.getItems().get((Integer) newIndex)));
     }
 
     private void changeCurrency(String currency) {
@@ -242,18 +241,20 @@ public class NewReceivingController implements Initializable {
 
         itemsTable.getColumns().addAll(codeCol, nameCol, saleQuantityCol, priceCol, saleDiscountCol, totalPriceCol);
 
-        Callback<TableColumn, TableCell> cellFactory =
-                p -> new EditingCell();
+        Callback<TableColumn, TableCell> quantityCellFactory =
+                p -> new EditingCell(true);
+
+        Callback<TableColumn, TableCell> discountCellFactory =
+                p -> new EditingCell(false);
 
         saleQuantityCol.setCellValueFactory(
                 new PropertyValueFactory<Item, String>("saleQuantity"));
-        saleQuantityCol.setCellFactory(cellFactory);
+        saleQuantityCol.setCellFactory(quantityCellFactory);
 
         saleQuantityCol.setOnEditCommit(
                 (EventHandler<TableColumn.CellEditEvent<Item, String>>) t -> {
-                    ((Item) t.getTableView().getItems().get(
-                            t.getTablePosition().getRow())
-                    ).setTotalQuantity(Integer.parseInt(t.getNewValue()));
+                    t.getTableView().getItems().get(
+                            t.getTablePosition().getRow()).setTotalQuantity(Integer.parseInt(t.getNewValue()));
 
                     calculateSubtotal();
                     recalculateNumbers();
@@ -262,7 +263,7 @@ public class NewReceivingController implements Initializable {
 
         saleDiscountCol.setCellValueFactory(
                 new PropertyValueFactory<Item, String>("discount"));
-        saleDiscountCol.setCellFactory(cellFactory);
+        saleDiscountCol.setCellFactory(discountCellFactory);
 
         saleDiscountCol.setOnEditCommit(
                 (EventHandler<TableColumn.CellEditEvent<Item, String>>) t -> {
@@ -302,11 +303,19 @@ public class NewReceivingController implements Initializable {
     private void setTextFieldsListeners() {
         amountPaidField.textProperty().addListener((observable, oldValue, newValue) -> {
             amountPaid = (newValue.isEmpty() ? 0 : Double.parseDouble(newValue));
+
+            if (amountPaid > totalAmount) {
+                amountPaidField.setText(oldValue);
+            }
             recalculateNumbers();
         });
 
         receivingsDiscountField.textProperty().addListener((observable, oldValue, newValue) -> {
-            salesDiscount = (newValue.isEmpty() ? 0 : Double.parseDouble(newValue));
+            receivingDiscount = (newValue.isEmpty() ? 0 : Double.parseDouble(newValue));
+
+            if (receivingDiscount > (subtotal - amountPaid)) {
+                receivingsDiscountField.setText(oldValue);
+            }
             recalculateNumbers();
         });
     }
@@ -338,7 +347,7 @@ public class NewReceivingController implements Initializable {
     }
 
     private void recalculateNumbers() {
-        totalAmount = subtotal - salesDiscount - taxes;
+        totalAmount = subtotal - receivingDiscount - taxes;
         remainingAmount = totalAmount - amountPaid;
 
         updateNumbersUI();
@@ -347,7 +356,7 @@ public class NewReceivingController implements Initializable {
     private void updateNumbersUI() {
         DecimalFormat formatter = HelperFunctions.getDecimalFormatter();
         subtotalText.setText( formatter.format(subtotal) + " " + currencyChoiceBox.getValue());
-        discountText.setText(formatter.format(salesDiscount) + " " + currencyChoiceBox.getValue());
+        discountText.setText(formatter.format(receivingDiscount) + " " + currencyChoiceBox.getValue());
         taxesText.setText(formatter.format(taxes) + " " + currencyChoiceBox.getValue());
         totalText.setText(formatter.format(totalAmount) + " " + currencyChoiceBox.getValue());
         remainingAmountText.setText(formatter.format(remainingAmount) + " " + currencyChoiceBox.getValue());

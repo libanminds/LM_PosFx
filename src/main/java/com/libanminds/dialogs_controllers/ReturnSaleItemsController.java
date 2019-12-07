@@ -75,6 +75,11 @@ public class ReturnSaleItemsController implements Initializable {
         initNumbers();
         updateNumbersUI();
         initializeTables();
+        initFilters();
+    }
+
+    private void initFilters() {
+        discountField.setTextFormatter(HelperFunctions.getUnsignedNumberFilter());
     }
 
     private void initButtonsClicks() {
@@ -131,7 +136,7 @@ public class ReturnSaleItemsController implements Initializable {
         returnedItemsTable.getColumns().addAll(codeCol, nameCol, saleQuantityCol);
 
         Callback<TableColumn, TableCell> cellFactory =
-                p -> new EditingCell();
+                p -> new EditingCell(true);
 
         returnedQuantityCol.setCellValueFactory(
                 new PropertyValueFactory<Item, String>("returnedQuantity"));

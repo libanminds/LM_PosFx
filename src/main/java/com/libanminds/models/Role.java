@@ -11,4 +11,20 @@ public class Role {
 
     public int getID() { return ID; }
     public String getName() { return name; }
+
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true ;
+
+        if (! (other instanceof Role)) return false ;
+
+        Role otherRole = (Role) other ;
+        return this.ID == otherRole.ID;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

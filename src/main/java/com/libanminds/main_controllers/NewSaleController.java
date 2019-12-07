@@ -7,6 +7,7 @@ import com.libanminds.models.Item;
 import com.libanminds.models.Sale;
 import com.libanminds.repositories.SalesRepository;
 import com.libanminds.utils.EditingCell;
+import com.libanminds.utils.GlobalSettings;
 import com.libanminds.utils.HelperFunctions;
 import com.libanminds.utils.Views;
 import javafx.beans.value.ChangeListener;
@@ -103,6 +104,12 @@ public class NewSaleController implements Initializable {
         initChoiceBoxes();
         setTableListener();
         setTextFieldsListeners();
+        initFilters();
+    }
+
+    private void initFilters() {
+        saleDiscountTextField.setTextFormatter(HelperFunctions.getUnsignedNumberFilter());
+        amountPaidField.setTextFormatter(HelperFunctions.getUnsignedNumberFilter());
     }
 
     private void initButtonsClicks() {
@@ -128,6 +135,8 @@ public class NewSaleController implements Initializable {
 
         if (result.get() == yesButton) {
             itemsTable.getItems().remove(selectedSaleItem);
+            saleDiscountTextField.setText((salesDiscount = 0) + "");
+            amountPaidField.setText((amountPaid = 0) + "");
             calculateSubtotal();
             recalculateNumbers();
         } else {
@@ -167,14 +176,8 @@ public class NewSaleController implements Initializable {
     private void initChoiceBoxes() {
         String[] currencies = {"$", "LL"};
         currencyChoiceBox.setItems(FXCollections.observableArrayList(currencies));
-        currencyChoiceBox.setValue("LL"); // Default here, get it from settings.
-
-        currencyChoiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldIndex, Number newIndex) {
-                changeCurrency(currencyChoiceBox.getItems().get((Integer) newIndex));
-            }
-        });
+        currencyChoiceBox.setValue(GlobalSettings.DEFAULT_CURRENCY);
+        currencyChoiceBox.getSelectionModel().selectedIndexProperty().addListener((observableValue, oldIndex, newIndex) -> changeCurrency(currencyChoiceBox.getItems().get((Integer) newIndex)));
     }
 
     private void initializeTables() {
@@ -189,12 +192,15 @@ public class NewSaleController implements Initializable {
 
         itemsTable.getColumns().addAll(codeCol, nameCol, saleQuantityCol, priceCol, saleDiscountCol, totalPriceCol);
 
-        Callback<TableColumn, TableCell> cellFactory =
-                p -> new EditingCell();
+        Callback<TableColumn, TableCell> quantityCellFactory =
+                p -> new EditingCell(true);
+
+        Callback<TableColumn, TableCell> discountCellFactory =
+                p -> new EditingCell(false);
 
         saleQuantityCol.setCellValueFactory(
                 new PropertyValueFactory<Item, String>("totalQuantity"));
-        saleQuantityCol.setCellFactory(cellFactory);
+        saleQuantityCol.setCellFactory(quantityCellFactory);
 
         saleQuantityCol.setOnEditCommit(
                 (EventHandler<TableColumn.CellEditEvent<Item, String>>) t -> {
@@ -208,7 +214,7 @@ public class NewSaleController implements Initializable {
 
         saleDiscountCol.setCellValueFactory(
                 new PropertyValueFactory<Item, String>("discount"));
-        saleDiscountCol.setCellFactory(cellFactory);
+        saleDiscountCol.setCellFactory(discountCellFactory);
 
         saleDiscountCol.setOnEditCommit(
                 (EventHandler<TableColumn.CellEditEvent<Item, String>>) t -> {
@@ -261,7 +267,7 @@ public class NewSaleController implements Initializable {
 
     private void addItemToList() {
         if (selectedItem != null) {
-            if(itemsTable.getItems().contains(selectedItem)) {
+            if (itemsTable.getItems().contains(selectedItem)) {
                 itemsTable.getItems().get(itemsTable.getItems().indexOf(selectedItem)).incrementTotalQuantity();
                 itemsTable.refresh();
             } else {
@@ -276,11 +282,10 @@ public class NewSaleController implements Initializable {
 
     public void setSelectedCustomer(Customer customer) {
         selectedCustomer = customer;
-        if(selectedCustomer != null) {
+        if (selectedCustomer != null) {
             customerName.setText(selectedCustomer.getName());
             pastInvoicesTable.setItems(SalesRepository.getCompactSalesOfCustomer(selectedCustomer.getID()));
-        }
-        else {
+        } else {
             customerName.setText("Guest");
             pastInvoicesTable.getItems().clear();
         }
@@ -294,12 +299,21 @@ public class NewSaleController implements Initializable {
     private void setTextFieldsListeners() {
         amountPaidField.textProperty().addListener((observable, oldValue, newValue) -> {
             amountPaid = (newValue.isEmpty() ? 0 : Double.parseDouble(newValue));
+
+            if (amountPaid > totalAmount) {
+                amountPaidField.setText(oldValue);
+            }
             recalculateNumbers();
         });
 
         saleDiscountTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             salesDiscount = (newValue.isEmpty() ? 0 : Double.parseDouble(newValue));
-            recalculateNumbers();
+
+            if (salesDiscount > (subtotal - amountPaid)) {
+                saleDiscountTextField.setText(oldValue);
+            }
+            else
+                recalculateNumbers();
         });
     }
 
@@ -336,6 +350,7 @@ public class NewSaleController implements Initializable {
     }
 
     private void recalculateNumbers() {
+        System.out.println(salesDiscount);
         totalAmount = subtotal - salesDiscount - taxes;
         remainingAmount = totalAmount - amountPaid;
 
@@ -344,7 +359,7 @@ public class NewSaleController implements Initializable {
 
     private void updateNumbersUI() {
         DecimalFormat formatter = HelperFunctions.getDecimalFormatter();
-        subtotalText.setText( formatter.format(subtotal) + " " + currencyChoiceBox.getValue());
+        subtotalText.setText(formatter.format(subtotal) + " " + currencyChoiceBox.getValue());
         discountText.setText(formatter.format(salesDiscount) + " " + currencyChoiceBox.getValue());
         taxesText.setText(formatter.format(taxes) + " " + currencyChoiceBox.getValue());
         totalText.setText(formatter.format(totalAmount) + " " + currencyChoiceBox.getValue());

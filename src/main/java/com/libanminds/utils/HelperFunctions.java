@@ -1,10 +1,13 @@
 package com.libanminds.utils;
 
+import javafx.scene.control.TextFormatter;
+
 import java.io.File;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Locale;
+import java.util.function.UnaryOperator;
 
 public class HelperFunctions {
 
@@ -24,5 +27,36 @@ public class HelperFunctions {
         formatter.setDecimalFormatSymbols(symbols);
 
         return formatter;
+    }
+
+    public static TextFormatter<String> getUnsignedIntegerFilter() {
+        return new TextFormatter<>(change -> {
+            String text = change.getText();
+            if (text.matches("[0-9]*")) {
+                return change;
+            }
+            return null;
+        });
+    }
+
+    public static TextFormatter<String> getUnsignedNumberFilter() {
+        return new TextFormatter<>(c -> {
+            if (c.isContentChange()) {
+                if (c.getControlNewText().length() == 0) {
+                    return c;
+                }
+                try {
+                    double val = Double.parseDouble(c.getControlNewText());
+                    char lastChar = c.getControlNewText().charAt(c.getControlNewText().length() - 1);
+
+                    // f and d won't through an exception if they are at the end of a number (f means float, d means double)
+                    if (val < 0 || Character.toLowerCase(lastChar)  == 'f' || Character.toLowerCase(lastChar) == 'd')
+                        return null;
+                    return c;
+                } catch (NumberFormatException e) {}
+                return null;
+            }
+            return c;
+        });
     }
 }

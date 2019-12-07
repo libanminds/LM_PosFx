@@ -75,6 +75,7 @@ public class CompleteReceivingController implements Initializable {
         initNumbers();
         updateNumbersUI();
         initializeTable();
+        initFilters();
     }
 
     private void initNumbers() {
@@ -83,6 +84,11 @@ public class CompleteReceivingController implements Initializable {
         totalAmount = receiving.getTotalAmount();
         amountPaid = receiving.getPaidAmount();
         remainingAmount = totalAmount - amountPaid;
+    }
+
+    private void initFilters() {
+        receivingDiscountTextField.setTextFormatter(HelperFunctions.getUnsignedNumberFilter());
+        newPaymentField.setTextFormatter(HelperFunctions.getUnsignedNumberFilter());
     }
 
     private void initButtonsClicks() {

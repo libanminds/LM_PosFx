@@ -9,6 +9,7 @@ import com.libanminds.repositories.ExpensesRepository;
 import com.libanminds.repositories.ItemsCategoriesRepository;
 import com.libanminds.repositories.ItemsRepository;
 import com.libanminds.utils.Constants;
+import com.libanminds.utils.GlobalSettings;
 import com.libanminds.utils.HelperFunctions;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -94,6 +95,7 @@ public class ItemDialogController implements Initializable {
         initCancelButton();
         initChoiceBoxes();
         initImagePicker();
+        initFilters();
     }
 
     public void setHostController(SelectItemDialogController controller) {
@@ -125,13 +127,22 @@ public class ItemDialogController implements Initializable {
         }
     }
 
+    private void initFilters() {
+        code.setTextFormatter(HelperFunctions.getUnsignedIntegerFilter());
+        quantity.setTextFormatter(HelperFunctions.getUnsignedIntegerFilter());
+        cost.setTextFormatter(HelperFunctions.getUnsignedNumberFilter());
+        limit.setTextFormatter(HelperFunctions.getUnsignedIntegerFilter());
+        price.setTextFormatter(HelperFunctions.getUnsignedNumberFilter());
+    }
+
     private void initChoiceBoxes() {
-        String[] currencies = { "$", "LL" };
+        String[] currencies = { Constants.DOLLAR_CURRENCY, Constants.LIRA_CURRENCY};
         currency.setItems(FXCollections.observableArrayList(currencies));
+        currency.setValue(GlobalSettings.DEFAULT_CURRENCY);
 
         ObservableList<ItemCategory> categories = ItemsCategoriesRepository.getItemsCategories();
-
         category.setItems(FXCollections.observableList(categories));
+        category.setValue(categories.get(0));
     }
 
     private void initSaveButton() {

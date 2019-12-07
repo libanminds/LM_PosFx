@@ -75,6 +75,7 @@ public class CompleteSaleController implements Initializable {
         initNumbers();
         updateNumbersUI();
         initializeTable();
+        initFilters();
     }
 
     private void initNumbers() {
@@ -83,6 +84,11 @@ public class CompleteSaleController implements Initializable {
         totalAmount = sale.getTotalAmount();
         amountPaid = sale.getPaidAmount();
         remainingAmount = totalAmount - amountPaid;
+    }
+
+    private void initFilters() {
+        saleDiscountTextField.setTextFormatter(HelperFunctions.getUnsignedNumberFilter());
+        newPaymentField.setTextFormatter(HelperFunctions.getUnsignedNumberFilter());
     }
 
     private void initButtonsClicks() {
@@ -132,7 +138,6 @@ public class CompleteSaleController implements Initializable {
             recalculateNumbers();
         });
     }
-
 
     private void recalculateNumbers() {
         totalAmount = subtotal - salesDiscount + taxes - newSalesDiscount;

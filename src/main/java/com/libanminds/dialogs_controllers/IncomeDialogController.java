@@ -8,6 +8,9 @@ import com.libanminds.repositories.ExpenseTypesRepository;
 import com.libanminds.repositories.ExpensesRepository;
 import com.libanminds.repositories.IncomeTypesRepository;
 import com.libanminds.repositories.IncomesRepository;
+import com.libanminds.utils.Constants;
+import com.libanminds.utils.GlobalSettings;
+import com.libanminds.utils.HelperFunctions;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -59,6 +62,7 @@ public class IncomeDialogController implements Initializable {
         initChoiceBoxes();
         initSaveButton();
         initCancelButton();
+        initFilters();
     }
 
     public void initData(Income income) {
@@ -76,14 +80,23 @@ public class IncomeDialogController implements Initializable {
             incomeID = -1;
     }
 
+    private void initFilters() {
+        amount.setTextFormatter(HelperFunctions.getUnsignedNumberFilter());
+    }
+
     private void initChoiceBoxes() {
         ObservableList<Type> types = IncomeTypesRepository.getIncomeTypes();
-        String[] currencies = { "$", "LL" };
-        String[] payments = { "Cash", "Cheque", "Credit Card" };
+        String[] currencies = {Constants.DOLLAR_CURRENCY, Constants.LIRA_CURRENCY};
+        String[] payments = Constants.paymentTypes;
 
         typeChoiceBox.setItems(FXCollections.observableList(types));
+        typeChoiceBox.setValue(types.get(0));
+
         currency.setItems(FXCollections.observableArrayList(currencies));
+        currency.setValue(GlobalSettings.DEFAULT_CURRENCY);
+
         paymentType.setItems(FXCollections.observableArrayList(payments));
+        paymentType.setValue(GlobalSettings.DEFAULT_PAYMENT_TYPE);
     }
 
     private void initSaveButton() {
