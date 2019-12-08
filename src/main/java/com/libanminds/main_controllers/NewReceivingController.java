@@ -254,7 +254,7 @@ public class NewReceivingController implements Initializable {
         saleQuantityCol.setOnEditCommit(
                 (EventHandler<TableColumn.CellEditEvent<Item, String>>) t -> {
                     t.getTableView().getItems().get(
-                            t.getTablePosition().getRow()).setTotalQuantity(Integer.parseInt(t.getNewValue()));
+                            t.getTablePosition().getRow()).setTotalQuantity(Integer.parseInt(t.getNewValue().isEmpty() ? "1" : t.getNewValue()));
 
                     calculateSubtotal();
                     recalculateNumbers();

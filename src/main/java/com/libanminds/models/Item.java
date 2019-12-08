@@ -165,6 +165,10 @@ public class Item {
         return previouslyReturnedQuantity.get();
     }
 
+    public int getInitiallyAvailableQuantity() {
+        return totalQuantity.get() - previouslyReturnedQuantity.get();
+    }
+
     public void setPreviouslyReturnedQuantity(int previouslyReturnedQuantity) {
         this.previouslyReturnedQuantity.set(previouslyReturnedQuantity);
     }

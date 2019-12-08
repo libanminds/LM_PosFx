@@ -5,7 +5,6 @@ import com.libanminds.models.Item;
 import com.libanminds.models.Receiving;
 import com.libanminds.repositories.ItemsRepository;
 import com.libanminds.repositories.ReceivingsRepository;
-import com.libanminds.repositories.SalesRepository;
 import com.libanminds.utils.EditingCell;
 import com.libanminds.utils.HelperFunctions;
 import javafx.event.Event;
@@ -59,7 +58,7 @@ public class ReturnReceivingItemsController implements Initializable {
     private Receiving receiving;
 
     private double subtotal;
-    private double salesDiscount;
+    private double receivingDiscount;
     private double taxes;
     private double totalAmount;
     private double amountPaid;
@@ -77,6 +76,7 @@ public class ReturnReceivingItemsController implements Initializable {
         updateNumbersUI();
         initializeTables();
         initFilters();
+        setTextFieldsListeners();
     }
 
     private void initFilters() {
@@ -112,6 +112,8 @@ public class ReturnReceivingItemsController implements Initializable {
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() >= 2 && (! row.isEmpty()) ) {
                     Item item = row.getItem();
+                    if(item.getSaleQuantityValue() <= 0)
+                        return;
                     if(returnedItemsTable.getItems().contains(item)) {
                         item.incrementReturnedQuantity();
                     }else {
@@ -145,9 +147,15 @@ public class ReturnReceivingItemsController implements Initializable {
 
         returnedQuantityCol.setOnEditCommit(
                 (EventHandler<TableColumn.CellEditEvent<Item, String>>) t -> {
-                    t.getTableView().getItems().get(
-                            t.getTablePosition().getRow()).setReturnedQuantity(Integer.parseInt(t.getNewValue()));
+                    int newValue = Integer.parseInt(t.getNewValue().isEmpty() ? "0" : t.getNewValue());
+                    Item item = t.getTableView().getItems().get(
+                            t.getTablePosition().getRow());//
 
+                    if(newValue > item.getInitiallyAvailableQuantity()) {
+                        return;
+                    }
+
+                    item.setReturnedQuantity(newValue);
                     returnedItemsTable.refresh();
                     receivedItemsTable.refresh();
                     recalculateNumbers();
@@ -159,7 +167,7 @@ public class ReturnReceivingItemsController implements Initializable {
     }
 
     private void SaveChanges() {
-        receiving.setDiscount(salesDiscount);
+        receiving.setDiscount(receivingDiscount);
         receiving.setPaidAmount(amountPaid - amountToRefund);
         receiving.setTotalAmount(totalAmount);
         ReceivingsRepository.returnReceivedItems(receiving, returnedItemsTable.getItems());
@@ -169,12 +177,24 @@ public class ReturnReceivingItemsController implements Initializable {
 
     private void initNumbers() {
         subtotal = receiving.getTotalAmount() + receiving.getDiscount();
-        salesDiscount = receiving.getDiscount();
+        receivingDiscount = receiving.getDiscount();
         totalAmount = receiving.getTotalAmount();
         amountPaid = receiving.getPaidAmount();
         amountToRefund = 0;
         remainingAmount = totalAmount - amountPaid;
-        discountField.setText(salesDiscount + "");
+        discountField.setText(receivingDiscount + "");
+    }
+
+    private void setTextFieldsListeners() {
+        discountField.textProperty().addListener((observable, oldValue, newValue) -> {
+            receivingDiscount = (newValue.isEmpty() ? 0 : Double.parseDouble(newValue));
+
+            if (receivingDiscount > subtotal) {
+                discountField.setText(oldValue);
+            }
+
+            recalculateNumbers();
+        });
     }
 
     private void recalculateNumbers() {
@@ -184,12 +204,19 @@ public class ReturnReceivingItemsController implements Initializable {
             subtotal += receivedItemsTable.getItems().get(i).getTotal();
         }
 
-        totalAmount = subtotal - salesDiscount + taxes;
+        if(receivingDiscount > subtotal) {
+            receivingDiscount = subtotal;
+            discountField.setText(receivingDiscount + "");
+        }
+
+        totalAmount = subtotal - receivingDiscount + taxes;
         remainingAmount = totalAmount - amountPaid;
 
         if(remainingAmount < 0) {
             amountToRefund = Math.abs(remainingAmount);
             remainingAmount = 0;
+        } else {
+            amountToRefund = 0;
         }
 
         updateNumbersUI();

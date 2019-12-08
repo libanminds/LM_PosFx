@@ -76,6 +76,7 @@ public class ReturnSaleItemsController implements Initializable {
         updateNumbersUI();
         initializeTables();
         initFilters();
+        setTextFieldsListeners();
     }
 
     private void initFilters() {
@@ -111,6 +112,10 @@ public class ReturnSaleItemsController implements Initializable {
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() >= 2 && (! row.isEmpty()) ) {
                     Item item = row.getItem();
+
+                    if(item.getSaleQuantityValue() <= 0)
+                        return;
+
                     if(returnedItemsTable.getItems().contains(item)) {
                         item.incrementReturnedQuantity();
                     }else {
@@ -144,9 +149,15 @@ public class ReturnSaleItemsController implements Initializable {
 
         returnedQuantityCol.setOnEditCommit(
                 (EventHandler<TableColumn.CellEditEvent<Item, String>>) t -> {
-                    t.getTableView().getItems().get(
-                            t.getTablePosition().getRow()).setReturnedQuantity(Integer.parseInt(t.getNewValue()));
+                    int newValue = Integer.parseInt(t.getNewValue().isEmpty() ? "0" : t.getNewValue());
+                    Item item = t.getTableView().getItems().get(
+                            t.getTablePosition().getRow());//
 
+                    if(newValue > item.getInitiallyAvailableQuantity()) {
+                        return;
+                    }
+
+                    item.setReturnedQuantity(newValue);
                     returnedItemsTable.refresh();
                     soldItemsTable.refresh();
                     recalculateNumbers();
@@ -176,11 +187,28 @@ public class ReturnSaleItemsController implements Initializable {
         discountField.setText(salesDiscount + "");
     }
 
+    private void setTextFieldsListeners() {
+        discountField.textProperty().addListener((observable, oldValue, newValue) -> {
+            salesDiscount = (newValue.isEmpty() ? 0 : Double.parseDouble(newValue));
+
+            if (salesDiscount > subtotal) {
+                discountField.setText(oldValue);
+            }
+
+            recalculateNumbers();
+        });
+    }
+
     private void recalculateNumbers() {
 
         subtotal = 0;
         for (int i = 0; i < soldItemsTable.getItems().size(); i++) {
             subtotal += soldItemsTable.getItems().get(i).getTotal();
+        }
+
+        if(salesDiscount > subtotal) {
+            salesDiscount = subtotal;
+            discountField.setText(salesDiscount + "");
         }
 
         totalAmount = subtotal - salesDiscount + taxes;
@@ -189,6 +217,8 @@ public class ReturnSaleItemsController implements Initializable {
         if(remainingAmount < 0) {
             amountToRefund = Math.abs(remainingAmount);
             remainingAmount = 0;
+        }else {
+            amountToRefund = 0;
         }
 
         updateNumbersUI();

@@ -130,11 +130,21 @@ public class CompleteReceivingController implements Initializable {
     private void setTextFieldsListeners() {
         newPaymentField.textProperty().addListener((observable, oldValue, newValue) -> {
             newPayment = (newValue.isEmpty() ? 0 : Double.parseDouble(newValue));
+
+            if ((amountPaid + newPayment) > totalAmount) {
+                newPaymentField.setText(oldValue);
+            }
+
             recalculateNumbers();
         });
 
         receivingDiscountTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             newReceivingDiscount = (newValue.isEmpty() ? 0 : Double.parseDouble(newValue));
+
+            if ((receivingDiscount + newReceivingDiscount) > (subtotal - (amountPaid + newPayment))) {
+                receivingDiscountTextField.setText(oldValue);
+            }
+
             recalculateNumbers();
         });
     }

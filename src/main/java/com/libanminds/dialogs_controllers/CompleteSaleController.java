@@ -130,11 +130,21 @@ public class CompleteSaleController implements Initializable {
     private void setTextFieldsListeners() {
         newPaymentField.textProperty().addListener((observable, oldValue, newValue) -> {
             newPayment = (newValue.isEmpty() ? 0 : Double.parseDouble(newValue));
+
+            if ((amountPaid + newPayment) > totalAmount) {
+                newPaymentField.setText(oldValue);
+            }
+
             recalculateNumbers();
         });
 
         saleDiscountTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             newSalesDiscount = (newValue.isEmpty() ? 0 : Double.parseDouble(newValue));
+
+            if ((salesDiscount + newSalesDiscount) > (subtotal - (amountPaid + newPayment))) {
+                saleDiscountTextField.setText(oldValue);
+            }
+
             recalculateNumbers();
         });
     }
