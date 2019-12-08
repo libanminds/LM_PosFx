@@ -15,7 +15,7 @@ import java.util.List;
 public class ReceivingsRepository {
 
     public static ObservableList<Receiving> getReceivings() {
-        String query = "SELECT * FROM purchases LEFT JOIN suppliers on purchases.supplier_id = suppliers.id WHERE total_amount != 0";
+        String query = "SELECT * FROM purchases LEFT JOIN suppliers on purchases.supplier_id = suppliers.id WHERE total_amount != 0 ORDER BY created_at DESC";
 
         return getReceivingsFromQuery(query, false);
     }
@@ -24,7 +24,7 @@ public class ReceivingsRepository {
         String query = "SELECT * FROM purchases LEFT JOIN suppliers on purchases.supplier_id = suppliers.id where  total_amount != 0 and (" +
                 " first_name like '%" + value + "%' or" +
                 " last_name like '%" + value + "%' or" +
-                " type like '%" + value + "%')";
+                " type like '%" + value + "%') ORDER BY created_at DESC";
 
         return getReceivingsFromQuery(query, false);
     }

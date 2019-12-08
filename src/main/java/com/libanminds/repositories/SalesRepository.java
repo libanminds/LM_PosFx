@@ -17,7 +17,7 @@ import java.util.List;
 public class SalesRepository {
 
     public static ObservableList<Sale> getSales() {
-        String query = "SELECT * FROM sales LEFT JOIN customers on sales.customer_id = customers.id WHERE total_amount != 0";
+        String query = "SELECT * FROM sales LEFT JOIN customers on sales.customer_id = customers.id WHERE total_amount != 0 ORDER BY created_at DESC";
 
         return getSalesFromQuery(query, false);
     }
@@ -26,7 +26,7 @@ public class SalesRepository {
         String query = "SELECT * FROM sales LEFT JOIN customers on sales.customer_id = customers.id where  total_amount != 0 and (" +
                 " first_name like '%" + value + "%' or" +
                 " last_name like '%" + value + "%' or" +
-                " type like '%" + value + "%')";
+                " type like '%" + value + "%') ORDER BY created_at DESC";
 
         return getSalesFromQuery(query, false);
     }

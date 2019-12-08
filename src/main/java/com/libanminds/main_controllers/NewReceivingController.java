@@ -171,6 +171,8 @@ public class NewReceivingController implements Initializable {
     }
 
     private void createReceiving() {
+        if(itemsTable.getItems().isEmpty()) return;
+
         ReceivingsRepository.createReceiving(
                 itemsTable.getItems(),
                 selectedSupplier,
@@ -194,6 +196,7 @@ public class NewReceivingController implements Initializable {
         selectedSupplier = null;
         supplierName.setText("");
         itemsTable.getItems().clear();
+        pastInvoicesTable.getItems().clear();
         amountPaidField.setText("");
         markAsDiscount.setSelected(false);
         receivingsDiscountField.setText("");

@@ -245,6 +245,8 @@ public class NewSaleController implements Initializable {
     }
 
     private void createSale() {
+        if(itemsTable.getItems().isEmpty()) return;
+
         SalesRepository.createSale(
                 itemsTable.getItems(),
                 selectedCustomer,
@@ -328,6 +330,7 @@ public class NewSaleController implements Initializable {
         selectedCustomer = null;
         customerName.setText("");
         itemsTable.getItems().clear();
+        pastInvoicesTable.getItems().clear();
         amountPaidField.setText("");
         markAsDiscount.setSelected(false);
         saleDiscountTextField.setText("");
