@@ -17,10 +17,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
@@ -71,6 +68,10 @@ public class ItemDialogController implements Initializable {
     private CheckBox includesTax;
 
     @FXML
+    private Label errorMessagesLabel;
+
+
+    @FXML
     private ChoiceBox<ItemCategory> category;
 
     @FXML
@@ -96,6 +97,7 @@ public class ItemDialogController implements Initializable {
         initChoiceBoxes();
         initImagePicker();
         initFilters();
+        initErrorMessages();
     }
 
     public void setHostController(SelectItemDialogController controller) {
@@ -127,6 +129,10 @@ public class ItemDialogController implements Initializable {
         }
     }
 
+    private void initErrorMessages() {
+        errorMessagesLabel.setText("");
+    }
+
     private void initFilters() {
         code.setTextFormatter(HelperFunctions.getUnsignedIntegerFilter());
         quantity.setTextFormatter(HelperFunctions.getUnsignedIntegerFilter());
@@ -145,9 +151,45 @@ public class ItemDialogController implements Initializable {
         category.setValue(categories.get(0));
     }
 
+    private boolean validateInput() {
+        boolean isValid = true;
+        if(code.getText().isEmpty()) {
+            HelperFunctions.highlightTextfieldError(code);
+            isValid = false;
+        }
+
+        if(name.getText().isEmpty()) {
+            HelperFunctions.highlightTextfieldError(name);
+            isValid = false;
+        }
+
+        if(limit.getText().isEmpty()) {
+            HelperFunctions.highlightTextfieldError(limit);
+            isValid = false;
+        }
+
+        if(cost.getText().isEmpty()) {
+            HelperFunctions.highlightTextfieldError(cost);
+            isValid = false;
+        }
+
+        if(quantity.getText().isEmpty()) {
+            HelperFunctions.highlightTextfieldError(quantity);
+            isValid = false;
+        }
+
+        if(price.getText().isEmpty()) {
+            HelperFunctions.highlightTextfieldError(price);
+            isValid = false;
+        }
+
+        if(!isValid) errorMessagesLabel.setText("Please fill in all the required fields");
+        return isValid;
+    }
+
     private void initSaveButton() {
         save.setOnMouseClicked((EventHandler<Event>) event -> {
-
+            if(!validateInput()) return;
             boolean successful;
 
             Item newItem = new Item(

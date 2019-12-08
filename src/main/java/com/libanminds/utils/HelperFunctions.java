@@ -1,11 +1,14 @@
 package com.libanminds.utils;
 
+import javafx.collections.ObservableList;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 
 import java.io.File;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
+import java.util.Collections;
 import java.util.Locale;
 import java.util.function.UnaryOperator;
 
@@ -58,5 +61,18 @@ public class HelperFunctions {
             }
             return c;
         });
+    }
+
+    public static void highlightTextfieldError(TextField tf) {
+        ObservableList<String> styleClass = tf.getStyleClass();
+
+        if(!styleClass.contains("errorHighlight")) {
+            styleClass.add("errorHighlight");
+        }
+    }
+
+    public static void removeHighlightedTextfieldError(TextField tf) {
+        ObservableList<String> styleClass = tf.getStyleClass();
+        styleClass.removeAll(Collections.singleton("errorHighlight"));
     }
 }

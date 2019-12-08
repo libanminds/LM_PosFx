@@ -87,6 +87,8 @@ public class ReturnSaleItemsController implements Initializable {
         saveSale.setOnMouseClicked((EventHandler<Event>) event -> SaveChanges());
     }
 
+
+
     private void initializeTables() {
 
         //SOLD ITEMS TABLE START

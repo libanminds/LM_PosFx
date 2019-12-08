@@ -32,6 +32,18 @@ public class UsersRepository {
         return getUsersFromQuery(query);
     }
 
+    public static boolean usernameExists(String username) {
+        String query = "SELECT * FROM users where username = '" + username + "'";
+        Statement statement = DBConnection.instance.getStatement();
+        try {
+            return statement.executeQuery(query).next();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
     public static boolean addUser(User user) {
         String query = "INSERT INTO users(username,first_name,last_name,password,email,phone,role,address) VALUES (?,?,?,?,?,?,?,?)";
         PreparedStatement statement = DBConnection.instance.getPreparedStatement(query);

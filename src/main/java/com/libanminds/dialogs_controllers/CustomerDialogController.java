@@ -8,6 +8,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
@@ -45,6 +46,10 @@ public class CustomerDialogController implements Initializable {
     @FXML
     private JFXButton save;
 
+    @FXML
+    private Label errorMessagesLabel;
+
+
     private int customerID = -1;
 
     private SelectCustomerDialogController hostController;
@@ -53,6 +58,7 @@ public class CustomerDialogController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         initSaveButton();
         initCancelButton();
+        initErrorMessages();
     }
 
     public void setHostController(SelectCustomerDialogController controller) {
@@ -60,6 +66,7 @@ public class CustomerDialogController implements Initializable {
     }
 
     public void initData(Customer customer) {
+
         if (customer != null) {
             customerID = customer.getID() ;
             firstName.setText(customer.getFirstName());
@@ -72,12 +79,17 @@ public class CustomerDialogController implements Initializable {
         }
     }
 
+    private void initErrorMessages() {
+        errorMessagesLabel.setText("");
+    }
+
     private void initSaveButton() {
         save.setOnMouseClicked((EventHandler<Event>) event -> {
 
+            if(!validateInput())
+                return;
+
             boolean successful;
-
-
             Customer newCustomer = new Customer(
                     customerID,
                     firstName.getText(),
@@ -105,6 +117,16 @@ public class CustomerDialogController implements Initializable {
                 //TODO : DO SOMETHING
             }
         });
+    }
+
+    private boolean validateInput() {
+        if(firstName.getText().isEmpty()) {
+            errorMessagesLabel.setText("Please fill in all the required fields");
+            HelperFunctions.highlightTextfieldError(firstName);
+            return false;
+        }
+
+        return true;
     }
 
     private void initCancelButton() {

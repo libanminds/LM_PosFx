@@ -8,15 +8,13 @@ import com.libanminds.models.Type;
 import com.libanminds.repositories.ExpensesRepository;
 import com.libanminds.repositories.IncomesRepository;
 import com.libanminds.repositories.ItemsCategoriesRepository;
+import com.libanminds.utils.HelperFunctions;
 import javafx.collections.FXCollections;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
@@ -34,12 +32,16 @@ public class ItemCategoryDialogController implements Initializable {
     @FXML
     private Button cancelButton;
 
+    @FXML
+    private Label errorMessagesLabel;
+
     private int categoryID;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initSaveButton();
         initCancelButton();
+        initErrorMessages();
     }
 
     public void initData(ItemCategory category) {
@@ -50,8 +52,24 @@ public class ItemCategoryDialogController implements Initializable {
             categoryID = -1;
     }
 
+    private void initErrorMessages() {
+        errorMessagesLabel.setText("");
+    }
+
+    private boolean validateInput() {
+        boolean isValid = true;
+        if(categoryField.getText().isEmpty()) {
+            HelperFunctions.highlightTextfieldError(categoryField);
+            isValid = false;
+        }
+
+        if(!isValid) errorMessagesLabel.setText("Please fill in the required field");
+        return isValid;
+    }
+
     private void initSaveButton() {
         saveButton.setOnMouseClicked((EventHandler<Event>) event -> {
+            if(!validateInput()) return;
             boolean successful;
 
             if(categoryID == -1)

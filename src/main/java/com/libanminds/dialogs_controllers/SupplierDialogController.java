@@ -3,10 +3,12 @@ package com.libanminds.dialogs_controllers;
 import com.jfoenix.controls.JFXButton;
 import com.libanminds.models.Supplier;
 import com.libanminds.repositories.SupplierRepository;
+import com.libanminds.utils.HelperFunctions;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -42,6 +44,10 @@ public class SupplierDialogController implements Initializable {
     @FXML
     private JFXButton save;
 
+    @FXML
+    private Label errorMessagesLabel;
+
+
     private int supplierID = -1;
 
     private SelectSupplierDialogController hostController;
@@ -50,6 +56,7 @@ public class SupplierDialogController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         initSaveButton();
         initCancelButton();
+        initErrorMessages();
     }
 
     public void setHostController(SelectSupplierDialogController controller) {
@@ -69,8 +76,24 @@ public class SupplierDialogController implements Initializable {
         }
     }
 
+    private void initErrorMessages() {
+        errorMessagesLabel.setText("");
+    }
+
+    private boolean validateInput() {
+        if(firstName.getText().isEmpty()) {
+            errorMessagesLabel.setText("Please fill in all the required fields");
+            HelperFunctions.highlightTextfieldError(firstName);
+            return false;
+        }
+
+        return true;
+    }
+
     private void initSaveButton() {
+
         save.setOnMouseClicked((EventHandler<Event>) event -> {
+            if(!validateInput()) return;
 
             boolean successful;
 

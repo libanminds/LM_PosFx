@@ -7,12 +7,14 @@ import com.libanminds.repositories.ExpensesRepository;
 import com.libanminds.repositories.UsersRepository;
 import com.libanminds.utils.Constants;
 import com.libanminds.utils.GlobalSettings;
+import com.libanminds.utils.HelperFunctions;
 import javafx.collections.FXCollections;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
@@ -52,6 +54,10 @@ public class EmployeeDialogController implements Initializable {
     @FXML
     private TextField employeeAddress;
 
+    @FXML
+    private Label errorMessagesLabel;
+
+
     int employeeID;
 
     @Override
@@ -59,6 +65,7 @@ public class EmployeeDialogController implements Initializable {
         initRoles();
         initSaveButton();
         initCancelButton();
+        initErrorMessages();
     }
 
     public void initData(User employee) {
@@ -76,6 +83,10 @@ public class EmployeeDialogController implements Initializable {
             employeeID = -1;
     }
 
+    private void initErrorMessages() {
+        errorMessagesLabel.setText("");
+    }
+
     private void initRoles() {
         Role[] roles = Constants.ROLES;
 
@@ -83,8 +94,35 @@ public class EmployeeDialogController implements Initializable {
         role.setValue(GlobalSettings.DEFAULT_USER_ROLE);
     }
 
+    private boolean validateInput() {
+        boolean isValid = true;
+
+        if(username.getText().isEmpty()) {
+            HelperFunctions.highlightTextfieldError(username);
+            isValid = false;
+        }else if(UsersRepository.usernameExists(username.getText())) {
+            HelperFunctions.highlightTextfieldError(username);
+            errorMessagesLabel.setText("Username already exists.");
+            return false;
+        }
+
+        if(firstName.getText().isEmpty()) {
+            HelperFunctions.highlightTextfieldError(firstName);
+            isValid = false;
+        }
+
+        if(password.getText().isEmpty()) {
+            HelperFunctions.highlightTextfieldError(password);
+            isValid = false;
+        }
+
+        if(!isValid) errorMessagesLabel.setText("Please fill in all the required fields");
+        return isValid;
+    }
+
     private void initSaveButton() {
         save.setOnMouseClicked((EventHandler<Event>) event -> {
+            if(!validateInput()) return;
             boolean successful;
 
             if(employeeID == -1)

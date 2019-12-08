@@ -5,11 +5,12 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="104.0" prefWidth="440.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.dialogs_controllers.IncomeTypesDialogController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="104.0" prefWidth="440.0" stylesheets="@../../css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.dialogs_controllers.IncomeTypesDialogController">
    <children>
       <TextField fx:id="typeField" layoutX="22.0" layoutY="52.0" prefHeight="26.0" prefWidth="215.0" />
       <Button fx:id="saveButton" layoutX="341.0" layoutY="53.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Save" />
       <Label layoutX="22.0" layoutY="29.0" text="Type" />
       <Button fx:id="cancelButton" layoutX="248.0" layoutY="53.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Cancel" />
+      <Label fx:id="errorMessagesLabel" layoutX="21.0" layoutY="78.0" text="Error message goes here" textFill="RED" />
    </children>
 </Pane>

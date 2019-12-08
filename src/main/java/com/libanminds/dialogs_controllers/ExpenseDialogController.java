@@ -19,6 +19,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -56,6 +57,9 @@ public class ExpenseDialogController implements Initializable {
     @FXML
     private ChoiceBox<String> paymentType;
 
+    @FXML
+    private Label errorMessagesLabel;
+
     private int expenseID;
 
     @Override
@@ -64,6 +68,7 @@ public class ExpenseDialogController implements Initializable {
         initSaveButton();
         initCancelButton();
         initFilters();
+        initErrorMessages();
     }
 
     public void initData(Expense expense) {
@@ -79,6 +84,10 @@ public class ExpenseDialogController implements Initializable {
             notes.setText(expense.getNotes());
         } else
             expenseID = -1;
+    }
+
+    private void initErrorMessages() {
+        errorMessagesLabel.setText("");
     }
 
     private void initFilters() {
@@ -100,8 +109,25 @@ public class ExpenseDialogController implements Initializable {
         paymentType.setValue(GlobalSettings.DEFAULT_PAYMENT_TYPE);
     }
 
+    private boolean validateInput() {
+        boolean isValid = true;
+        if(description.getText().isEmpty()) {
+            HelperFunctions.highlightTextfieldError(description);
+            isValid = false;
+        }
+
+        if(amount.getText().isEmpty()) {
+            HelperFunctions.highlightTextfieldError(amount);
+            isValid = false;
+        }
+
+        if(!isValid) errorMessagesLabel.setText("Please fill in all the required fields");
+        return isValid;
+    }
+
     private void initSaveButton() {
         save.setOnMouseClicked((EventHandler<Event>) event -> {
+            if(!validateInput()) return;
             boolean successful;
 
             if(expenseID == -1)

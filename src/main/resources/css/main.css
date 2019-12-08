@@ -185,3 +185,8 @@ VBox.card {
 .bold-text {
     -fx-font-weight: bold;
 }
+
+.errorHighlight {
+    -fx-text-box-border: red ;
+    -fx-focus-color: red ;
+}

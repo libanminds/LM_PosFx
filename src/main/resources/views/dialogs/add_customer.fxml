@@ -29,6 +29,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Label text="Add Customer" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER">
@@ -77,6 +78,7 @@
                   </JFXButton>
                </children>
             </HBox>
+            <Label fx:id="errorMessagesLabel" text="Error messages goes here" textFill="RED" GridPane.columnIndex="3" GridPane.rowIndex="5" />
          </children>
          <padding>
             <Insets bottom="24.0" left="24.0" right="24.0" top="8.0" />
