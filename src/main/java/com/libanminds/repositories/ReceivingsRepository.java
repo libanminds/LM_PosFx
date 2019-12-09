@@ -29,7 +29,7 @@ public class ReceivingsRepository {
         return getReceivingsFromQuery(query, false);
     }
 
-    public static boolean completeReceivingPayment(int receivingID, double discount, double totalAmount, double paidAmount) {
+    public static boolean completeReceivingPayment(int receivingID, int supplierID, double discount, double totalAmount, double paidAmount, double newPayment, String currency) {
 
         String query = "UPDATE purchases SET discount = ?, total_amount = ?, paid_amount = ? where id = ?";
         PreparedStatement salesStatement = DBConnection.instance.getPreparedStatement(query);
@@ -41,11 +41,32 @@ public class ReceivingsRepository {
             salesStatement.setInt(4, receivingID);
             salesStatement.executeUpdate();
             salesStatement.close();
-            return true;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
+
+        if (newPayment > 0) {
+            query = "INSERT INTO supplier_transactions(supplier_id,invoice_id,amount,currency, is_refund) VALUES (?,?,?,?,?)";
+
+            salesStatement = DBConnection.instance.getPreparedStatement(query);
+
+            try {
+                salesStatement.setInt(1, supplierID);
+                salesStatement.setInt(2, receivingID);
+                salesStatement.setDouble(3, newPayment);
+                salesStatement.setString(4, currency);
+                salesStatement.setBoolean(5, false);
+                salesStatement.executeUpdate();
+
+                salesStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public static boolean createReceiving(List<Item> items, Supplier supplier, double discount, double totalAmount, String currency, double paidAmount, boolean isOfficial, String paymentType) {
@@ -79,6 +100,26 @@ public class ReceivingsRepository {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        }
+
+        if (paidAmount > 0) {
+            query = "INSERT INTO supplier_transactions(supplier_id,invoice_id,amount,currency, is_refund) VALUES (?,?,?,?,?)";
+
+            receivingsStatement = DBConnection.instance.getPreparedStatement(query);
+
+            try {
+                receivingsStatement.setInt(1, supplier.getID());
+                receivingsStatement.setInt(2, receivingID);
+                receivingsStatement.setDouble(3, paidAmount);
+                receivingsStatement.setString(4, currency);
+                receivingsStatement.setBoolean(5, false);
+                receivingsStatement.executeUpdate();
+
+                receivingsStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
         }
 
         for (Item item : items) {
@@ -120,7 +161,7 @@ public class ReceivingsRepository {
     }
 
 
-    public static boolean returnReceivedItems(Receiving receiving, List<Item> items) {
+    public static boolean returnReceivedItems(Receiving receiving, List<Item> items, double refundedAmount) {
         String query = "UPDATE purchases SET discount = ?, total_amount = ?, paid_amount = ? where id = ?";
         PreparedStatement purchasesStatement = DBConnection.instance.getPreparedStatement(query);
 
@@ -134,6 +175,27 @@ public class ReceivingsRepository {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        }
+
+
+        if (refundedAmount > 0) {
+            query = "INSERT INTO supplier_transactions(supplier_id,invoice_id,amount,currency, is_refund) VALUES (?,?,?,?,?)";
+
+            purchasesStatement = DBConnection.instance.getPreparedStatement(query);
+
+            try {
+                purchasesStatement.setInt(1, receiving.getID());
+                purchasesStatement.setInt(2, receiving.getSupplierID());
+                purchasesStatement.setDouble(3, refundedAmount);
+                purchasesStatement.setString(4, receiving.getCurrency());
+                purchasesStatement.setBoolean(5, true);
+                purchasesStatement.executeUpdate();
+
+                purchasesStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
         }
 
         for (Item item : items) {

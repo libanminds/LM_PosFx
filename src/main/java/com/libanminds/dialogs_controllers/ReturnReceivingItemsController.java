@@ -170,7 +170,7 @@ public class ReturnReceivingItemsController implements Initializable {
         receiving.setDiscount(receivingDiscount);
         receiving.setPaidAmount(amountPaid - amountToRefund);
         receiving.setTotalAmount(totalAmount);
-        ReceivingsRepository.returnReceivedItems(receiving, returnedItemsTable.getItems());
+        ReceivingsRepository.returnReceivedItems(receiving, returnedItemsTable.getItems(), amountToRefund);
         Stage currentStage = (Stage) saveReceiving.getScene().getWindow();
         currentStage.close();
     }

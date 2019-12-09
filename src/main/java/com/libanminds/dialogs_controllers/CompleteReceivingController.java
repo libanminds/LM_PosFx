@@ -98,9 +98,12 @@ public class CompleteReceivingController implements Initializable {
     private void updateReceiving() {
         ReceivingsRepository.completeReceivingPayment(
                 receiving.getID(),
+                receiving.getSupplierID(),
                 markAsDiscount.isSelected()? receivingDiscount + newReceivingDiscount + remainingAmount : receivingDiscount + newReceivingDiscount,
                 markAsDiscount.isSelected() ? totalAmount - remainingAmount : totalAmount,
-                amountPaid + newPayment
+                amountPaid + newPayment,
+                newPayment,
+                receiving.getCurrency()
         );
 
         Stage currentStage = (Stage) saveBtn.getScene().getWindow();

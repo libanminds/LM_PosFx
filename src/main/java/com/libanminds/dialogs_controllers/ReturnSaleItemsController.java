@@ -174,7 +174,7 @@ public class ReturnSaleItemsController implements Initializable {
         sale.setDiscount(salesDiscount);
         sale.setPaidAmount(amountPaid - amountToRefund);
         sale.setTotalAmount(totalAmount);
-        SalesRepository.returnSoldItems(sale, returnedItemsTable.getItems());
+        SalesRepository.returnSoldItems(sale, returnedItemsTable.getItems(), amountToRefund);
         Stage currentStage = (Stage) saveSale.getScene().getWindow();
         currentStage.close();
     }

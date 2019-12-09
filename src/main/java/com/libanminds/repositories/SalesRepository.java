@@ -31,7 +31,7 @@ public class SalesRepository {
         return getSalesFromQuery(query, false);
     }
 
-    public static boolean completeSalePayment(int saleID, double discount, double totalAmount, double paidAmount) {
+    public static boolean completeSalePayment(int saleID, int customerID, double discount, double totalAmount, double paidAmount,double newPayment, String currency) {
 
         String query = "UPDATE sales SET discount = ?, total_amount = ?, paid_amount = ? where id = ?";
         PreparedStatement salesStatement = DBConnection.instance.getPreparedStatement(query);
@@ -43,11 +43,31 @@ public class SalesRepository {
             salesStatement.setInt(4, saleID);
             salesStatement.executeUpdate();
             salesStatement.close();
-            return true;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
+
+        if (newPayment > 0) {
+            query = "INSERT INTO customer_transactions(customer_id,invoice_id,amount,currency, is_refund) VALUES (?,?,?,?,?)";
+
+            salesStatement = DBConnection.instance.getPreparedStatement(query);
+
+            try {
+                salesStatement.setInt(1, customerID);
+                salesStatement.setInt(2, saleID);
+                salesStatement.setDouble(3, newPayment);
+                salesStatement.setString(4, currency);
+                salesStatement.setBoolean(5, false);
+                salesStatement.executeUpdate();
+
+                salesStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        return true;
     }
 
     public static boolean createSale(List<Item> items, Customer customer, double discount, double totalAmount, String currency, double paidAmount, boolean isOfficial, String paymentType) {
@@ -81,6 +101,27 @@ public class SalesRepository {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        }
+
+        if (paidAmount > 0) {
+            query = "INSERT INTO customer_transactions(customer_id,invoice_id,amount,currency, is_refund) VALUES (?,?,?,?,?)";
+
+            salesStatement = DBConnection.instance.getPreparedStatement(query);
+
+            try {
+                salesStatement.setInt(1, customer.getID());
+                salesStatement.setInt(2, saleID);
+                salesStatement.setDouble(3, paidAmount);
+                salesStatement.setString(4, currency);
+                salesStatement.setBoolean(5, false);
+                salesStatement.executeUpdate();
+
+                salesStatement.close();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
         }
 
         for (Item item : items) {
@@ -123,7 +164,7 @@ public class SalesRepository {
 
     }
 
-    public static boolean returnSoldItems(Sale sale, List<Item> items) {
+    public static boolean returnSoldItems(Sale sale, List<Item> items, double refundedAmount) {
         String query = "UPDATE sales SET discount = ?, total_amount = ?, paid_amount = ? where id = ?";
         PreparedStatement salesStatement = DBConnection.instance.getPreparedStatement(query);
 
@@ -137,6 +178,26 @@ public class SalesRepository {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        }
+
+        if (refundedAmount > 0) {
+            query = "INSERT INTO customer_transactions(customer_id,invoice_id,amount,currency, is_refund) VALUES (?,?,?,?,?)";
+
+            salesStatement = DBConnection.instance.getPreparedStatement(query);
+
+            try {
+                salesStatement.setInt(1, sale.getID());
+                salesStatement.setInt(2, sale.getCustomerID());
+                salesStatement.setDouble(3, refundedAmount);
+                salesStatement.setString(4, sale.getCurrency());
+                salesStatement.setBoolean(5, true);
+                salesStatement.executeUpdate();
+
+                salesStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
         }
 
         for (Item item : items) {
@@ -158,7 +219,7 @@ public class SalesRepository {
             itemStatement = DBConnection.instance.getPreparedStatement(query);
             try {
                 itemStatement.setInt(1, item.getReturnedQuantityValue());
-                itemStatement.setInt(2,  item.getID());
+                itemStatement.setInt(2, item.getID());
                 itemStatement.executeUpdate();
 
                 itemStatement.close();

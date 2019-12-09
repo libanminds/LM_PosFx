@@ -98,9 +98,12 @@ public class CompleteSaleController implements Initializable {
     private void updateSale() {
         SalesRepository.completeSalePayment(
                 sale.getID(),
+                sale.getCustomerID(),
                 markAsDiscount.isSelected()? salesDiscount + newSalesDiscount + remainingAmount : salesDiscount + newSalesDiscount,
                 markAsDiscount.isSelected() ? totalAmount - remainingAmount : totalAmount,
-                amountPaid + newPayment
+                amountPaid + newPayment,
+                newPayment,
+                sale.getCurrency()
         );
 
         Stage currentStage = (Stage) saveSale.getScene().getWindow();
