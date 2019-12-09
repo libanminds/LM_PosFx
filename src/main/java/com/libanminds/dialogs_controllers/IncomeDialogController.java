@@ -17,10 +17,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
@@ -42,10 +39,10 @@ public class IncomeDialogController implements Initializable {
     private TextArea notes;
 
     @FXML
-    private JFXButton cancel;
+    private Button cancel;
 
     @FXML
-    private JFXButton save;
+    private Button save;
 
     @FXML
     private ChoiceBox<Type> typeChoiceBox;

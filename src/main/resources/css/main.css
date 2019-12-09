@@ -4,21 +4,25 @@
     -btn-green-color: #007e33;
 }
 
+.root{
+    -fx-background: #ecf0f4;
+}
+
 #menu JFXButton {
     -fx-alignment: center-left;
     -fx-background-radius: 0;
     -fx-padding: 8 10 8 20;
     -jfx-disable-visual-focus: true;
     -fx-min-width: 200;
-    -fx-font-size: 16;
+    -fx-font-size: 18;
 }
 
 #menu JFXButton:hover {
-    -fx-background-color: #202126;
+    -fx-background-color: #4974a0;
 }
 
 #menu JFXButton:activeView {
-    -fx-background-color: #202126;
+    -fx-background-color: #315f8e;
 }
 
 #menu JFXButton:activeView FontIcon {
@@ -30,7 +34,7 @@
 }
 
 .bg-dark {
-    -fx-background-color: #373942;
+    -fx-background-color: #5580aa;
 }
 
 .scroll-bar:horizontal .track,
@@ -71,6 +75,45 @@
 
 .table-column {
     -fx-min-width: 50;
+}
+
+.table-view .column-header,
+.table-view .column-header .filler,
+.table-view .column-header-background .filler {
+    -fx-stroke: transparent;
+    -fx-alignment: CENTER ;
+    -fx-text-alignment: center;
+
+}
+
+.table-view .table-column{
+    -fx-text-alignment: center;
+    -fx-alignment: CENTER
+
+}
+
+.table-view .column-header,
+.table-view .column-header .filler,
+.table-view .column-header-background .filler {
+    -fx-background-color: #5580aa;
+    -fx-size: 60;
+    -fx-alignment: CENTER ;
+    -fx-text-alignment: center;
+
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.table-row-cell {
+    -fx-cell-size: 50px;
+}
+
+.table-view {
+    /*-fx-table-cell-border-color: transparent;*/
+    /*-fx-control-inner-background-alt: -fx-control-inner-background ;*/
 }
 
 .no-text {
@@ -171,7 +214,7 @@ VBox.card {
 }
 
 .reports-panel JFXButton FontIcon {
-    -fx-icon-size: 20px;
+    -fx-icon-size: 22px;
 }
 
 .curved-edges {

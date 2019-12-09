@@ -53,7 +53,7 @@ public class ReturnSaleItemsController implements Initializable {
     private TextField discountField;
 
     @FXML
-    private JFXButton saveSale;
+    private Button saveSale;
 
     private Sale sale;
 

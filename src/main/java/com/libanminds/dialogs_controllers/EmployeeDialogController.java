@@ -13,6 +13,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -43,10 +44,10 @@ public class EmployeeDialogController implements Initializable {
     private TextField phone;
 
     @FXML
-    private JFXButton cancel;
+    private Button cancel;
 
     @FXML
-    private JFXButton save;
+    private Button save;
 
     @FXML
     private ChoiceBox<Role> role;

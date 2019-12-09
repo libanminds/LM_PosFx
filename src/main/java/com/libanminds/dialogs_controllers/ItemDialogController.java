@@ -47,10 +47,10 @@ public class ItemDialogController implements Initializable {
     private TextField price;
 
     @FXML
-    private JFXButton cancel;
+    private Button cancel;
 
     @FXML
-    private JFXButton save;
+    private Button save;
 
     @FXML
     private ChoiceBox<String> currency;

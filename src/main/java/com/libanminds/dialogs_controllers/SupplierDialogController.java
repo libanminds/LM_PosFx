@@ -8,6 +8,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -33,16 +34,16 @@ public class SupplierDialogController implements Initializable {
     private TextField company;
 
     @FXML
-    private TextField comments;
+    private TextArea comments;
 
     @FXML
-    private TextArea address;
+    private TextField address;
 
     @FXML
-    private JFXButton cancel;
+    private Button cancel;
 
     @FXML
-    private JFXButton save;
+    private Button save;
 
     @FXML
     private Label errorMessagesLabel;

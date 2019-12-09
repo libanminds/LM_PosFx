@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
@@ -17,39 +18,56 @@
     <content>
         <VBox minHeight="600.0">
             <children>
-                <HBox alignment="CENTER_LEFT" spacing="8.0">
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" spacing="20.0">
+               <children>
+                  <Label text="Incomes" textFill="#006372">
+                     <font>
+                        <Font name="System Bold" size="30.0" />
+                     </font>
+                  </Label>
+                  <Region HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="searchField" prefWidth="300.0" promptText="Search Income">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+               </children>
+               <padding>
+                  <Insets bottom="8.0" top="8.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+            </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="20.0">
                     <children>
-                        <TextField fx:id="searchField" prefWidth="300.0" promptText="Search Income">
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                        </TextField>
-                        <MenuButton mnemonicParsing="false" text="Filter">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="By Category">
-                                    <graphic>
-                                        <FontIcon iconLiteral="ti-files" />
-                                    </graphic>
-                                </MenuItem>
-                                <MenuItem mnemonicParsing="false" text="By Date">
-                                    <graphic>
-                                        <FontIcon iconLiteral="ti-calendar" />
-                                    </graphic>
-                                </MenuItem>
-                            </items>
+                  <Button fx:id="deleteIncome" mnemonicParsing="false" style="-fx-background-color: ecf0f4;" text="Delete Income" textFill="#5580aa">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                     </padding></Button>
+                  <Button fx:id="editIncome" mnemonicParsing="false" style="-fx-background-color: d8e1ea;" text="Edit Income" textFill="#5580aa">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                     </padding></Button>
+                        <Button fx:id="addIncomeButton" graphicTextGap="8.0" mnemonicParsing="false" style="-fx-background-color: #5580aa;" text="Add Income" textFill="WHITE">
                             <graphic>
-                                <FontIcon iconLiteral="ti-filter" />
+                                <FontIcon iconColor="WHITE" iconLiteral="ti-plus" />
                             </graphic>
-                        </MenuButton>
-                        <Region HBox.hgrow="ALWAYS" />
-                  <Button fx:id="deleteIncome" mnemonicParsing="false" text="Delete Income" />
-                  <Button fx:id="editIncome" mnemonicParsing="false" text="Edit Income" />
-                        <Button fx:id="addIncomeButton" graphicTextGap="8.0" mnemonicParsing="false" text="Add Income">
-                            <graphic>
-                                <FontIcon iconLiteral="ti-plus" />
-                            </graphic>
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                     </padding>
                         </Button>
-                        <MenuButton mnemonicParsing="false" text="...">
+                        <Region HBox.hgrow="ALWAYS" />
+                        <MenuButton mnemonicParsing="false" style="-fx-background-color: #5580aa;" text="More Options" textFill="WHITE">
                             <items>
                                 <MenuItem fx:id="manageTypes" mnemonicParsing="false" text="Manage Types">
                                     <graphic>
@@ -57,6 +75,9 @@
                                     </graphic>
                                 </MenuItem>
                             </items>
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
                         </MenuButton>
                     </children>
                     <VBox.margin>

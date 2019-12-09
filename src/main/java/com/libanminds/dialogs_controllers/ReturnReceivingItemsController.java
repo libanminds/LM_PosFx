@@ -53,7 +53,7 @@ public class ReturnReceivingItemsController implements Initializable {
     private TextField discountField;
 
     @FXML
-    private JFXButton saveReceiving;
+    private Button saveReceiving;
 
     private Receiving receiving;
 

@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -17,26 +18,58 @@
             <children>
                 <HBox alignment="CENTER_LEFT" spacing="8.0">
                     <children>
+                  <Label text="Suppliers" textFill="#006372">
+                     <font>
+                        <Font name="System Bold" size="30.0" />
+                     </font>
+                  </Label>
+                        <Region HBox.hgrow="ALWAYS" />
                         <TextField fx:id="searchField" prefWidth="300.0" promptText="Search Suppliers">
                             <font>
                                 <Font size="14.0" />
                             </font>
                         </TextField>
-                        <Region HBox.hgrow="ALWAYS" />
-                  <Button fx:id="deleteSupplier" mnemonicParsing="false" text="Delete Supplier" />
-                  <Button fx:id="editSupplier" mnemonicParsing="false" text="Edit Supplier" />
-                        <Button fx:id="newSupplierBtn" graphicTextGap="8.0" mnemonicParsing="false" text="Add Supplier">
-                            <graphic>
-                                <FontIcon iconLiteral="ti-plus" />
-                            </graphic>
-                        </Button>
                     </children>
                     <VBox.margin>
-                        <Insets />
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                     </VBox.margin>
                     <padding>
-                        <Insets bottom="8.0" left="16.0" right="16.0" top="8.0" />
+                        <Insets bottom="8.0" top="8.0" />
                     </padding></HBox>
+            <HBox alignment="CENTER_LEFT" spacing="20.0">
+               <children>
+                  <Button fx:id="deleteSupplier" mnemonicParsing="false" style="-fx-background-color: ecf0f4;" text="Delete Supplier" textFill="#5580aa">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                     </padding>
+                  </Button>
+                  <Button fx:id="editSupplier" mnemonicParsing="false" style="-fx-background-color: d8e1ea;" text="Edit Supplier" textFill="#5580aa">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                     </padding>
+                  </Button>
+                  <Button fx:id="newSupplierBtn" graphicTextGap="8.0" mnemonicParsing="false" style="-fx-background-color: #5580aa;" text="Add Supplier" textFill="WHITE">
+                     <graphic>
+                        <FontIcon iconColor="WHITE" iconLiteral="ti-plus" />
+                     </graphic>
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                     </padding>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets bottom="8.0" left="16.0" right="16.0" top="8.0" />
+               </padding>
+            </HBox>
                 <TableView fx:id="suppliersTable" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
                     <VBox.margin>
                         <Insets bottom="8.0" left="16.0" right="16.0" top="8.0" />

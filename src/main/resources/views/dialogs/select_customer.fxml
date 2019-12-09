@@ -9,11 +9,10 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="600.0" prefWidth="600.0" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.dialogs_controllers.SelectCustomerDialogController">
    <content>
-      <VBox minHeight="600.0" prefHeight="600.0" prefWidth="644.0">
+      <VBox minHeight="600.0" prefHeight="600.0" prefWidth="644.0" stylesheets="@../../css/main.css">
          <children>
             <HBox alignment="CENTER_LEFT" spacing="8.0">
                <children>
@@ -23,10 +22,13 @@
                      </font>
                   </TextField>
                   <Region HBox.hgrow="ALWAYS" />
-                  <Button fx:id="newCustomerBtn" graphicTextGap="8.0" mnemonicParsing="false" text="Add Customer">
-                     <graphic>
-                        <FontIcon iconLiteral="ti-plus" />
-                     </graphic>
+                  <Button fx:id="newCustomerBtn" graphicTextGap="8.0" mnemonicParsing="false" style="-fx-background-color: #5580aa;" text="Add Customer" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
+                     </padding>
                   </Button>
                </children>
                <VBox.margin>

@@ -77,7 +77,7 @@ public class NewReceivingController implements Initializable {
     private Label remainingAmountText;
 
     @FXML
-    private JFXButton saveReceiving;
+    private Button saveReceiving;
 
     @FXML
     private TableView<Receiving> pastInvoicesTable;

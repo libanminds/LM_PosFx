@@ -51,7 +51,7 @@ public class CompleteReceivingController implements Initializable {
     private Label remainingAmountLabel;
 
     @FXML
-    private JFXButton saveBtn;
+    private Button saveBtn;
 
     private double subtotal;
     private double receivingDiscount;

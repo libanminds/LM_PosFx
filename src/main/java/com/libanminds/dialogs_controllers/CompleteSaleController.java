@@ -50,9 +50,8 @@ public class CompleteSaleController implements Initializable {
     @FXML
     private Label remainingAmountLabel;
 
-
     @FXML
-    private JFXButton saveSale;
+    private Button saveSale;
 
     private double subtotal;
     private double salesDiscount;

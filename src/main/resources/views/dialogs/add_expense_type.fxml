@@ -1,16 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="104.0" prefWidth="440.0" stylesheets="@../../css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.dialogs_controllers.ExpenseTypesDialogController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="104.0" prefWidth="494.0" stylesheets="@../../css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.dialogs_controllers.ExpenseTypesDialogController">
    <children>
       <TextField fx:id="typeField" layoutX="22.0" layoutY="52.0" prefHeight="26.0" prefWidth="215.0" />
-      <Button fx:id="saveButton" layoutX="341.0" layoutY="53.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Save" />
       <Label layoutX="22.0" layoutY="29.0" text="Type" />
-      <Button fx:id="cancelButton" layoutX="248.0" layoutY="53.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Cancel" />
       <Label fx:id="errorMessagesLabel" layoutX="21.0" layoutY="82.0" text="Error message goes here" textFill="RED" />
+      <Button fx:id="cancelButton" layoutX="284.0" layoutY="45.0" mnemonicParsing="false" style="-fx-background-color: ecf0f4;" text="Cancel" textFill="#5580aa">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+         <padding>
+            <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+         </padding>
+      </Button>
+      <Button fx:id="saveButton" layoutX="371.0" layoutY="45.0" mnemonicParsing="false" style="-fx-background-color: #5580aa;" text="Save" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+         <padding>
+            <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
+         </padding>
+      </Button>
    </children>
 </Pane>
