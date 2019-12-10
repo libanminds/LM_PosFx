@@ -87,8 +87,6 @@ public class ReturnSaleItemsController implements Initializable {
         saveSale.setOnMouseClicked((EventHandler<Event>) event -> SaveChanges());
     }
 
-
-
     private void initializeTables() {
 
         //SOLD ITEMS TABLE START
@@ -104,7 +102,8 @@ public class ReturnSaleItemsController implements Initializable {
         codeCol.setCellValueFactory(new PropertyValueFactory<>("code"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         saleQuantityCol.setCellValueFactory(new PropertyValueFactory<>("saleQuantity"));
-        priceCol.setCellValueFactory(new PropertyValueFactory<>("formattedPrice"));
+        priceCol.setCellValueFactory(cellData -> cellData.getValue().getFormattedPriceProperty());
+        //priceCol.setCellValueFactory(new PropertyValueFactory<>("formattedPrice"));
         saleDiscountCol.setCellValueFactory(new PropertyValueFactory<>("formattedDiscount"));
         totalPriceCol.setCellValueFactory(new PropertyValueFactory<>("formattedTotal"));
 

@@ -270,7 +270,7 @@ public class ItemsRepository {
                 item.setTotalQuantity(rs.getInt(17));
                 item.setPreviouslyReturnedQuantity(rs.getInt("returned_quantity"));
                 item.setDiscount(rs.getInt("discount"));
-                item.setCurrency(currency);
+                item.setSaleCurrency(currency);
 
                 data.add(item);
             }
