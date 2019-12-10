@@ -65,6 +65,12 @@
                         <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                      </padding>
                   </Button>
+                  <Region prefHeight="17.0" prefWidth="128.0" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="accountStatementBtn" mnemonicParsing="false" style="-fx-background-color: #5580aa;" text="View Statement of Account" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
                </children>
                <padding>
                   <Insets bottom="8.0" left="16.0" right="16.0" top="8.0" />

@@ -6,6 +6,8 @@ import com.libanminds.models.Customer;
 import com.libanminds.models.Supplier;
 import com.libanminds.repositories.CustomersRepository;
 import com.libanminds.repositories.SupplierRepository;
+import com.libanminds.transactions_history_controllers.CustomerStatementOfAccountController;
+import com.libanminds.transactions_history_controllers.SupplierStatementOfAccountController;
 import com.libanminds.utils.Views;
 import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
@@ -37,6 +39,9 @@ public class SuppliersController implements Initializable {
 
     @FXML
     private Button newSupplierBtn;
+
+    @FXML
+    private Button accountStatementBtn;
 
     @FXML
     private TableView<Supplier> suppliersTable;
@@ -79,8 +84,16 @@ public class SuppliersController implements Initializable {
             }
         });
 
+        accountStatementBtn.setOnMouseClicked(new EventHandler<Event>() {
+            @Override
+            public void handle(Event event) {
+                showStatementOfAccountDialog(selectedSupplier);
+            }
+        });
+
         deleteSupplier.setDisable(selectedSupplier == null);
         editSupplier.setDisable(selectedSupplier == null);
+        accountStatementBtn.setDisable(selectedSupplier == null);
     }
 
     private void showSuppliersDialog(Supplier supplier) {
@@ -96,6 +109,20 @@ public class SuppliersController implements Initializable {
                 suppliersTable.setItems(SupplierRepository.getSuppliers());
             });
         }catch (Exception e){}
+    }
+
+    private void showStatementOfAccountDialog(Supplier supplier) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.SUPPLIER_STATEMENT_OF_ACCOUNT));
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(loader.load()));
+            SupplierStatementOfAccountController controller = loader.getController();
+            controller.setSelectedCustomer(supplier);
+            stage.show();
+        }catch (Exception e) {
+            System.out.println(e.getCause());
+        }
     }
 
     private void showDeleteConfirmationDialog() {
@@ -144,6 +171,7 @@ public class SuppliersController implements Initializable {
             selectedSupplier = (Supplier) newValue;
             deleteSupplier.setDisable(selectedSupplier == null);
             editSupplier.setDisable(selectedSupplier == null);
+            accountStatementBtn.setDisable(selectedSupplier == null);
         });
     }
 }

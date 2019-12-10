@@ -38,6 +38,10 @@ public final class Views {
     public static final String RETURN_SALE_ITEMS = "/views/dialogs/return_sale_items.fxml";
     public static final String RETURN_RECEIVING_ITEMS = "/views/dialogs/return_receiving_items.fxml";
 
+    //Transactions History
+    public static final String CUSTOMER_STATEMENT_OF_ACCOUNT = "/views/dialogs/customer_statement_of_account.fxml";
+    public static final String SUPPLIER_STATEMENT_OF_ACCOUNT = "/views/dialogs/supplier_statement_of_account.fxml";
+
     //Categories Controllers
     public static final String ITEMS_CATEGORIES = "/views/main/item_categories.fxml";
     public static final String INCOME_TYPES = "/views/main/income_types.fxml";

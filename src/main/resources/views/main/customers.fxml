@@ -66,6 +66,12 @@
                         <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                      </padding>
                   </Button>
+                  <Region prefHeight="13.0" prefWidth="122.0" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="accountStatementBtn" mnemonicParsing="false" style="-fx-background-color: #5580aa;" text="View Statement of Account" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
                </children>
             </HBox>
             <TableView fx:id="customersTable" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@../../css/main.css" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">

@@ -3,6 +3,7 @@ package com.libanminds.main_controllers;
 import com.libanminds.dialogs_controllers.CustomerDialogController;
 import com.libanminds.models.Customer;
 import com.libanminds.repositories.CustomersRepository;
+import com.libanminds.transactions_history_controllers.CustomerStatementOfAccountController;
 import com.libanminds.utils.Views;
 import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
@@ -33,6 +34,9 @@ public class CustomersController implements Initializable {
 
     @FXML
     private Button newCustomerBtn;
+
+    @FXML
+    private Button accountStatementBtn;
 
     @FXML
     private TableView<Customer> customersTable;
@@ -73,8 +77,16 @@ public class CustomersController implements Initializable {
             }
         });
 
+        accountStatementBtn.setOnMouseClicked(new EventHandler<Event>() {
+            @Override
+            public void handle(Event event) {
+                showStatementOfAccountDialog(selectedCustomer);
+            }
+        });
+
         deleteCustomer.setDisable(selectedCustomer == null);
         editCustomer.setDisable(selectedCustomer == null);
+        accountStatementBtn.setDisable(selectedCustomer == null);
     }
 
     private void showCustomerDialog(Customer customer) {
@@ -90,6 +102,20 @@ public class CustomersController implements Initializable {
                 customersTable.setItems(CustomersRepository.getCustomers());
             });
         }catch (Exception e){
+            System.out.println(e.getCause());
+        }
+    }
+
+    private void showStatementOfAccountDialog(Customer customer) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.CUSTOMER_STATEMENT_OF_ACCOUNT));
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(loader.load()));
+            CustomerStatementOfAccountController controller = loader.getController();
+            controller.setSelectedCustomer(customer);
+            stage.show();
+        }catch (Exception e) {
             System.out.println(e.getCause());
         }
     }
@@ -144,6 +170,7 @@ public class CustomersController implements Initializable {
             selectedCustomer = (Customer)newValue;
             deleteCustomer.setDisable(selectedCustomer == null);
             editCustomer.setDisable(selectedCustomer == null);
+            accountStatementBtn.setDisable(selectedCustomer == null);
         });
     }
 }

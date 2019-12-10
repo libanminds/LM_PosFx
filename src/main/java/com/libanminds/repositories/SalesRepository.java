@@ -186,8 +186,8 @@ public class SalesRepository {
             salesStatement = DBConnection.instance.getPreparedStatement(query);
 
             try {
-                salesStatement.setInt(1, sale.getID());
-                salesStatement.setInt(2, sale.getCustomerID());
+                salesStatement.setInt(1, sale.getCustomerID());
+                salesStatement.setInt(2, sale.getID());
                 salesStatement.setDouble(3, refundedAmount);
                 salesStatement.setString(4, sale.getCurrency());
                 salesStatement.setBoolean(5, true);
