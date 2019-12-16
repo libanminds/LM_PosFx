@@ -1,5 +1,6 @@
 package com.libanminds.main_controllers;
 
+import com.libanminds.dialogs_controllers.CompleteSaleController;
 import com.libanminds.dialogs_controllers.SelectCustomerDialogController;
 import com.libanminds.dialogs_controllers.SelectItemDialogController;
 import com.libanminds.models.Customer;
@@ -241,11 +242,42 @@ public class NewSaleController implements Initializable {
 
         invoiceTotalAmountCol.setCellValueFactory(new PropertyValueFactory<>("formattedTotalAmount"));
         invoiceBalanceCol.setCellValueFactory(new PropertyValueFactory<>("formattedBalance"));
+
+        pastInvoicesTable.setRowFactory(tv -> {
+            TableRow<Sale> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() >= 2 && (!row.isEmpty())) {
+                    Sale compactSale = row.getItem();
+                    showCompleteSaleDialog(SalesRepository.getSale(compactSale.getID()));
+                }
+            });
+            return row;
+        });
+
         //PAST INVOICES TABLE ENDS
     }
 
+    private void showCompleteSaleDialog(Sale sale) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.COMPLETE_SALE));
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(loader.load()));
+            CompleteSaleController controller = loader.getController();
+            controller.setSale(sale);
+            stage.show();
+            stage.setOnHidden(e -> {
+                pastInvoicesTable.setItems(SalesRepository.getCompactSalesOfCustomer(selectedCustomer.getID()));
+            });
+        }catch (Exception e){
+            System.out.println(e.getCause());
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     private void createSale() {
-        if(itemsTable.getItems().isEmpty()) return;
+        if (itemsTable.getItems().isEmpty()) return;
 
         SalesRepository.createSale(
                 itemsTable.getItems(),
@@ -313,8 +345,7 @@ public class NewSaleController implements Initializable {
 
             if (salesDiscount > (subtotal - amountPaid)) {
                 saleDiscountTextField.setText(oldValue);
-            }
-            else
+            } else
                 recalculateNumbers();
         });
     }

@@ -2,9 +2,7 @@ package com.libanminds.main_controllers;
 
 import com.libanminds.dialogs_controllers.*;
 import com.libanminds.models.Receiving;
-import com.libanminds.models.Sale;
 import com.libanminds.repositories.ReceivingsRepository;
-import com.libanminds.repositories.SalesRepository;
 import com.libanminds.utils.Views;
 import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
@@ -53,7 +51,7 @@ public class ReceivingsController implements Initializable {
 
     private void initButtons() {
         completePayment.setOnMouseClicked((EventHandler<Event>) event -> {
-            showCompleteSaleDialog(selectedReceiving);
+            showCompleteReceivingDialog(selectedReceiving);
         });
 
         viewReceiving.setOnMouseClicked((EventHandler<Event>) event -> {
@@ -104,7 +102,7 @@ public class ReceivingsController implements Initializable {
         }
     }
 
-    private void showCompleteSaleDialog(Receiving receiving) {
+    private void showCompleteReceivingDialog(Receiving receiving) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.COMPLETE_RECEIVING));
             Stage stage = new Stage();

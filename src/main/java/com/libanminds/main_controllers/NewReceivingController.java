@@ -1,12 +1,15 @@
 package com.libanminds.main_controllers;
 
 import com.jfoenix.controls.JFXButton;
+import com.libanminds.dialogs_controllers.CompleteReceivingController;
 import com.libanminds.dialogs_controllers.SelectItemDialogController;
 import com.libanminds.dialogs_controllers.SelectSupplierDialogController;
 import com.libanminds.models.Item;
 import com.libanminds.models.Receiving;
+import com.libanminds.models.Sale;
 import com.libanminds.models.Supplier;
 import com.libanminds.repositories.ReceivingsRepository;
+import com.libanminds.repositories.SalesRepository;
 import com.libanminds.utils.*;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
@@ -293,7 +296,36 @@ public class NewReceivingController implements Initializable {
 
         invoiceTotalAmountCol.setCellValueFactory(new PropertyValueFactory<>("formattedTotalAmount"));
         invoiceBalanceCol.setCellValueFactory(new PropertyValueFactory<>("formattedBalance"));
+
+        pastInvoicesTable.setRowFactory(tv -> {
+            TableRow<Receiving> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() >= 2 && (!row.isEmpty())) {
+                    Receiving compactReceiving = row.getItem();
+                    showCompleteReceivingDialog(ReceivingsRepository.getReceiving(compactReceiving.getID()));
+                }
+            });
+            return row;
+        });
         //PAST INVOICES TABLE ENDS
+    }
+
+    private void showCompleteReceivingDialog(Receiving receiving) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.COMPLETE_RECEIVING));
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(loader.load()));
+            CompleteReceivingController controller = loader.getController();
+            controller.setReceiving(receiving);
+            stage.show();
+            stage.setOnHidden(e -> {
+                pastInvoicesTable.setItems(ReceivingsRepository.getCompactReceivingOfCustomer(selectedSupplier.getID()));
+            });
+        }catch (Exception e){
+
+            e.printStackTrace();
+        }
     }
 
     private void setTableListener() {
