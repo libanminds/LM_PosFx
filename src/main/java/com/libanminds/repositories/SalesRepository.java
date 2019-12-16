@@ -22,6 +22,12 @@ public class SalesRepository {
         return getSalesFromQuery(query, false);
     }
 
+    public static Sale getSale(int saleID) {
+        String query = "SELECT * FROM sales LEFT JOIN customers on sales.customer_id = customers.id WHERE sales.id = " + saleID;
+
+        return getSalesFromQuery(query, false).get(0);
+    }
+
     public static ObservableList<Sale> getSalesLike(String value) {
         String query = "SELECT * FROM sales LEFT JOIN customers on sales.customer_id = customers.id where  total_amount != 0 and (" +
                 " first_name like '%" + value + "%' or" +

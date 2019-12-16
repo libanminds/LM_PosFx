@@ -1,12 +1,15 @@
 package com.libanminds.transactions_history_controllers;
 
 import com.libanminds.dialogs_controllers.CustomerDialogController;
+import com.libanminds.dialogs_controllers.ViewSaleController;
 import com.libanminds.main_controllers.NewSaleController;
 import com.libanminds.models.Customer;
 import com.libanminds.models.CustomerTransaction;
 import com.libanminds.models.ItemCategory;
+import com.libanminds.models.Sale;
 import com.libanminds.repositories.CustomersRepository;
 import com.libanminds.repositories.ItemsCategoriesRepository;
+import com.libanminds.repositories.SalesRepository;
 import com.libanminds.repositories.TransactionsRepository;
 import com.libanminds.utils.Constants;
 import com.libanminds.utils.GlobalSettings;
@@ -97,5 +100,32 @@ public class CustomerStatementOfAccountController implements Initializable {
         transactionDate.setCellValueFactory(new PropertyValueFactory<>("transactionDate"));
 
         transactionsTable.setItems(TransactionsRepository.getCustomerTransactions(selectedCustomer));
+
+        transactionsTable.setRowFactory( tv -> {
+            TableRow<CustomerTransaction> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() >= 2 && (! row.isEmpty()) ) {
+                    CustomerTransaction transaction = row.getItem();
+                    showViewSaleDialog(SalesRepository.getSale(transaction.getInvoiceID()));
+                }
+            });
+            return row ;
+        });
+    }
+
+    private void showViewSaleDialog(Sale sale) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.VIEW_SALE));
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(loader.load()));
+            ViewSaleController controller = loader.getController();
+            controller.setSale(sale);
+            stage.show();
+        }catch (Exception e){
+            System.out.println(e.getCause());
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

@@ -1,21 +1,23 @@
 package com.libanminds.transactions_history_controllers;
 
-import com.libanminds.models.Customer;
-import com.libanminds.models.CustomerTransaction;
-import com.libanminds.models.Supplier;
-import com.libanminds.models.SupplierTransaction;
+import com.libanminds.dialogs_controllers.ViewReceivingController;
+import com.libanminds.models.*;
+import com.libanminds.repositories.ReceivingsRepository;
+import com.libanminds.repositories.SalesRepository;
 import com.libanminds.repositories.TransactionsRepository;
 import com.libanminds.utils.Constants;
 import com.libanminds.utils.GlobalSettings;
 import com.libanminds.utils.HelperFunctions;
+import com.libanminds.utils.Views;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -90,5 +92,31 @@ public class SupplierStatementOfAccountController implements Initializable {
         transactionDate.setCellValueFactory(new PropertyValueFactory<>("transactionDate"));
 
         transactionsTable.setItems(TransactionsRepository.getSuppliersTransactions(selectedSupplier));
+
+        transactionsTable.setRowFactory( tv -> {
+            TableRow<SupplierTransaction> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() >= 2 && (! row.isEmpty()) ) {
+                    SupplierTransaction transaction = row.getItem();
+                    showViewReceivingDialog(ReceivingsRepository.getReceiving(transaction.getInvoiceID()));
+                }
+            });
+            return row ;
+        });
+    }
+
+
+    private void showViewReceivingDialog(Receiving receiving) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.VIEW_RECEIVING));
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(loader.load()));
+            ViewReceivingController controller = loader.getController();
+            controller.setReceiving(receiving);
+            stage.show();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

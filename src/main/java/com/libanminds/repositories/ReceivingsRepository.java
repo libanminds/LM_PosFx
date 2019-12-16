@@ -20,6 +20,12 @@ public class ReceivingsRepository {
         return getReceivingsFromQuery(query, false);
     }
 
+    public static Receiving getReceiving(int receivingID) {
+        String query = "SELECT * FROM purchases LEFT JOIN suppliers on purchases.supplier_id = suppliers.id WHERE purchases.id = " + receivingID;
+
+        return getReceivingsFromQuery(query, false).get(0);
+    }
+
     public static ObservableList<Receiving> getReceivingsLike(String value) {
         String query = "SELECT * FROM purchases LEFT JOIN suppliers on purchases.supplier_id = suppliers.id where  total_amount != 0 and (" +
                 " first_name like '%" + value + "%' or" +
