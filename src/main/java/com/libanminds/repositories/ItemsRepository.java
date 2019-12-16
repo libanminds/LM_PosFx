@@ -2,7 +2,6 @@ package com.libanminds.repositories;
 
 import com.libanminds.models.*;
 import com.libanminds.utils.DBConnection;
-import com.libanminds.utils.GlobalSettings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -34,8 +33,20 @@ public class ItemsRepository {
         return getItemsOfSAPFromQuery(query, sale.getCurrency());
     }
 
+    public static ObservableList<Item> getReturnedItemsOfSale(Sale sale) {
+        String query = "SELECT * FROM items INNER JOIN sale_items ON items.id = sale_items.item_id LEFT JOIN item_properties ON items.item_properties_id = item_properties.id where returned_quantity > 0 and sale_id = " + sale.getID();
+
+        return getItemsOfSAPFromQuery(query, sale.getCurrency());
+    }
+
     public static ObservableList<Item> getItemsOfReceiving(Receiving receiving) {
         String query = "SELECT * FROM items INNER JOIN purchase_items ON items.id = purchase_items.item_id LEFT JOIN item_properties ON items.item_properties_id = item_properties.id where receiving_id = " + receiving.getID();
+
+        return getItemsOfSAPFromQuery(query, receiving.getCurrency());
+    }
+
+    public static ObservableList<Item> getReturnedItemsOfReceiving(Receiving receiving) {
+        String query = "SELECT * FROM items INNER JOIN purchase_items ON items.id = purchase_items.item_id LEFT JOIN item_properties ON items.item_properties_id = item_properties.id where  returned_quantity > 0 and receiving_id = " + receiving.getID();
 
         return getItemsOfSAPFromQuery(query, receiving.getCurrency());
     }

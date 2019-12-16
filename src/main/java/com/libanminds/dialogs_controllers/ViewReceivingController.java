@@ -1,8 +1,11 @@
 package com.libanminds.dialogs_controllers;
 
+import com.libanminds.models.CustomerTransaction;
 import com.libanminds.models.Item;
 import com.libanminds.models.Receiving;
+import com.libanminds.models.SupplierTransaction;
 import com.libanminds.repositories.ItemsRepository;
+import com.libanminds.repositories.TransactionsRepository;
 import com.libanminds.utils.HelperFunctions;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,6 +22,12 @@ public class ViewReceivingController implements Initializable {
 
     @FXML
     private TableView<Item> itemsTable;
+
+    @FXML
+    private TableView<SupplierTransaction> transactionsTable;
+
+    @FXML
+    private TableView<Item> returnedItemsTable;
 
     @FXML
     private Label subtotalText;
@@ -38,6 +47,9 @@ public class ViewReceivingController implements Initializable {
     @FXML
     private Label remainingAmountLabel;
 
+    @FXML
+    private Label supplierName;
+
     private double subtotal;
     private double receivingDiscount;
     private double taxes;
@@ -50,11 +62,12 @@ public class ViewReceivingController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {}
 
-    public void setReceiving(Receiving sale) {
-        this.receiving = sale;
+    public void setReceiving(Receiving receiving) {
+        this.receiving = receiving;
         initNumbers();
         updateNumbersUI();
         initializeTable();
+        initLabels(receiving.getSupplierName());
     }
 
     private void initNumbers() {
@@ -63,6 +76,10 @@ public class ViewReceivingController implements Initializable {
         totalAmount = receiving.getTotalAmount();
         amountPaid = receiving.getPaidAmount();
         remainingAmount = totalAmount - amountPaid;
+    }
+
+    private void initLabels(String name) {
+        supplierName.setText("Supplier: " + name);
     }
 
     private void initializeTable() {
@@ -83,6 +100,32 @@ public class ViewReceivingController implements Initializable {
         totalPriceCol.setCellValueFactory(new PropertyValueFactory<>("formattedTotal"));
 
         itemsTable.setItems(ItemsRepository.getItemsOfReceiving(receiving));
+
+
+
+        TableColumn<SupplierTransaction, String> transactionAmount = new TableColumn<>("Amount");
+        TableColumn<SupplierTransaction, String> transactionIsRefund = new TableColumn<>("is Refund");
+        TableColumn<SupplierTransaction, String> transactionDate = new TableColumn<>("Date/Time");
+
+        transactionsTable.getColumns().addAll(transactionAmount, transactionIsRefund, transactionDate);
+
+        transactionAmount.setCellValueFactory(new PropertyValueFactory<>("amountWithCurrency"));
+        transactionIsRefund.setCellValueFactory(new PropertyValueFactory<>("isRefund"));
+        transactionDate.setCellValueFactory(new PropertyValueFactory<>("transactionDate"));
+
+        transactionsTable.setItems(TransactionsRepository.getReceivingTransactions(receiving));
+
+        TableColumn<Item, String> itemCode = new TableColumn<>("Code");
+        TableColumn<Item, String> itemName = new TableColumn<>("Name");
+        TableColumn<Item, String> returnedQuantity = new TableColumn<>("Quantity");
+
+        returnedItemsTable.getColumns().addAll(itemCode, itemName, returnedQuantity);
+
+        itemCode.setCellValueFactory(new PropertyValueFactory<>("code"));
+        itemName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        returnedQuantity.setCellValueFactory(new PropertyValueFactory<>("previouslyReturnedQuantity"));
+
+        returnedItemsTable.setItems(ItemsRepository.getReturnedItemsOfReceiving(receiving));
     }
 
     private void updateNumbersUI() {

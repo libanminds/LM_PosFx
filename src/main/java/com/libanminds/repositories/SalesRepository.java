@@ -255,7 +255,7 @@ public class SalesRepository {
                         ) : new Sale(
                                 rs.getInt(1),
                                 rs.getInt("customer_id"),
-                                rs.getString("first_name") + rs.getString("last_name"),
+                                rs.getString("first_name") + " " + rs.getString("last_name"),
                                 rs.getDouble("discount"),
                                 rs.getInt("tax_id"),
                                 rs.getDouble("conversion_rate"),

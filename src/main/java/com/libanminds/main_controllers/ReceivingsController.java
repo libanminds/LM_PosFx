@@ -129,7 +129,7 @@ public class ReceivingsController implements Initializable {
     }
 
     private void initializeTable() {
-        TableColumn<Receiving,String> customerName = new TableColumn<>("Customer Name");
+        TableColumn<Receiving,String> customerName = new TableColumn<>("Supplier Name");
         TableColumn<Receiving,String> totalAmount = new TableColumn<>("Total Amount");
         TableColumn<Receiving,String> paidAmount = new TableColumn<>("Paid Amount");
         TableColumn<Receiving,String> discount = new TableColumn<>("Discount");

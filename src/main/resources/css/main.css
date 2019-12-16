@@ -102,6 +102,10 @@
 
 }
 
+.table-view > .column-header-background > .show-hide-columns-button {
+    -fx-background-color: #44709d;
+}
+
 .table-view .column-header .label {
     -fx-text-fill: white;
     -fx-font-weight: bold;

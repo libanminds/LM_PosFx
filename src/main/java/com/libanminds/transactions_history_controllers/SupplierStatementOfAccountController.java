@@ -3,6 +3,7 @@ package com.libanminds.transactions_history_controllers;
 import com.libanminds.models.Customer;
 import com.libanminds.models.CustomerTransaction;
 import com.libanminds.models.Supplier;
+import com.libanminds.models.SupplierTransaction;
 import com.libanminds.repositories.TransactionsRepository;
 import com.libanminds.utils.Constants;
 import com.libanminds.utils.GlobalSettings;
@@ -25,7 +26,7 @@ public class SupplierStatementOfAccountController implements Initializable {
     private Label title;
 
     @FXML
-    private TableView<CustomerTransaction> transactionsTable;
+    private TableView<SupplierTransaction> transactionsTable;
 
     @FXML
     private Label paidText;
@@ -57,7 +58,7 @@ public class SupplierStatementOfAccountController implements Initializable {
     private void setNumbers(String currency) {
         double paid = 0;
         double returned = 0;
-        for (CustomerTransaction transaction : transactionsTable.getItems()) {
+        for (SupplierTransaction transaction : transactionsTable.getItems()) {
             if(transaction.isRefund())
                 returned += transaction.getAmount(currency);
             else
@@ -76,10 +77,10 @@ public class SupplierStatementOfAccountController implements Initializable {
     }
 
     private void initializeTable() {
-        TableColumn<CustomerTransaction,String> invoiceID = new TableColumn<>("Invoice ID");
-        TableColumn<CustomerTransaction,String> amountWithCurrency = new TableColumn<>("amount");
-        TableColumn<CustomerTransaction,String> isRefund = new TableColumn<>("Is a refund");
-        TableColumn<CustomerTransaction,String> transactionDate = new TableColumn<>("Date/Time");
+        TableColumn<SupplierTransaction,String> invoiceID = new TableColumn<>("Invoice ID");
+        TableColumn<SupplierTransaction,String> amountWithCurrency = new TableColumn<>("amount");
+        TableColumn<SupplierTransaction,String> isRefund = new TableColumn<>("Is a refund");
+        TableColumn<SupplierTransaction,String> transactionDate = new TableColumn<>("Date/Time");
 
         transactionsTable.getColumns().addAll(invoiceID,amountWithCurrency,isRefund,transactionDate);
 

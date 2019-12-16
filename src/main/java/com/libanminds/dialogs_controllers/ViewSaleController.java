@@ -1,10 +1,13 @@
 package com.libanminds.dialogs_controllers;
 
 import com.jfoenix.controls.JFXButton;
+import com.libanminds.models.CustomerTransaction;
 import com.libanminds.models.Item;
 import com.libanminds.models.Sale;
+import com.libanminds.models.Transaction;
 import com.libanminds.repositories.ItemsRepository;
 import com.libanminds.repositories.SalesRepository;
+import com.libanminds.repositories.TransactionsRepository;
 import com.libanminds.utils.HelperFunctions;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -24,6 +27,12 @@ public class ViewSaleController implements Initializable {
     private TableView<Item> itemsTable;
 
     @FXML
+    private TableView<CustomerTransaction> transactionsTable;
+
+    @FXML
+    private TableView<Item> returnedItemsTable;
+
+    @FXML
     private Label subtotalText;
 
     @FXML
@@ -40,6 +49,9 @@ public class ViewSaleController implements Initializable {
 
     @FXML
     private Label remainingAmountLabel;
+
+    @FXML
+    private Label customerName;
 
     private double subtotal;
     private double salesDiscount;
@@ -58,6 +70,7 @@ public class ViewSaleController implements Initializable {
         initNumbers();
         updateNumbersUI();
         initializeTable();
+        initLabels(this.sale.getCustomerName());
     }
 
     private void initNumbers() {
@@ -66,6 +79,10 @@ public class ViewSaleController implements Initializable {
         totalAmount = sale.getTotalAmount();
         amountPaid = sale.getPaidAmount();
         remainingAmount = totalAmount - amountPaid;
+    }
+
+    private void initLabels(String name) {
+        customerName.setText("Customer: " + name);
     }
 
     private void initializeTable() {
@@ -86,6 +103,32 @@ public class ViewSaleController implements Initializable {
         totalPriceCol.setCellValueFactory(new PropertyValueFactory<>("formattedTotal"));
 
         itemsTable.setItems(ItemsRepository.getItemsOfSale(sale));
+
+
+        TableColumn<CustomerTransaction, String> transactionAmount = new TableColumn<>("Amount");
+        TableColumn<CustomerTransaction, String> transactionIsRefund = new TableColumn<>("is Refund");
+        TableColumn<CustomerTransaction, String> transactionDate = new TableColumn<>("Date/Time");
+
+        transactionsTable.getColumns().addAll(transactionAmount, transactionIsRefund, transactionDate);
+
+        transactionAmount.setCellValueFactory(new PropertyValueFactory<>("amountWithCurrency"));
+        transactionIsRefund.setCellValueFactory(new PropertyValueFactory<>("isRefund"));
+        transactionDate.setCellValueFactory(new PropertyValueFactory<>("transactionDate"));
+
+        transactionsTable.setItems(TransactionsRepository.getSaleTransactions(sale));
+
+
+        TableColumn<Item, String> itemCode = new TableColumn<>("Code");
+        TableColumn<Item, String> itemName = new TableColumn<>("Name");
+        TableColumn<Item, String> returnedQuantity = new TableColumn<>("Quantity");
+
+        returnedItemsTable.getColumns().addAll(itemCode, itemName, returnedQuantity);
+
+        itemCode.setCellValueFactory(new PropertyValueFactory<>("code"));
+        itemName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        returnedQuantity.setCellValueFactory(new PropertyValueFactory<>("previouslyReturnedQuantity"));
+
+        returnedItemsTable.setItems(ItemsRepository.getReturnedItemsOfSale(sale));
     }
 
     private void updateNumbersUI() {
