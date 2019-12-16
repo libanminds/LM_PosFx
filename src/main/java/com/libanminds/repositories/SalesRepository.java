@@ -147,11 +147,10 @@ public class SalesRepository {
                 e.printStackTrace();
                 return false;
             }
-
             query = "UPDATE items SET quantity = quantity - ? WHERE id = ?";
             statement = DBConnection.instance.getPreparedStatement(query);
             try {
-                statement.setInt(1, item.getSaleQuantityValue());
+                statement.setInt(1, (item.getStock() - item.getSaleQuantityValue()) < 0 ? item.getStock() : item.getSaleQuantityValue());
                 statement.setInt(2, item.getID());
                 statement.executeUpdate();
 
