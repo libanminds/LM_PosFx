@@ -3,6 +3,8 @@ package com.libanminds.dialogs_controllers;
 import com.libanminds.main_controllers.NewSaleController;
 import com.libanminds.models.Customer;
 import com.libanminds.repositories.CustomersRepository;
+import com.libanminds.utils.Authorization;
+import com.libanminds.utils.AuthorizationKeys;
 import com.libanminds.utils.Views;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -38,10 +40,15 @@ public class SelectCustomerDialogController implements Initializable {
         initButtons();
         initSearch();
         initializeTable();
+        handleAuthorization();
     }
 
     public void setHostController (NewSaleController controller) {
         hostController = controller;
+    }
+
+    private void handleAuthorization() {
+        newCustomerBtn.setVisible(Authorization.authorized.contains(AuthorizationKeys.CAN_ADD_CUSTOMER));
     }
 
     private void initButtons() {

@@ -3,6 +3,8 @@ package com.libanminds.main_controllers;
 import com.libanminds.dialogs_controllers.ItemDialogController;
 import com.libanminds.models.Item;
 import com.libanminds.repositories.ItemsRepository;
+import com.libanminds.utils.Authorization;
+import com.libanminds.utils.AuthorizationKeys;
 import com.libanminds.utils.Views;
 import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
@@ -14,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -22,6 +25,10 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ItemsController implements Initializable {
+
+    @FXML
+    private HBox buttonsHolder;
+
     @FXML
     private TextField searchField;
 
@@ -38,6 +45,12 @@ public class ItemsController implements Initializable {
     private MenuItem manageCategories;
 
     @FXML
+    private MenuItem countInventory;
+
+    @FXML
+    private MenuButton otherOptions;
+
+    @FXML
     private TableView<Item> itemsTable;
 
     Item selectedItem;
@@ -48,6 +61,26 @@ public class ItemsController implements Initializable {
         initButtons();
         initSearch();
         setTableListener();
+        handleAuthorization();
+    }
+
+    private void handleAuthorization() {
+        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_ADD_ITEMS))
+            buttonsHolder.getChildren().remove(newItemBtn);
+
+        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_EDIT_ITEMS))
+            buttonsHolder.getChildren().remove(editItem);
+
+        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_DELETE_ITEMS))
+            buttonsHolder.getChildren().remove(deleteItem);
+
+        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_ITEMS_CATEGORIES))
+            otherOptions.getItems().remove(manageCategories);
+
+        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_COUNT_ITEMS_INVENTORY))
+            otherOptions.getItems().remove(countInventory);
+
+        otherOptions.setVisible(!otherOptions.getItems().isEmpty());
     }
 
     private void initButtons() {

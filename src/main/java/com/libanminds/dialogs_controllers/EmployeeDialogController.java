@@ -2,13 +2,12 @@ package com.libanminds.dialogs_controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.libanminds.models.*;
-import com.libanminds.repositories.CustomersRepository;
-import com.libanminds.repositories.ExpensesRepository;
-import com.libanminds.repositories.UsersRepository;
+import com.libanminds.repositories.*;
 import com.libanminds.utils.Constants;
 import com.libanminds.utils.GlobalSettings;
 import com.libanminds.utils.HelperFunctions;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -89,10 +88,9 @@ public class EmployeeDialogController implements Initializable {
     }
 
     private void initRoles() {
-        Role[] roles = Constants.ROLES;
-
-        role.setItems(FXCollections.observableArrayList(roles));
-        role.setValue(GlobalSettings.DEFAULT_USER_ROLE);
+        ObservableList<Role> roles = RolesRepository.getRoles();
+        role.setItems(FXCollections.observableList(roles));
+        role.setValue(roles.get(0));
     }
 
     private boolean validateInput() {
@@ -135,7 +133,7 @@ public class EmployeeDialogController implements Initializable {
                         password.getText(),
                         email.getText(),
                         phone.getText(),
-                        role.getValue().getName(),
+                        role.getValue(),
                         employeeAddress.getText()
                 ));
             else
@@ -147,7 +145,7 @@ public class EmployeeDialogController implements Initializable {
                         password.getText(),
                         email.getText(),
                         phone.getText(),
-                        role.getValue().getName(),
+                        role.getValue(),
                         employeeAddress.getText()
                 ));
 

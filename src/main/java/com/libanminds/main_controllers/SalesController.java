@@ -5,6 +5,8 @@ import com.libanminds.dialogs_controllers.ReturnSaleItemsController;
 import com.libanminds.dialogs_controllers.ViewSaleController;
 import com.libanminds.models.Sale;
 import com.libanminds.repositories.SalesRepository;
+import com.libanminds.utils.Authorization;
+import com.libanminds.utils.AuthorizationKeys;
 import com.libanminds.utils.Views;
 import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
@@ -15,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -22,6 +25,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class SalesController implements Initializable {
+
+    @FXML
+    private HBox buttonsHolder;
 
     @FXML
     private TextField searchField;
@@ -46,6 +52,18 @@ public class SalesController implements Initializable {
         initSearch();
         initializeTable();
         setTableListener();
+        handleAuthorization();
+    }
+
+    private void handleAuthorization() {
+        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_SALE))
+            buttonsHolder.getChildren().remove(viewSaleBtn);
+
+        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_RETURN_SALE_ITEMS))
+            buttonsHolder.getChildren().remove(returnItems);
+
+        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_COMPLETE_SALE_PAYMENT))
+            buttonsHolder.getChildren().remove(completePayment);
     }
 
     private void initButtons() {

@@ -3,6 +3,8 @@ package com.libanminds.main_controllers;
 import com.libanminds.dialogs_controllers.*;
 import com.libanminds.models.Receiving;
 import com.libanminds.repositories.ReceivingsRepository;
+import com.libanminds.utils.Authorization;
+import com.libanminds.utils.AuthorizationKeys;
 import com.libanminds.utils.Views;
 import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
@@ -16,6 +18,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -23,6 +26,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ReceivingsController implements Initializable {
+
+    @FXML
+    private HBox buttonsHolder;
 
     @FXML
     private TextField searchField;
@@ -47,6 +53,18 @@ public class ReceivingsController implements Initializable {
         initSearch();
         initializeTable();
         setTableListener();
+        handleAuthorization();
+    }
+
+    private void handleAuthorization() {
+        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_RECEIVING))
+            buttonsHolder.getChildren().remove(viewReceiving);
+
+        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_RETURN_RECEIVING_ITEMS))
+            buttonsHolder.getChildren().remove(returnItems);
+
+        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_COMPLETE_RECEIVING_PAYMENT))
+            buttonsHolder.getChildren().remove(completePayment);
     }
 
     private void initButtons() {

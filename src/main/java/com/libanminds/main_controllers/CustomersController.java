@@ -4,6 +4,8 @@ import com.libanminds.dialogs_controllers.CustomerDialogController;
 import com.libanminds.models.Customer;
 import com.libanminds.repositories.CustomersRepository;
 import com.libanminds.transactions_history_controllers.CustomerStatementOfAccountController;
+import com.libanminds.utils.Authorization;
+import com.libanminds.utils.AuthorizationKeys;
 import com.libanminds.utils.Views;
 import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
@@ -14,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -22,6 +25,9 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class CustomersController implements Initializable {
+
+    @FXML
+    private HBox buttonsHolder;
 
     @FXML
     private TextField searchField;
@@ -49,6 +55,21 @@ public class CustomersController implements Initializable {
         initSearch();
         initializeTable();
         setTableListener();
+        handleAuthorization();
+    }
+
+    private void handleAuthorization() {
+        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_CUSTOMER_STATEMENT_OF_ACCOUNT))
+            buttonsHolder.getChildren().remove(accountStatementBtn);
+
+        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_ADD_CUSTOMER))
+            buttonsHolder.getChildren().remove(newCustomerBtn);
+
+        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_EDIT_CUSTOMER))
+            buttonsHolder.getChildren().remove(editCustomer);
+
+        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_DELETE_CUSTOMER))
+            buttonsHolder.getChildren().remove(deleteCustomer);
     }
 
     private void initializeVariables() {

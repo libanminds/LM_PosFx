@@ -3,6 +3,8 @@ package com.libanminds.dialogs_controllers;
 import com.libanminds.main_controllers.NewReceivingController;
 import com.libanminds.models.Supplier;
 import com.libanminds.repositories.SupplierRepository;
+import com.libanminds.utils.Authorization;
+import com.libanminds.utils.AuthorizationKeys;
 import com.libanminds.utils.Views;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -38,10 +40,15 @@ public class SelectSupplierDialogController implements Initializable {
         initializeTable();
         initSearch();
         initButtons();
+        handleAuthorization();
     }
 
     public void setHostController (NewReceivingController controller) {
         hostController = controller;
+    }
+
+    private void handleAuthorization() {
+        newSupplierBtn.setVisible(Authorization.authorized.contains(AuthorizationKeys.CAN_ADD_SUPPLIER));
     }
 
     private void initSearch() {

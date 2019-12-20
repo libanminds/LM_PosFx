@@ -2,6 +2,7 @@ package com.libanminds.main_controllers;
 
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import com.libanminds.repositories.UsersRepository;
 import com.libanminds.utils.Views;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,8 +26,12 @@ public class LoginController {
 
     @FXML
     public void onLogin(ActionEvent event) {
-        // TODO login logic
+        boolean isAuthenticated = UsersRepository.login(username.getText(),password.getText());
         System.out.println("Username: " + username.getText() + "\nPassword: " + password.getText());
+        System.out.println("Authenticated: " + isAuthenticated);
+
+        //TODO: check isAuthentication
+
         try {
             redirectToMain();
         } catch (IOException e) {

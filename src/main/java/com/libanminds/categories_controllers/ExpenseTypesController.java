@@ -5,6 +5,8 @@ import com.libanminds.dialogs_controllers.IncomeTypesDialogController;
 import com.libanminds.models.Type;
 import com.libanminds.repositories.ExpenseTypesRepository;
 import com.libanminds.repositories.IncomeTypesRepository;
+import com.libanminds.utils.Authorization;
+import com.libanminds.utils.AuthorizationKeys;
 import com.libanminds.utils.Views;
 import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
@@ -15,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -23,6 +26,9 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ExpenseTypesController implements Initializable {
+
+    @FXML
+    private HBox buttonsHolder;
 
     @FXML
     private TextField searchField;
@@ -47,6 +53,18 @@ public class ExpenseTypesController implements Initializable {
         initSearch();
         initializeTable();
         setTableListener();
+        handleAuthorization();
+    }
+
+    private void handleAuthorization() {
+        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_ADD_EXPENSES_CATEGORIES))
+            buttonsHolder.getChildren().remove(addType);
+
+        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_EDIT_EXPENSES_CATEGORIES))
+            buttonsHolder.getChildren().remove(editType);
+
+        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_DELETE_EXPENSES_CATEGORIES))
+            buttonsHolder.getChildren().remove(deleteType);
     }
 
     private void initButtons() {

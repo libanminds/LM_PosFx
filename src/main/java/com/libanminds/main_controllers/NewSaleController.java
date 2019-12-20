@@ -7,10 +7,7 @@ import com.libanminds.models.Customer;
 import com.libanminds.models.Item;
 import com.libanminds.models.Sale;
 import com.libanminds.repositories.SalesRepository;
-import com.libanminds.utils.EditingCell;
-import com.libanminds.utils.GlobalSettings;
-import com.libanminds.utils.HelperFunctions;
-import com.libanminds.utils.Views;
+import com.libanminds.utils.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -247,6 +244,8 @@ public class NewSaleController implements Initializable {
             TableRow<Sale> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() >= 2 && (!row.isEmpty())) {
+                    if(!Authorization.authorized.contains(AuthorizationKeys.CAN_RETURN_SALE_ITEMS))
+                        return;
                     Sale compactSale = row.getItem();
                     showCompleteSaleDialog(SalesRepository.getSale(compactSale.getID()));
                 }

@@ -38,7 +38,7 @@
                     <padding>
                         <Insets bottom="8.0" top="8.0" />
                     </padding></HBox>
-            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" spacing="20.0">
+            <HBox fx:id="buttonsHolder" alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" spacing="20.0">
                <children>
                   <Button fx:id="deleteItem" mnemonicParsing="false" style="-fx-background-color: ecf0f4;" text="Delete Item" textFill="#5580aa">
                      <font>
@@ -68,14 +68,14 @@
                      </padding>
                   </Button>
                   <Region HBox.hgrow="ALWAYS" />
-                  <MenuButton mnemonicParsing="false" style="-fx-background-color: #5580aa;" text="Other Options" textFill="WHITE">
+                  <MenuButton fx:id="otherOptions" mnemonicParsing="false" style="-fx-background-color: #5580aa;" text="Other Options" textFill="WHITE">
                      <items>
                         <MenuItem fx:id="manageCategories" mnemonicParsing="false" text="Manage Categories">
                            <graphic>
                               <FontIcon iconLiteral="ti-files" />
                            </graphic>
                         </MenuItem>
-                        <MenuItem mnemonicParsing="false" text="Count Inventory">
+                        <MenuItem fx:id="countInventory" mnemonicParsing="false" text="Count Inventory">
                            <graphic>
                               <FontIcon iconLiteral="ti-agenda" />
                            </graphic>

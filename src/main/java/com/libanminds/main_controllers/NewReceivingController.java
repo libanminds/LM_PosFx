@@ -301,6 +301,8 @@ public class NewReceivingController implements Initializable {
             TableRow<Receiving> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() >= 2 && (!row.isEmpty())) {
+                    if(!Authorization.authorized.contains(AuthorizationKeys.CAN_RETURN_RECEIVING_ITEMS))
+                        return;
                     Receiving compactReceiving = row.getItem();
                     showCompleteReceivingDialog(ReceivingsRepository.getReceiving(compactReceiving.getID()));
                 }

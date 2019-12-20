@@ -39,7 +39,7 @@
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </VBox.margin>
             </HBox>
-                <HBox alignment="CENTER_LEFT" spacing="20.0">
+                <HBox fx:id="buttonsHolder" alignment="CENTER_LEFT" spacing="20.0">
                     <children>
                   <Button fx:id="deleteIncome" mnemonicParsing="false" style="-fx-background-color: ecf0f4;" text="Delete Income" textFill="#5580aa">
                      <font>
@@ -67,7 +67,7 @@
                      </padding>
                         </Button>
                         <Region HBox.hgrow="ALWAYS" />
-                        <MenuButton mnemonicParsing="false" style="-fx-background-color: #5580aa;" text="More Options" textFill="WHITE">
+                        <MenuButton fx:id="moreOptions" mnemonicParsing="false" style="-fx-background-color: #5580aa;" text="More Options" textFill="WHITE">
                             <items>
                                 <MenuItem fx:id="manageTypes" mnemonicParsing="false" text="Manage Types">
                                     <graphic>

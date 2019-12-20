@@ -4,6 +4,8 @@ import com.libanminds.main_controllers.NewReceivingController;
 import com.libanminds.main_controllers.NewSaleController;
 import com.libanminds.models.Item;
 import com.libanminds.repositories.ItemsRepository;
+import com.libanminds.utils.Authorization;
+import com.libanminds.utils.AuthorizationKeys;
 import com.libanminds.utils.Views;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -41,11 +43,16 @@ public class SelectItemDialogController implements Initializable {
         initializeTable();
         initButtons();
         initSearch();
+        handleAuthorization();
     }
 
     public void setHostController (NewSaleController controllerSales, NewReceivingController controllerReceivings) {
         hostControllerSale = controllerSales;
         hostControllerReceiving = controllerReceivings;
+    }
+
+    private void handleAuthorization() {
+        newItemBtn.setVisible(Authorization.authorized.contains(AuthorizationKeys.CAN_ADD_ITEMS));
     }
 
     private void initButtons() {

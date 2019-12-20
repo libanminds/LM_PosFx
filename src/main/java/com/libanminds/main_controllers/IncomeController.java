@@ -6,6 +6,8 @@ import com.libanminds.models.Expense;
 import com.libanminds.models.Income;
 import com.libanminds.repositories.ExpensesRepository;
 import com.libanminds.repositories.IncomesRepository;
+import com.libanminds.utils.Authorization;
+import com.libanminds.utils.AuthorizationKeys;
 import com.libanminds.utils.Views;
 import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
@@ -17,6 +19,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -25,6 +28,10 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class IncomeController implements Initializable {
+
+
+    @FXML
+    private HBox buttonsHolder;
 
     @FXML
     private TextField searchField;
@@ -42,6 +49,9 @@ public class IncomeController implements Initializable {
     private MenuItem manageTypes;
 
     @FXML
+    private MenuButton moreOptions;
+
+    @FXML
     private TableView<Income> incomesTable;
 
     Income selectedIncome;
@@ -52,6 +62,20 @@ public class IncomeController implements Initializable {
         initSearch();
         initNewIncome();
         setTableListener();
+        handleAuthorization();
+    }
+
+    private void handleAuthorization() {
+        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_ADD_INCOME))
+            buttonsHolder.getChildren().remove(addIncomeButton);
+
+        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_EDIT_INCOME))
+            buttonsHolder.getChildren().remove(editIncome);
+
+        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_DELETE_INCOME))
+            buttonsHolder.getChildren().remove(deleteIncome);
+
+        moreOptions.setVisible(Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_INCOMES_CATEGORIES));
     }
 
     private void initNewIncome() {

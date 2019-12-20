@@ -8,6 +8,8 @@ import com.libanminds.repositories.CustomersRepository;
 import com.libanminds.repositories.SupplierRepository;
 import com.libanminds.transactions_history_controllers.CustomerStatementOfAccountController;
 import com.libanminds.transactions_history_controllers.SupplierStatementOfAccountController;
+import com.libanminds.utils.Authorization;
+import com.libanminds.utils.AuthorizationKeys;
 import com.libanminds.utils.Views;
 import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
@@ -19,6 +21,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -27,6 +30,9 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class SuppliersController implements Initializable {
+
+    @FXML
+    private HBox buttonsHolder;
 
     @FXML
     private TextField searchField;
@@ -54,6 +60,21 @@ public class SuppliersController implements Initializable {
         initSearch();
         initButtons();
         setTableListener();
+        handleAuthorization();
+    }
+
+    private void handleAuthorization() {
+        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_SUPPLIER_STATEMENT_OF_ACCOUNT))
+            buttonsHolder.getChildren().remove(accountStatementBtn);
+
+        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_ADD_SUPPLIER))
+            buttonsHolder.getChildren().remove(newSupplierBtn);
+
+        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_EDIT_SUPPLIER))
+            buttonsHolder.getChildren().remove(editSupplier);
+
+        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_DELETE_SUPPLIER))
+            buttonsHolder.getChildren().remove(deleteSupplier);
     }
 
     private void initSearch() {

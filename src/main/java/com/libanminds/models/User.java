@@ -1,5 +1,6 @@
 package com.libanminds.models;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class User {
@@ -11,10 +12,10 @@ public class User {
     private SimpleStringProperty password;
     private SimpleStringProperty email;
     private SimpleStringProperty phone;
-    private SimpleStringProperty role;
+    private Role role;
     private SimpleStringProperty address;
 
-    public User(int id,String username, String firstName, String lastName, String password, String email, String phone, String role, String address) {
+    public User(int id, String username, String firstName, String lastName, String password, String email, String phone, Role role, String address) {
         this.id = id;
         this.username = new SimpleStringProperty(username);
         this.firstName = new SimpleStringProperty(firstName);
@@ -22,7 +23,7 @@ public class User {
         this.password = new SimpleStringProperty(password);
         this.email = new SimpleStringProperty(email);
         this.phone = new SimpleStringProperty(phone);
-        this.role = new SimpleStringProperty(role);
+        this.role = role;
         this.address = new SimpleStringProperty(address);
     }
 
@@ -82,12 +83,12 @@ public class User {
         phone.set(val);
     }
 
-    public String getRole() {
-        return role.get();
+    public int getRoleID() {
+        return role.getID();
     }
 
-    public void setRole(String val) {
-        role.set(val);
+    public String getRoleName() {
+        return role.getName();
     }
 
     public String getAddress() {

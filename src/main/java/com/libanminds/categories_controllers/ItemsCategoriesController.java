@@ -3,6 +3,8 @@ package com.libanminds.categories_controllers;
 import com.libanminds.dialogs_controllers.ItemCategoryDialogController;
 import com.libanminds.models.ItemCategory;
 import com.libanminds.repositories.ItemsCategoriesRepository;
+import com.libanminds.utils.Authorization;
+import com.libanminds.utils.AuthorizationKeys;
 import com.libanminds.utils.Views;
 import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
@@ -13,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.net.URL;
@@ -20,6 +23,9 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ItemsCategoriesController implements Initializable {
+
+    @FXML
+    private HBox buttonsHolder;
 
     @FXML
     private TextField searchField;
@@ -44,10 +50,18 @@ public class ItemsCategoriesController implements Initializable {
         initSearch();
         initializeTable();
         setTableListener();
+        handleAuthorization();
     }
 
-    private void initializeVariables() {
-        selectedCategory = null;
+    private void handleAuthorization() {
+        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_ADD_ITEMS_CATEGORIES))
+            buttonsHolder.getChildren().remove(addCategory);
+
+        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_EDIT_ITEMS_CATEGORIES))
+            buttonsHolder.getChildren().remove(editCategory);
+
+        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_DELETE_ITEMS_CATEGORIES))
+            buttonsHolder.getChildren().remove(deleteCategory);
     }
 
     private void initButtons() {

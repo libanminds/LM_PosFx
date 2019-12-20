@@ -7,6 +7,8 @@ import com.libanminds.repositories.CustomersRepository;
 import com.libanminds.repositories.ExpensesRepository;
 import com.libanminds.repositories.SupplierRepository;
 import com.libanminds.repositories.UsersRepository;
+import com.libanminds.utils.Authorization;
+import com.libanminds.utils.AuthorizationKeys;
 import com.libanminds.utils.Views;
 import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
@@ -18,6 +20,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -26,6 +29,10 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ExpensesController implements Initializable {
+
+
+    @FXML
+    private HBox buttonsHolder;
 
     @FXML
     private TextField searchField;
@@ -43,6 +50,9 @@ public class ExpensesController implements Initializable {
     private MenuItem manageTypes;
 
     @FXML
+    private MenuButton moreOptions;
+
+    @FXML
     private TableView<Expense> expensesTable;
 
     private Expense selectedExpense;
@@ -53,6 +63,20 @@ public class ExpensesController implements Initializable {
         initSearch();
         initButtons();
         setTableListener();
+        handleAuthorization();
+    }
+
+    private void handleAuthorization() {
+        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_ADD_EXPENSES))
+            buttonsHolder.getChildren().remove(addExpenseButton);
+
+        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_EDIT_EXPENSES))
+            buttonsHolder.getChildren().remove(editExpenses);
+
+        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_DELETE_EXPENSES))
+            buttonsHolder.getChildren().remove(deleteExpenses);
+
+        moreOptions.setVisible(Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_EXPENSES_CATEGORIES));
     }
 
     private void initButtons() {

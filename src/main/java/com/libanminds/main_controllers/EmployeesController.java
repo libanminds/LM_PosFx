@@ -8,6 +8,8 @@ import com.libanminds.repositories.CustomersRepository;
 import com.libanminds.repositories.ExpensesRepository;
 import com.libanminds.repositories.IncomesRepository;
 import com.libanminds.repositories.UsersRepository;
+import com.libanminds.utils.Authorization;
+import com.libanminds.utils.AuthorizationKeys;
 import com.libanminds.utils.Views;
 import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
@@ -19,6 +21,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -27,6 +30,9 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class EmployeesController implements Initializable {
+
+    @FXML
+    private HBox buttonsHolder;
 
     @FXML
     private TextField searchField;
@@ -51,6 +57,18 @@ public class EmployeesController implements Initializable {
         initSearch();
         initButtons();
         setTableListener();
+        handleAuthorization();
+    }
+
+    private void handleAuthorization() {
+        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_ADD_USER))
+            buttonsHolder.getChildren().remove(newEmployeeButton);
+
+        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_EDIT_USER))
+            buttonsHolder.getChildren().remove(editEmployee);
+
+        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_DELETE_USER))
+            buttonsHolder.getChildren().remove(deleteEmployee);
     }
 
     private void initButtons() {
@@ -97,7 +115,7 @@ public class EmployeesController implements Initializable {
     private void showDeleteConfirmationDialog() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Delete Confirmation");
-        alert.setHeaderText("Are you sure you want to delete this income row?");
+        alert.setHeaderText("Are you sure you want to delete " + selectedEmployee.getName() + "?");
 
         ButtonType yesButton = new ButtonType("Yes");
         ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
@@ -133,7 +151,7 @@ public class EmployeesController implements Initializable {
 
         usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        roleCol.setCellValueFactory(new PropertyValueFactory<>("role"));
+        roleCol.setCellValueFactory(new PropertyValueFactory<>("roleName"));
         emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
         phoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
         addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
