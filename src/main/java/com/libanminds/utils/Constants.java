@@ -14,6 +14,6 @@ public class Constants {
 
     //Roles
     public static Role[] ROLES = {
-        new Role(1,"Admin")
+            new Role(1, "Admin")
     };
 }

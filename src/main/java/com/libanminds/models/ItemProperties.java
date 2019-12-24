@@ -22,47 +22,47 @@ public class ItemProperties {
         return ID.get();
     }
 
-    public SimpleIntegerProperty IDProperty() {
-        return ID;
-    }
-
     public void setID(int ID) {
         this.ID.set(ID);
+    }
+
+    public SimpleIntegerProperty IDProperty() {
+        return ID;
     }
 
     public double getCost() {
         return cost.get();
     }
 
-    public SimpleDoubleProperty costProperty() {
-        return cost;
-    }
-
     public void setCost(double cost) {
         this.cost.set(cost);
+    }
+
+    public SimpleDoubleProperty costProperty() {
+        return cost;
     }
 
     public double getPrice() {
         return price.get();
     }
 
-    public SimpleDoubleProperty priceProperty() {
-        return price;
-    }
-
     public void setPrice(double price) {
         this.price.set(price);
+    }
+
+    public SimpleDoubleProperty priceProperty() {
+        return price;
     }
 
     public String getCurrency() {
         return currency.get();
     }
 
-    public SimpleStringProperty currencyProperty() {
-        return currency;
-    }
-
     public void setCurrency(String currency) {
         this.currency.set(currency);
+    }
+
+    public SimpleStringProperty currencyProperty() {
+        return currency;
     }
 }

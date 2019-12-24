@@ -103,7 +103,7 @@ public class ItemDialogController implements Initializable {
 
             try {
                 imageDisplay.setImage(new Image(new File(item.getImageUrl()).toURI().toString()));
-            }catch (Exception e) {
+            } catch (Exception e) {
                 System.out.println("Image not working: " + e.getMessage());
             }
             code.setText(item.getCode() + "");
@@ -135,7 +135,7 @@ public class ItemDialogController implements Initializable {
     }
 
     private void initChoiceBoxes() {
-        String[] currencies = { Constants.DOLLAR_CURRENCY, Constants.LIRA_CURRENCY};
+        String[] currencies = {Constants.DOLLAR_CURRENCY, Constants.LIRA_CURRENCY};
         currency.setItems(FXCollections.observableArrayList(currencies));
         currency.setValue(GlobalSettings.DEFAULT_CURRENCY);
 
@@ -146,43 +146,43 @@ public class ItemDialogController implements Initializable {
 
     private boolean validateInput() {
         boolean isValid = true;
-        if(code.getText().isEmpty()) {
+        if (code.getText().isEmpty()) {
             HelperFunctions.highlightTextfieldError(code);
             isValid = false;
         }
 
-        if(name.getText().isEmpty()) {
+        if (name.getText().isEmpty()) {
             HelperFunctions.highlightTextfieldError(name);
             isValid = false;
         }
 
-        if(limit.getText().isEmpty()) {
+        if (limit.getText().isEmpty()) {
             HelperFunctions.highlightTextfieldError(limit);
             isValid = false;
         }
 
-        if(cost.getText().isEmpty()) {
+        if (cost.getText().isEmpty()) {
             HelperFunctions.highlightTextfieldError(cost);
             isValid = false;
         }
 
-        if(quantity.getText().isEmpty()) {
+        if (quantity.getText().isEmpty()) {
             HelperFunctions.highlightTextfieldError(quantity);
             isValid = false;
         }
 
-        if(price.getText().isEmpty()) {
+        if (price.getText().isEmpty()) {
             HelperFunctions.highlightTextfieldError(price);
             isValid = false;
         }
 
-        if(!isValid) errorMessagesLabel.setText("Please fill in all the required fields");
+        if (!isValid) errorMessagesLabel.setText("Please fill in all the required fields");
         return isValid;
     }
 
     private void initSaveButton() {
         save.setOnMouseClicked((EventHandler<Event>) event -> {
-            if(!validateInput()) return;
+            if (!validateInput()) return;
             boolean successful;
 
             Item newItem = new Item(
@@ -204,10 +204,10 @@ public class ItemDialogController implements Initializable {
                     ""
             );
 
-            if(itemID == -1)
+            if (itemID == -1)
                 successful = ItemsRepository.addItem(newItem);
             else {
-                if(itemImageChanged) {
+                if (itemImageChanged) {
                     //deleteFile(imagePath);
                     imagePath = saveImageOnDevice(itemImage);
                 }
@@ -215,13 +215,13 @@ public class ItemDialogController implements Initializable {
                 successful = ItemsRepository.updateItem(newItem);
             }
 
-            if(successful) {
-                if(hostController != null) {
+            if (successful) {
+                if (hostController != null) {
                     hostController.setSelectedItem(newItem);
                 }
                 Stage currentStage = (Stage) save.getScene().getWindow();
                 currentStage.close();
-            }else {
+            } else {
                 //TODO : DO SOMETHING
             }
         });
@@ -230,8 +230,8 @@ public class ItemDialogController implements Initializable {
     //Be super careful when using this function (Though it's not working yet, maybe because the image is being used by the program)
     private boolean deleteFile(String filePath) {
         File file = new File(filePath);
-            if(file.exists())
-                return file.delete();
+        if (file.exists())
+            return file.delete();
 
         return false;
     }
@@ -253,7 +253,7 @@ public class ItemDialogController implements Initializable {
             itemImageChanged = itemImage != null;
             try {
                 imageDisplay.setImage(new Image(itemImage.toURI().toString()));
-            }catch (Exception e) {
+            } catch (Exception e) {
 
             }
         });
@@ -263,11 +263,11 @@ public class ItemDialogController implements Initializable {
         String imagePath = "";
         try {
             BufferedImage bufferedImage = ImageIO.read(imageFile);
-            String fileExtension= HelperFunctions.getFileExtension(imageFile);
+            String fileExtension = HelperFunctions.getFileExtension(imageFile);
             File outputFile = new File(getImagePath(imageFile));
             ImageIO.write(bufferedImage, fileExtension, outputFile);
             imagePath = outputFile.getAbsolutePath();
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 

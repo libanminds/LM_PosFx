@@ -46,7 +46,7 @@ public class SelectItemDialogController implements Initializable {
         handleAuthorization();
     }
 
-    public void setHostController (NewSaleController controllerSales, NewReceivingController controllerReceivings) {
+    public void setHostController(NewSaleController controllerSales, NewReceivingController controllerReceivings) {
         hostControllerSale = controllerSales;
         hostControllerReceiving = controllerReceivings;
     }
@@ -70,13 +70,13 @@ public class SelectItemDialogController implements Initializable {
             selectedItem = null;
             stage.show();
             stage.setOnHidden(e -> {
-                if(selectedItem != null) {
+                if (selectedItem != null) {
                     sendDataBackToHost();
                     Stage currentStage = (Stage) newItemBtn.getScene().getWindow();
                     currentStage.close();
                 }
             });
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
@@ -89,33 +89,33 @@ public class SelectItemDialogController implements Initializable {
 
     private void initializeTable() {
         TableColumn<Item, ImageView> imageCol = new TableColumn<>("Image");
-        TableColumn<Item,String> codeCol = new TableColumn<>("Code");
-        TableColumn<Item,String> nameCol = new TableColumn<>("Name");
-        TableColumn<Item,String> categoryCol = new TableColumn<>("Category");
-        TableColumn<Item,String> priceCol = new TableColumn<>("Price");
-        TableColumn<Item,Double> stockCol = new TableColumn<>("Stock");
-        TableColumn<Item,String> supplierCol = new TableColumn<>("Supplier");
-        TableColumn<Item,String> descriptionCol = new TableColumn<>("Description");
-        TableColumn<Item,String> isServiceCol = new TableColumn<>("Is Service");
-        TableColumn<Item,String> lastModifierCol = new TableColumn<>("Last Modified");
+        TableColumn<Item, String> codeCol = new TableColumn<>("Code");
+        TableColumn<Item, String> nameCol = new TableColumn<>("Name");
+        TableColumn<Item, String> categoryCol = new TableColumn<>("Category");
+        TableColumn<Item, String> priceCol = new TableColumn<>("Price");
+        TableColumn<Item, Double> stockCol = new TableColumn<>("Stock");
+        TableColumn<Item, String> supplierCol = new TableColumn<>("Supplier");
+        TableColumn<Item, String> descriptionCol = new TableColumn<>("Description");
+        TableColumn<Item, String> isServiceCol = new TableColumn<>("Is Service");
+        TableColumn<Item, String> lastModifierCol = new TableColumn<>("Last Modified");
 
-        itemsTable.getColumns().addAll(imageCol,codeCol,nameCol,categoryCol,priceCol,stockCol,supplierCol,descriptionCol,isServiceCol,lastModifierCol);
+        itemsTable.getColumns().addAll(imageCol, codeCol, nameCol, categoryCol, priceCol, stockCol, supplierCol, descriptionCol, isServiceCol, lastModifierCol);
 
-        imageCol.setCellValueFactory(new PropertyValueFactory<Item,ImageView>("image"));
-        codeCol.setCellValueFactory(new PropertyValueFactory<Item,String>("code"));
-        nameCol.setCellValueFactory(new PropertyValueFactory<Item,String>("name"));
-        categoryCol.setCellValueFactory(new PropertyValueFactory<Item,String>("category"));
-        priceCol.setCellValueFactory(new PropertyValueFactory<Item,String>("price"));
-        stockCol.setCellValueFactory(new PropertyValueFactory<Item,Double>("stock"));
-        supplierCol.setCellValueFactory(new PropertyValueFactory<Item,String>("supplier"));
-        descriptionCol.setCellValueFactory(new PropertyValueFactory<Item,String>("description"));
-        isServiceCol.setCellValueFactory(new PropertyValueFactory<Item,String>("isService"));
-        lastModifierCol.setCellValueFactory(new PropertyValueFactory<Item,String>("lastModified"));
+        imageCol.setCellValueFactory(new PropertyValueFactory<Item, ImageView>("image"));
+        codeCol.setCellValueFactory(new PropertyValueFactory<Item, String>("code"));
+        nameCol.setCellValueFactory(new PropertyValueFactory<Item, String>("name"));
+        categoryCol.setCellValueFactory(new PropertyValueFactory<Item, String>("category"));
+        priceCol.setCellValueFactory(new PropertyValueFactory<Item, String>("price"));
+        stockCol.setCellValueFactory(new PropertyValueFactory<Item, Double>("stock"));
+        supplierCol.setCellValueFactory(new PropertyValueFactory<Item, String>("supplier"));
+        descriptionCol.setCellValueFactory(new PropertyValueFactory<Item, String>("description"));
+        isServiceCol.setCellValueFactory(new PropertyValueFactory<Item, String>("isService"));
+        lastModifierCol.setCellValueFactory(new PropertyValueFactory<Item, String>("lastModified"));
 
-        itemsTable.setRowFactory( tv -> {
+        itemsTable.setRowFactory(tv -> {
             TableRow<Item> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
-                if (event.getClickCount() >= 2 && (! row.isEmpty()) ) {
+                if (event.getClickCount() >= 2 && (!row.isEmpty())) {
                     Item item = row.getItem();
                     setSelectedItem(item);
                     sendDataBackToHost();
@@ -123,17 +123,17 @@ public class SelectItemDialogController implements Initializable {
                     currentStage.close();
                 }
             });
-            return row ;
+            return row;
         });
 
         itemsTable.setItems(ItemsRepository.getItems());
     }
 
     private void sendDataBackToHost() {
-        if(hostControllerSale != null)
+        if (hostControllerSale != null)
             hostControllerSale.setSelectedItem(selectedItem);
 
-        if(hostControllerReceiving != null)
+        if (hostControllerReceiving != null)
             hostControllerReceiving.setSelectedItem(selectedItem);
     }
 

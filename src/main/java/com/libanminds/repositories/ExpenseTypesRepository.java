@@ -19,7 +19,7 @@ public class ExpenseTypesRepository {
     }
 
     public static ObservableList<Type> getExpenseTypesLike(String value) {
-        String query = "SELECT * FROM expense_types where name like '%"+ value + "%'";
+        String query = "SELECT * FROM expense_types where name like '%" + value + "%'";
 
         return getTypesFromQuery(query);
     }
@@ -54,10 +54,10 @@ public class ExpenseTypesRepository {
     public static boolean deleteExpenseType(Type type) {
         try {
             String query = "DELETE FROM expense_types where id = " + type.getID();
-            Statement statement  = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.instance.getStatement();
             statement.executeUpdate(query);
             return true;
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return false;
         }
@@ -67,8 +67,8 @@ public class ExpenseTypesRepository {
         ObservableList<Type> data = FXCollections.observableArrayList();
 
         try {
-            Statement statement  = DBConnection.instance.getStatement();
-            ResultSet rs    = statement.executeQuery(query);
+            Statement statement = DBConnection.instance.getStatement();
+            ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
                 data.add(new Type(
                         rs.getInt("id"),

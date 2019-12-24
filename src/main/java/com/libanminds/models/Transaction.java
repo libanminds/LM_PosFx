@@ -34,35 +34,39 @@ public class Transaction {
         return transactionID.get();
     }
 
-    public SimpleIntegerProperty transactionIDProperty() {
-        return transactionID;
-    }
-
     public void setTransactionID(int transactionID) {
         this.transactionID.set(transactionID);
+    }
+
+    public SimpleIntegerProperty transactionIDProperty() {
+        return transactionID;
     }
 
     public int getInvoiceID() {
         return invoiceID.get();
     }
 
-    public SimpleIntegerProperty invoiceIDProperty() {
-        return invoiceID;
-    }
-
     public void setInvoiceID(int invoiceID) {
         this.invoiceID.set(invoiceID);
+    }
+
+    public SimpleIntegerProperty invoiceIDProperty() {
+        return invoiceID;
     }
 
     public double getAmount() {
         return amount.get();
     }
 
+    public void setAmount(double amount) {
+        this.amount.set(amount);
+    }
+
     public double getAmount(String currency) {
-        if(this.currency.get().equals(currency)) {
+        if (this.currency.get().equals(currency)) {
             return amount.get();
         } else {
-            if(this.currency.get().equals(Constants.DOLLAR_CURRENCY))
+            if (this.currency.get().equals(Constants.DOLLAR_CURRENCY))
                 return amount.get() * GlobalSettings.CONVERSION_RATE_FROM_DOLLAR;
             else
                 return amount.get() / GlobalSettings.CONVERSION_RATE_FROM_DOLLAR;
@@ -73,20 +77,16 @@ public class Transaction {
         return amount;
     }
 
-    public void setAmount(double amount) {
-        this.amount.set(amount);
-    }
-
     public String getCurrency() {
         return currency.get();
     }
 
-    public SimpleStringProperty currencyProperty() {
-        return currency;
-    }
-
     public void setCurrency(String currency) {
         this.currency.set(currency);
+    }
+
+    public SimpleStringProperty currencyProperty() {
+        return currency;
     }
 
     public boolean isRefund() {
@@ -105,11 +105,11 @@ public class Transaction {
         return transactionDate.get();
     }
 
-    public SimpleStringProperty transactionDateProperty() {
-        return transactionDate;
-    }
-
     public void setTransactionDate(String transactionDate) {
         this.transactionDate.set(transactionDate);
+    }
+
+    public SimpleStringProperty transactionDateProperty() {
+        return transactionDate;
     }
 }

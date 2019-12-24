@@ -1,4 +1,5 @@
 package com.libanminds.repositories;
+
 import com.libanminds.models.Customer;
 import com.libanminds.models.GraphPoint;
 import com.libanminds.utils.Constants;
@@ -19,26 +20,26 @@ public class DashboardRepository {
     private static double revenue;
 
     public static ArrayList<GraphPoint> getPointsOfGraph(String currency) {
-        String query = "SELECT SUM(CASE WHEN currency != '" + currency + "' THEN total_amount * "+ (currency.equals(Constants.DOLLAR_CURRENCY) ? 1/GlobalSettings.CONVERSION_RATE_FROM_DOLLAR : GlobalSettings.CONVERSION_RATE_FROM_DOLLAR) +" ELSE total_amount END) AS total, date(created_at) as sale_date  FROM sales GROUP BY sale_date ORDER BY sale_date DESC LIMIT " + GlobalSettings.DAYS_COUNT_OF_SALES_GRAPH;
+        String query = "SELECT SUM(CASE WHEN currency != '" + currency + "' THEN total_amount * " + (currency.equals(Constants.DOLLAR_CURRENCY) ? 1 / GlobalSettings.CONVERSION_RATE_FROM_DOLLAR : GlobalSettings.CONVERSION_RATE_FROM_DOLLAR) + " ELSE total_amount END) AS total, date(created_at) as sale_date  FROM sales GROUP BY sale_date ORDER BY sale_date DESC LIMIT " + GlobalSettings.DAYS_COUNT_OF_SALES_GRAPH;
         return getGraphPointsFromQuery(query);
     }
 
     public static String getSalesOfToday(String currency) {
         revenue = 0;
-        String query = "SELECT SUM(CASE WHEN currency != '" + currency + "' THEN total_amount * "+ (currency.equals(Constants.DOLLAR_CURRENCY) ? 1/GlobalSettings.CONVERSION_RATE_FROM_DOLLAR : GlobalSettings.CONVERSION_RATE_FROM_DOLLAR) +" ELSE total_amount END) AS total, date(created_at) AS sale_date FROM sales WHERE sale_date = date('now') GROUP BY sale_date";
-        return getFormattedMoneyFromQuery(query,currency,"sale");
+        String query = "SELECT SUM(CASE WHEN currency != '" + currency + "' THEN total_amount * " + (currency.equals(Constants.DOLLAR_CURRENCY) ? 1 / GlobalSettings.CONVERSION_RATE_FROM_DOLLAR : GlobalSettings.CONVERSION_RATE_FROM_DOLLAR) + " ELSE total_amount END) AS total, date(created_at) AS sale_date FROM sales WHERE sale_date = date('now') GROUP BY sale_date";
+        return getFormattedMoneyFromQuery(query, currency, "sale");
     }
 
     public static String getExpensesOfToday(String currency) {
-        String query = "SELECT SUM(CASE WHEN currency != '" + currency + "' THEN amount * "+ (currency.equals(Constants.DOLLAR_CURRENCY) ? 1/GlobalSettings.CONVERSION_RATE_FROM_DOLLAR : GlobalSettings.CONVERSION_RATE_FROM_DOLLAR) +" ELSE amount END) AS total, date(created_at) AS expense_date FROM expenses WHERE expense_date = date('now') GROUP BY expense_date";
+        String query = "SELECT SUM(CASE WHEN currency != '" + currency + "' THEN amount * " + (currency.equals(Constants.DOLLAR_CURRENCY) ? 1 / GlobalSettings.CONVERSION_RATE_FROM_DOLLAR : GlobalSettings.CONVERSION_RATE_FROM_DOLLAR) + " ELSE amount END) AS total, date(created_at) AS expense_date FROM expenses WHERE expense_date = date('now') GROUP BY expense_date";
 
-        return getFormattedMoneyFromQuery(query,currency,"expense");
+        return getFormattedMoneyFromQuery(query, currency, "expense");
     }
 
     public static String getIncomesOfToday(String currency) {
-        String query = "SELECT SUM(CASE WHEN currency != '" + currency + "' THEN amount * "+ (currency.equals(Constants.DOLLAR_CURRENCY) ? 1/GlobalSettings.CONVERSION_RATE_FROM_DOLLAR : GlobalSettings.CONVERSION_RATE_FROM_DOLLAR) +" ELSE amount END) AS total, date(created_at) AS income_date FROM incomes WHERE income_date = date('now') GROUP BY income_date";
+        String query = "SELECT SUM(CASE WHEN currency != '" + currency + "' THEN amount * " + (currency.equals(Constants.DOLLAR_CURRENCY) ? 1 / GlobalSettings.CONVERSION_RATE_FROM_DOLLAR : GlobalSettings.CONVERSION_RATE_FROM_DOLLAR) + " ELSE amount END) AS total, date(created_at) AS income_date FROM incomes WHERE income_date = date('now') GROUP BY income_date";
 
-        return getFormattedMoneyFromQuery(query,currency,"income");
+        return getFormattedMoneyFromQuery(query, currency, "income");
     }
 
     public static String getRevenueOfToday(String currency) {
@@ -61,8 +62,8 @@ public class DashboardRepository {
         ObservableList<Customer> data = FXCollections.observableArrayList();
 
         try {
-            Statement statement  = DBConnection.instance.getStatement();
-            ResultSet rs    = statement.executeQuery(query);
+            Statement statement = DBConnection.instance.getStatement();
+            ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
                 data.add(new Customer(
                         rs.getInt("id"),
@@ -89,7 +90,7 @@ public class DashboardRepository {
             Statement statement = DBConnection.instance.getStatement();
             ResultSet rs = statement.executeQuery(query);
             if (rs.next()) {
-                if(origin.equals("sale") || origin.equals("income"))
+                if (origin.equals("sale") || origin.equals("income"))
                     revenue += rs.getDouble("total");
                 else
                     revenue -= rs.getDouble("total");
@@ -113,7 +114,7 @@ public class DashboardRepository {
                 graphDataPoints.add(new GraphPoint(
                         rs.getDouble("total"),
                         rs.getString("sale_date")
-                        ));
+                ));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

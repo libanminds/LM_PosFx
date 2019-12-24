@@ -26,34 +26,25 @@ import java.util.ResourceBundle;
 
 public class ItemsController implements Initializable {
 
+    Item selectedItem;
     @FXML
     private HBox buttonsHolder;
-
     @FXML
     private TextField searchField;
-
     @FXML
     private Button deleteItem;
-
     @FXML
     private Button editItem;
-
     @FXML
     private Button newItemBtn;
-
     @FXML
     private MenuItem manageCategories;
-
     @FXML
     private MenuItem countInventory;
-
     @FXML
     private MenuButton otherOptions;
-
     @FXML
     private TableView<Item> itemsTable;
-
-    Item selectedItem;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -65,19 +56,19 @@ public class ItemsController implements Initializable {
     }
 
     private void handleAuthorization() {
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_ADD_ITEMS))
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_ADD_ITEMS))
             buttonsHolder.getChildren().remove(newItemBtn);
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_EDIT_ITEMS))
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_EDIT_ITEMS))
             buttonsHolder.getChildren().remove(editItem);
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_DELETE_ITEMS))
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_DELETE_ITEMS))
             buttonsHolder.getChildren().remove(deleteItem);
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_ITEMS_CATEGORIES))
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_ITEMS_CATEGORIES))
             otherOptions.getItems().remove(manageCategories);
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_COUNT_ITEMS_INVENTORY))
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_COUNT_ITEMS_INVENTORY))
             otherOptions.getItems().remove(countInventory);
 
         otherOptions.setVisible(!otherOptions.getItems().isEmpty());
@@ -88,7 +79,7 @@ public class ItemsController implements Initializable {
 
         editItem.setOnMouseClicked((EventHandler<Event>) event -> showItemDialog(selectedItem));
         deleteItem.setOnMouseClicked((EventHandler<Event>) event -> showDeleteConfirmationDialog());
-        manageCategories.setOnAction(t ->  showCategoriesDialog());
+        manageCategories.setOnAction(t -> showCategoriesDialog());
 
         deleteItem.setDisable(selectedItem == null);
         editItem.setDisable(selectedItem == null);
@@ -101,7 +92,7 @@ public class ItemsController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(loader.load()));
             stage.show();
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
@@ -118,7 +109,7 @@ public class ItemsController implements Initializable {
             stage.setOnHidden(e -> {
                 itemsTable.setItems(ItemsRepository.getItems());
             });
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
@@ -137,7 +128,7 @@ public class ItemsController implements Initializable {
 
         if (result.get() == yesButton) {
             boolean successful = ItemsRepository.deleteItem(selectedItem);
-            if(successful)
+            if (successful)
                 itemsTable.getItems().remove(selectedItem);
         } else {
             alert.close();
@@ -152,36 +143,36 @@ public class ItemsController implements Initializable {
 
     private void initializeTable() {
         TableColumn<Item, ImageView> imageCol = new TableColumn<>("Image");
-        TableColumn<Item,String> codeCol = new TableColumn<>("Code");
-        TableColumn<Item,String> nameCol = new TableColumn<>("Name");
-        TableColumn<Item,String> categoryCol = new TableColumn<>("Category");
-        TableColumn<Item,String> priceCol = new TableColumn<>("Price");
-        TableColumn<Item,Double> stockCol = new TableColumn<>("Stock");
-        TableColumn<Item,String> supplierCol = new TableColumn<>("Supplier");
-        TableColumn<Item,String> descriptionCol = new TableColumn<>("Description");
-        TableColumn<Item,String> isServiceCol = new TableColumn<>("Is Service");
-        TableColumn<Item,String> lastModifierCol = new TableColumn<>("Last Modified");
+        TableColumn<Item, String> codeCol = new TableColumn<>("Code");
+        TableColumn<Item, String> nameCol = new TableColumn<>("Name");
+        TableColumn<Item, String> categoryCol = new TableColumn<>("Category");
+        TableColumn<Item, String> priceCol = new TableColumn<>("Price");
+        TableColumn<Item, Double> stockCol = new TableColumn<>("Stock");
+        TableColumn<Item, String> supplierCol = new TableColumn<>("Supplier");
+        TableColumn<Item, String> descriptionCol = new TableColumn<>("Description");
+        TableColumn<Item, String> isServiceCol = new TableColumn<>("Is Service");
+        TableColumn<Item, String> lastModifierCol = new TableColumn<>("Last Modified");
 
-        itemsTable.getColumns().addAll(imageCol,codeCol,nameCol,categoryCol,priceCol,stockCol,supplierCol,descriptionCol,isServiceCol,lastModifierCol);
+        itemsTable.getColumns().addAll(imageCol, codeCol, nameCol, categoryCol, priceCol, stockCol, supplierCol, descriptionCol, isServiceCol, lastModifierCol);
 
-        imageCol.setCellValueFactory(new PropertyValueFactory<Item,ImageView>("image"));
+        imageCol.setCellValueFactory(new PropertyValueFactory<Item, ImageView>("image"));
         //imageCol.setPrefWidth(60);
-        codeCol.setCellValueFactory(new PropertyValueFactory<Item,String>("code"));
-        nameCol.setCellValueFactory(new PropertyValueFactory<Item,String>("name"));
-        categoryCol.setCellValueFactory(new PropertyValueFactory<Item,String>("category"));
-        priceCol.setCellValueFactory(new PropertyValueFactory<Item,String>("initialPrice"));
-        stockCol.setCellValueFactory(new PropertyValueFactory<Item,Double>("stock"));
-        supplierCol.setCellValueFactory(new PropertyValueFactory<Item,String>("supplier"));
-        descriptionCol.setCellValueFactory(new PropertyValueFactory<Item,String>("description"));
-        isServiceCol.setCellValueFactory(new PropertyValueFactory<Item,String>("isService"));
-        lastModifierCol.setCellValueFactory(new PropertyValueFactory<Item,String>("lastModified"));
+        codeCol.setCellValueFactory(new PropertyValueFactory<Item, String>("code"));
+        nameCol.setCellValueFactory(new PropertyValueFactory<Item, String>("name"));
+        categoryCol.setCellValueFactory(new PropertyValueFactory<Item, String>("category"));
+        priceCol.setCellValueFactory(new PropertyValueFactory<Item, String>("initialPrice"));
+        stockCol.setCellValueFactory(new PropertyValueFactory<Item, Double>("stock"));
+        supplierCol.setCellValueFactory(new PropertyValueFactory<Item, String>("supplier"));
+        descriptionCol.setCellValueFactory(new PropertyValueFactory<Item, String>("description"));
+        isServiceCol.setCellValueFactory(new PropertyValueFactory<Item, String>("isService"));
+        lastModifierCol.setCellValueFactory(new PropertyValueFactory<Item, String>("lastModified"));
 
         itemsTable.setItems(ItemsRepository.getItems());
     }
 
     private void setTableListener() {
         itemsTable.selectionModelProperty().get().selectedItemProperty().addListener((ChangeListener) (observable, oldValue, newValue) -> {
-            selectedItem = (Item)newValue;
+            selectedItem = (Item) newValue;
             deleteItem.setDisable(selectedItem == null);
             editItem.setDisable(selectedItem == null);
         });

@@ -15,7 +15,7 @@ public class Customer {
     private SimpleStringProperty notes;
     private SimpleDoubleProperty balance;
 
-    public Customer(int id,String firstName,String lastName, String email, String phone, String address,String company, String notes, double balance) {
+    public Customer(int id, String firstName, String lastName, String email, String phone, String address, String company, String notes, double balance) {
         this.id = id;
         this.firstName = new SimpleStringProperty(firstName);
         this.lastName = new SimpleStringProperty(lastName);
@@ -40,7 +40,7 @@ public class Customer {
     }
 
     public String getName() {
-        return firstName.get() + " " +lastName.get();
+        return firstName.get() + " " + lastName.get();
     }
 
     public void setName(String fName, String lName) {

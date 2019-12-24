@@ -59,7 +59,8 @@ public class ViewSaleController implements Initializable {
     private Sale sale;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {}
+    public void initialize(URL location, ResourceBundle resources) {
+    }
 
     public void setSale(Sale sale) {
         this.sale = sale;
@@ -129,7 +130,7 @@ public class ViewSaleController implements Initializable {
 
     private void updateNumbersUI() {
         DecimalFormat formatter = HelperFunctions.getDecimalFormatter();
-        subtotalText.setText( formatter.format(subtotal) + " " + sale.getCurrency());
+        subtotalText.setText(formatter.format(subtotal) + " " + sale.getCurrency());
         discountText.setText(formatter.format(salesDiscount) + " " + sale.getCurrency());
         taxesText.setText(formatter.format(taxes) + " " + sale.getCurrency());
         amountPaidText.setText(formatter.format(amountPaid) + " " + sale.getCurrency());

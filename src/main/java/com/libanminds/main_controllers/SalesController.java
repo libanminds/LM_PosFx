@@ -59,13 +59,13 @@ public class SalesController implements Initializable {
     }
 
     private void handleAuthorization() {
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_SALE))
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_SALE))
             buttonsHolder.getChildren().remove(viewSaleBtn);
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_RETURN_SALE_ITEMS))
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_RETURN_SALE_ITEMS))
             buttonsHolder.getChildren().remove(returnItems);
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_COMPLETE_SALE_PAYMENT))
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_COMPLETE_SALE_PAYMENT))
             buttonsHolder.getChildren().remove(completePayment);
     }
 
@@ -114,7 +114,7 @@ public class SalesController implements Initializable {
             stage.setOnHidden(e -> {
                 salesTable.setItems(SalesRepository.getSales());
             });
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getCause());
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -133,7 +133,7 @@ public class SalesController implements Initializable {
             stage.setOnHidden(e -> {
                 salesTable.setItems(SalesRepository.getSales());
             });
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getCause());
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -152,7 +152,7 @@ public class SalesController implements Initializable {
             stage.setOnHidden(e -> {
                 salesTable.setItems(SalesRepository.getSales());
             });
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getCause());
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -160,14 +160,14 @@ public class SalesController implements Initializable {
     }
 
     private void initializeTable() {
-        TableColumn<Sale,String> customerName = new TableColumn<>("Customer Name");
-        TableColumn<Sale,String> totalAmount = new TableColumn<>("Total Amount");
-        TableColumn<Sale,String> paidAmount = new TableColumn<>("Paid Amount");
-        TableColumn<Sale,String> discount = new TableColumn<>("Discount");
-        TableColumn<Sale,String> remainingAmount = new TableColumn<>("Remaining Amount");
-        TableColumn<Sale,String> paymentType = new TableColumn<>("Payment Type");
+        TableColumn<Sale, String> customerName = new TableColumn<>("Customer Name");
+        TableColumn<Sale, String> totalAmount = new TableColumn<>("Total Amount");
+        TableColumn<Sale, String> paidAmount = new TableColumn<>("Paid Amount");
+        TableColumn<Sale, String> discount = new TableColumn<>("Discount");
+        TableColumn<Sale, String> remainingAmount = new TableColumn<>("Remaining Amount");
+        TableColumn<Sale, String> paymentType = new TableColumn<>("Payment Type");
 
-        salesTable.getColumns().addAll(customerName,totalAmount,paidAmount,discount,remainingAmount,paymentType);
+        salesTable.getColumns().addAll(customerName, totalAmount, paidAmount, discount, remainingAmount, paymentType);
 
         customerName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         totalAmount.setCellValueFactory(new PropertyValueFactory<>("totalAmountFormatted"));
@@ -181,7 +181,7 @@ public class SalesController implements Initializable {
 
     private void setTableListener() {
         salesTable.selectionModelProperty().get().selectedItemProperty().addListener((ChangeListener) (observable, oldValue, newValue) -> {
-            selectedSale = (Sale)newValue;
+            selectedSale = (Sale) newValue;
             completePayment.setDisable(selectedSale == null || selectedSale.isComplete());
             viewSaleBtn.setDisable(selectedSale == null);
             returnItems.setDisable(selectedSale == null);

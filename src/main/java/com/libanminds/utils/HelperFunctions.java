@@ -52,10 +52,11 @@ public class HelperFunctions {
                     char lastChar = c.getControlNewText().charAt(c.getControlNewText().length() - 1);
 
                     // f and d won't through an exception if they are at the end of a number (f means float, d means double)
-                    if (val < 0 || Character.toLowerCase(lastChar)  == 'f' || Character.toLowerCase(lastChar) == 'd')
+                    if (val < 0 || Character.toLowerCase(lastChar) == 'f' || Character.toLowerCase(lastChar) == 'd')
                         return null;
                     return c;
-                } catch (NumberFormatException e) {}
+                } catch (NumberFormatException e) {
+                }
                 return null;
             }
             return c;
@@ -65,7 +66,7 @@ public class HelperFunctions {
     public static void highlightTextfieldError(TextField tf) {
         ObservableList<String> styleClass = tf.getStyleClass();
 
-        if(!styleClass.contains("errorHighlight")) {
+        if (!styleClass.contains("errorHighlight")) {
             styleClass.add("errorHighlight");
         }
     }

@@ -152,7 +152,7 @@ public class ReceivingsRepository {
             statement = DBConnection.instance.getPreparedStatement(query);
             try {
                 statement.setInt(1, item.getSaleQuantityValue());
-                statement.setInt(2,  item.getID());
+                statement.setInt(2, item.getID());
                 statement.executeUpdate();
 
                 statement.close();
@@ -192,7 +192,7 @@ public class ReceivingsRepository {
             purchasesStatement = DBConnection.instance.getPreparedStatement(query);
 
             try {
-                purchasesStatement.setInt(1,receiving.getSupplierID());
+                purchasesStatement.setInt(1, receiving.getSupplierID());
                 purchasesStatement.setInt(2, receiving.getID());
                 purchasesStatement.setDouble(3, refundedAmount);
                 purchasesStatement.setString(4, receiving.getCurrency());
@@ -225,7 +225,7 @@ public class ReceivingsRepository {
             itemStatement = DBConnection.instance.getPreparedStatement(query);
             try {
                 itemStatement.setInt(1, item.getReturnedQuantityValue());
-                itemStatement.setInt(2,  item.getID());
+                itemStatement.setInt(2, item.getID());
                 itemStatement.executeUpdate();
 
                 itemStatement.close();

@@ -59,7 +59,8 @@ public class ViewReceivingController implements Initializable {
     private Receiving receiving;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {}
+    public void initialize(URL location, ResourceBundle resources) {
+    }
 
     public void setReceiving(Receiving receiving) {
         this.receiving = receiving;
@@ -101,7 +102,6 @@ public class ViewReceivingController implements Initializable {
         itemsTable.setItems(ItemsRepository.getItemsOfReceiving(receiving));
 
 
-
         TableColumn<SupplierTransaction, String> transactionAmount = new TableColumn<>("Amount");
         TableColumn<SupplierTransaction, String> transactionIsRefund = new TableColumn<>("is Refund");
         TableColumn<SupplierTransaction, String> transactionDate = new TableColumn<>("Date/Time");
@@ -129,7 +129,7 @@ public class ViewReceivingController implements Initializable {
 
     private void updateNumbersUI() {
         DecimalFormat formatter = HelperFunctions.getDecimalFormatter();
-        subtotalText.setText( formatter.format(subtotal) + " " + receiving.getCurrency());
+        subtotalText.setText(formatter.format(subtotal) + " " + receiving.getCurrency());
         discountText.setText(formatter.format(receivingDiscount) + " " + receiving.getCurrency());
         taxesText.setText(formatter.format(taxes) + " " + receiving.getCurrency());
         amountPaidText.setText(formatter.format(amountPaid) + " " + receiving.getCurrency());

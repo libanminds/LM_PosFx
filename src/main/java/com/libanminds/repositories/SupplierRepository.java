@@ -22,7 +22,7 @@ public class SupplierRepository {
                 " first_name like '%" + value + "%' or" +
                 " last_name like '%" + value + "%' or" +
                 " email like '%" + value + "%' or" +
-                " phone like '%"+ value + "%'";
+                " phone like '%" + value + "%'";
 
         return getCustomersFromQuery(query);
     }
@@ -70,8 +70,8 @@ public class SupplierRepository {
 
     public static boolean updateBalance(int supplierID, double balance) {
         try {
-            String query = "UPDATE suppliers SET balance = "+ balance + " WHERE id = " + supplierID;
-            Statement statement  = DBConnection.instance.getStatement();
+            String query = "UPDATE suppliers SET balance = " + balance + " WHERE id = " + supplierID;
+            Statement statement = DBConnection.instance.getStatement();
             statement.executeUpdate(query);
             return true;
         } catch (Exception e) {
@@ -83,10 +83,10 @@ public class SupplierRepository {
     public static boolean deleteSupplier(Supplier supplier) {
         try {
             String query = "DELETE FROM suppliers where id = " + supplier.getID();
-            Statement statement  = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.instance.getStatement();
             statement.executeUpdate(query);
             return true;
-        }catch (Exception e) {
+        } catch (Exception e) {
             return false;
         }
     }
@@ -94,8 +94,8 @@ public class SupplierRepository {
     private static ObservableList<Supplier> getCustomersFromQuery(String query) {
         ObservableList<Supplier> data = FXCollections.observableArrayList();
         try {
-            Statement statement  = DBConnection.instance.getStatement();
-            ResultSet rs    = statement.executeQuery(query);
+            Statement statement = DBConnection.instance.getStatement();
+            ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
                 data.add(new Supplier(
                         rs.getInt("id"),

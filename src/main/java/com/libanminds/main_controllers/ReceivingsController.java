@@ -59,13 +59,13 @@ public class ReceivingsController implements Initializable {
     }
 
     private void handleAuthorization() {
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_RECEIVING))
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_RECEIVING))
             buttonsHolder.getChildren().remove(viewReceiving);
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_RETURN_RECEIVING_ITEMS))
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_RETURN_RECEIVING_ITEMS))
             buttonsHolder.getChildren().remove(returnItems);
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_COMPLETE_RECEIVING_PAYMENT))
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_COMPLETE_RECEIVING_PAYMENT))
             buttonsHolder.getChildren().remove(completePayment);
     }
 
@@ -98,7 +98,7 @@ public class ReceivingsController implements Initializable {
             stage.setOnHidden(e -> {
                 receivingsTable.setItems(ReceivingsRepository.getReceivings());
             });
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -115,7 +115,7 @@ public class ReceivingsController implements Initializable {
             stage.setOnHidden(e -> {
                 receivingsTable.setItems(ReceivingsRepository.getReceivings());
             });
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getCause());
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -134,7 +134,7 @@ public class ReceivingsController implements Initializable {
             stage.setOnHidden(e -> {
                 receivingsTable.setItems(ReceivingsRepository.getReceivings());
             });
-        }catch (Exception e){
+        } catch (Exception e) {
 
             e.printStackTrace();
         }
@@ -147,14 +147,14 @@ public class ReceivingsController implements Initializable {
     }
 
     private void initializeTable() {
-        TableColumn<Receiving,String> customerName = new TableColumn<>("Supplier Name");
-        TableColumn<Receiving,String> totalAmount = new TableColumn<>("Total Amount");
-        TableColumn<Receiving,String> paidAmount = new TableColumn<>("Paid Amount");
-        TableColumn<Receiving,String> discount = new TableColumn<>("Discount");
-        TableColumn<Receiving,String> remainingAmount = new TableColumn<>("Remaining Amount");
-        TableColumn<Receiving,String> paymentType = new TableColumn<>("Payment Type");
+        TableColumn<Receiving, String> customerName = new TableColumn<>("Supplier Name");
+        TableColumn<Receiving, String> totalAmount = new TableColumn<>("Total Amount");
+        TableColumn<Receiving, String> paidAmount = new TableColumn<>("Paid Amount");
+        TableColumn<Receiving, String> discount = new TableColumn<>("Discount");
+        TableColumn<Receiving, String> remainingAmount = new TableColumn<>("Remaining Amount");
+        TableColumn<Receiving, String> paymentType = new TableColumn<>("Payment Type");
 
-        receivingsTable.getColumns().addAll(customerName,totalAmount,paidAmount,discount,remainingAmount,paymentType);
+        receivingsTable.getColumns().addAll(customerName, totalAmount, paidAmount, discount, remainingAmount, paymentType);
 
         customerName.setCellValueFactory(new PropertyValueFactory<>("supplierName"));
         totalAmount.setCellValueFactory(new PropertyValueFactory<>("totalAmountFormatted"));

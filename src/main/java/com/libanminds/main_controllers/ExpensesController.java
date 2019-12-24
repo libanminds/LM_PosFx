@@ -62,13 +62,13 @@ public class ExpensesController implements Initializable {
     }
 
     private void handleAuthorization() {
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_ADD_EXPENSES))
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_ADD_EXPENSES))
             buttonsHolder.getChildren().remove(addExpenseButton);
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_EDIT_EXPENSES))
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_EDIT_EXPENSES))
             buttonsHolder.getChildren().remove(editExpenses);
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_DELETE_EXPENSES))
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_DELETE_EXPENSES))
             buttonsHolder.getChildren().remove(deleteExpenses);
 
         moreOptions.setVisible(Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_EXPENSES_CATEGORIES));
@@ -96,7 +96,7 @@ public class ExpensesController implements Initializable {
             }
         });
 
-        manageTypes.setOnAction(t ->  showExpenseTypesDialog());
+        manageTypes.setOnAction(t -> showExpenseTypesDialog());
 
         deleteExpenses.setDisable(selectedExpense == null);
         editExpenses.setDisable(selectedExpense == null);
@@ -109,7 +109,7 @@ public class ExpensesController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(loader.load()));
             stage.show();
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
@@ -126,7 +126,8 @@ public class ExpensesController implements Initializable {
             stage.setOnHidden(e -> {
                 expensesTable.setItems(ExpensesRepository.getExpenses());
             });
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
     }
 
     private void showDeleteConfirmationDialog() {
@@ -143,7 +144,7 @@ public class ExpensesController implements Initializable {
 
         if (result.get() == yesButton) {
             boolean successful = ExpensesRepository.deleteExpense(selectedExpense);
-            if(successful)
+            if (successful)
                 expensesTable.getItems().remove(selectedExpense);
         } else {
             alert.close();
@@ -157,14 +158,14 @@ public class ExpensesController implements Initializable {
     }
 
     private void initializeTable() {
-        TableColumn<Expense,String> typeCol = new TableColumn<>("Type");
-        TableColumn<Expense,String> descriptionCol = new TableColumn<>("Description");
-        TableColumn<Expense,String> amountCol = new TableColumn<>("Amount");
-        TableColumn<Expense,String> paymentTypeCol = new TableColumn<>("Payment Type");
-        TableColumn<Expense,String> recipientCol = new TableColumn<>("Recipient");
-        TableColumn<Expense,String> notesCol = new TableColumn<>("Notes");
+        TableColumn<Expense, String> typeCol = new TableColumn<>("Type");
+        TableColumn<Expense, String> descriptionCol = new TableColumn<>("Description");
+        TableColumn<Expense, String> amountCol = new TableColumn<>("Amount");
+        TableColumn<Expense, String> paymentTypeCol = new TableColumn<>("Payment Type");
+        TableColumn<Expense, String> recipientCol = new TableColumn<>("Recipient");
+        TableColumn<Expense, String> notesCol = new TableColumn<>("Notes");
 
-        expensesTable.getColumns().addAll(typeCol,descriptionCol,amountCol,paymentTypeCol,recipientCol,notesCol);
+        expensesTable.getColumns().addAll(typeCol, descriptionCol, amountCol, paymentTypeCol, recipientCol, notesCol);
 
         typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         descriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -178,7 +179,7 @@ public class ExpensesController implements Initializable {
 
     private void setTableListener() {
         expensesTable.selectionModelProperty().get().selectedItemProperty().addListener((ChangeListener) (observable, oldValue, newValue) -> {
-            selectedExpense = (Expense)newValue;
+            selectedExpense = (Expense) newValue;
             deleteExpenses.setDisable(selectedExpense == null);
             editExpenses.setDisable(selectedExpense == null);
         });

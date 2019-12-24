@@ -25,25 +25,19 @@ import java.util.ResourceBundle;
 
 public class EmployeesController implements Initializable {
 
+    User selectedEmployee;
     @FXML
     private HBox buttonsHolder;
-
     @FXML
     private TextField searchField;
-
     @FXML
     private Button deleteEmployee;
-
     @FXML
     private Button editEmployee;
-
     @FXML
     private Button newEmployeeButton;
-
     @FXML
     private TableView<User> employeesTable;
-
-    User selectedEmployee;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -55,13 +49,13 @@ public class EmployeesController implements Initializable {
     }
 
     private void handleAuthorization() {
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_ADD_USER))
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_ADD_USER))
             buttonsHolder.getChildren().remove(newEmployeeButton);
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_EDIT_USER))
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_EDIT_USER))
             buttonsHolder.getChildren().remove(editEmployee);
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_DELETE_USER))
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_DELETE_USER))
             buttonsHolder.getChildren().remove(deleteEmployee);
     }
 
@@ -103,7 +97,8 @@ public class EmployeesController implements Initializable {
             stage.setOnHidden(e -> {
                 employeesTable.setItems(UsersRepository.getUsers());
             });
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
     }
 
     private void showDeleteConfirmationDialog() {
@@ -120,7 +115,7 @@ public class EmployeesController implements Initializable {
 
         if (result.get() == yesButton) {
             boolean successful = UsersRepository.deleteUser(selectedEmployee);
-            if(successful)
+            if (successful)
                 employeesTable.getItems().remove(selectedEmployee);
         } else {
             alert.close();
@@ -134,14 +129,14 @@ public class EmployeesController implements Initializable {
     }
 
     private void initializeTable() {
-        TableColumn<User,String> usernameCol = new TableColumn<>("username");
-        TableColumn<User,String> nameCol = new TableColumn<>("Name");
-        TableColumn<User,String> roleCol = new TableColumn<>("Role");
-        TableColumn<User,String> emailCol = new TableColumn<>("Email");
-        TableColumn<User,String> phoneCol = new TableColumn<>("Phone");
-        TableColumn<User,Double> addressCol = new TableColumn<>("Address");
+        TableColumn<User, String> usernameCol = new TableColumn<>("username");
+        TableColumn<User, String> nameCol = new TableColumn<>("Name");
+        TableColumn<User, String> roleCol = new TableColumn<>("Role");
+        TableColumn<User, String> emailCol = new TableColumn<>("Email");
+        TableColumn<User, String> phoneCol = new TableColumn<>("Phone");
+        TableColumn<User, Double> addressCol = new TableColumn<>("Address");
 
-        employeesTable.getColumns().addAll(usernameCol,nameCol,roleCol,emailCol,phoneCol,addressCol);
+        employeesTable.getColumns().addAll(usernameCol, nameCol, roleCol, emailCol, phoneCol, addressCol);
 
         usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -155,7 +150,7 @@ public class EmployeesController implements Initializable {
 
     private void setTableListener() {
         employeesTable.selectionModelProperty().get().selectedItemProperty().addListener((ChangeListener) (observable, oldValue, newValue) -> {
-            selectedEmployee = (User)newValue;
+            selectedEmployee = (User) newValue;
             deleteEmployee.setDisable(selectedEmployee == null);
             editEmployee.setDisable(selectedEmployee == null);
         });

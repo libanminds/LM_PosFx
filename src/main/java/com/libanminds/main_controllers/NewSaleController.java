@@ -243,7 +243,7 @@ public class NewSaleController implements Initializable {
             TableRow<Sale> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() >= 2 && (!row.isEmpty())) {
-                    if(!Authorization.authorized.contains(AuthorizationKeys.CAN_RETURN_SALE_ITEMS))
+                    if (!Authorization.authorized.contains(AuthorizationKeys.CAN_RETURN_SALE_ITEMS))
                         return;
                     Sale compactSale = row.getItem();
                     showCompleteSaleDialog(SalesRepository.getSale(compactSale.getID()));
@@ -267,7 +267,7 @@ public class NewSaleController implements Initializable {
             stage.setOnHidden(e -> {
                 pastInvoicesTable.setItems(SalesRepository.getCompactSalesOfCustomer(selectedCustomer.getID()));
             });
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getCause());
             System.out.println(e.getMessage());
             e.printStackTrace();

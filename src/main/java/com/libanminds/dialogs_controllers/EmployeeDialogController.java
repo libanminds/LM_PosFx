@@ -22,41 +22,29 @@ import java.util.ResourceBundle;
 
 public class EmployeeDialogController implements Initializable {
 
+    int employeeID;
     @FXML
     private TextField username;
-
     @FXML
     private TextField firstName;
-
     @FXML
     private TextField lastName;
-
     @FXML
     private TextField password;
-
     @FXML
     private TextField email;
-
     @FXML
     private TextField phone;
-
     @FXML
     private Button cancel;
-
     @FXML
     private Button save;
-
     @FXML
     private ChoiceBox<Role> role;
-
     @FXML
     private TextField employeeAddress;
-
     @FXML
     private Label errorMessagesLabel;
-
-
-    int employeeID;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -68,7 +56,7 @@ public class EmployeeDialogController implements Initializable {
 
     public void initData(User employee) {
         if (employee != null) {
-            employeeID = employee.getID() ;
+            employeeID = employee.getID();
             username.setText(employee.getUsername());
             firstName.setText(employee.getFirstName());
             lastName.setText(employee.getLastName());
@@ -94,35 +82,35 @@ public class EmployeeDialogController implements Initializable {
     private boolean validateInput() {
         boolean isValid = true;
 
-        if(username.getText().isEmpty()) {
+        if (username.getText().isEmpty()) {
             HelperFunctions.highlightTextfieldError(username);
             isValid = false;
-        }else if(UsersRepository.usernameExists(username.getText())) {
+        } else if (UsersRepository.usernameExists(username.getText())) {
             HelperFunctions.highlightTextfieldError(username);
             errorMessagesLabel.setText("Username already exists.");
             return false;
         }
 
-        if(firstName.getText().isEmpty()) {
+        if (firstName.getText().isEmpty()) {
             HelperFunctions.highlightTextfieldError(firstName);
             isValid = false;
         }
 
-        if(password.getText().isEmpty()) {
+        if (password.getText().isEmpty()) {
             HelperFunctions.highlightTextfieldError(password);
             isValid = false;
         }
 
-        if(!isValid) errorMessagesLabel.setText("Please fill in all the required fields");
+        if (!isValid) errorMessagesLabel.setText("Please fill in all the required fields");
         return isValid;
     }
 
     private void initSaveButton() {
         save.setOnMouseClicked((EventHandler<Event>) event -> {
-            if(!validateInput()) return;
+            if (!validateInput()) return;
             boolean successful;
 
-            if(employeeID == -1)
+            if (employeeID == -1)
                 successful = UsersRepository.addUser(new User(
                         employeeID,
                         username.getText(),
@@ -147,10 +135,10 @@ public class EmployeeDialogController implements Initializable {
                         employeeAddress.getText()
                 ));
 
-            if(successful) {
+            if (successful) {
                 Stage currentStage = (Stage) save.getScene().getWindow();
                 currentStage.close();
-            }else {
+            } else {
                 //TODO : DO SOMETHING
             }
         });

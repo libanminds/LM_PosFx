@@ -39,8 +39,8 @@ public class TransactionsRepository {
         ObservableList<CustomerTransaction> data = FXCollections.observableArrayList();
 
         try {
-            Statement statement  = DBConnection.instance.getStatement();
-            ResultSet rs    = statement.executeQuery(query);
+            Statement statement = DBConnection.instance.getStatement();
+            ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
                 data.add(new CustomerTransaction(
                         rs.getInt("id"),
@@ -63,8 +63,8 @@ public class TransactionsRepository {
         ObservableList<SupplierTransaction> data = FXCollections.observableArrayList();
 
         try {
-            Statement statement  = DBConnection.instance.getStatement();
-            ResultSet rs    = statement.executeQuery(query);
+            Statement statement = DBConnection.instance.getStatement();
+            ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
                 data.add(new SupplierTransaction(
                         rs.getInt("id"),

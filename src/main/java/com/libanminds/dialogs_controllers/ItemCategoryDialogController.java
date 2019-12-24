@@ -52,21 +52,21 @@ public class ItemCategoryDialogController implements Initializable {
 
     private boolean validateInput() {
         boolean isValid = true;
-        if(categoryField.getText().isEmpty()) {
+        if (categoryField.getText().isEmpty()) {
             HelperFunctions.highlightTextfieldError(categoryField);
             isValid = false;
         }
 
-        if(!isValid) errorMessagesLabel.setText("Please fill in the required field");
+        if (!isValid) errorMessagesLabel.setText("Please fill in the required field");
         return isValid;
     }
 
     private void initSaveButton() {
         saveButton.setOnMouseClicked((EventHandler<Event>) event -> {
-            if(!validateInput()) return;
+            if (!validateInput()) return;
             boolean successful;
 
-            if(categoryID == -1)
+            if (categoryID == -1)
                 successful = ItemsCategoriesRepository.addItemCategory(new ItemCategory(
                         categoryID,
                         categoryField.getText()
@@ -77,10 +77,10 @@ public class ItemCategoryDialogController implements Initializable {
                         categoryField.getText()
                 ));
 
-            if(successful) {
+            if (successful) {
                 Stage currentStage = (Stage) saveButton.getScene().getWindow();
                 currentStage.close();
-            }else {
+            } else {
                 //TODO : DO SOMETHING
             }
 

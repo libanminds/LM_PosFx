@@ -26,31 +26,23 @@ import java.util.ResourceBundle;
 public class IncomeController implements Initializable {
 
 
+    Income selectedIncome;
     @FXML
     private HBox buttonsHolder;
-
     @FXML
     private TextField searchField;
-
     @FXML
     private Button deleteIncome;
-
     @FXML
     private Button editIncome;
-
     @FXML
     private Button addIncomeButton;
-
     @FXML
     private MenuItem manageTypes;
-
     @FXML
     private MenuButton moreOptions;
-
     @FXML
     private TableView<Income> incomesTable;
-
-    Income selectedIncome;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -62,13 +54,13 @@ public class IncomeController implements Initializable {
     }
 
     private void handleAuthorization() {
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_ADD_INCOME))
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_ADD_INCOME))
             buttonsHolder.getChildren().remove(addIncomeButton);
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_EDIT_INCOME))
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_EDIT_INCOME))
             buttonsHolder.getChildren().remove(editIncome);
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_DELETE_INCOME))
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_DELETE_INCOME))
             buttonsHolder.getChildren().remove(deleteIncome);
 
         moreOptions.setVisible(Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_INCOMES_CATEGORIES));
@@ -78,7 +70,7 @@ public class IncomeController implements Initializable {
         addIncomeButton.setOnMouseClicked((EventHandler<Event>) event -> showIncomeDialog(null));
         editIncome.setOnMouseClicked((EventHandler<Event>) event -> showIncomeDialog(selectedIncome));
         deleteIncome.setOnMouseClicked((EventHandler<Event>) event -> showDeleteConfirmationDialog());
-        manageTypes.setOnAction(t ->  showIncomeTypesDialog());
+        manageTypes.setOnAction(t -> showIncomeTypesDialog());
 
         deleteIncome.setDisable(selectedIncome == null);
         editIncome.setDisable(selectedIncome == null);
@@ -91,7 +83,7 @@ public class IncomeController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(loader.load()));
             stage.show();
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
@@ -108,7 +100,8 @@ public class IncomeController implements Initializable {
             stage.setOnHidden(e -> {
                 incomesTable.setItems(IncomesRepository.getIncomes());
             });
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
     }
 
     private void showDeleteConfirmationDialog() {
@@ -125,7 +118,7 @@ public class IncomeController implements Initializable {
 
         if (result.get() == yesButton) {
             boolean successful = IncomesRepository.deleteIncome(selectedIncome);
-            if(successful)
+            if (successful)
                 incomesTable.getItems().remove(selectedIncome);
         } else {
             alert.close();
@@ -139,14 +132,14 @@ public class IncomeController implements Initializable {
     }
 
     private void initializeTable() {
-        TableColumn<Income,String> typeCol = new TableColumn<>("Type");
-        TableColumn<Income,String> descriptionCol = new TableColumn<>("Description");
-        TableColumn<Income,String> amountCol = new TableColumn<>("Amount");
-        TableColumn<Income,String> paymentTypeCol = new TableColumn<>("Payment Type");
-        TableColumn<Income,String> fromCol = new TableColumn<>("From");
-        TableColumn<Income,String> notesCol = new TableColumn<>("Notes");
+        TableColumn<Income, String> typeCol = new TableColumn<>("Type");
+        TableColumn<Income, String> descriptionCol = new TableColumn<>("Description");
+        TableColumn<Income, String> amountCol = new TableColumn<>("Amount");
+        TableColumn<Income, String> paymentTypeCol = new TableColumn<>("Payment Type");
+        TableColumn<Income, String> fromCol = new TableColumn<>("From");
+        TableColumn<Income, String> notesCol = new TableColumn<>("Notes");
 
-        incomesTable.getColumns().addAll(typeCol,descriptionCol,amountCol,paymentTypeCol,fromCol,notesCol);
+        incomesTable.getColumns().addAll(typeCol, descriptionCol, amountCol, paymentTypeCol, fromCol, notesCol);
 
         typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         descriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -160,7 +153,7 @@ public class IncomeController implements Initializable {
 
     private void setTableListener() {
         incomesTable.selectionModelProperty().get().selectedItemProperty().addListener((ChangeListener) (observable, oldValue, newValue) -> {
-            selectedIncome = (Income)newValue;
+            selectedIncome = (Income) newValue;
             deleteIncome.setDisable(selectedIncome == null);
             editIncome.setDisable(selectedIncome == null);
         });

@@ -102,26 +102,26 @@ public class ExpenseDialogController implements Initializable {
 
     private boolean validateInput() {
         boolean isValid = true;
-        if(description.getText().isEmpty()) {
+        if (description.getText().isEmpty()) {
             HelperFunctions.highlightTextfieldError(description);
             isValid = false;
         }
 
-        if(amount.getText().isEmpty()) {
+        if (amount.getText().isEmpty()) {
             HelperFunctions.highlightTextfieldError(amount);
             isValid = false;
         }
 
-        if(!isValid) errorMessagesLabel.setText("Please fill in all the required fields");
+        if (!isValid) errorMessagesLabel.setText("Please fill in all the required fields");
         return isValid;
     }
 
     private void initSaveButton() {
         save.setOnMouseClicked((EventHandler<Event>) event -> {
-            if(!validateInput()) return;
+            if (!validateInput()) return;
             boolean successful;
 
-            if(expenseID == -1)
+            if (expenseID == -1)
                 successful = ExpensesRepository.addExpense(new Expense(
                         expenseID,
                         typeChoiceBox.getValue(),
@@ -144,10 +144,10 @@ public class ExpenseDialogController implements Initializable {
                         notes.getText()
                 ));
 
-            if(successful) {
+            if (successful) {
                 Stage currentStage = (Stage) save.getScene().getWindow();
                 currentStage.close();
-            }else {
+            } else {
                 //TODO : DO SOMETHING
             }
         });

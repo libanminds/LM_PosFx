@@ -26,8 +26,8 @@ public class Item {
     private SimpleStringProperty lastModified;
 
 
-    private SimpleStringProperty  imageUrl;
-    private SimpleStringProperty  currency;
+    private SimpleStringProperty imageUrl;
+    private SimpleStringProperty currency;
     private SimpleIntegerProperty minStock;
     private ImageView image;
 
@@ -44,13 +44,13 @@ public class Item {
     private StringProperty formattedPrice;
 
     public Item(int itemID, String imageUrl, int code, int itemPropertiesID, String name, ItemCategory category, double cost, double price, String currency, int stock, int minStock, String supplier, String description, boolean priceIncludesTax, boolean isService, String lastModified) {
-        try{
+        try {
             Image imageFile = new Image(new FileInputStream(imageUrl));
             image = new ImageView(imageFile);
             image.setFitHeight(50);
             image.setFitWidth(50);
             image.setPreserveRatio(true);
-        }catch(Exception e) {
+        } catch (Exception e) {
             image = null;
         }
         this.itemID = new SimpleIntegerProperty(itemID);
@@ -61,7 +61,7 @@ public class Item {
         this.name = new SimpleStringProperty(name);
         this.category = category;
         this.cost = new SimpleDoubleProperty(cost);
-        this.initialPrice =  new SimpleDoubleProperty(price);
+        this.initialPrice = new SimpleDoubleProperty(price);
         this.currency = new SimpleStringProperty(currency);
         this.stock = new SimpleIntegerProperty(stock);
         this.supplier = new SimpleStringProperty(supplier);
@@ -74,17 +74,17 @@ public class Item {
         formattedPrice = new SimpleStringProperty(price + currency);
         this.saleQuantity.bind(this.totalQuantity.subtract(this.previouslyReturnedQuantity).subtract(this.returnedQuantity));
         this.total.bind(this.price.multiply(this.saleQuantity).subtract(this.discount));
-        this.formattedPrice.bind(Bindings.createStringBinding( () -> HelperFunctions.getDecimalFormatter().format(this.price.getValue()) + " " + this.saleCurrency.getValue(),this.price,this.saleCurrency));
-        this.formattedTotal.bind(Bindings.createStringBinding( () -> HelperFunctions.getDecimalFormatter().format(this.total.getValue()) + " " + this.saleCurrency.getValue(),this.total,this.saleCurrency));
+        this.formattedPrice.bind(Bindings.createStringBinding(() -> HelperFunctions.getDecimalFormatter().format(this.price.getValue()) + " " + this.saleCurrency.getValue(), this.price, this.saleCurrency));
+        this.formattedTotal.bind(Bindings.createStringBinding(() -> HelperFunctions.getDecimalFormatter().format(this.total.getValue()) + " " + this.saleCurrency.getValue(), this.total, this.saleCurrency));
     }
 
     @Override
     public boolean equals(Object other) {
-        if (this == other) return true ;
+        if (this == other) return true;
 
-        if (! (other instanceof Item)) return false ;
+        if (!(other instanceof Item)) return false;
 
-        Item otherItem = (Item) other ;
+        Item otherItem = (Item) other;
         return this.getID() == otherItem.getID();
     }
 
@@ -115,10 +115,10 @@ public class Item {
     }
 
     private void calculatePrice() {
-        if(currency.get().equals(saleCurrency.getValue())) {
+        if (currency.get().equals(saleCurrency.getValue())) {
             price.setValue(initialPrice.getValue());
         } else {
-            if(currency.get().equals("$"))
+            if (currency.get().equals("$"))
                 price.setValue(initialPrice.getValue() * GlobalSettings.CONVERSION_RATE_FROM_DOLLAR);
             else
                 price.setValue(initialPrice.getValue() / GlobalSettings.CONVERSION_RATE_FROM_DOLLAR);
@@ -145,12 +145,12 @@ public class Item {
         return saleQuantity.getValue() + "";
     }
 
-    public int getSaleQuantityValue() {
-        return saleQuantity.getValue();
-    }
-
     public void setSaleQuantity(int val) {
         saleQuantity.set(val);
+    }
+
+    public int getSaleQuantityValue() {
+        return saleQuantity.getValue();
     }
 
     public void incrementTotalQuantity() {
@@ -161,24 +161,24 @@ public class Item {
         return returnedQuantity.getValue() + "";
     }
 
-    public int getPreviouslyReturnedQuantity() {
-        return previouslyReturnedQuantity.get();
+    public void setReturnedQuantity(int returnedQuantity) {
+        this.returnedQuantity.set(returnedQuantity);
     }
 
-    public int getInitiallyAvailableQuantity() {
-        return totalQuantity.get() - previouslyReturnedQuantity.get();
+    public int getPreviouslyReturnedQuantity() {
+        return previouslyReturnedQuantity.get();
     }
 
     public void setPreviouslyReturnedQuantity(int previouslyReturnedQuantity) {
         this.previouslyReturnedQuantity.set(previouslyReturnedQuantity);
     }
 
-    public int getReturnedQuantityValue() {
-        return returnedQuantity.getValue();
+    public int getInitiallyAvailableQuantity() {
+        return totalQuantity.get() - previouslyReturnedQuantity.get();
     }
 
-    public void setReturnedQuantity(int returnedQuantity) {
-        this.returnedQuantity.set(returnedQuantity);
+    public int getReturnedQuantityValue() {
+        return returnedQuantity.getValue();
     }
 
     public void incrementReturnedQuantity() {
@@ -197,6 +197,10 @@ public class Item {
         return discount.getValue() + "";
     }
 
+    public void setDiscount(double val) {
+        discount.setValue(val);
+    }
+
     public double getDiscountValue() {
         return discount.getValue();
     }
@@ -213,10 +217,6 @@ public class Item {
         return formattedPrice;
     }
 
-    public void setDiscount(double val) {
-        discount.setValue(val);
-    }
-
     public int getID() {
         return itemID.get();
     }
@@ -225,12 +225,12 @@ public class Item {
         return category;
     }
 
-    public void setImage(ImageView value) {
-        image = value;
-    }
-
     public ImageView getImage() {
         return image;
+    }
+
+    public void setImage(ImageView value) {
+        image = value;
     }
 
     public String getImageUrl() {
@@ -273,16 +273,16 @@ public class Item {
         return price.get();
     }
 
+    public void setPrice(double val) {
+        price.set(val);
+    }
+
     public String getCurrency() {
         return currency.get();
     }
 
     public void setCurrency(String val) {
         currency.set(val);
-    }
-
-    public void setPrice(double val) {
-        price.set(val);
     }
 
     public int getStock() {

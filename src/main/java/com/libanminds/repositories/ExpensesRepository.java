@@ -24,7 +24,7 @@ public class ExpensesRepository {
                 " description like '%" + value + "%' or" +
                 " recipient like '%" + value + "%' or" +
                 " name like '%" + value + "%' or" +
-                " notes like '%"+ value + "%'";
+                " notes like '%" + value + "%'";
 
         return getExpensesFromQuery(query);
     }
@@ -72,10 +72,10 @@ public class ExpensesRepository {
     public static boolean deleteExpense(Expense expense) {
         try {
             String query = "DELETE FROM expenses where id = " + expense.getID();
-            Statement statement  = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.instance.getStatement();
             statement.executeUpdate(query);
             return true;
-        }catch (Exception e) {
+        } catch (Exception e) {
             return false;
         }
     }
@@ -83,13 +83,13 @@ public class ExpensesRepository {
     private static ObservableList<Expense> getExpensesFromQuery(String query) {
         ObservableList<Expense> data = FXCollections.observableArrayList();
         try {
-            Statement statement  = DBConnection.instance.getStatement();
-            ResultSet rs    = statement.executeQuery(query);
+            Statement statement = DBConnection.instance.getStatement();
+            ResultSet rs = statement.executeQuery(query);
 
             while (rs.next()) {
                 data.add(new Expense(
                         rs.getInt(1),
-                        new Type(rs.getInt("type_id"),rs.getString("name")),
+                        new Type(rs.getInt("type_id"), rs.getString("name")),
                         rs.getString("description"),
                         rs.getDouble("amount"),
                         rs.getString("currency"),

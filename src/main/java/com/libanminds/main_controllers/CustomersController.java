@@ -59,16 +59,16 @@ public class CustomersController implements Initializable {
     }
 
     private void handleAuthorization() {
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_CUSTOMER_STATEMENT_OF_ACCOUNT))
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_CUSTOMER_STATEMENT_OF_ACCOUNT))
             buttonsHolder.getChildren().remove(accountStatementBtn);
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_ADD_CUSTOMER))
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_ADD_CUSTOMER))
             buttonsHolder.getChildren().remove(newCustomerBtn);
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_EDIT_CUSTOMER))
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_EDIT_CUSTOMER))
             buttonsHolder.getChildren().remove(editCustomer);
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_DELETE_CUSTOMER))
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_DELETE_CUSTOMER))
             buttonsHolder.getChildren().remove(deleteCustomer);
     }
 
@@ -122,7 +122,7 @@ public class CustomersController implements Initializable {
             stage.setOnHidden(e -> {
                 customersTable.setItems(CustomersRepository.getCustomers());
             });
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getCause());
         }
     }
@@ -136,7 +136,7 @@ public class CustomersController implements Initializable {
             CustomerStatementOfAccountController controller = loader.getController();
             controller.setSelectedCustomer(customer);
             stage.show();
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getCause());
         }
     }
@@ -144,7 +144,7 @@ public class CustomersController implements Initializable {
     private void showDeleteConfirmationDialog() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Delete Confirmation");
-        alert.setHeaderText("Are you sure you want to delele "+ selectedCustomer.getName() + "?");
+        alert.setHeaderText("Are you sure you want to delele " + selectedCustomer.getName() + "?");
 
         ButtonType yesButton = new ButtonType("Yes");
         ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
@@ -155,7 +155,7 @@ public class CustomersController implements Initializable {
 
         if (result.get() == yesButton) {
             boolean successful = CustomersRepository.deleteCustomer(selectedCustomer);
-            if(successful)
+            if (successful)
                 customersTable.getItems().remove(selectedCustomer);
         } else {
             alert.close();
@@ -169,13 +169,13 @@ public class CustomersController implements Initializable {
     }
 
     private void initializeTable() {
-        TableColumn<Customer,String> nameCol = new TableColumn<>("Name");
-        TableColumn<Customer,String> emailCol = new TableColumn<>("Email");
-        TableColumn<Customer,String> phoneCol = new TableColumn<>("Phone");
-        TableColumn<Customer,String> addressCol = new TableColumn<>("Address");
-        TableColumn<Customer,Double> balanceCol = new TableColumn<>("Balance");
+        TableColumn<Customer, String> nameCol = new TableColumn<>("Name");
+        TableColumn<Customer, String> emailCol = new TableColumn<>("Email");
+        TableColumn<Customer, String> phoneCol = new TableColumn<>("Phone");
+        TableColumn<Customer, String> addressCol = new TableColumn<>("Address");
+        TableColumn<Customer, Double> balanceCol = new TableColumn<>("Balance");
 
-        customersTable.getColumns().addAll(nameCol,emailCol,phoneCol,addressCol,balanceCol);
+        customersTable.getColumns().addAll(nameCol, emailCol, phoneCol, addressCol, balanceCol);
 
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
@@ -188,7 +188,7 @@ public class CustomersController implements Initializable {
 
     private void setTableListener() {
         customersTable.selectionModelProperty().get().selectedItemProperty().addListener((ChangeListener) (observable, oldValue, newValue) -> {
-            selectedCustomer = (Customer)newValue;
+            selectedCustomer = (Customer) newValue;
             deleteCustomer.setDisable(selectedCustomer == null);
             editCustomer.setDisable(selectedCustomer == null);
             accountStatementBtn.setDisable(selectedCustomer == null);

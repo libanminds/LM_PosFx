@@ -58,17 +58,17 @@ public class CustomerStatementOfAccountController implements Initializable {
     }
 
     private void initChoiceBoxes() {
-        String[] currencies = { Constants.DOLLAR_CURRENCY, Constants.LIRA_CURRENCY};
+        String[] currencies = {Constants.DOLLAR_CURRENCY, Constants.LIRA_CURRENCY};
         currency.setItems(FXCollections.observableArrayList(currencies));
         currency.setValue(GlobalSettings.DEFAULT_CURRENCY);
-        currency.getSelectionModel().selectedIndexProperty().addListener((observableValue, oldIndex, newIndex) -> setNumbers(currencies[(Integer)newIndex]));
+        currency.getSelectionModel().selectedIndexProperty().addListener((observableValue, oldIndex, newIndex) -> setNumbers(currencies[(Integer) newIndex]));
     }
 
     private void setNumbers(String currency) {
         double paid = 0;
         double returned = 0;
         for (CustomerTransaction transaction : transactionsTable.getItems()) {
-            if(transaction.isRefund())
+            if (transaction.isRefund())
                 returned += transaction.getAmount(currency);
             else
                 paid += transaction.getAmount(currency);
@@ -79,12 +79,12 @@ public class CustomerStatementOfAccountController implements Initializable {
     }
 
     private void initializeTable() {
-        TableColumn<CustomerTransaction,String> invoiceID = new TableColumn<>("Invoice ID");
-        TableColumn<CustomerTransaction,String> amountWithCurrency = new TableColumn<>("amount");
-        TableColumn<CustomerTransaction,String> isRefund = new TableColumn<>("Is a refund");
-        TableColumn<CustomerTransaction,String> transactionDate = new TableColumn<>("Date/Time");
+        TableColumn<CustomerTransaction, String> invoiceID = new TableColumn<>("Invoice ID");
+        TableColumn<CustomerTransaction, String> amountWithCurrency = new TableColumn<>("amount");
+        TableColumn<CustomerTransaction, String> isRefund = new TableColumn<>("Is a refund");
+        TableColumn<CustomerTransaction, String> transactionDate = new TableColumn<>("Date/Time");
 
-        transactionsTable.getColumns().addAll(invoiceID,amountWithCurrency,isRefund,transactionDate);
+        transactionsTable.getColumns().addAll(invoiceID, amountWithCurrency, isRefund, transactionDate);
 
         invoiceID.setCellValueFactory(new PropertyValueFactory<>("invoiceID"));
         amountWithCurrency.setCellValueFactory(new PropertyValueFactory<>("amountWithCurrency"));
@@ -93,15 +93,15 @@ public class CustomerStatementOfAccountController implements Initializable {
 
         transactionsTable.setItems(TransactionsRepository.getCustomerTransactions(selectedCustomer));
 
-        transactionsTable.setRowFactory( tv -> {
+        transactionsTable.setRowFactory(tv -> {
             TableRow<CustomerTransaction> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
-                if (event.getClickCount() >= 2 && (! row.isEmpty()) ) {
+                if (event.getClickCount() >= 2 && (!row.isEmpty())) {
                     CustomerTransaction transaction = row.getItem();
                     showViewSaleDialog(SalesRepository.getSale(transaction.getInvoiceID()));
                 }
             });
-            return row ;
+            return row;
         });
     }
 
@@ -114,7 +114,7 @@ public class CustomerStatementOfAccountController implements Initializable {
             ViewSaleController controller = loader.getController();
             controller.setSale(sale);
             stage.show();
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getCause());
             System.out.println(e.getMessage());
             e.printStackTrace();

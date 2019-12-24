@@ -62,7 +62,7 @@ public class SupplierStatementOfAccountController implements Initializable {
         double paid = 0;
         double returned = 0;
         for (SupplierTransaction transaction : transactionsTable.getItems()) {
-            if(transaction.isRefund())
+            if (transaction.isRefund())
                 returned += transaction.getAmount(currency);
             else
                 paid += transaction.getAmount(currency);
@@ -73,19 +73,19 @@ public class SupplierStatementOfAccountController implements Initializable {
     }
 
     private void initChoiceBoxes() {
-        String[] currencies = { Constants.DOLLAR_CURRENCY, Constants.LIRA_CURRENCY};
+        String[] currencies = {Constants.DOLLAR_CURRENCY, Constants.LIRA_CURRENCY};
         currency.setItems(FXCollections.observableArrayList(currencies));
         currency.setValue(GlobalSettings.DEFAULT_CURRENCY);
-        currency.getSelectionModel().selectedIndexProperty().addListener((observableValue, oldIndex, newIndex) -> setNumbers(currencies[(Integer)newIndex]));
+        currency.getSelectionModel().selectedIndexProperty().addListener((observableValue, oldIndex, newIndex) -> setNumbers(currencies[(Integer) newIndex]));
     }
 
     private void initializeTable() {
-        TableColumn<SupplierTransaction,String> invoiceID = new TableColumn<>("Invoice ID");
-        TableColumn<SupplierTransaction,String> amountWithCurrency = new TableColumn<>("amount");
-        TableColumn<SupplierTransaction,String> isRefund = new TableColumn<>("Is a refund");
-        TableColumn<SupplierTransaction,String> transactionDate = new TableColumn<>("Date/Time");
+        TableColumn<SupplierTransaction, String> invoiceID = new TableColumn<>("Invoice ID");
+        TableColumn<SupplierTransaction, String> amountWithCurrency = new TableColumn<>("amount");
+        TableColumn<SupplierTransaction, String> isRefund = new TableColumn<>("Is a refund");
+        TableColumn<SupplierTransaction, String> transactionDate = new TableColumn<>("Date/Time");
 
-        transactionsTable.getColumns().addAll(invoiceID,amountWithCurrency,isRefund,transactionDate);
+        transactionsTable.getColumns().addAll(invoiceID, amountWithCurrency, isRefund, transactionDate);
 
         invoiceID.setCellValueFactory(new PropertyValueFactory<>("invoiceID"));
         amountWithCurrency.setCellValueFactory(new PropertyValueFactory<>("amountWithCurrency"));
@@ -94,15 +94,15 @@ public class SupplierStatementOfAccountController implements Initializable {
 
         transactionsTable.setItems(TransactionsRepository.getSuppliersTransactions(selectedSupplier));
 
-        transactionsTable.setRowFactory( tv -> {
+        transactionsTable.setRowFactory(tv -> {
             TableRow<SupplierTransaction> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
-                if (event.getClickCount() >= 2 && (! row.isEmpty()) ) {
+                if (event.getClickCount() >= 2 && (!row.isEmpty())) {
                     SupplierTransaction transaction = row.getItem();
                     showViewReceivingDialog(ReceivingsRepository.getReceiving(transaction.getInvoiceID()));
                 }
             });
-            return row ;
+            return row;
         });
     }
 
@@ -116,7 +116,7 @@ public class SupplierStatementOfAccountController implements Initializable {
             ViewReceivingController controller = loader.getController();
             controller.setReceiving(receiving);
             stage.show();
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

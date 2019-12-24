@@ -19,7 +19,7 @@ public class ItemsCategoriesRepository {
     }
 
     public static ObservableList<ItemCategory> getItemsCategoriesLike(String value) {
-        String query = "SELECT * FROM item_categories where name like '%"+ value + "%'";
+        String query = "SELECT * FROM item_categories where name like '%" + value + "%'";
 
         return getItemsFromQuery(query);
     }
@@ -54,10 +54,10 @@ public class ItemsCategoriesRepository {
     public static boolean deleteItemCategory(ItemCategory category) {
         try {
             String query = "DELETE FROM item_categories where id = " + category.getID();
-            Statement statement  = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.instance.getStatement();
             statement.executeUpdate(query);
             return true;
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return false;
         }
@@ -67,8 +67,8 @@ public class ItemsCategoriesRepository {
         ObservableList<ItemCategory> data = FXCollections.observableArrayList();
 
         try {
-            Statement statement  = DBConnection.instance.getStatement();
-            ResultSet rs    = statement.executeQuery(query);
+            Statement statement = DBConnection.instance.getStatement();
+            ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
                 data.add(new ItemCategory(
                         rs.getInt("id"),

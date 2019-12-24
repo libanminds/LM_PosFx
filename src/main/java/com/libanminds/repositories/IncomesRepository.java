@@ -24,7 +24,7 @@ public class IncomesRepository {
                 " description like '%" + value + "%' or" +
                 " taken_from like '%" + value + "%' or" +
                 " name like '%" + value + "%' or" +
-                " notes like '%"+ value + "%'";
+                " notes like '%" + value + "%'";
 
         return getIncomesFromQuery(query);
     }
@@ -72,10 +72,10 @@ public class IncomesRepository {
     public static boolean deleteIncome(Income income) {
         try {
             String query = "DELETE FROM incomes where id = " + income.getID();
-            Statement statement  = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.instance.getStatement();
             statement.executeUpdate(query);
             return true;
-        }catch (Exception e) {
+        } catch (Exception e) {
             return false;
         }
     }
@@ -83,13 +83,13 @@ public class IncomesRepository {
     private static ObservableList<Income> getIncomesFromQuery(String query) {
         ObservableList<Income> data = FXCollections.observableArrayList();
         try {
-            Statement statement  = DBConnection.instance.getStatement();
-            ResultSet rs    = statement.executeQuery(query);
+            Statement statement = DBConnection.instance.getStatement();
+            ResultSet rs = statement.executeQuery(query);
 
             while (rs.next()) {
                 data.add(new Income(
                         rs.getInt(1),
-                        new Type(rs.getInt("type_id"),rs.getString("name")),
+                        new Type(rs.getInt("type_id"), rs.getString("name")),
                         rs.getString("description"),
                         rs.getDouble("amount"),
                         rs.getString("currency"),

@@ -62,7 +62,7 @@ public class Receiving {
     }
 
     public String getFormattedBalance() {
-        return HelperFunctions.getDecimalFormatter().format(totalAmount.getValue() - paidAmount.getValue())+ " " + currency.getValue();
+        return HelperFunctions.getDecimalFormatter().format(totalAmount.getValue() - paidAmount.getValue()) + " " + currency.getValue();
     }
 
     public String getFormattedTotalAmount() {
@@ -71,6 +71,10 @@ public class Receiving {
 
     public int getSupplierID() {
         return supplierID.get();
+    }
+
+    public void setSupplierID(int supplierID) {
+        this.supplierID.set(supplierID);
     }
 
     public SimpleIntegerProperty supplierIDProperty() {
@@ -85,20 +89,16 @@ public class Receiving {
         this.supplierName.set(supplierName);
     }
 
-    public void setSupplierID(int supplierID) {
-        this.supplierID.set(supplierID);
-    }
-
     public double getDiscount() {
         return discount.get();
     }
 
-    public String getDiscountFormatted() {
-        return HelperFunctions.getDecimalFormatter().format(discount.get()) + " " + currency.get();
-    }
-
     public void setDiscount(double discount) {
         this.discount.set(discount);
+    }
+
+    public String getDiscountFormatted() {
+        return HelperFunctions.getDecimalFormatter().format(discount.get()) + " " + currency.get();
     }
 
     public int getTaxID() {
@@ -121,12 +121,12 @@ public class Receiving {
         return totalAmount.get();
     }
 
-    public String getTotalAmountFormatted() {
-        return HelperFunctions.getDecimalFormatter().format(totalAmount.get()) + " " + currency.get();
-    }
-
     public void setTotalAmount(double totalAmount) {
         this.totalAmount.set(totalAmount);
+    }
+
+    public String getTotalAmountFormatted() {
+        return HelperFunctions.getDecimalFormatter().format(totalAmount.get()) + " " + currency.get();
     }
 
     public String getCurrency() {
@@ -141,12 +141,12 @@ public class Receiving {
         return paidAmount.get();
     }
 
-    public String getPaidAmountFormatted() {
-        return HelperFunctions.getDecimalFormatter().format(paidAmount.get()) + " " + currency.get();
-    }
-
     public void setPaidAmount(double paidAmount) {
         this.paidAmount.set(paidAmount);
+    }
+
+    public String getPaidAmountFormatted() {
+        return HelperFunctions.getDecimalFormatter().format(paidAmount.get()) + " " + currency.get();
     }
 
     public boolean isIsOfficial() {

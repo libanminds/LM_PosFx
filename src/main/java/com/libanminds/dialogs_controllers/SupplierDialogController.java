@@ -66,7 +66,7 @@ public class SupplierDialogController implements Initializable {
 
     public void initData(Supplier supplier) {
         if (supplier != null) {
-            supplierID = supplier.getID() ;
+            supplierID = supplier.getID();
             firstName.setText(supplier.getFirstName());
             lastName.setText(supplier.getLastName());
             company.setText(supplier.getCompany());
@@ -82,7 +82,7 @@ public class SupplierDialogController implements Initializable {
     }
 
     private boolean validateInput() {
-        if(firstName.getText().isEmpty()) {
+        if (firstName.getText().isEmpty()) {
             errorMessagesLabel.setText("Please fill in all the required fields");
             HelperFunctions.highlightTextfieldError(firstName);
             return false;
@@ -94,7 +94,7 @@ public class SupplierDialogController implements Initializable {
     private void initSaveButton() {
 
         save.setOnMouseClicked((EventHandler<Event>) event -> {
-            if(!validateInput()) return;
+            if (!validateInput()) return;
 
             boolean successful;
 
@@ -110,19 +110,19 @@ public class SupplierDialogController implements Initializable {
                     0
             );
 
-            if(supplierID == -1)
+            if (supplierID == -1)
                 successful = SupplierRepository.addSupplier(supplier);
             else
                 successful = SupplierRepository.updateSupplier(supplier);
 
-            if(successful) {
-                if(hostController != null) {
+            if (successful) {
+                if (hostController != null) {
                     hostController.setSelectedSupplier(supplier);
                 }
 
                 Stage currentStage = (Stage) save.getScene().getWindow();
                 currentStage.close();
-            }else {
+            } else {
                 //TODO : DO SOMETHING
             }
         });

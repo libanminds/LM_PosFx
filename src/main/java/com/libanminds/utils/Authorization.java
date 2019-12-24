@@ -1,4 +1,5 @@
 package com.libanminds.utils;
+
 import com.libanminds.models.User;
 
 import java.util.ArrayList;
