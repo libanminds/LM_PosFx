@@ -45,7 +45,7 @@ public class Customer {
 
     public void setName(String fName, String lName) {
         firstName.set(fName);
-        firstName.set(lName);
+        lastName.set(lName);
     }
 
     public String getEmail() {

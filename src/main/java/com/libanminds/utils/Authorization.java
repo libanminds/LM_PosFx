@@ -9,7 +9,7 @@ public class Authorization {
 
     public static ArrayList<String> authorized;
 
-    public static void Authorize(ArrayList<String> data) {
+    public static void authorize(ArrayList<String> data) {
         authorized = data;
     }
 }

@@ -15,7 +15,7 @@ public class HelperFunctions {
 
     public static String getFileExtension(File file) {
         String name = file.getName();
-        int lastIndexOf = name.lastIndexOf(".");
+        int lastIndexOf = name.lastIndexOf('.');
         if (lastIndexOf == -1) {
             return "jpg";
         }
@@ -56,6 +56,7 @@ public class HelperFunctions {
                         return null;
                     return c;
                 } catch (NumberFormatException e) {
+                    e.printStackTrace();
                 }
                 return null;
             }
@@ -66,13 +67,17 @@ public class HelperFunctions {
     public static void highlightTextfieldError(TextField tf) {
         ObservableList<String> styleClass = tf.getStyleClass();
 
-        if (!styleClass.contains("errorHighlight")) {
-            styleClass.add("errorHighlight");
+        if (!styleClass.contains(Constants.CSS_ERROR_HIGHLIGHT)) {
+            styleClass.add(Constants.CSS_ERROR_HIGHLIGHT);
         }
     }
 
     public static void removeHighlightedTextfieldError(TextField tf) {
         ObservableList<String> styleClass = tf.getStyleClass();
-        styleClass.removeAll(Collections.singleton("errorHighlight"));
+        styleClass.removeAll(Collections.singleton(Constants.CSS_ERROR_HIGHLIGHT));
+    }
+
+    private HelperFunctions() {
+        throw new AssertionError("You are not allowed to instantiate this class");
     }
 }

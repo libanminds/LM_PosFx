@@ -11,4 +11,9 @@ public class GlobalSettings {
     public static String DEFAULT_CURRENCY = Constants.LIRA_CURRENCY;
     public static String DEFAULT_PAYMENT_TYPE = Constants.paymentTypes[0];
     public static Role DEFAULT_USER_ROLE = Constants.ROLES[0];
+
+
+    private GlobalSettings() {
+        throw new AssertionError("You are not allowed to instantiate this class");
+    }
 }

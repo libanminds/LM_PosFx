@@ -32,7 +32,7 @@ public class UsersRepository {
             return false;
         }
 
-        Authorization.Authorize(data);
+        Authorization.authorize(data);
         return true;
     }
 
