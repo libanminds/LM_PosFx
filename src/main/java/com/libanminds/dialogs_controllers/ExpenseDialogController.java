@@ -1,14 +1,9 @@
 package com.libanminds.dialogs_controllers;
 
-import com.jfoenix.controls.JFXButton;
-import com.libanminds.models.Customer;
 import com.libanminds.models.Expense;
-import com.libanminds.models.ItemCategory;
 import com.libanminds.models.Type;
-import com.libanminds.repositories.CustomersRepository;
 import com.libanminds.repositories.ExpenseTypesRepository;
 import com.libanminds.repositories.ExpensesRepository;
-import com.libanminds.repositories.ItemsCategoriesRepository;
 import com.libanminds.utils.Constants;
 import com.libanminds.utils.GlobalSettings;
 import com.libanminds.utils.HelperFunctions;
@@ -20,7 +15,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
 
 import java.net.URL;
 import java.util.ResourceBundle;

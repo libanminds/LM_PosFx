@@ -1,11 +1,8 @@
 package com.libanminds.categories_controllers;
 
 import com.libanminds.dialogs_controllers.IncomeTypesDialogController;
-import com.libanminds.dialogs_controllers.ItemCategoryDialogController;
-import com.libanminds.models.ItemCategory;
 import com.libanminds.models.Type;
 import com.libanminds.repositories.IncomeTypesRepository;
-import com.libanminds.repositories.ItemsCategoriesRepository;
 import com.libanminds.utils.Authorization;
 import com.libanminds.utils.AuthorizationKeys;
 import com.libanminds.utils.Views;
@@ -21,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;

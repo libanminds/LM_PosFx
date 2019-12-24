@@ -10,7 +10,6 @@ import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Collections;
 import java.util.Locale;
-import java.util.function.UnaryOperator;
 
 public class HelperFunctions {
 

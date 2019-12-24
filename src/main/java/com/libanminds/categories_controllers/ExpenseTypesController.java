@@ -1,10 +1,8 @@
 package com.libanminds.categories_controllers;
 
 import com.libanminds.dialogs_controllers.ExpenseTypesDialogController;
-import com.libanminds.dialogs_controllers.IncomeTypesDialogController;
 import com.libanminds.models.Type;
 import com.libanminds.repositories.ExpenseTypesRepository;
-import com.libanminds.repositories.IncomeTypesRepository;
 import com.libanminds.utils.Authorization;
 import com.libanminds.utils.AuthorizationKeys;
 import com.libanminds.utils.Views;

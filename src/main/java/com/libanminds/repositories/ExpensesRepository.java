@@ -1,9 +1,7 @@
 package com.libanminds.repositories;
 
-import com.libanminds.models.Customer;
 import com.libanminds.models.Expense;
 import com.libanminds.models.Type;
-import com.libanminds.models.User;
 import com.libanminds.utils.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

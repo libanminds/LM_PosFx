@@ -1,6 +1,5 @@
 package com.libanminds.repositories;
 
-import com.libanminds.models.Customer;
 import com.libanminds.models.Supplier;
 import com.libanminds.utils.DBConnection;
 import javafx.collections.FXCollections;

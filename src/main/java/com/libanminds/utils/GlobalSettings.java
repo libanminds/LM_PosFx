@@ -2,8 +2,6 @@ package com.libanminds.utils;
 
 import com.libanminds.models.Role;
 
-import java.awt.*;
-
 public class GlobalSettings {
 
     //TODO: retrieve these from the settings.

@@ -1,6 +1,5 @@
 package com.libanminds.dialogs_controllers;
 
-import com.jfoenix.controls.JFXButton;
 import com.libanminds.models.Item;
 import com.libanminds.models.Sale;
 import com.libanminds.repositories.ItemsRepository;

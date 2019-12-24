@@ -1,6 +1,8 @@
 package com.libanminds.repositories;
 
-import com.libanminds.models.*;
+import com.libanminds.models.Item;
+import com.libanminds.models.Receiving;
+import com.libanminds.models.Supplier;
 import com.libanminds.utils.DBConnection;
 import com.libanminds.utils.GlobalSettings;
 import javafx.collections.FXCollections;

@@ -9,7 +9,6 @@ import com.libanminds.models.Sale;
 import com.libanminds.repositories.SalesRepository;
 import com.libanminds.utils.*;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.Event;
 import javafx.event.EventHandler;

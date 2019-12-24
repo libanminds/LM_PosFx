@@ -1,6 +1,5 @@
 package com.libanminds.dialogs_controllers;
 
-import com.libanminds.models.CustomerTransaction;
 import com.libanminds.models.Item;
 import com.libanminds.models.Receiving;
 import com.libanminds.models.SupplierTransaction;

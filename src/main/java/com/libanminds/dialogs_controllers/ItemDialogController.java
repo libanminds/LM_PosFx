@@ -1,11 +1,7 @@
 package com.libanminds.dialogs_controllers;
 
-import com.jfoenix.controls.JFXButton;
-import com.libanminds.models.Expense;
 import com.libanminds.models.Item;
 import com.libanminds.models.ItemCategory;
-import com.libanminds.models.Type;
-import com.libanminds.repositories.ExpensesRepository;
 import com.libanminds.repositories.ItemsCategoriesRepository;
 import com.libanminds.repositories.ItemsRepository;
 import com.libanminds.utils.Constants;
@@ -22,14 +18,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
-import java.nio.file.Files;
-import java.util.Random;
 import java.util.ResourceBundle;
 
 public class ItemDialogController implements Initializable {

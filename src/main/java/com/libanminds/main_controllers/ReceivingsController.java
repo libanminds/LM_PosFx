@@ -1,6 +1,8 @@
 package com.libanminds.main_controllers;
 
-import com.libanminds.dialogs_controllers.*;
+import com.libanminds.dialogs_controllers.CompleteReceivingController;
+import com.libanminds.dialogs_controllers.ReturnReceivingItemsController;
+import com.libanminds.dialogs_controllers.ViewReceivingController;
 import com.libanminds.models.Receiving;
 import com.libanminds.repositories.ReceivingsRepository;
 import com.libanminds.utils.Authorization;

@@ -1,12 +1,10 @@
 package com.libanminds.repositories;
 
-import com.libanminds.models.ItemCategory;
 import com.libanminds.models.Role;
 import com.libanminds.utils.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;

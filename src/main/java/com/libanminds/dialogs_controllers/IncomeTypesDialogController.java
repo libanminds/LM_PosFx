@@ -1,9 +1,7 @@
 package com.libanminds.dialogs_controllers;
 
-import com.libanminds.models.ItemCategory;
 import com.libanminds.models.Type;
 import com.libanminds.repositories.IncomeTypesRepository;
-import com.libanminds.repositories.ItemsCategoriesRepository;
 import com.libanminds.utils.HelperFunctions;
 import javafx.event.Event;
 import javafx.event.EventHandler;

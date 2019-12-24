@@ -1,10 +1,9 @@
 package com.libanminds.dialogs_controllers;
 
-import com.jfoenix.controls.JFXButton;
-import com.libanminds.models.*;
-import com.libanminds.repositories.*;
-import com.libanminds.utils.Constants;
-import com.libanminds.utils.GlobalSettings;
+import com.libanminds.models.Role;
+import com.libanminds.models.User;
+import com.libanminds.repositories.RolesRepository;
+import com.libanminds.repositories.UsersRepository;
 import com.libanminds.utils.HelperFunctions;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,7 +16,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
 
 import java.net.URL;
 import java.util.ResourceBundle;

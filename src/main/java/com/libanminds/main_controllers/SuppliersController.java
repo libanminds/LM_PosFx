@@ -1,12 +1,8 @@
 package com.libanminds.main_controllers;
 
-import com.libanminds.dialogs_controllers.CustomerDialogController;
 import com.libanminds.dialogs_controllers.SupplierDialogController;
-import com.libanminds.models.Customer;
 import com.libanminds.models.Supplier;
-import com.libanminds.repositories.CustomersRepository;
 import com.libanminds.repositories.SupplierRepository;
-import com.libanminds.transactions_history_controllers.CustomerStatementOfAccountController;
 import com.libanminds.transactions_history_controllers.SupplierStatementOfAccountController;
 import com.libanminds.utils.Authorization;
 import com.libanminds.utils.AuthorizationKeys;
@@ -17,7 +13,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;

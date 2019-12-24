@@ -1,6 +1,5 @@
 package com.libanminds.repositories;
 
-import com.libanminds.models.Expense;
 import com.libanminds.models.Income;
 import com.libanminds.models.Type;
 import com.libanminds.utils.DBConnection;

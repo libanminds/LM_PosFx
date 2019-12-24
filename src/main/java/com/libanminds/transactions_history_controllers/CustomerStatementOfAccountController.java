@@ -1,14 +1,9 @@
 package com.libanminds.transactions_history_controllers;
 
-import com.libanminds.dialogs_controllers.CustomerDialogController;
 import com.libanminds.dialogs_controllers.ViewSaleController;
-import com.libanminds.main_controllers.NewSaleController;
 import com.libanminds.models.Customer;
 import com.libanminds.models.CustomerTransaction;
-import com.libanminds.models.ItemCategory;
 import com.libanminds.models.Sale;
-import com.libanminds.repositories.CustomersRepository;
-import com.libanminds.repositories.ItemsCategoriesRepository;
 import com.libanminds.repositories.SalesRepository;
 import com.libanminds.repositories.TransactionsRepository;
 import com.libanminds.utils.Constants;
@@ -16,9 +11,6 @@ import com.libanminds.utils.GlobalSettings;
 import com.libanminds.utils.HelperFunctions;
 import com.libanminds.utils.Views;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;

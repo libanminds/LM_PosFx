@@ -1,10 +1,7 @@
 package com.libanminds.main_controllers;
 
-import com.libanminds.dialogs_controllers.ExpenseDialogController;
 import com.libanminds.dialogs_controllers.IncomeDialogController;
-import com.libanminds.models.Expense;
 import com.libanminds.models.Income;
-import com.libanminds.repositories.ExpensesRepository;
 import com.libanminds.repositories.IncomesRepository;
 import com.libanminds.utils.Authorization;
 import com.libanminds.utils.AuthorizationKeys;
@@ -15,7 +12,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;

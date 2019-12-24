@@ -1,15 +1,12 @@
 package com.libanminds.main_controllers;
 
-import com.jfoenix.controls.JFXButton;
 import com.libanminds.dialogs_controllers.CompleteReceivingController;
 import com.libanminds.dialogs_controllers.SelectItemDialogController;
 import com.libanminds.dialogs_controllers.SelectSupplierDialogController;
 import com.libanminds.models.Item;
 import com.libanminds.models.Receiving;
-import com.libanminds.models.Sale;
 import com.libanminds.models.Supplier;
 import com.libanminds.repositories.ReceivingsRepository;
-import com.libanminds.repositories.SalesRepository;
 import com.libanminds.utils.*;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;

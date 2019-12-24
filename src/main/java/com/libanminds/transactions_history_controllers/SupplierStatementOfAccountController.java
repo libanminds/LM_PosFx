@@ -1,9 +1,10 @@
 package com.libanminds.transactions_history_controllers;
 
 import com.libanminds.dialogs_controllers.ViewReceivingController;
-import com.libanminds.models.*;
+import com.libanminds.models.Receiving;
+import com.libanminds.models.Supplier;
+import com.libanminds.models.SupplierTransaction;
 import com.libanminds.repositories.ReceivingsRepository;
-import com.libanminds.repositories.SalesRepository;
 import com.libanminds.repositories.TransactionsRepository;
 import com.libanminds.utils.Constants;
 import com.libanminds.utils.GlobalSettings;
