@@ -79,12 +79,7 @@ public class ItemsCategoriesController implements Initializable {
             }
         });
 
-        deleteCategory.setOnMouseClicked(new EventHandler<Event>() {
-            @Override
-            public void handle(Event event) {
-                showDeleteConfirmationDialog();
-            }
-        });
+        deleteCategory.setOnMouseClicked((EventHandler<Event>) event -> showDeleteConfirmationDialog());
 
         editCategory.setDisable(selectedCategory == null);
         deleteCategory.setDisable(selectedCategory == null);
