@@ -37,7 +37,7 @@ public class SalesRepository {
         return getSalesFromQuery(query, false);
     }
 
-    public static boolean completeSalePayment(int saleID, int customerID, double discount, double totalAmount, double paidAmount,double newPayment, String currency) {
+    public static boolean completeSalePayment(int saleID, int customerID, double discount, double totalAmount, double paidAmount, double newPayment, String currency) {
 
         String query = "UPDATE sales SET discount = ?, total_amount = ?, paid_amount = ? where id = ?";
         PreparedStatement salesStatement = DBConnection.instance.getPreparedStatement(query);

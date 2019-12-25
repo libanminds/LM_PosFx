@@ -1,15 +1,12 @@
 package com.libanminds.main_controllers;
 
-import com.jfoenix.controls.JFXButton;
 import com.libanminds.dialogs_controllers.CompleteReceivingController;
 import com.libanminds.dialogs_controllers.SelectItemDialogController;
 import com.libanminds.dialogs_controllers.SelectSupplierDialogController;
 import com.libanminds.models.Item;
 import com.libanminds.models.Receiving;
-import com.libanminds.models.Sale;
 import com.libanminds.models.Supplier;
 import com.libanminds.repositories.ReceivingsRepository;
-import com.libanminds.repositories.SalesRepository;
 import com.libanminds.utils.*;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
@@ -143,7 +140,7 @@ public class NewReceivingController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(loader.load()));
             SelectItemDialogController controller = loader.getController();
-            controller.setHostController(null,this);
+            controller.setHostController(null, this);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -174,7 +171,7 @@ public class NewReceivingController implements Initializable {
     }
 
     private void createReceiving() {
-        if(itemsTable.getItems().isEmpty()) return;
+        if (itemsTable.getItems().isEmpty()) return;
 
         ReceivingsRepository.createReceiving(
                 itemsTable.getItems(),
@@ -209,12 +206,11 @@ public class NewReceivingController implements Initializable {
 
     public void setSelectedSupplier(Supplier supplier) {
         selectedSupplier = supplier;
-        if(selectedSupplier != null) {
+        if (selectedSupplier != null) {
 
             supplierName.setText(selectedSupplier.getName());
             pastInvoicesTable.setItems(ReceivingsRepository.getCompactReceivingOfCustomer(selectedSupplier.getID()));
-        }
-        else {
+        } else {
             supplierName.setText("Guest");
             pastInvoicesTable.getItems().clear();
         }
@@ -301,7 +297,7 @@ public class NewReceivingController implements Initializable {
             TableRow<Receiving> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() >= 2 && (!row.isEmpty())) {
-                    if(!Authorization.authorized.contains(AuthorizationKeys.CAN_RETURN_RECEIVING_ITEMS))
+                    if (!Authorization.authorized.contains(AuthorizationKeys.CAN_RETURN_RECEIVING_ITEMS))
                         return;
                     Receiving compactReceiving = row.getItem();
                     showCompleteReceivingDialog(ReceivingsRepository.getReceiving(compactReceiving.getID()));
@@ -324,7 +320,7 @@ public class NewReceivingController implements Initializable {
             stage.setOnHidden(e -> {
                 pastInvoicesTable.setItems(ReceivingsRepository.getCompactReceivingOfCustomer(selectedSupplier.getID()));
             });
-        }catch (Exception e){
+        } catch (Exception e) {
 
             e.printStackTrace();
         }
@@ -364,7 +360,7 @@ public class NewReceivingController implements Initializable {
 
     private void addItemToList() {
         if (selectedItem != null) {
-            if(itemsTable.getItems().contains(selectedItem)) {
+            if (itemsTable.getItems().contains(selectedItem)) {
                 itemsTable.getItems().get(itemsTable.getItems().indexOf(selectedItem)).incrementTotalQuantity();
                 itemsTable.refresh();
             } else {
@@ -392,7 +388,7 @@ public class NewReceivingController implements Initializable {
 
     private void updateNumbersUI() {
         DecimalFormat formatter = HelperFunctions.getDecimalFormatter();
-        subtotalText.setText( formatter.format(subtotal) + " " + currencyChoiceBox.getValue());
+        subtotalText.setText(formatter.format(subtotal) + " " + currencyChoiceBox.getValue());
         discountText.setText(formatter.format(receivingDiscount) + " " + currencyChoiceBox.getValue());
         taxesText.setText(formatter.format(taxes) + " " + currencyChoiceBox.getValue());
         totalText.setText(formatter.format(totalAmount) + " " + currencyChoiceBox.getValue());

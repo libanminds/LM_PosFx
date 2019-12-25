@@ -2,7 +2,7 @@ package com.libanminds.models;
 
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class CustomerTransaction extends Transaction{
+public class CustomerTransaction extends Transaction {
 
     public SimpleIntegerProperty customerID;
 
@@ -15,11 +15,11 @@ public class CustomerTransaction extends Transaction{
         return customerID.get();
     }
 
-    public SimpleIntegerProperty customerIDProperty() {
-        return customerID;
-    }
-
     public void setCustomerID(int customerID) {
         this.customerID.set(customerID);
+    }
+
+    public SimpleIntegerProperty customerIDProperty() {
+        return customerID;
     }
 }

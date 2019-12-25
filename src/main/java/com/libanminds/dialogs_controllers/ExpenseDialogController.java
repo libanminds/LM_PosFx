@@ -1,14 +1,9 @@
 package com.libanminds.dialogs_controllers;
 
-import com.jfoenix.controls.JFXButton;
-import com.libanminds.models.Customer;
 import com.libanminds.models.Expense;
-import com.libanminds.models.ItemCategory;
 import com.libanminds.models.Type;
-import com.libanminds.repositories.CustomersRepository;
 import com.libanminds.repositories.ExpenseTypesRepository;
 import com.libanminds.repositories.ExpensesRepository;
-import com.libanminds.repositories.ItemsCategoriesRepository;
 import com.libanminds.utils.Constants;
 import com.libanminds.utils.GlobalSettings;
 import com.libanminds.utils.HelperFunctions;
@@ -20,7 +15,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -108,26 +102,26 @@ public class ExpenseDialogController implements Initializable {
 
     private boolean validateInput() {
         boolean isValid = true;
-        if(description.getText().isEmpty()) {
+        if (description.getText().isEmpty()) {
             HelperFunctions.highlightTextfieldError(description);
             isValid = false;
         }
 
-        if(amount.getText().isEmpty()) {
+        if (amount.getText().isEmpty()) {
             HelperFunctions.highlightTextfieldError(amount);
             isValid = false;
         }
 
-        if(!isValid) errorMessagesLabel.setText("Please fill in all the required fields");
+        if (!isValid) errorMessagesLabel.setText("Please fill in all the required fields");
         return isValid;
     }
 
     private void initSaveButton() {
         save.setOnMouseClicked((EventHandler<Event>) event -> {
-            if(!validateInput()) return;
+            if (!validateInput()) return;
             boolean successful;
 
-            if(expenseID == -1)
+            if (expenseID == -1)
                 successful = ExpensesRepository.addExpense(new Expense(
                         expenseID,
                         typeChoiceBox.getValue(),
@@ -150,10 +144,10 @@ public class ExpenseDialogController implements Initializable {
                         notes.getText()
                 ));
 
-            if(successful) {
+            if (successful) {
                 Stage currentStage = (Stage) save.getScene().getWindow();
                 currentStage.close();
-            }else {
+            } else {
                 //TODO : DO SOMETHING
             }
         });

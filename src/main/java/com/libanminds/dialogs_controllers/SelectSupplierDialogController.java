@@ -43,7 +43,7 @@ public class SelectSupplierDialogController implements Initializable {
         handleAuthorization();
     }
 
-    public void setHostController (NewReceivingController controller) {
+    public void setHostController(NewReceivingController controller) {
         hostController = controller;
     }
 
@@ -71,36 +71,37 @@ public class SelectSupplierDialogController implements Initializable {
             controller.setHostController(this);
             stage.show();
             stage.setOnHidden(e -> {
-                if(selectedSupplier != null) {
+                if (selectedSupplier != null) {
                     sendDataBackToHost();
                     Stage currentStage = (Stage) newSupplierBtn.getScene().getWindow();
                     currentStage.close();
                 }
             });
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
     }
 
     private void initializeTable() {
-        TableColumn<Supplier,String> nameCol = new TableColumn<Supplier,String>("Name");
-        TableColumn<Supplier,String> companyCol = new TableColumn<Supplier,String>("Company");
-        TableColumn<Supplier,String> emailCol = new TableColumn<Supplier,String>("Email");
-        TableColumn<Supplier,String> phoneCol = new TableColumn<Supplier,String>("Phone");
-        TableColumn<Supplier,String> addressCol = new TableColumn<Supplier,String>("Address");
-        TableColumn<Supplier,Double> balanceCol = new TableColumn<Supplier,Double>("Balance");
+        TableColumn<Supplier, String> nameCol = new TableColumn<Supplier, String>("Name");
+        TableColumn<Supplier, String> companyCol = new TableColumn<Supplier, String>("Company");
+        TableColumn<Supplier, String> emailCol = new TableColumn<Supplier, String>("Email");
+        TableColumn<Supplier, String> phoneCol = new TableColumn<Supplier, String>("Phone");
+        TableColumn<Supplier, String> addressCol = new TableColumn<Supplier, String>("Address");
+        TableColumn<Supplier, Double> balanceCol = new TableColumn<Supplier, Double>("Balance");
 
-        suppliersTable.getColumns().addAll(nameCol,companyCol,emailCol,phoneCol,addressCol,balanceCol);
+        suppliersTable.getColumns().addAll(nameCol, companyCol, emailCol, phoneCol, addressCol, balanceCol);
 
-        nameCol.setCellValueFactory(new PropertyValueFactory<Supplier,String>("name"));
-        companyCol.setCellValueFactory(new PropertyValueFactory<Supplier,String>("company"));
-        emailCol.setCellValueFactory(new PropertyValueFactory<Supplier,String>("email"));
-        phoneCol.setCellValueFactory(new PropertyValueFactory<Supplier,String>("phone"));
-        addressCol.setCellValueFactory(new PropertyValueFactory<Supplier,String>("address"));
-        balanceCol.setCellValueFactory(new PropertyValueFactory<Supplier,Double>("balance"));
+        nameCol.setCellValueFactory(new PropertyValueFactory<Supplier, String>("name"));
+        companyCol.setCellValueFactory(new PropertyValueFactory<Supplier, String>("company"));
+        emailCol.setCellValueFactory(new PropertyValueFactory<Supplier, String>("email"));
+        phoneCol.setCellValueFactory(new PropertyValueFactory<Supplier, String>("phone"));
+        addressCol.setCellValueFactory(new PropertyValueFactory<Supplier, String>("address"));
+        balanceCol.setCellValueFactory(new PropertyValueFactory<Supplier, Double>("balance"));
 
-        suppliersTable.setRowFactory( tv -> {
+        suppliersTable.setRowFactory(tv -> {
             TableRow<Supplier> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
-                if (event.getClickCount() >= 2 && (! row.isEmpty()) ) {
+                if (event.getClickCount() >= 2 && (!row.isEmpty())) {
                     Supplier supplier = row.getItem();
                     setSelectedSupplier(supplier);
                     sendDataBackToHost();
@@ -108,7 +109,7 @@ public class SelectSupplierDialogController implements Initializable {
                     currentStage.close();
                 }
             });
-            return row ;
+            return row;
         });
 
 

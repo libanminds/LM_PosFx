@@ -22,7 +22,7 @@ public class CustomersRepository {
                 " first_name like '%" + value + "%' or" +
                 " last_name like '%" + value + "%' or" +
                 " email like '%" + value + "%' or" +
-                " phone like '%"+ value + "%'";
+                " phone like '%" + value + "%'";
 
         return getCustomersFromQuery(query);
     }
@@ -70,18 +70,18 @@ public class CustomersRepository {
     public static boolean deleteCustomer(Customer customer) {
         try {
             String query = "DELETE FROM customers where id = " + customer.getID();
-            Statement statement  = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.instance.getStatement();
             statement.executeUpdate(query);
             return true;
-        }catch (Exception e) {
+        } catch (Exception e) {
             return false;
         }
     }
 
     public static boolean updateBalance(int customerID, double balance) {
         try {
-            String query = "UPDATE customers SET balance = "+ balance + " WHERE id = " + customerID;
-            Statement statement  = DBConnection.instance.getStatement();
+            String query = "UPDATE customers SET balance = " + balance + " WHERE id = " + customerID;
+            Statement statement = DBConnection.instance.getStatement();
             statement.executeUpdate(query);
             return true;
         } catch (Exception e) {
@@ -93,8 +93,8 @@ public class CustomersRepository {
         ObservableList<Customer> data = FXCollections.observableArrayList();
 
         try {
-            Statement statement  = DBConnection.instance.getStatement();
-            ResultSet rs    = statement.executeQuery(query);
+            Statement statement = DBConnection.instance.getStatement();
+            ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
                 data.add(new Customer(
                         rs.getInt("id"),

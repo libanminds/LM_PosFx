@@ -10,7 +10,7 @@ public class DBConnection {
 
     private Connection connection;
 
-    public DBConnection () {
+    public DBConnection() {
         connection = connect();
     }
 
@@ -31,15 +31,15 @@ public class DBConnection {
     public Statement getStatement() {
         try {
             return connection.createStatement();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             return null;
         }
     }
 
     public PreparedStatement getPreparedStatement(String query) {
         try {
-            return connection.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
-        }catch (SQLException e) {
+            return connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
             return null;
         }
@@ -47,8 +47,8 @@ public class DBConnection {
 
     public PreparedStatement getPreparedStatement(String query, int getGeneratedKeys) {
         try {
-            return connection.prepareStatement(query,getGeneratedKeys);
-        }catch (SQLException e) {
+            return connection.prepareStatement(query, getGeneratedKeys);
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
             return null;
         }

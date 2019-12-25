@@ -18,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -54,13 +55,13 @@ public class ItemsCategoriesController implements Initializable {
     }
 
     private void handleAuthorization() {
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_ADD_ITEMS_CATEGORIES))
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_ADD_ITEMS_CATEGORIES))
             buttonsHolder.getChildren().remove(addCategory);
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_EDIT_ITEMS_CATEGORIES))
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_EDIT_ITEMS_CATEGORIES))
             buttonsHolder.getChildren().remove(editCategory);
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_DELETE_ITEMS_CATEGORIES))
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_DELETE_ITEMS_CATEGORIES))
             buttonsHolder.getChildren().remove(deleteCategory);
     }
 
@@ -97,13 +98,14 @@ public class ItemsCategoriesController implements Initializable {
             stage.setOnHidden(e -> {
                 categoriesTable.setItems(ItemsCategoriesRepository.getItemsCategories());
             });
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
     }
 
     private void showDeleteConfirmationDialog() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Delete Confirmation");
-        alert.setHeaderText("Are you sure you want to delete "+ selectedCategory.getName() + "?");
+        alert.setHeaderText("Are you sure you want to delete " + selectedCategory.getName() + "?");
 
         ButtonType yesButton = new ButtonType("Yes");
         ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
@@ -114,7 +116,7 @@ public class ItemsCategoriesController implements Initializable {
 
         if (result.get() == yesButton) {
             boolean successful = ItemsCategoriesRepository.deleteItemCategory(selectedCategory);
-            if(successful)
+            if (successful)
                 categoriesTable.getItems().remove(selectedCategory);
         } else {
             alert.close();
@@ -128,7 +130,7 @@ public class ItemsCategoriesController implements Initializable {
     }
 
     private void initializeTable() {
-        TableColumn<ItemCategory,String> nameCol = new TableColumn<>("Category");
+        TableColumn<ItemCategory, String> nameCol = new TableColumn<>("Category");
         categoriesTable.getColumns().addAll(nameCol);
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         categoriesTable.setItems(ItemsCategoriesRepository.getItemsCategories());

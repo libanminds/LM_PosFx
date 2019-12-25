@@ -1,21 +1,17 @@
 package com.libanminds.dialogs_controllers;
 
-import com.jfoenix.controls.JFXButton;
 import com.libanminds.models.CustomerTransaction;
 import com.libanminds.models.Item;
 import com.libanminds.models.Sale;
-import com.libanminds.models.Transaction;
 import com.libanminds.repositories.ItemsRepository;
-import com.libanminds.repositories.SalesRepository;
 import com.libanminds.repositories.TransactionsRepository;
 import com.libanminds.utils.HelperFunctions;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -63,7 +59,8 @@ public class ViewSaleController implements Initializable {
     private Sale sale;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {}
+    public void initialize(URL location, ResourceBundle resources) {
+    }
 
     public void setSale(Sale sale) {
         this.sale = sale;
@@ -133,7 +130,7 @@ public class ViewSaleController implements Initializable {
 
     private void updateNumbersUI() {
         DecimalFormat formatter = HelperFunctions.getDecimalFormatter();
-        subtotalText.setText( formatter.format(subtotal) + " " + sale.getCurrency());
+        subtotalText.setText(formatter.format(subtotal) + " " + sale.getCurrency());
         discountText.setText(formatter.format(salesDiscount) + " " + sale.getCurrency());
         taxesText.setText(formatter.format(taxes) + " " + sale.getCurrency());
         amountPaidText.setText(formatter.format(amountPaid) + " " + sale.getCurrency());

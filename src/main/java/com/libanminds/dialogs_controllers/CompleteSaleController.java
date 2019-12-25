@@ -1,6 +1,5 @@
 package com.libanminds.dialogs_controllers;
 
-import com.jfoenix.controls.JFXButton;
 import com.libanminds.models.Item;
 import com.libanminds.models.Sale;
 import com.libanminds.repositories.ItemsRepository;
@@ -99,7 +98,7 @@ public class CompleteSaleController implements Initializable {
         SalesRepository.completeSalePayment(
                 sale.getID(),
                 sale.getCustomerID(),
-                markAsDiscount.isSelected()? salesDiscount + newSalesDiscount + remainingAmount : salesDiscount + newSalesDiscount,
+                markAsDiscount.isSelected() ? salesDiscount + newSalesDiscount + remainingAmount : salesDiscount + newSalesDiscount,
                 markAsDiscount.isSelected() ? totalAmount - remainingAmount : totalAmount,
                 amountPaid + newPayment,
                 newPayment,
@@ -161,7 +160,7 @@ public class CompleteSaleController implements Initializable {
 
     private void updateNumbersUI() {
         DecimalFormat formatter = HelperFunctions.getDecimalFormatter();
-        subtotalText.setText( formatter.format(subtotal) + " " + sale.getCurrency());
+        subtotalText.setText(formatter.format(subtotal) + " " + sale.getCurrency());
         discountText.setText(formatter.format(salesDiscount + newSalesDiscount) + " " + sale.getCurrency());
         taxesText.setText(formatter.format(taxes) + " " + sale.getCurrency());
         amountPaidText.setText(formatter.format(amountPaid) + " " + sale.getCurrency());

@@ -22,8 +22,8 @@ public class UsersRepository {
 
         ArrayList<String> data = new ArrayList<>();
         try {
-            Statement statement  = DBConnection.instance.getStatement();
-            ResultSet rs    = statement.executeQuery(query);
+            Statement statement = DBConnection.instance.getStatement();
+            ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
                 data.add(rs.getString("permission"));
             }
@@ -32,7 +32,7 @@ public class UsersRepository {
             return false;
         }
 
-        Authorization.Authorize(data);
+        Authorization.authorize(data);
         return true;
     }
 
@@ -49,7 +49,7 @@ public class UsersRepository {
                 " last_name like '%" + value + "%' or" +
                 " email like '%" + value + "%' or" +
                 " name like '%" + value + "%' or" +
-                " phone like '%"+ value + "%'";
+                " phone like '%" + value + "%'";
 
         return getUsersFromQuery(query);
     }
@@ -59,7 +59,7 @@ public class UsersRepository {
         Statement statement = DBConnection.instance.getStatement();
         try {
             return statement.executeQuery(query).next();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -111,10 +111,10 @@ public class UsersRepository {
     public static boolean deleteUser(User user) {
         try {
             String query = "DELETE FROM users where id = " + user.getID();
-            Statement statement  = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.instance.getStatement();
             statement.executeUpdate(query);
             return true;
-        }catch (Exception e) {
+        } catch (Exception e) {
             return false;
         }
     }
@@ -122,8 +122,8 @@ public class UsersRepository {
     private static ObservableList<User> getUsersFromQuery(String query) {
         ObservableList<User> data = FXCollections.observableArrayList();
         try {
-            Statement statement  = DBConnection.instance.getStatement();
-            ResultSet rs    = statement.executeQuery(query);
+            Statement statement = DBConnection.instance.getStatement();
+            ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
                 data.add(new User(
                         rs.getInt(1), // user ID

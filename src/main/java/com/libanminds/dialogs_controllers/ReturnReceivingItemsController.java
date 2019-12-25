@@ -1,6 +1,5 @@
 package com.libanminds.dialogs_controllers;
 
-import com.jfoenix.controls.JFXButton;
 import com.libanminds.models.Item;
 import com.libanminds.models.Receiving;
 import com.libanminds.repositories.ItemsRepository;
@@ -110,13 +109,13 @@ public class ReturnReceivingItemsController implements Initializable {
         receivedItemsTable.setRowFactory(tv -> {
             TableRow<Item> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
-                if (event.getClickCount() >= 2 && (! row.isEmpty()) ) {
+                if (event.getClickCount() >= 2 && (!row.isEmpty())) {
                     Item item = row.getItem();
-                    if(item.getSaleQuantityValue() <= 0)
+                    if (item.getSaleQuantityValue() <= 0)
                         return;
-                    if(returnedItemsTable.getItems().contains(item)) {
+                    if (returnedItemsTable.getItems().contains(item)) {
                         item.incrementReturnedQuantity();
-                    }else {
+                    } else {
                         item.incrementReturnedQuantity();
                         receivedItemsTable.refresh();
                         returnedItemsTable.getItems().add(item);
@@ -126,7 +125,7 @@ public class ReturnReceivingItemsController implements Initializable {
                     recalculateNumbers();
                 }
             });
-            return row ;
+            return row;
         });
 
         receivedItemsTable.setItems(ItemsRepository.getItemsOfReceiving(receiving));
@@ -151,7 +150,7 @@ public class ReturnReceivingItemsController implements Initializable {
                     Item item = t.getTableView().getItems().get(
                             t.getTablePosition().getRow());//
 
-                    if(newValue > item.getInitiallyAvailableQuantity()) {
+                    if (newValue > item.getInitiallyAvailableQuantity()) {
                         return;
                     }
 
@@ -204,7 +203,7 @@ public class ReturnReceivingItemsController implements Initializable {
             subtotal += receivedItemsTable.getItems().get(i).getTotal();
         }
 
-        if(receivingDiscount > subtotal) {
+        if (receivingDiscount > subtotal) {
             receivingDiscount = subtotal;
             discountField.setText(receivingDiscount + "");
         }
@@ -212,7 +211,7 @@ public class ReturnReceivingItemsController implements Initializable {
         totalAmount = subtotal - receivingDiscount + taxes;
         remainingAmount = totalAmount - amountPaid;
 
-        if(remainingAmount < 0) {
+        if (remainingAmount < 0) {
             amountToRefund = Math.abs(remainingAmount);
             remainingAmount = 0;
         } else {
@@ -224,7 +223,7 @@ public class ReturnReceivingItemsController implements Initializable {
 
     private void updateNumbersUI() {
         DecimalFormat formatter = HelperFunctions.getDecimalFormatter();
-        subtotalText.setText( formatter.format(subtotal) + " " + receiving.getCurrency());
+        subtotalText.setText(formatter.format(subtotal) + " " + receiving.getCurrency());
         discountCurrencyText.setText(receiving.getCurrency());
         taxesText.setText(formatter.format(taxes) + " " + receiving.getCurrency());
         totalText.setText(formatter.format(totalAmount) + " " + receiving.getCurrency());

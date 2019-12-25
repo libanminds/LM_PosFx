@@ -9,17 +9,22 @@ public class Role {
         this.name = name;
     }
 
-    public int getID() { return ID; }
-    public String getName() { return name; }
+    public int getID() {
+        return ID;
+    }
+
+    public String getName() {
+        return name;
+    }
 
 
     @Override
     public boolean equals(Object other) {
-        if (this == other) return true ;
+        if (this == other) return true;
 
-        if (! (other instanceof Role)) return false ;
+        if (!(other instanceof Role)) return false;
 
-        Role otherRole = (Role) other ;
+        Role otherRole = (Role) other;
         return this.ID == otherRole.ID;
     }
 

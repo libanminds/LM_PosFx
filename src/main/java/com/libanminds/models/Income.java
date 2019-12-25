@@ -13,7 +13,7 @@ public class Income {
     private SimpleStringProperty from;
     private SimpleStringProperty notes;
 
-    public Income(int id,Type type,String description,double amount,String currency,String paymentType,String recipient, String notes) {
+    public Income(int id, Type type, String description, double amount, String currency, String paymentType, String recipient, String notes) {
         this.id = id;
         this.type = type;
         this.description = new SimpleStringProperty(description);
@@ -49,7 +49,7 @@ public class Income {
     }
 
     public String getAmountWithCurrency() {
-        return amount.get() + " "+ currency.get();
+        return amount.get() + " " + currency.get();
     }
 
     public double getAmount() {

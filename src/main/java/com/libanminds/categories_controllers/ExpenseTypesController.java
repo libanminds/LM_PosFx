@@ -1,10 +1,8 @@
 package com.libanminds.categories_controllers;
 
 import com.libanminds.dialogs_controllers.ExpenseTypesDialogController;
-import com.libanminds.dialogs_controllers.IncomeTypesDialogController;
 import com.libanminds.models.Type;
 import com.libanminds.repositories.ExpenseTypesRepository;
-import com.libanminds.repositories.IncomeTypesRepository;
 import com.libanminds.utils.Authorization;
 import com.libanminds.utils.AuthorizationKeys;
 import com.libanminds.utils.Views;
@@ -57,13 +55,13 @@ public class ExpenseTypesController implements Initializable {
     }
 
     private void handleAuthorization() {
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_ADD_EXPENSES_CATEGORIES))
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_ADD_EXPENSES_CATEGORIES))
             buttonsHolder.getChildren().remove(addType);
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_EDIT_EXPENSES_CATEGORIES))
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_EDIT_EXPENSES_CATEGORIES))
             buttonsHolder.getChildren().remove(editType);
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_DELETE_EXPENSES_CATEGORIES))
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_DELETE_EXPENSES_CATEGORIES))
             buttonsHolder.getChildren().remove(deleteType);
     }
 
@@ -105,13 +103,14 @@ public class ExpenseTypesController implements Initializable {
             stage.setOnHidden(e -> {
                 typesTable.setItems(ExpenseTypesRepository.getExpenseTypes());
             });
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
     }
 
     private void showDeleteConfirmationDialog() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Delete Confirmation");
-        alert.setHeaderText("Are you sure you want to delete "+ selectedType.getName() + "?");
+        alert.setHeaderText("Are you sure you want to delete " + selectedType.getName() + "?");
 
         ButtonType yesButton = new ButtonType("Yes");
         ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
@@ -122,7 +121,7 @@ public class ExpenseTypesController implements Initializable {
 
         if (result.get() == yesButton) {
             boolean successful = ExpenseTypesRepository.deleteExpenseType(selectedType);
-            if(successful)
+            if (successful)
                 typesTable.getItems().remove(selectedType);
         } else {
             alert.close();
@@ -136,7 +135,7 @@ public class ExpenseTypesController implements Initializable {
     }
 
     private void initializeTable() {
-        TableColumn<Type,String> nameCol = new TableColumn<>("Type");
+        TableColumn<Type, String> nameCol = new TableColumn<>("Type");
         typesTable.getColumns().addAll(nameCol);
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         typesTable.setItems(ExpenseTypesRepository.getExpenseTypes());

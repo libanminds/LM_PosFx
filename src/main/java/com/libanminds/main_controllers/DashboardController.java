@@ -25,14 +25,11 @@ import java.util.ResourceBundle;
 public class DashboardController implements Initializable {
 
     @FXML
-    private AreaChart<?,?> salesChart;
-
-    @FXML
     CategoryAxis salesChartX;
-
     @FXML
     NumberAxis salesChartY;
-
+    @FXML
+    private AreaChart<?, ?> salesChart;
     @FXML
     private PieChart pieChart;
 
@@ -76,11 +73,11 @@ public class DashboardController implements Initializable {
 
         ArrayList<GraphPoint> dataPoints = DashboardRepository.getPointsOfGraph(Constants.LIRA_CURRENCY);
 
-        XYChart.Series costs= new XYChart.Series();
+        XYChart.Series costs = new XYChart.Series();
         costs.setName("Item's Cost");
 
-        for(GraphPoint dataPoint : dataPoints) {
-            costs.getData().add(new XYChart.Data(dataPoint.getCategoryValue(),dataPoint.getNumberValue()));
+        for (GraphPoint dataPoint : dataPoints) {
+            costs.getData().add(new XYChart.Data(dataPoint.getCategoryValue(), dataPoint.getNumberValue()));
         }
 
         salesChart.getData().addAll(costs);
@@ -114,10 +111,10 @@ public class DashboardController implements Initializable {
 
     private void initRegularCustomersTable() {
 
-        TableColumn<Customer,String> nameCol = new TableColumn<>("Name");
-        TableColumn<Customer,String> phoneCol = new TableColumn<>("Phone");
+        TableColumn<Customer, String> nameCol = new TableColumn<>("Name");
+        TableColumn<Customer, String> phoneCol = new TableColumn<>("Phone");
 
-        regularCustomersTable.getColumns().addAll(nameCol,phoneCol);
+        regularCustomersTable.getColumns().addAll(nameCol, phoneCol);
 
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         phoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
@@ -132,7 +129,7 @@ public class DashboardController implements Initializable {
         ObservableList<PieChart.Data> pieChartData =
                 FXCollections.observableArrayList();
 
-        for(GraphPoint dataPoint : dataPoints)
+        for (GraphPoint dataPoint : dataPoints)
             pieChartData.add(new PieChart.Data(dataPoint.getCategoryValue(), dataPoint.getNumberValue()));
 
         pieChart.getData().addAll(pieChartData);

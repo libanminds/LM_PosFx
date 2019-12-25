@@ -1,9 +1,7 @@
 package com.libanminds.dialogs_controllers;
 
-import com.libanminds.models.ItemCategory;
 import com.libanminds.models.Type;
 import com.libanminds.repositories.IncomeTypesRepository;
-import com.libanminds.repositories.ItemsCategoriesRepository;
 import com.libanminds.utils.HelperFunctions;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -54,21 +52,21 @@ public class IncomeTypesDialogController implements Initializable {
 
     private boolean validateInput() {
         boolean isValid = true;
-        if(typeField.getText().isEmpty()) {
+        if (typeField.getText().isEmpty()) {
             HelperFunctions.highlightTextfieldError(typeField);
             isValid = false;
         }
 
-        if(!isValid) errorMessagesLabel.setText("Please fill in the required field");
+        if (!isValid) errorMessagesLabel.setText("Please fill in the required field");
         return isValid;
     }
 
     private void initSaveButton() {
         saveButton.setOnMouseClicked((EventHandler<Event>) event -> {
-            if(!validateInput()) return;
+            if (!validateInput()) return;
             boolean successful;
 
-            if(typeID == -1)
+            if (typeID == -1)
                 successful = IncomeTypesRepository.addIncomeType(new Type(
                         typeID,
                         typeField.getText()
@@ -79,10 +77,10 @@ public class IncomeTypesDialogController implements Initializable {
                         typeField.getText()
                 ));
 
-            if(successful) {
+            if (successful) {
                 Stage currentStage = (Stage) saveButton.getScene().getWindow();
                 currentStage.close();
-            }else {
+            } else {
                 //TODO : DO SOMETHING
             }
 

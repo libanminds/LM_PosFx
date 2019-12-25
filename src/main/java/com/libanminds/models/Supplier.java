@@ -15,7 +15,7 @@ public class Supplier {
     private SimpleStringProperty notes;
     private SimpleDoubleProperty balance;
 
-    public Supplier(int id,String firstName,String lastName, String company, String email, String phone, String address, String notes, double balance) {
+    public Supplier(int id, String firstName, String lastName, String company, String email, String phone, String address, String notes, double balance) {
         this.id = id;
         this.firstName = new SimpleStringProperty(firstName);
         this.lastName = new SimpleStringProperty(lastName);

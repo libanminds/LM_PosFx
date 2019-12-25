@@ -1,12 +1,10 @@
 package com.libanminds.repositories;
 
-import com.libanminds.models.ItemCategory;
 import com.libanminds.models.Role;
 import com.libanminds.utils.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -68,8 +66,8 @@ public class RolesRepository {
         ObservableList<Role> data = FXCollections.observableArrayList();
 
         try {
-            Statement statement  = DBConnection.instance.getStatement();
-            ResultSet rs    = statement.executeQuery(query);
+            Statement statement = DBConnection.instance.getStatement();
+            ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
                 data.add(new Role(
                         rs.getInt("id"),

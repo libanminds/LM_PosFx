@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
     private static final PseudoClass activeView = PseudoClass.getPseudoClass("activeView");
-
+    public static MainController instance;
     @FXML
     private VBox menu;
     @FXML
@@ -43,7 +43,7 @@ public class MainController implements Initializable {
     private JFXButton menuExpenses;
     @FXML
     private JFXButton menuIncome;
-//    @FXML
+    //    @FXML
 //    private JFXButton menuAppointments;
     @FXML
     private JFXButton menuEmployees;
@@ -51,10 +51,7 @@ public class MainController implements Initializable {
     private JFXButton menuSettings;
     @FXML
     private JFXButton menuLogout;
-
     private String currentView;
-
-    public static MainController instance;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -73,69 +70,69 @@ public class MainController implements Initializable {
     private String handleAccess() {
         String initialView = "";
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_DASHBOARD)) {
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_DASHBOARD)) {
             menu.getChildren().remove(menuDashboard);
-        }else if(initialView.isBlank())
+        } else if (initialView.isBlank())
             initialView = Views.DASHBOARD;
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_CUSTOMERS)) {
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_CUSTOMERS)) {
             menu.getChildren().remove(menuCustomers);
-        }else if(initialView.isBlank())
+        } else if (initialView.isBlank())
             initialView = Views.CUSTOMERS;
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_SUPPLIERS)) {
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_SUPPLIERS)) {
             menu.getChildren().remove(menuSuppliers);
-        }else if(initialView.isBlank())
+        } else if (initialView.isBlank())
             initialView = Views.SUPPLIERS;
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_ITEMS)) {
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_ITEMS)) {
             menu.getChildren().remove(menuItems);
-        }else if(initialView.isBlank())
+        } else if (initialView.isBlank())
             initialView = Views.ITEMS;
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_REPORTS)) {
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_REPORTS)) {
             menu.getChildren().remove(menuReports);
-        }else if(initialView.isBlank())
+        } else if (initialView.isBlank())
             initialView = Views.REPORTS;
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_SALES)) {
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_SALES)) {
             menu.getChildren().remove(menuSales);
-        }else if(initialView.isBlank())
+        } else if (initialView.isBlank())
             initialView = Views.SALES;
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_CREATE_SALE)) {
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_CREATE_SALE)) {
             menu.getChildren().remove(menuNewSale);
-        }else if(initialView.isBlank())
+        } else if (initialView.isBlank())
             initialView = Views.NEW_SALE;
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_RECEIVINGS)) {
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_RECEIVINGS)) {
             menu.getChildren().remove(menuReceivings);
-        }else if(initialView.isBlank())
+        } else if (initialView.isBlank())
             initialView = Views.RECEIVINGS;
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_CREATE_RECEIVING)) {
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_CREATE_RECEIVING)) {
             menu.getChildren().remove(menuNewReceiving);
-        }else if(initialView.isBlank())
+        } else if (initialView.isBlank())
             initialView = Views.NEW_RECEIVING;
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_EXPENSES)) {
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_EXPENSES)) {
             menu.getChildren().remove(menuExpenses);
-        }else if(initialView.isBlank())
+        } else if (initialView.isBlank())
             initialView = Views.EXPENSES;
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_INCOMES)) {
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_INCOMES)) {
             menu.getChildren().remove(menuIncome);
-        }else if(initialView.isBlank())
+        } else if (initialView.isBlank())
             initialView = Views.INCOME;
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_USERS)) {
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_USERS)) {
             menu.getChildren().remove(menuEmployees);
-        }else if(initialView.isBlank())
+        } else if (initialView.isBlank())
             initialView = Views.EMPLOYEES;
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_SETTINGS)) {
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_SETTINGS)) {
             menu.getChildren().remove(menuSettings);
-        }else if(initialView.isBlank())
+        } else if (initialView.isBlank())
             initialView = Views.SETTINGS;
 
         return initialView;

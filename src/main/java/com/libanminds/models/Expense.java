@@ -14,7 +14,7 @@ public class Expense {
     private SimpleStringProperty recipient;
     private SimpleStringProperty notes;
 
-    public Expense(int id,Type type,String description,double amount,String currency,String paymentType,String recipient, String notes) {
+    public Expense(int id, Type type, String description, double amount, String currency, String paymentType, String recipient, String notes) {
         this.id = id;
         this.type = type;
         this.description = new SimpleStringProperty(description);
@@ -25,7 +25,9 @@ public class Expense {
         this.notes = new SimpleStringProperty(notes);
     }
 
-    public Type getTypeObject() {return type;}
+    public Type getTypeObject() {
+        return type;
+    }
 
     public int getID() {
         return id;
@@ -48,7 +50,7 @@ public class Expense {
     }
 
     public String getAmountWithCurrency() {
-        return amount.get() + " "+ currency.get();
+        return amount.get() + " " + currency.get();
     }
 
     public double getAmount() {

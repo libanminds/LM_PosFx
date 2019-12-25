@@ -10,13 +10,12 @@ import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Collections;
 import java.util.Locale;
-import java.util.function.UnaryOperator;
 
 public class HelperFunctions {
 
     public static String getFileExtension(File file) {
         String name = file.getName();
-        int lastIndexOf = name.lastIndexOf(".");
+        int lastIndexOf = name.lastIndexOf('.');
         if (lastIndexOf == -1) {
             return "jpg";
         }
@@ -53,10 +52,12 @@ public class HelperFunctions {
                     char lastChar = c.getControlNewText().charAt(c.getControlNewText().length() - 1);
 
                     // f and d won't through an exception if they are at the end of a number (f means float, d means double)
-                    if (val < 0 || Character.toLowerCase(lastChar)  == 'f' || Character.toLowerCase(lastChar) == 'd')
+                    if (val < 0 || Character.toLowerCase(lastChar) == 'f' || Character.toLowerCase(lastChar) == 'd')
                         return null;
                     return c;
-                } catch (NumberFormatException e) {}
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
                 return null;
             }
             return c;
@@ -66,13 +67,17 @@ public class HelperFunctions {
     public static void highlightTextfieldError(TextField tf) {
         ObservableList<String> styleClass = tf.getStyleClass();
 
-        if(!styleClass.contains("errorHighlight")) {
-            styleClass.add("errorHighlight");
+        if (!styleClass.contains(Constants.CSS_ERROR_HIGHLIGHT)) {
+            styleClass.add(Constants.CSS_ERROR_HIGHLIGHT);
         }
     }
 
     public static void removeHighlightedTextfieldError(TextField tf) {
         ObservableList<String> styleClass = tf.getStyleClass();
-        styleClass.removeAll(Collections.singleton("errorHighlight"));
+        styleClass.removeAll(Collections.singleton(Constants.CSS_ERROR_HIGHLIGHT));
+    }
+
+    private HelperFunctions() {
+        throw new AssertionError("You are not allowed to instantiate this class");
     }
 }

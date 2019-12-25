@@ -1,6 +1,5 @@
 package com.libanminds.repositories;
 
-import com.libanminds.models.ItemCategory;
 import com.libanminds.models.Type;
 import com.libanminds.utils.DBConnection;
 import javafx.collections.FXCollections;
@@ -20,7 +19,7 @@ public class IncomeTypesRepository {
     }
 
     public static ObservableList<Type> getIncomeTypesLike(String value) {
-        String query = "SELECT * FROM income_types where name like '%"+ value + "%'";
+        String query = "SELECT * FROM income_types where name like '%" + value + "%'";
 
         return getTypesFromQuery(query);
     }
@@ -55,10 +54,10 @@ public class IncomeTypesRepository {
     public static boolean deleteIncomeType(Type type) {
         try {
             String query = "DELETE FROM income_types where id = " + type.getID();
-            Statement statement  = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.instance.getStatement();
             statement.executeUpdate(query);
             return true;
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return false;
         }
@@ -68,8 +67,8 @@ public class IncomeTypesRepository {
         ObservableList<Type> data = FXCollections.observableArrayList();
 
         try {
-            Statement statement  = DBConnection.instance.getStatement();
-            ResultSet rs    = statement.executeQuery(query);
+            Statement statement = DBConnection.instance.getStatement();
+            ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
                 data.add(new Type(
                         rs.getInt("id"),

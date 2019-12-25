@@ -12,6 +12,10 @@ import javafx.stage.Stage;
 
 public class MainApp extends Application {
 
+    public static void main(String[] args) {
+        launch(args);
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
 
@@ -25,10 +29,6 @@ public class MainApp extends Application {
         stage.setTitle("POS System - Login");
         stage.setScene(scene);
         stage.show();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 
 }

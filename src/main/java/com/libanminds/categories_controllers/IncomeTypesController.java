@@ -1,11 +1,8 @@
 package com.libanminds.categories_controllers;
 
 import com.libanminds.dialogs_controllers.IncomeTypesDialogController;
-import com.libanminds.dialogs_controllers.ItemCategoryDialogController;
-import com.libanminds.models.ItemCategory;
 import com.libanminds.models.Type;
 import com.libanminds.repositories.IncomeTypesRepository;
-import com.libanminds.repositories.ItemsCategoriesRepository;
 import com.libanminds.utils.Authorization;
 import com.libanminds.utils.AuthorizationKeys;
 import com.libanminds.utils.Views;
@@ -21,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -57,13 +55,13 @@ public class IncomeTypesController implements Initializable {
     }
 
     private void handleAuthorization() {
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_ADD_INCOMES_CATEGORIES))
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_ADD_INCOMES_CATEGORIES))
             buttonsHolder.getChildren().remove(addType);
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_EDIT_INCOMES_CATEGORIES))
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_EDIT_INCOMES_CATEGORIES))
             buttonsHolder.getChildren().remove(editType);
 
-        if(!Authorization.authorized.contains(AuthorizationKeys.CAN_DELETE_INCOMES_CATEGORIES))
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_DELETE_INCOMES_CATEGORIES))
             buttonsHolder.getChildren().remove(deleteType);
     }
 
@@ -105,13 +103,14 @@ public class IncomeTypesController implements Initializable {
             stage.setOnHidden(e -> {
                 typesTable.setItems(IncomeTypesRepository.getIncomeTypes());
             });
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
     }
 
     private void showDeleteConfirmationDialog() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Delete Confirmation");
-        alert.setHeaderText("Are you sure you want to delete "+ selectedType.getName() + "?");
+        alert.setHeaderText("Are you sure you want to delete " + selectedType.getName() + "?");
 
         ButtonType yesButton = new ButtonType("Yes");
         ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
@@ -122,7 +121,7 @@ public class IncomeTypesController implements Initializable {
 
         if (result.get() == yesButton) {
             boolean successful = IncomeTypesRepository.deleteIncomeType(selectedType);
-            if(successful)
+            if (successful)
                 typesTable.getItems().remove(selectedType);
         } else {
             alert.close();
@@ -136,7 +135,7 @@ public class IncomeTypesController implements Initializable {
     }
 
     private void initializeTable() {
-        TableColumn<Type,String> nameCol = new TableColumn<>("Type");
+        TableColumn<Type, String> nameCol = new TableColumn<>("Type");
         typesTable.getColumns().addAll(nameCol);
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         typesTable.setItems(IncomeTypesRepository.getIncomeTypes());

@@ -1,6 +1,5 @@
 package com.libanminds.dialogs_controllers;
 
-import com.jfoenix.controls.JFXButton;
 import com.libanminds.models.Item;
 import com.libanminds.models.Sale;
 import com.libanminds.repositories.ItemsRepository;
@@ -108,18 +107,18 @@ public class ReturnSaleItemsController implements Initializable {
         totalPriceCol.setCellValueFactory(new PropertyValueFactory<>("formattedTotal"));
 
 
-        soldItemsTable.setRowFactory( tv -> {
+        soldItemsTable.setRowFactory(tv -> {
             TableRow<Item> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
-                if (event.getClickCount() >= 2 && (! row.isEmpty()) ) {
+                if (event.getClickCount() >= 2 && (!row.isEmpty())) {
                     Item item = row.getItem();
 
-                    if(item.getSaleQuantityValue() <= 0)
+                    if (item.getSaleQuantityValue() <= 0)
                         return;
 
-                    if(returnedItemsTable.getItems().contains(item)) {
+                    if (returnedItemsTable.getItems().contains(item)) {
                         item.incrementReturnedQuantity();
-                    }else {
+                    } else {
                         item.incrementReturnedQuantity();
                         soldItemsTable.refresh();
                         returnedItemsTable.getItems().add(item);
@@ -129,7 +128,7 @@ public class ReturnSaleItemsController implements Initializable {
                     recalculateNumbers();
                 }
             });
-            return row ;
+            return row;
         });
 
         soldItemsTable.setItems(ItemsRepository.getItemsOfSale(sale));
@@ -154,7 +153,7 @@ public class ReturnSaleItemsController implements Initializable {
                     Item item = t.getTableView().getItems().get(
                             t.getTablePosition().getRow());//
 
-                    if(newValue > item.getInitiallyAvailableQuantity()) {
+                    if (newValue > item.getInitiallyAvailableQuantity()) {
                         return;
                     }
 
@@ -207,7 +206,7 @@ public class ReturnSaleItemsController implements Initializable {
             subtotal += soldItemsTable.getItems().get(i).getTotal();
         }
 
-        if(salesDiscount > subtotal) {
+        if (salesDiscount > subtotal) {
             salesDiscount = subtotal;
             discountField.setText(salesDiscount + "");
         }
@@ -215,10 +214,10 @@ public class ReturnSaleItemsController implements Initializable {
         totalAmount = subtotal - salesDiscount + taxes;
         remainingAmount = totalAmount - amountPaid;
 
-        if(remainingAmount < 0) {
+        if (remainingAmount < 0) {
             amountToRefund = Math.abs(remainingAmount);
             remainingAmount = 0;
-        }else {
+        } else {
             amountToRefund = 0;
         }
 
@@ -227,7 +226,7 @@ public class ReturnSaleItemsController implements Initializable {
 
     private void updateNumbersUI() {
         DecimalFormat formatter = HelperFunctions.getDecimalFormatter();
-        subtotalText.setText( formatter.format(subtotal) + " " + sale.getCurrency());
+        subtotalText.setText(formatter.format(subtotal) + " " + sale.getCurrency());
         discountCurrencyText.setText(sale.getCurrency());
         taxesText.setText(formatter.format(taxes) + " " + sale.getCurrency());
         totalText.setText(formatter.format(totalAmount) + " " + sale.getCurrency());

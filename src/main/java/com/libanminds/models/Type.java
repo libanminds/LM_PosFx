@@ -9,17 +9,25 @@ public class Type {
         this.name = name;
     }
 
-    public int getID() { return ID; }
-    public String getName() { return name; }
-    public void setName(String val) { name = val; }
+    public int getID() {
+        return ID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String val) {
+        name = val;
+    }
 
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
 
-        if (! (other instanceof Type)) return false;
+        if (!(other instanceof Type)) return false;
 
-        Type otherCategory = (Type) other ;
+        Type otherCategory = (Type) other;
         return this.ID == otherCategory.ID;
     }
 

@@ -43,7 +43,7 @@ public class SelectCustomerDialogController implements Initializable {
         handleAuthorization();
     }
 
-    public void setHostController (NewSaleController controller) {
+    public void setHostController(NewSaleController controller) {
         hostController = controller;
     }
 
@@ -65,13 +65,14 @@ public class SelectCustomerDialogController implements Initializable {
             controller.setHostController(this);
             stage.show();
             stage.setOnHidden(e -> {
-                if(selectedCustomer != null) {
+                if (selectedCustomer != null) {
                     sendDataBackToHost();
                     Stage currentStage = (Stage) newCustomerBtn.getScene().getWindow();
                     currentStage.close();
                 }
             });
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
     }
 
     public void setSelectedCustomer(Customer customer) {
@@ -85,13 +86,13 @@ public class SelectCustomerDialogController implements Initializable {
     }
 
     private void initializeTable() {
-        TableColumn<Customer,String> nameCol = new TableColumn<>("Name");
-        TableColumn<Customer,String> emailCol = new TableColumn<>("Email");
-        TableColumn<Customer,String> phoneCol = new TableColumn<>("Phone");
-        TableColumn<Customer,String> addressCol = new TableColumn<>("Address");
-        TableColumn<Customer,Double> balanceCol = new TableColumn<>("Balance");
+        TableColumn<Customer, String> nameCol = new TableColumn<>("Name");
+        TableColumn<Customer, String> emailCol = new TableColumn<>("Email");
+        TableColumn<Customer, String> phoneCol = new TableColumn<>("Phone");
+        TableColumn<Customer, String> addressCol = new TableColumn<>("Address");
+        TableColumn<Customer, Double> balanceCol = new TableColumn<>("Balance");
 
-        customersTable.getColumns().addAll(nameCol,emailCol,phoneCol,addressCol,balanceCol);
+        customersTable.getColumns().addAll(nameCol, emailCol, phoneCol, addressCol, balanceCol);
 
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
@@ -99,10 +100,10 @@ public class SelectCustomerDialogController implements Initializable {
         addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
         balanceCol.setCellValueFactory(new PropertyValueFactory<>("balance"));
 
-        customersTable.setRowFactory( tv -> {
+        customersTable.setRowFactory(tv -> {
             TableRow<Customer> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
-                if (event.getClickCount() >= 2 && (! row.isEmpty()) ) {
+                if (event.getClickCount() >= 2 && (!row.isEmpty())) {
                     Customer customer = row.getItem();
                     setSelectedCustomer(customer);
                     sendDataBackToHost();
@@ -110,7 +111,7 @@ public class SelectCustomerDialogController implements Initializable {
                     currentStage.close();
                 }
             });
-            return row ;
+            return row;
         });
 
         customersTable.setItems(CustomersRepository.getCustomers());
