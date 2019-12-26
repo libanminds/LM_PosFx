@@ -4,6 +4,7 @@ import com.libanminds.main_controllers.LoginController;
 import com.libanminds.models.reports_models.CompactReportItem;
 import com.libanminds.repositories.ReportsRepository;
 import com.libanminds.utils.DBConnection;
+import com.libanminds.utils.PDFGenerator;
 import com.libanminds.utils.Views;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class MainApp extends Application {
@@ -22,9 +24,10 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-
         //Initialize Database Connection
         DBConnection.instance = new DBConnection();
+
+        PDFGenerator.generateDemoPDF();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.LOGIN));
         Parent root = loader.load();
