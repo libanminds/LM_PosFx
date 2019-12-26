@@ -19,6 +19,9 @@ public class Sale {
     private SimpleBooleanProperty isOfficial;
     private SimpleStringProperty paymentType;
 
+    //CAREFUL: This value is valid only when the 3rd constructor is called
+    private SimpleDoubleProperty returnedAmount;
+
     public Sale(int saleID, int customerID, String customerName, double discount, int taxID, double conversionRate, double totalAmount, String currency, double paidAmount, boolean isOfficial, String paymentType) {
         this.saleID = new SimpleIntegerProperty(saleID);
         this.customerID = new SimpleIntegerProperty(customerID);
@@ -37,6 +40,14 @@ public class Sale {
         this.saleID = new SimpleIntegerProperty(saleID);
         this.totalAmount = new SimpleDoubleProperty(totalAmount);
         this.paidAmount = new SimpleDoubleProperty(paidAmount);
+        this.currency = new SimpleStringProperty(currency);
+    }
+
+    public Sale(int saleID, double totalAmount, double paidAmount, double returnedAmount, String currency) {
+        this.saleID = new SimpleIntegerProperty(saleID);
+        this.totalAmount = new SimpleDoubleProperty(totalAmount);
+        this.paidAmount = new SimpleDoubleProperty(paidAmount);
+        this.returnedAmount = new SimpleDoubleProperty(returnedAmount);
         this.currency = new SimpleStringProperty(currency);
     }
 
@@ -66,6 +77,14 @@ public class Sale {
 
     public String getFormattedTotalAmount() {
         return HelperFunctions.getDecimalFormatter().format(totalAmount.getValue()) + " " + currency.getValue();
+    }
+
+    public double getReturnedAmount() {
+        return returnedAmount.get();
+    }
+
+    public void setReturnedAmount(double returnedAmount) {
+        this.returnedAmount.set(returnedAmount);
     }
 
     public int getCustomerID() {

@@ -20,6 +20,9 @@ public class Receiving {
     private SimpleBooleanProperty isOfficial;
     private SimpleStringProperty paymentType;
 
+    //CAREFUL: This value is valid only when the 3rd constructor is called
+    private SimpleDoubleProperty returnedAmount;
+
     public Receiving(int receivingID, int supplierID, String supplierName, double discount, int taxID, double conversionRate, double totalAmount, String currency, double paidAmount, boolean isOfficial, String paymentType) {
         this.receivingID = new SimpleIntegerProperty(receivingID);
         this.supplierID = new SimpleIntegerProperty(supplierID);
@@ -38,6 +41,14 @@ public class Receiving {
         this.receivingID = new SimpleIntegerProperty(receivingID);
         this.totalAmount = new SimpleDoubleProperty(totalAmount);
         this.paidAmount = new SimpleDoubleProperty(paidAmount);
+        this.currency = new SimpleStringProperty(currency);
+    }
+
+    public Receiving(int saleID, double totalAmount, double paidAmount, double returnedAmount, String currency) {
+        this.receivingID = new SimpleIntegerProperty(saleID);
+        this.totalAmount = new SimpleDoubleProperty(totalAmount);
+        this.paidAmount = new SimpleDoubleProperty(paidAmount);
+        this.returnedAmount = new SimpleDoubleProperty(returnedAmount);
         this.currency = new SimpleStringProperty(currency);
     }
 

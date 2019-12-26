@@ -14,7 +14,7 @@ public class SupplierRepository {
     public static ObservableList<Supplier> getSuppliers() {
         String query = "SELECT * FROM suppliers";
 
-        return getCustomersFromQuery(query);
+        return getSuppliersFromQuery(query);
     }
 
     public static ObservableList<Supplier> getSuppliersLike(String value) {
@@ -24,7 +24,7 @@ public class SupplierRepository {
                 " email like '%" + value + "%' or" +
                 " phone like '%" + value + "%'";
 
-        return getCustomersFromQuery(query);
+        return getSuppliersFromQuery(query);
     }
 
     public static boolean addSupplier(Supplier supplier) {
@@ -91,7 +91,7 @@ public class SupplierRepository {
         }
     }
 
-    private static ObservableList<Supplier> getCustomersFromQuery(String query) {
+    private static ObservableList<Supplier> getSuppliersFromQuery(String query) {
         ObservableList<Supplier> data = FXCollections.observableArrayList();
         try {
             Statement statement = DBConnection.instance.getStatement();
