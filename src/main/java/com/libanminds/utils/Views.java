@@ -46,10 +46,6 @@ public final class Views {
     public static final String INCOME_TYPES = "/views/main/income_types.fxml";
     public static final String EXPENSE_TYPES = "/views/main/expense_types.fxml";
 
-    // Report Dialogs
-    public static final String REPORT_SELECT_CUSTOMER = "/views/dialogs/report_select_customer.fxml";
-    public static final String REPORT_SELECT_SUPPLIER = "/views/dialogs/report_select_supplier.fxml";
-
     private Views() {
         throw new AssertionError("You are not allowed to instantiate this class");
     }

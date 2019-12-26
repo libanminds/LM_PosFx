@@ -1,6 +1,7 @@
 package com.libanminds.dialogs_controllers;
 
 import com.libanminds.main_controllers.NewReceivingController;
+import com.libanminds.main_controllers.ReportsController;
 import com.libanminds.models.Supplier;
 import com.libanminds.repositories.SupplierRepository;
 import com.libanminds.utils.Authorization;
@@ -33,7 +34,11 @@ public class SelectSupplierDialogController implements Initializable {
 
     private Supplier selectedSupplier;
 
-    private NewReceivingController hostController;
+    private NewReceivingController receivingController;
+
+    private ReportsController reportsController;
+
+    private boolean fromReports;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -41,10 +46,11 @@ public class SelectSupplierDialogController implements Initializable {
         initSearch();
         initButtons();
         handleAuthorization();
+        fromReports = false;
     }
 
-    public void setHostController(NewReceivingController controller) {
-        hostController = controller;
+    public void setReceivingController(NewReceivingController controller) {
+        receivingController = controller;
     }
 
     private void handleAuthorization() {
@@ -105,7 +111,7 @@ public class SelectSupplierDialogController implements Initializable {
                     Supplier supplier = row.getItem();
                     setSelectedSupplier(supplier);
                     sendDataBackToHost();
-                    Stage currentStage = (Stage) newSupplierBtn.getScene().getWindow();
+                    Stage currentStage = (Stage) searchField.getScene().getWindow();
                     currentStage.close();
                 }
             });
@@ -121,6 +127,19 @@ public class SelectSupplierDialogController implements Initializable {
     }
 
     private void sendDataBackToHost() {
-        hostController.setSelectedSupplier(selectedSupplier);
+        if (fromReports) {
+            reportsController.setSelectedSupplier(selectedSupplier);
+        } else {
+            receivingController.setSelectedSupplier(selectedSupplier);
+        }
+    }
+
+    public void setFromReports(boolean fromReports) {
+        this.fromReports = fromReports;
+        newSupplierBtn.setVisible(!fromReports);
+    }
+
+    public void setReportsController(ReportsController reportsController) {
+        this.reportsController = reportsController;
     }
 }

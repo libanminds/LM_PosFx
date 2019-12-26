@@ -2,20 +2,13 @@ package com.libanminds.main_controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
-import com.libanminds.dialogs_controllers.ReportSelectCustomerDialogController;
-import com.libanminds.dialogs_controllers.ReportSelectSupplierDialogController;
 import com.libanminds.models.*;
 import com.libanminds.models.reports_models.CompactReportItem;
 import com.libanminds.repositories.ReportsRepository;
 import com.libanminds.utils.Constants;
 import com.libanminds.utils.ReportType;
-import com.libanminds.utils.Views;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -31,15 +24,6 @@ public class ReportsController implements Initializable {
     private JFXDatePicker dateTo;
 
     @FXML
-    private JFXButton expensesBtn;
-
-    @FXML
-    private JFXButton itemsSoldBtn;
-
-    @FXML
-    private JFXButton itemsPurchasedBtn;
-
-    @FXML
     private JFXButton salesBtn;
 
     @FXML
@@ -49,22 +33,22 @@ public class ReportsController implements Initializable {
     private JFXButton customersBtn;
 
     @FXML
-    private JFXButton customerTransactionsBtn;
-
-    @FXML
-    private JFXButton itemsPerCustomerBtn;
-
-    @FXML
     private JFXButton suppliersBtn;
 
     @FXML
-    private JFXButton supplierTransactionsBtn;
+    private JFXButton itemsSoldBtn;
 
     @FXML
-    private JFXButton itemsPerSupplierBtn;
+    private JFXButton itemsPurchasedBtn;
+
+    @FXML
+    private JFXButton expensesBtn;
 
     @FXML
     private JFXButton incomeBtn;
+
+    private Customer selectedCustomer;
+    private Supplier selectedSupplier;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -72,19 +56,23 @@ public class ReportsController implements Initializable {
         initDates();
     }
 
+    public void setSelectedCustomer(Customer selectedCustomer) {
+        this.selectedCustomer = selectedCustomer;
+    }
+
+    public void setSelectedSupplier(Supplier selectedSupplier) {
+        this.selectedSupplier = selectedSupplier;
+    }
+
     private void initButtons() {
-        itemsPurchasedBtn.setOnMouseClicked(event -> generateReport(ReportType.ITEMS_PURCHASED));
-        itemsSoldBtn.setOnMouseClicked(event -> generateReport(ReportType.ITEMS_SOLD));
-        salesBtn.setOnMouseClicked(event -> generateReport(ReportType.SALES));
-        purchasesBtn.setOnMouseClicked(event -> generateReport(ReportType.PURCHASES));
-        customersBtn.setOnMouseClicked(event -> generateReport(ReportType.CUSTOMERS));
-        customerTransactionsBtn.setOnMouseClicked(event -> selectCustomer(ReportType.CUSTOMER_TRANSACTIONS));
-        itemsPerCustomerBtn.setOnMouseClicked(event -> selectCustomer(ReportType.ITEMS_PER_CUSTOMER));
-        suppliersBtn.setOnMouseClicked(event -> generateReport(ReportType.SUPPLIERS));
-        supplierTransactionsBtn.setOnMouseClicked(event -> selectSupplier(ReportType.SUPPLIER_TRANSACTIONS));
-        itemsPerSupplierBtn.setOnMouseClicked(event -> selectSupplier(ReportType.ITEMS_PER_SUPPLIER));
-        incomeBtn.setOnMouseClicked(event -> generateReport(ReportType.INCOME));
-        expensesBtn.setOnMouseClicked(event -> generateReport(ReportType.EXPENSES));
+        salesBtn.setOnMouseClicked(event -> generateSalesReport());
+        purchasesBtn.setOnMouseClicked(event -> generatePurchasesReport());
+        customersBtn.setOnMouseClicked(event -> showCustomersAdvancedOptions());
+        suppliersBtn.setOnMouseClicked(event -> showSuppliersAdvancedOptions());
+        itemsSoldBtn.setOnMouseClicked(event -> generateItemsSoldReport());
+        itemsPurchasedBtn.setOnMouseClicked(event -> generateItemsPurchasedReport());
+        expensesBtn.setOnMouseClicked(event -> generateExpensesReport());
+        incomeBtn.setOnMouseClicked(event -> generateIncomeReport());
     }
 
     private void initDates() {
@@ -93,79 +81,74 @@ public class ReportsController implements Initializable {
         dateTo.setValue(today);
     }
 
-    private void selectCustomer(ReportType reportAfterSelection) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.REPORT_SELECT_CUSTOMER));
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setScene(new Scene(loader.load()));
-            ReportSelectCustomerDialogController controller = loader.getController();
-            controller.setDateFrom(dateFrom.getValue().format(Constants.REPORT_DATE_FORMAT));
-            controller.setDateTo(dateTo.getValue().format(Constants.REPORT_DATE_FORMAT));
-            controller.setReportType(reportAfterSelection);
-            stage.show();
-        } catch (Exception e) {
-            System.out.println(e.getCause());
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
+    private void showCustomersAdvancedOptions() {
+
     }
 
-    private void selectSupplier(ReportType reportAfterSelection) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.REPORT_SELECT_SUPPLIER));
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setScene(new Scene(loader.load()));
-            ReportSelectSupplierDialogController controller = loader.getController();
-            controller.setDateFrom(dateFrom.getValue().format(Constants.REPORT_DATE_FORMAT));
-            controller.setDateTo(dateTo.getValue().format(Constants.REPORT_DATE_FORMAT));
-            controller.setReportType(reportAfterSelection);
-            stage.show();
-        } catch (Exception e) {
-            System.out.println(e.getCause());
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
+    private void showSuppliersAdvancedOptions() {
+
     }
 
-    private void generateReport(ReportType type) {
-        String dateFrom = this.dateFrom.getValue().format(Constants.REPORT_DATE_FORMAT);
-        String dateTo = this.dateTo.getValue().format(Constants.REPORT_DATE_FORMAT);
-        switch (type) {
-            case ITEMS_SOLD:
-                ArrayList<CompactReportItem> itemsSold = ReportsRepository.getQuantitiesOfSoldItems(dateFrom, dateTo);
-                // generate report
-                break;
-            case ITEMS_PURCHASED:
-                ArrayList<CompactReportItem> itemsPurchased = ReportsRepository.getQuantitiesOfPurchasedItems(dateFrom, dateTo);
-                // generate report
-                break;
-            case SALES:
-                ArrayList<Sale> sales = ReportsRepository.getInfoOfSales(dateFrom, dateTo);
-                // generate report
-                break;
-            case PURCHASES:
-                ArrayList<Receiving> purchases = ReportsRepository.getInfoOfPurchases(dateFrom, dateTo);
-                // generate report
-                break;
-            case INCOME:
-                ArrayList<Income> incomes = ReportsRepository.getIncomes(dateFrom, dateTo);
-                // generate report
-                break;
-            case EXPENSES:
-                ArrayList<Expense> expenses = ReportsRepository.getExpenses(dateFrom, dateTo);
-                // generate report
-                break;
-            case CUSTOMERS:
-                ArrayList<Customer> customers = ReportsRepository.getCustomers(dateFrom, dateTo);
-                ArrayList<Customer> regulars = ReportsRepository.getRegularCustomers(dateFrom, dateTo);
-                // generate report
-                break;
-            case SUPPLIERS:
-                ArrayList<Supplier> suppliers = ReportsRepository.getSuppliers(dateFrom, dateTo);
-                // generate report
-                break;
-        }
+
+    private void generateItemsSoldReport() {
+        ArrayList<CompactReportItem> itemsSold = ReportsRepository.getQuantitiesOfSoldItems(
+                dateFrom.getValue().format(Constants.REPORT_DATE_FORMAT),
+                dateTo.getValue().format(Constants.REPORT_DATE_FORMAT)
+        );
+    }
+
+    private void generateItemsPurchasedReport() {
+        ArrayList<CompactReportItem> itemsPurchased = ReportsRepository.getQuantitiesOfPurchasedItems(
+                dateFrom.getValue().format(Constants.REPORT_DATE_FORMAT),
+                dateTo.getValue().format(Constants.REPORT_DATE_FORMAT)
+        );
+    }
+
+    private void generateSalesReport() {
+        ArrayList<Sale> sales = ReportsRepository.getInfoOfSales(
+                dateFrom.getValue().format(Constants.REPORT_DATE_FORMAT),
+                dateTo.getValue().format(Constants.REPORT_DATE_FORMAT)
+        );
+    }
+
+    private void generatePurchasesReport() {
+        ArrayList<Receiving> purchases = ReportsRepository.getInfoOfPurchases(
+                dateFrom.getValue().format(Constants.REPORT_DATE_FORMAT),
+                dateTo.getValue().format(Constants.REPORT_DATE_FORMAT)
+        );
+    }
+
+    private void generateIncomeReport() {
+        ArrayList<Income> incomes = ReportsRepository.getIncomes(
+                dateFrom.getValue().format(Constants.REPORT_DATE_FORMAT),
+                dateTo.getValue().format(Constants.REPORT_DATE_FORMAT)
+        );
+    }
+
+    private void generateExpensesReport() {
+        ArrayList<Expense> expenses = ReportsRepository.getExpenses(
+                dateFrom.getValue().format(Constants.REPORT_DATE_FORMAT),
+                dateTo.getValue().format(Constants.REPORT_DATE_FORMAT)
+        );
+    }
+
+    private void generateCustomersReport() {
+        // if sorted by date
+        ArrayList<Customer> customers = ReportsRepository.getCustomers(
+                dateFrom.getValue().format(Constants.REPORT_DATE_FORMAT),
+                dateTo.getValue().format(Constants.REPORT_DATE_FORMAT)
+        );
+        // else if sorted by top sales
+        ArrayList<Customer> regulars = ReportsRepository.getRegularCustomers(
+                dateFrom.getValue().format(Constants.REPORT_DATE_FORMAT),
+                dateTo.getValue().format(Constants.REPORT_DATE_FORMAT)
+        );
+    }
+
+    private void generateSuppliersReport() {
+        ArrayList<Supplier> suppliers = ReportsRepository.getSuppliers(
+                dateFrom.getValue().format(Constants.REPORT_DATE_FORMAT),
+                dateTo.getValue().format(Constants.REPORT_DATE_FORMAT)
+        );
     }
 }

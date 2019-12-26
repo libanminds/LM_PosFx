@@ -148,7 +148,7 @@ public class NewSaleController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(loader.load()));
             SelectCustomerDialogController controller = loader.getController();
-            controller.setHostController(this);
+            controller.setSaleController(this);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();

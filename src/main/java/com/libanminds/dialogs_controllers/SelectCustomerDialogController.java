@@ -1,6 +1,7 @@
 package com.libanminds.dialogs_controllers;
 
 import com.libanminds.main_controllers.NewSaleController;
+import com.libanminds.main_controllers.ReportsController;
 import com.libanminds.models.Customer;
 import com.libanminds.repositories.CustomersRepository;
 import com.libanminds.utils.Authorization;
@@ -33,7 +34,11 @@ public class SelectCustomerDialogController implements Initializable {
 
     private Customer selectedCustomer;
 
-    private NewSaleController hostController;
+    private NewSaleController saleController;
+
+    private ReportsController reportsController;
+
+    private boolean fromReports;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -41,10 +46,11 @@ public class SelectCustomerDialogController implements Initializable {
         initSearch();
         initializeTable();
         handleAuthorization();
+        fromReports = false;
     }
 
-    public void setHostController(NewSaleController controller) {
-        hostController = controller;
+    public void setSaleController(NewSaleController controller) {
+        saleController = controller;
     }
 
     private void handleAuthorization() {
@@ -107,7 +113,7 @@ public class SelectCustomerDialogController implements Initializable {
                     Customer customer = row.getItem();
                     setSelectedCustomer(customer);
                     sendDataBackToHost();
-                    Stage currentStage = (Stage) newCustomerBtn.getScene().getWindow();
+                    Stage currentStage = (Stage) searchField.getScene().getWindow();
                     currentStage.close();
                 }
             });
@@ -118,6 +124,19 @@ public class SelectCustomerDialogController implements Initializable {
     }
 
     private void sendDataBackToHost() {
-        hostController.setSelectedCustomer(selectedCustomer);
+        if (fromReports) {
+            reportsController.setSelectedCustomer(selectedCustomer);
+        } else {
+            saleController.setSelectedCustomer(selectedCustomer);
+        }
+    }
+
+    public void setFromReports(boolean fromReports) {
+        this.fromReports = fromReports;
+        newCustomerBtn.setVisible(!fromReports);
+    }
+
+    public void setReportsController(ReportsController reportsController) {
+        this.reportsController = reportsController;
     }
 }

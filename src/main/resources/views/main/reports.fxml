@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <ScrollPane fitToHeight="true" fitToWidth="true" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" stylesheets="@../../css/main.css" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.main_controllers.ReportsController">
@@ -25,28 +26,22 @@
             <Label minWidth="40.0" text="To: " />
             <JFXDatePicker fx:id="dateTo" promptText="To" />
         </HBox>
-        <GridPane gridLinesVisible="true" styleClass="reports-panel" VBox.vgrow="ALWAYS">
+        <GridPane gridLinesVisible="true" minHeight="250.0" styleClass="reports-panel">
             <columnConstraints>
-                <ColumnConstraints hgrow="ALWAYS" />
-                <ColumnConstraints hgrow="ALWAYS" />
-                <ColumnConstraints hgrow="ALWAYS" />
+                <ColumnConstraints percentWidth="25.0" />
+                <ColumnConstraints percentWidth="25.0" />
+                <ColumnConstraints percentWidth="25.0" />
+                <ColumnConstraints percentWidth="25.0" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints vgrow="ALWAYS" />
-                <RowConstraints vgrow="ALWAYS" />
                 <RowConstraints vgrow="ALWAYS" />
                 <RowConstraints vgrow="ALWAYS" />
             </rowConstraints>
 
 
-            <JFXButton fx:id="expensesBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Expenses" GridPane.columnIndex="2">
+            <JFXButton fx:id="expensesBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Expenses" GridPane.columnIndex="2" GridPane.rowIndex="1">
                 <graphic>
                     <FontIcon iconLiteral="ti-money" />
-                </graphic>
-            </JFXButton>
-            <JFXButton fx:id="itemsSoldBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Items Sold" GridPane.rowIndex="3">
-                <graphic>
-                    <FontIcon iconLiteral="ti-receipt" />
                 </graphic>
             </JFXButton>
             <JFXButton fx:id="salesBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Sales">
@@ -59,47 +54,48 @@
                     <FontIcon iconLiteral="ti-cloud-down" />
                 </graphic>
             </JFXButton>
-            <JFXButton fx:id="customersBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Customers" GridPane.rowIndex="1">
+            <JFXButton fx:id="customersBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Customers" GridPane.columnIndex="2">
                 <graphic>
                     <FontIcon iconLiteral="ti-user" />
                 </graphic>
             </JFXButton>
-            <JFXButton fx:id="customerTransactionsBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Customer transactions" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                <graphic>
-                    <FontIcon iconLiteral="ti-bar-chart" />
-                </graphic>
-            </JFXButton>
-            <JFXButton fx:id="itemsPerCustomerBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Items per customer" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                <graphic>
-                    <FontIcon iconLiteral="ti-upload" />
-                </graphic>
-            </JFXButton>
-            <JFXButton fx:id="suppliersBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Suppliers" GridPane.rowIndex="2">
+            <JFXButton fx:id="suppliersBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Suppliers" GridPane.columnIndex="3">
                 <graphic>
                     <FontIcon iconLiteral="ti-truck" />
                 </graphic>
             </JFXButton>
-            <JFXButton fx:id="supplierTransactionsBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Supplier transactions" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                <graphic>
-                    <FontIcon iconLiteral="ti-bar-chart-alt" />
-                </graphic>
-            </JFXButton>
-            <JFXButton fx:id="itemsPerSupplierBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Items per supplier" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                <graphic>
-                    <FontIcon iconLiteral="ti-download" />
-                </graphic>
-            </JFXButton>
-            <JFXButton fx:id="incomeBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Income" GridPane.columnIndex="2" GridPane.rowIndex="3">
+            <JFXButton fx:id="incomeBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Income" GridPane.columnIndex="3" GridPane.rowIndex="1">
                 <graphic>
                     <FontIcon iconLiteral="ti-wallet" />
                 </graphic>
             </JFXButton>
-         <JFXButton fx:id="itemsPurchasedBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Items Purchased" GridPane.columnIndex="1" GridPane.rowIndex="3">
+         <JFXButton fx:id="itemsSoldBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Items Sold" GridPane.rowIndex="1">
+            <graphic>
+               <FontIcon iconLiteral="ti-receipt" />
+            </graphic>
+         </JFXButton>
+         <JFXButton fx:id="itemsPurchasedBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Items Purchased" GridPane.columnIndex="1" GridPane.rowIndex="1">
             <graphic>
                <FontIcon iconLiteral="ti-package" />
             </graphic>
          </JFXButton>
+         <VBox.margin>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </VBox.margin>
 
         </GridPane>
+      <Label minWidth="40.0" text="Advanced Options:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+         </VBox.margin>
+      </Label>
+      <HBox fx:id="advancedOptions" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+         <padding>
+            <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+         </padding>
+      </HBox>
     </VBox>
 </ScrollPane>
