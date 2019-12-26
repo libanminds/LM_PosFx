@@ -1,6 +1,8 @@
 package com.libanminds;
 
 import com.libanminds.main_controllers.LoginController;
+import com.libanminds.models.reports_models.CompactReportItem;
+import com.libanminds.repositories.ReportsRepository;
 import com.libanminds.utils.DBConnection;
 import com.libanminds.utils.Views;
 import javafx.application.Application;
@@ -8,6 +10,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
 
 
 public class MainApp extends Application {

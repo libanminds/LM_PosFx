@@ -1,18 +1,63 @@
 package com.libanminds.repositories;
 
+import com.libanminds.models.reports_models.CompactReportItem;
 import com.libanminds.utils.Constants;
+import com.libanminds.utils.DBConnection;
 import com.libanminds.utils.GlobalSettings;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 public class ReportsRepository {
 
     //Returns for each item the following: Amount sold, amount returned to customer, and the item's name
-    public void getQuantitiesOfSoldItems() {
-        String query = "SELECT code, name, SUM(sale_items.quantity) AS quantity_sold, SUM(returned_quantity) AS quantity_returned FROM sale_items LEFT JOIN items ON item_id = items.id GROUP BY item_id ORDER BY name";
+    public static ArrayList<CompactReportItem> getQuantitiesOfSoldItems(String dateFrom, String dateTo) {
+        String query = "SELECT code, name, SUM(sale_items.quantity) AS quantity_sold, SUM(returned_quantity) AS quantity_returned FROM sale_items LEFT JOIN items ON item_id = items.id WHERE date(sale_items.created_at) >= date('"+dateFrom+"') and date(sale_items.created_at) <= date('"+dateTo+"') GROUP BY item_id ORDER BY name";
+
+        ArrayList<CompactReportItem> items = new ArrayList<>();
+
+        try {
+            Statement statement = DBConnection.instance.getStatement();
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next()) {
+                items.add(new CompactReportItem(
+                        rs.getInt("code"),
+                        rs.getInt("quantity_sold"),
+                        rs.getInt("quantity_returned"),
+                        rs.getString("name")
+                ));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+        return items;
     }
 
     //Returns for each item the following: Amount bought, amount returned to supplier, and the item's name
-    public void getQuantitiesOfPurchasedItems() {
-        String query = "SELECT code, name, SUM(purchase_items.quantity) AS quantity_bought, SUM(returned_quantity) AS quantity_returned FROM purchase_items LEFT JOIN items ON item_id = items.id GROUP BY item_id ORDER BY name";
+    public ArrayList<CompactReportItem>  getQuantitiesOfPurchasedItems(String dateFrom, String dateTo) {
+        String query = "SELECT code, name, SUM(purchase_items.quantity) AS quantity_bought, SUM(returned_quantity) AS quantity_returned FROM purchase_items LEFT JOIN items ON item_id = items.id WHERE date(sale_items.created_at) >= date('"+dateFrom+"') and date(sale_items.created_at) <= date('"+dateTo+"') GROUP BY item_id ORDER BY name";
+
+        ArrayList<CompactReportItem> items = new ArrayList<>();
+
+        try {
+            Statement statement = DBConnection.instance.getStatement();
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next()) {
+                items.add(new CompactReportItem(
+                        rs.getInt("code"),
+                        rs.getInt("quantity_sold"),
+                        rs.getInt("quantity_returned"),
+                        rs.getString("name")
+                ));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+        return items;
     }
 
     //Returns for each sale the total amount, returned amount, paid amount, remaining amount and the discount that was made on the sale (not items individually)
