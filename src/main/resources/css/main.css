@@ -2,9 +2,10 @@
     -btn-blue-color: #1a2ad1;
     -btn-red-color: #d11a2a;
     -btn-green-color: #007e33;
+    -btn-main-color: #5580aa;
 }
 
-.root{
+.root {
     -fx-background: #ecf0f4;
 }
 
@@ -81,12 +82,12 @@
 .table-view .column-header .filler,
 .table-view .column-header-background .filler {
     -fx-stroke: transparent;
-    -fx-alignment: CENTER ;
+    -fx-alignment: CENTER;
     -fx-text-alignment: center;
 
 }
 
-.table-view .table-column{
+.table-view .table-column {
     -fx-text-alignment: center;
     -fx-alignment: CENTER
 
@@ -97,7 +98,7 @@
 .table-view .column-header-background .filler {
     -fx-background-color: #5580aa;
     -fx-size: 60;
-    -fx-alignment: CENTER ;
+    -fx-alignment: CENTER;
     -fx-text-alignment: center;
 
 }
@@ -173,7 +174,14 @@ VBox.card {
     -fx-text-fill: white;
 }
 
-.green-btn FontIcon, .red-btn FontIcon, .blue-btn FontIcon {
+.main-btn {
+    -fx-background-color: -btn-main-color;
+    -fx-border-color: -btn-main-color;
+    -fx-border-radius: 4;
+    -fx-text-fill: white;
+}
+
+.green-btn FontIcon, .red-btn FontIcon, .blue-btn FontIcon, main-btn FontIcon {
     -fx-icon-color: white;
 }
 
@@ -207,10 +215,23 @@ VBox.card {
     -fx-icon-color: -btn-blue-color;
 }
 
+.main-btn-outline {
+    -fx-border-color: -btn-main-color;
+    -fx-border-radius: 4;
+    -fx-text-fill: -btn-main-color;
+}
+
+.main-btn-outline FontIcon {
+    -fx-icon-color: -btn-main-color;
+}
+
 .btn-with-min-width {
     -fx-min-width: 100;
 }
 
+JFXDatePicker {
+    -jfx-default-color: #5580aa;
+}
 
 .reports-panel JFXButton {
     -fx-font-size: 14;
@@ -234,6 +255,6 @@ VBox.card {
 }
 
 .errorHighlight {
-    -fx-text-box-border: red ;
-    -fx-focus-color: red ;
+    -fx-text-box-border: red;
+    -fx-focus-color: red;
 }

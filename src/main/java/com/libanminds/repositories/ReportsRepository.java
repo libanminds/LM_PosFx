@@ -5,8 +5,6 @@ import com.libanminds.models.reports_models.CompactReportItem;
 import com.libanminds.utils.Constants;
 import com.libanminds.utils.DBConnection;
 import com.libanminds.utils.GlobalSettings;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,14 +21,14 @@ public class ReportsRepository {
     }
 
     //Returns for each item the following: Amount bought, amount returned to supplier, and the item's name
-    public ArrayList<CompactReportItem>  getQuantitiesOfPurchasedItems(String dateFrom, String dateTo) {
+    public static ArrayList<CompactReportItem>  getQuantitiesOfPurchasedItems(String dateFrom, String dateTo) {
         String query = "SELECT code, name, SUM(purchase_items.quantity) AS quantity_bought, SUM(returned_quantity) AS quantity_returned FROM purchase_items LEFT JOIN items ON item_id = items.id WHERE date(sale_items.created_at) >= date('"+dateFrom+"') and date(sale_items.created_at) <= date('"+dateTo+"') GROUP BY item_id ORDER BY name";
 
         return getCompactReportItemsFromQuery(query, false);
     }
 
     //Returns for each sale the total amount, returned amount, paid amount, remaining amount and the discount that was made on the sale (not items individually)
-    public ArrayList<Sale> getInfoOfSales(String dateFrom, String dateTo) {
+    public static ArrayList<Sale> getInfoOfSales(String dateFrom, String dateTo) {
         String query = "SELECT sales.id, total_amount, paid_amount, sales.currency, sales.discount, SUM((returned_quantity * ((CASE WHEN sales.currency != item_properties.currency THEN (CASE WHEN sales.currency = '"+ Constants.DOLLAR_CURRENCY +"' THEN item_properties.price * "+ 1/GlobalSettings.CONVERSION_RATE_FROM_DOLLAR +" ELSE item_properties.price * "+ GlobalSettings.CONVERSION_RATE_FROM_DOLLAR +" END) ELSE item_properties.price END) - sale_items.discount))) AS returned_amount FROM sale_items LEFT JOIN sales ON sale_id = sales.id LEFT JOIN item_properties ON item_properties_id = item_properties.id WHERE date(sales.created_at) >= date('"+dateFrom+"') and date(sales.created_at) <= date('"+dateTo+"') GROUP BY sales.id";
 
         ArrayList<Sale> data = new ArrayList<>();
@@ -55,7 +53,7 @@ public class ReportsRepository {
     }
 
     //Returns for each receiving the total amount, returned amount, paid amount, remaining amount and the discount that was made on the receiving (not items individually)
-    public ArrayList<Receiving> getInfoOfPurchases(String dateFrom, String dateTo) {
+    public static ArrayList<Receiving> getInfoOfPurchases(String dateFrom, String dateTo) {
         String query = "SELECT purchases.id, total_amount, paid_amount, purchases.currency, purchases.discount, SUM((returned_quantity * ((CASE WHEN purchases.currency != item_properties.currency THEN (CASE WHEN purchases.currency = '"+ Constants.DOLLAR_CURRENCY +"' THEN item_properties.price * "+ 1/GlobalSettings.CONVERSION_RATE_FROM_DOLLAR +" ELSE item_properties.price * "+ GlobalSettings.CONVERSION_RATE_FROM_DOLLAR +" END) ELSE item_properties.price END) - purchase_items.discount))) AS returned_amount FROM purchase_items LEFT JOIN purchases ON receiving_id = sales.id LEFT JOIN item_properties ON item_properties_id = item_properties.id WHERE date(sales.created_at) >= date('"+dateFrom+"') and date(sales.created_at) <= date('"+dateTo+"') GROUP BY purchases.id";
 
         ArrayList<Receiving> data = new ArrayList<>();

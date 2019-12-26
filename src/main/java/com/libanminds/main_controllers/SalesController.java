@@ -70,26 +70,9 @@ public class SalesController implements Initializable {
     }
 
     private void initButtons() {
-        completePayment.setOnMouseClicked(new EventHandler<Event>() {
-            @Override
-            public void handle(Event event) {
-                showCompleteSaleDialog(selectedSale);
-            }
-
-        });
-        viewSaleBtn.setOnMouseClicked(new EventHandler<Event>() {
-            @Override
-            public void handle(Event event) {
-                showViewSaleDialog(selectedSale);
-            }
-        });
-
-        returnItems.setOnMouseClicked(new EventHandler<Event>() {
-            @Override
-            public void handle(Event event) {
-                showReturnItemsDialog(selectedSale);
-            }
-        });
+        completePayment.setOnMouseClicked((EventHandler<Event>) event -> showCompleteSaleDialog(selectedSale));
+        viewSaleBtn.setOnMouseClicked((EventHandler<Event>) event -> showViewSaleDialog(selectedSale));
+        returnItems.setOnMouseClicked((EventHandler<Event>) event -> showReturnItemsDialog(selectedSale));
 
         viewSaleBtn.setDisable(true);
         completePayment.setDisable(true);

@@ -126,7 +126,7 @@ public class NewReceivingController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(loader.load()));
             SelectSupplierDialogController controller = loader.getController();
-            controller.setHostController(this);
+            controller.setReceivingController(this);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
