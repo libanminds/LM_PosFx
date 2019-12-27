@@ -21,6 +21,10 @@ public class Constants {
 
     // CSS
     public static final String CSS_ERROR_HIGHLIGHT = "errorHighlight";
+    public static final String CSS_MAIN_BTN = "main-btn";
+    public static final String CSS_RED_BTN = "red-btn";
+    public static final String CSS_GREEN_BTN = "green-btn";
+    public static final String CSS_BTN_WITH_MIN_WIDTH = "btn-with-min-width";
     public static final String MAIN_COLOR = "5580aa";
 
     // Formatters

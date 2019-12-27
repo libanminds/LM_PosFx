@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXDatePicker?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -21,10 +21,10 @@
                 <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
             </padding>
             <Label minWidth="40.0" text="From: " />
-            <JFXDatePicker fx:id="dateFrom" promptText="From" />
+         <DatePicker fx:id="dateFrom" />
             <Region prefWidth="38.0" />
             <Label minWidth="40.0" text="To: " />
-            <JFXDatePicker fx:id="dateTo" promptText="To" />
+         <DatePicker fx:id="dateTo" />
         </HBox>
         <GridPane gridLinesVisible="true" minHeight="250.0" styleClass="reports-panel">
             <columnConstraints>
@@ -92,10 +92,10 @@
             <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
          </VBox.margin>
       </Label>
-      <HBox fx:id="advancedOptions" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+      <VBox fx:id="advancedOptions" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="32.0">
          <padding>
             <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
          </padding>
-      </HBox>
+      </VBox>
     </VBox>
 </ScrollPane>

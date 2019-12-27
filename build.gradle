@@ -17,6 +17,7 @@ dependencies {
     compile 'org.apache.pdfbox:pdfbox:2.0.8'
     compile 'org.apache.commons:commons-lang3:3.0'
     compile 'com.github.dhorions:boxable:1.5'
+    compile 'org.slf4j:slf4j-nop:1.7.25'
 }
 
 javafx {
