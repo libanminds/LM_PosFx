@@ -46,6 +46,16 @@ public final class Views {
     public static final String INCOME_TYPES = "/views/main/income_types.fxml";
     public static final String EXPENSE_TYPES = "/views/main/expense_types.fxml";
 
+    // Reports advanced options
+    public static final String CUSTOMERS_ADVANCED_OPTIONS = "/views/advanced_options/customers_advanced_options.fxml";
+    public static final String EXPENSES_ADVANCED_OPTIONS = "/views/advanced_options/expenses_advanced_options.fxml";
+    public static final String INCOME_ADVANCED_OPTIONS = "/views/advanced_options/income_advanced_options.fxml";
+    public static final String PURCHASED_ITEMS_ADVANCED_OPTIONS = "/views/advanced_options/purchased_items_advanced_options.fxml";
+    public static final String PURCHASES_ADVANCED_OPTIONS = "/views/advanced_options/purchases_advanced_options.fxml";
+    public static final String SALES_ADVANCED_OPTIONS = "/views/advanced_options/sales_advanced_options.fxml";
+    public static final String SOLD_ITEMS_ADVANCED_OPTIONS = "/views/advanced_options/sold_items_advanced_options.fxml";
+    public static final String SUPPLIERS_ADVANCED_OPTIONS = "/views/advanced_options/suppliers_advanced_options.fxml";
+
     private Views() {
         throw new AssertionError("You are not allowed to instantiate this class");
     }

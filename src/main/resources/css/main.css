@@ -233,13 +233,22 @@ JFXDatePicker {
     -jfx-default-color: #5580aa;
 }
 
+.reports-panel JFXButton:activeReport {
+    -fx-background-color: #489EE7;
+    -fx-text-fill: #fff;
+}
+
+.reports-panel JFXButton:activeReport FontIcon {
+    -fx-icon-color: #fff;
+}
+
 .reports-panel JFXButton {
-    -fx-font-size: 14;
+    -fx-font-size: 16;
     -fx-graphic-text-gap: 8;
 }
 
 .reports-panel JFXButton FontIcon {
-    -fx-icon-size: 22px;
+    -fx-icon-size: 24px;
 }
 
 .curved-edges {

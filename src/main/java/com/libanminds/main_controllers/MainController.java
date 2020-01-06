@@ -8,7 +8,6 @@ import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -45,8 +44,6 @@ public class MainController implements Initializable {
     private JFXButton menuExpenses;
     @FXML
     private JFXButton menuIncome;
-    //    @FXML
-//    private JFXButton menuAppointments;
     @FXML
     private JFXButton menuEmployees;
     @FXML
@@ -75,74 +72,74 @@ public class MainController implements Initializable {
 
         if (!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_DASHBOARD)) {
             menu.getChildren().remove(menuDashboard);
-        } else if (initialView.isBlank())
+        } else if (initialView.isBlank()) {
             initialView = Views.DASHBOARD;
-
+        }
         if (!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_CUSTOMERS)) {
             menu.getChildren().remove(menuCustomers);
-        } else if (initialView.isBlank())
+        } else if (initialView.isBlank()) {
             initialView = Views.CUSTOMERS;
-
+        }
         if (!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_SUPPLIERS)) {
             menu.getChildren().remove(menuSuppliers);
-        } else if (initialView.isBlank())
+        } else if (initialView.isBlank()) {
             initialView = Views.SUPPLIERS;
-
+        }
         if (!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_ITEMS)) {
             menu.getChildren().remove(menuItems);
-        } else if (initialView.isBlank())
+        } else if (initialView.isBlank()) {
             initialView = Views.ITEMS;
-
+        }
         if (!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_REPORTS)) {
             menu.getChildren().remove(menuReports);
-        } else if (initialView.isBlank())
+        } else if (initialView.isBlank()) {
             initialView = Views.REPORTS;
-
+        }
         if (!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_SALES)) {
             menu.getChildren().remove(menuSales);
-        } else if (initialView.isBlank())
+        } else if (initialView.isBlank()) {
             initialView = Views.SALES;
-
+        }
         if (!Authorization.authorized.contains(AuthorizationKeys.CAN_CREATE_SALE)) {
             menu.getChildren().remove(menuNewSale);
-        } else if (initialView.isBlank())
+        } else if (initialView.isBlank()) {
             initialView = Views.NEW_SALE;
-
+        }
         if (!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_RECEIVINGS)) {
             menu.getChildren().remove(menuReceivings);
-        } else if (initialView.isBlank())
+        } else if (initialView.isBlank()) {
             initialView = Views.RECEIVINGS;
-
+        }
         if (!Authorization.authorized.contains(AuthorizationKeys.CAN_CREATE_RECEIVING)) {
             menu.getChildren().remove(menuNewReceiving);
-        } else if (initialView.isBlank())
+        } else if (initialView.isBlank()) {
             initialView = Views.NEW_RECEIVING;
-
+        }
         if (!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_EXPENSES)) {
             menu.getChildren().remove(menuExpenses);
-        } else if (initialView.isBlank())
+        } else if (initialView.isBlank()) {
             initialView = Views.EXPENSES;
-
+        }
         if (!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_INCOMES)) {
             menu.getChildren().remove(menuIncome);
-        } else if (initialView.isBlank())
+        } else if (initialView.isBlank()) {
             initialView = Views.INCOME;
-
+        }
         if (!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_USERS)) {
             menu.getChildren().remove(menuEmployees);
-        } else if (initialView.isBlank())
+        } else if (initialView.isBlank()) {
             initialView = Views.EMPLOYEES;
-
+        }
         if (!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_SETTINGS)) {
             menu.getChildren().remove(menuSettings);
-        } else if (initialView.isBlank())
+        } else if (initialView.isBlank()) {
             initialView = Views.SETTINGS;
+        }
 
         return initialView;
     }
 
     private void initButtons() {
-
         menuDashboard.setOnAction(actionEvent -> onMenuClick(Views.DASHBOARD));
         menuCustomers.setOnAction(actionEvent -> onMenuClick(Views.CUSTOMERS));
         menuSuppliers.setOnAction(actionEvent -> onMenuClick(Views.SUPPLIERS));
@@ -154,7 +151,6 @@ public class MainController implements Initializable {
         menuNewReceiving.setOnAction(actionEvent -> onMenuClick(Views.NEW_RECEIVING));
         menuExpenses.setOnAction(actionEvent -> onMenuClick(Views.EXPENSES));
         menuIncome.setOnAction(actionEvent -> onMenuClick(Views.INCOME));
-//        menuAppointments.setOnAction(actionEvent -> onMenuClick(Views.APPOINTMENTS));
         menuEmployees.setOnAction(actionEvent -> onMenuClick(Views.EMPLOYEES));
         menuSettings.setOnAction(actionEvent -> onMenuClick(Views.SETTINGS));
         menuLogout.setOnAction(event -> logout());
@@ -171,9 +167,6 @@ public class MainController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(destination));
             body.getChildren().add(loader.load());
-            if (destination.equals(Views.REPORTS)) {
-                ((ReportsController) loader.getController()).setStage(stage);
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -231,5 +224,9 @@ public class MainController implements Initializable {
 
     public void setStage(Stage stage) {
         this.stage = stage;
+    }
+
+    public Stage getStage() {
+        return stage;
     }
 }

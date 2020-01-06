@@ -3,6 +3,7 @@ package com.libanminds.dialogs_controllers;
 import com.libanminds.main_controllers.NewSaleController;
 import com.libanminds.main_controllers.ReportsController;
 import com.libanminds.models.Customer;
+import com.libanminds.reports_controllers.CustomersReportController;
 import com.libanminds.repositories.CustomersRepository;
 import com.libanminds.utils.Authorization;
 import com.libanminds.utils.AuthorizationKeys;
@@ -36,7 +37,7 @@ public class SelectCustomerDialogController implements Initializable {
 
     private NewSaleController saleController;
 
-    private ReportsController reportsController;
+    private CustomersReportController reportsController;
 
     private boolean fromReports;
 
@@ -136,7 +137,7 @@ public class SelectCustomerDialogController implements Initializable {
         newCustomerBtn.setVisible(!fromReports);
     }
 
-    public void setReportsController(ReportsController reportsController) {
+    public void setReportsController(CustomersReportController reportsController) {
         this.reportsController = reportsController;
     }
 }

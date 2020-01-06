@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<VBox prefWidth="600.0" spacing="24.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.libanminds.reports_controllers.CustomersReportController">
+    <HBox alignment="CENTER_LEFT">
+        <Label minWidth="40.0" text="From: ">
+            <font>
+                <Font size="16.0"/>
+            </font>
+        </Label>
+        <DatePicker fx:id="dateFrom"/>
+        <Region prefWidth="38.0"/>
+        <Label minWidth="40.0" text="To: ">
+            <font>
+                <Font size="16.0"/>
+            </font>
+        </Label>
+        <DatePicker fx:id="dateTo"/>
+    </HBox>
+    <HBox alignment="CENTER_LEFT">
+        <Label fx:id="customerName" text="All Customers">
+            <font>
+                <Font size="16.0"/>
+            </font>
+            <HBox.margin>
+                <Insets right="24.0"/>
+            </HBox.margin>
+        </Label>
+        <JFXButton fx:id="customerSelectionBtn" text="Select Customer">
+            <font>
+                <Font size="16.0"/>
+            </font>
+        </JFXButton>
+    </HBox>
+    <HBox fx:id="sortingRow">
+        <Label text="Sort By">
+            <font>
+                <Font name="System Bold" size="16.0"/>
+            </font>
+            <HBox.margin>
+                <Insets right="24.0"/>
+            </HBox.margin>
+        </Label>
+        <RadioButton fx:id="sortBySales" mnemonicParsing="false" text="Sales">
+            <font>
+                <Font size="16.0"/>
+            </font>
+            <HBox.margin>
+                <Insets right="12.0"/>
+            </HBox.margin>
+        </RadioButton>
+        <RadioButton fx:id="sortByDate" mnemonicParsing="false" text="Date">
+            <font>
+                <Font size="16.0"/>
+            </font>
+        </RadioButton>
+    </HBox>
+    <JFXButton fx:id="generateReportBtn" styleClass="green-btn" text="Generate Report">
+        <font>
+            <Font size="16.0"/>
+        </font>
+    </JFXButton>
+    <padding>
+        <Insets bottom="12.0" left="12.0" right="12.0" top="12.0"/>
+    </padding>
+</VBox>

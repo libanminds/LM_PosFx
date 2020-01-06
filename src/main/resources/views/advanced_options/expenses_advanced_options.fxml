@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<VBox prefWidth="600.0" spacing="24.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.libanminds.reports_controllers.ExpensesReportController">
+    <HBox alignment="CENTER_LEFT">
+        <Label minWidth="40.0" text="From: ">
+            <font>
+                <Font size="16.0"/>
+            </font>
+        </Label>
+        <DatePicker fx:id="dateFrom"/>
+        <Region prefWidth="38.0"/>
+        <Label minWidth="40.0" text="To: ">
+            <font>
+                <Font size="16.0"/>
+            </font>
+        </Label>
+        <DatePicker fx:id="dateTo"/>
+    </HBox>
+    <JFXButton fx:id="generateReportBtn" styleClass="green-btn" text="Generate Report">
+        <font>
+            <Font size="16.0"/>
+        </font>
+    </JFXButton>
+    <padding>
+        <Insets bottom="12.0" left="12.0" right="12.0" top="12.0"/>
+    </padding>
+</VBox>

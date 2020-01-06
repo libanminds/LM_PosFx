@@ -3,6 +3,7 @@ package com.libanminds.dialogs_controllers;
 import com.libanminds.main_controllers.NewReceivingController;
 import com.libanminds.main_controllers.ReportsController;
 import com.libanminds.models.Supplier;
+import com.libanminds.reports_controllers.SuppliersReportController;
 import com.libanminds.repositories.SupplierRepository;
 import com.libanminds.utils.Authorization;
 import com.libanminds.utils.AuthorizationKeys;
@@ -36,7 +37,7 @@ public class SelectSupplierDialogController implements Initializable {
 
     private NewReceivingController receivingController;
 
-    private ReportsController reportsController;
+    private SuppliersReportController reportsController;
 
     private boolean fromReports;
 
@@ -139,7 +140,7 @@ public class SelectSupplierDialogController implements Initializable {
         newSupplierBtn.setVisible(!fromReports);
     }
 
-    public void setReportsController(ReportsController reportsController) {
+    public void setReportsController(SuppliersReportController reportsController) {
         this.reportsController = reportsController;
     }
 }
