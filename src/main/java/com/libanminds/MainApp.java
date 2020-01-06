@@ -27,8 +27,6 @@ public class MainApp extends Application {
         //Initialize Database Connection
         DBConnection.instance = new DBConnection();
 
-//        PDFGenerator.generateDemoPDF(stage);
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.LOGIN));
         Parent root = loader.load();
         ((LoginController) loader.getController()).setStage(stage);

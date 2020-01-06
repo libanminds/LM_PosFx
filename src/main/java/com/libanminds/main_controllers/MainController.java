@@ -8,7 +8,9 @@ import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -52,6 +54,7 @@ public class MainController implements Initializable {
     @FXML
     private JFXButton menuLogout;
     private String currentView;
+    private Stage stage;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -166,7 +169,11 @@ public class MainController implements Initializable {
         toggleActiveCss(true);  // activate new view button
         body.getChildren().clear();
         try {
-            body.getChildren().add(FXMLLoader.load(getClass().getResource(destination)));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(destination));
+            body.getChildren().add(loader.load());
+            if (destination.equals(Views.REPORTS)) {
+                ((ReportsController) loader.getController()).setStage(stage);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -220,5 +227,9 @@ public class MainController implements Initializable {
             default:
                 break;
         }
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 }

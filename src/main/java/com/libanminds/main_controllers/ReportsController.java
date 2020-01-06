@@ -7,6 +7,7 @@ import com.libanminds.models.*;
 import com.libanminds.models.reports_models.CompactReportItem;
 import com.libanminds.repositories.ReportsRepository;
 import com.libanminds.utils.Constants;
+import com.libanminds.utils.PDFGenerator;
 import com.libanminds.utils.Views;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -83,6 +84,9 @@ public class ReportsController implements Initializable {
     private Label supplierName = new Label();
     private HBox supplierNameWithBtn = new HBox();
     private JFXButton supplierGenerateReportBtn = new JFXButton("Generate Report");
+
+    // Extra
+    private Stage stage;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -238,6 +242,7 @@ public class ReportsController implements Initializable {
                 dateFrom.getValue().format(Constants.REPORT_DATE_FORMAT),
                 dateTo.getValue().format(Constants.REPORT_DATE_FORMAT)
         );
+        PDFGenerator.generateDemoPDF(stage);
     }
 
     private void generateItemsPurchasedReport() {
@@ -310,5 +315,9 @@ public class ReportsController implements Initializable {
                     dateTo.getValue().format(Constants.REPORT_DATE_FORMAT)
             );
         }
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 }

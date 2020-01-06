@@ -7,10 +7,12 @@ import com.libanminds.utils.Views;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.jar.Manifest;
 
 public class LoginController {
     @FXML
@@ -41,7 +43,9 @@ public class LoginController {
 
     private void redirectToMain() throws IOException {
         stage.close();
-        Scene scene = new Scene(FXMLLoader.load(getClass().getResource(Views.MAIN)));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.MAIN));
+        Scene scene = new Scene(loader.load());
+        ((MainController) loader.getController()).setStage(stage);
         stage.setTitle("POS System");
         stage.setScene(scene);
         stage.setMaximized(true);

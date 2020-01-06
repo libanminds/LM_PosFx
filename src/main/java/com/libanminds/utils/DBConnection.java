@@ -32,6 +32,7 @@ public class DBConnection {
         try {
             return connection.createStatement();
         } catch (SQLException e) {
+            e.printStackTrace();
             return null;
         }
     }

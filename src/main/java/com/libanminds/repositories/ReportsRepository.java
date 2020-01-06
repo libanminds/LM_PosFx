@@ -54,7 +54,7 @@ public class ReportsRepository {
 
     //Returns for each receiving the total amount, returned amount, paid amount, remaining amount and the discount that was made on the receiving (not items individually)
     public static ArrayList<Receiving> getInfoOfPurchases(String dateFrom, String dateTo) {
-        String query = "SELECT purchases.id, total_amount, paid_amount, purchases.currency, purchases.discount, SUM((returned_quantity * ((CASE WHEN purchases.currency != item_properties.currency THEN (CASE WHEN purchases.currency = '"+ Constants.DOLLAR_CURRENCY +"' THEN item_properties.price * "+ 1/GlobalSettings.CONVERSION_RATE_FROM_DOLLAR +" ELSE item_properties.price * "+ GlobalSettings.CONVERSION_RATE_FROM_DOLLAR +" END) ELSE item_properties.price END) - purchase_items.discount))) AS returned_amount FROM purchase_items LEFT JOIN purchases ON receiving_id = sales.id LEFT JOIN item_properties ON item_properties_id = item_properties.id WHERE date(sales.created_at) >= date('"+dateFrom+"') and date(sales.created_at) <= date('"+dateTo+"') GROUP BY purchases.id";
+        String query = "SELECT purchases.id, total_amount, paid_amount, purchases.currency, purchases.discount, SUM((returned_quantity * ((CASE WHEN purchases.currency != item_properties.currency THEN (CASE WHEN purchases.currency = '"+ Constants.DOLLAR_CURRENCY +"' THEN item_properties.price * "+ 1/GlobalSettings.CONVERSION_RATE_FROM_DOLLAR +" ELSE item_properties.price * "+ GlobalSettings.CONVERSION_RATE_FROM_DOLLAR +" END) ELSE item_properties.price END) - purchase_items.discount))) AS returned_amount FROM purchase_items LEFT JOIN purchases ON receiving_id = purchases.id LEFT JOIN item_properties ON item_properties_id = item_properties.id WHERE date(purchases.created_at) >= date('"+dateFrom+"') and date(purchases.created_at) <= date('"+dateTo+"') GROUP BY purchases.id";
 
         ArrayList<Receiving> data = new ArrayList<>();
 
@@ -84,7 +84,7 @@ public class ReportsRepository {
     }
 
     public static ArrayList<Customer> getRegularCustomers(String dateFrom, String dateTo) {
-        String query = "SELECT customers.*, COUNT(customer_id) as sales_count FROM sales LEFT JOIN customers ON customers.id = sales.customer_id GROUP BY customer_id WHERE date(sales.created_at) >= date('"+dateFrom+"') and date(sales.created_at) <= date('"+dateTo+"') ORDER BY sales_count DESC";
+        String query = "SELECT customers.*, COUNT(customer_id) as sales_count FROM sales LEFT JOIN customers ON customers.id = sales.customer_id WHERE date(sales.created_at) >= date('"+dateFrom+"') and date(sales.created_at) <= date('"+dateTo+"') GROUP BY customer_id ORDER BY sales_count DESC";
 
         return getCustomersFromQuery(query);
     }
@@ -135,7 +135,7 @@ public class ReportsRepository {
     }
 
     public static ArrayList<Income> getIncomes(String dateFrom, String dateTo) {
-        String query = "SELECT * FROM incomes LEFT JOIN income_types ON incomes.type_id = income_types.id WHERE date(expenses.created_at) >= date('" + dateFrom + "') and date(expenses.created_at) <= date('" + dateTo + "') ORDER BY created_at";
+        String query = "SELECT * FROM incomes LEFT JOIN income_types ON incomes.type_id = income_types.id WHERE date(incomes.created_at) >= date('" + dateFrom + "') and date(incomes.created_at) <= date('" + dateTo + "') ORDER BY created_at";
 
         ArrayList<Income> data = new ArrayList<>();
         try {
@@ -215,7 +215,6 @@ public class ReportsRepository {
 
     private static ArrayList<CompactReportItem> getCompactReportItemsFromQuery(String query, boolean isSold) {
         ArrayList<CompactReportItem> data = new ArrayList<>();
-
         try {
             Statement statement = DBConnection.instance.getStatement();
             ResultSet rs = statement.executeQuery(query);

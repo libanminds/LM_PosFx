@@ -22,6 +22,11 @@ public class PDFGenerator {
         ArrayList<ArrayList<String>> tableRows = new ArrayList<>();
         tableRows.add(new ArrayList<>(Arrays.asList("Apple", "5", "2")));
         tableRows.add(new ArrayList<>(Arrays.asList("Banana", "21", "3")));
+        tableRows.add(new ArrayList<>(Arrays.asList("Tomato", "3", "2")));
+        tableRows.add(new ArrayList<>(Arrays.asList("Potato", "15", "0")));
+        tableRows.add(new ArrayList<>(Arrays.asList("Fridge", "5", "2")));
+        tableRows.add(new ArrayList<>(Arrays.asList("Nuclear Heads", "10", "0")));
+        tableRows.add(new ArrayList<>(Arrays.asList("Oranges", "50", "2")));
 
         String[] totals = {"Total Paid: $5000", "Total Returned: $1600", "Total: $3400"};
         PDFGenerator.generatePDF(stage, "Sold Items Report", "The following is the list of the quantities of items sold from X till Y",
