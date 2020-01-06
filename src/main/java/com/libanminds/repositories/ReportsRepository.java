@@ -22,7 +22,7 @@ public class ReportsRepository {
 
     //Returns for each item the following: Amount bought, amount returned to supplier, and the item's name
     public static ArrayList<CompactReportItem>  getQuantitiesOfPurchasedItems(String dateFrom, String dateTo) {
-        String query = "SELECT code, name, SUM(purchase_items.quantity) AS quantity_bought, SUM(returned_quantity) AS quantity_returned FROM purchase_items LEFT JOIN items ON item_id = items.id WHERE date(sale_items.created_at) >= date('"+dateFrom+"') and date(sale_items.created_at) <= date('"+dateTo+"') GROUP BY item_id ORDER BY name";
+        String query = "SELECT code, name, SUM(purchase_items.quantity) AS quantity_bought, SUM(returned_quantity) AS quantity_returned FROM purchase_items LEFT JOIN items ON item_id = items.id WHERE date(purchase_items.created_at) >= date('"+ dateFrom+"') and date(purchase_items.created_at) <= date('"+ dateTo+"') GROUP BY item_id ORDER BY name";
 
         return getCompactReportItemsFromQuery(query, false);
     }
@@ -228,6 +228,7 @@ public class ReportsRepository {
                 ));
             }
         } catch (SQLException e) {
+            e.printStackTrace();
             System.out.println(e.getMessage());
             return null;
         }

@@ -79,7 +79,7 @@ public class ReportsController implements Initializable {
 
     // Supplier advanced options
     private Supplier selectedSupplier;
-    private JFXButton supplierSelectionBtn;
+    private JFXButton supplierSelectionBtn = new JFXButton();
     private Label supplierName = new Label();
     private HBox supplierNameWithBtn = new HBox();
     private JFXButton supplierGenerateReportBtn = new JFXButton("Generate Report");
