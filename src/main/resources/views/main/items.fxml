@@ -75,11 +75,6 @@
                               <FontIcon iconLiteral="ti-files" />
                            </graphic>
                         </MenuItem>
-                        <MenuItem fx:id="countInventory" mnemonicParsing="false" text="Count Inventory">
-                           <graphic>
-                              <FontIcon iconLiteral="ti-agenda" />
-                           </graphic>
-                        </MenuItem>
                      </items>
                      <font>
                         <Font name="System Bold" size="15.0" />

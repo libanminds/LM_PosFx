@@ -241,8 +241,8 @@ public class ItemsRepository {
                         rs.getInt("min_stock"),
                         "Jack Sparrow",
                         rs.getString("description"),
+                        rs.getBoolean("ttc"),
                         true,
-                        false,
                         rs.getString("created_at")
                 ));
             }
@@ -275,7 +275,7 @@ public class ItemsRepository {
                         "Jack Sparrow",
                         rs.getString("description"),
                         true,
-                        false,
+                        rs.getBoolean("ttc"),
                         rs.getString("created_at")
                 );
                 item.setTotalQuantity(rs.getInt(17));

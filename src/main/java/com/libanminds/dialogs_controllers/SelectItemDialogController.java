@@ -94,12 +94,10 @@ public class SelectItemDialogController implements Initializable {
         TableColumn<Item, String> categoryCol = new TableColumn<>("Category");
         TableColumn<Item, String> priceCol = new TableColumn<>("Price");
         TableColumn<Item, Double> stockCol = new TableColumn<>("Stock");
-        TableColumn<Item, String> supplierCol = new TableColumn<>("Supplier");
         TableColumn<Item, String> descriptionCol = new TableColumn<>("Description");
-        TableColumn<Item, String> isServiceCol = new TableColumn<>("Is Service");
-        TableColumn<Item, String> lastModifierCol = new TableColumn<>("Last Modified");
+        TableColumn<Item, String> ttcCol = new TableColumn<>("TTC");
 
-        itemsTable.getColumns().addAll(imageCol, codeCol, nameCol, categoryCol, priceCol, stockCol, supplierCol, descriptionCol, isServiceCol, lastModifierCol);
+        itemsTable.getColumns().addAll(imageCol, codeCol, nameCol, categoryCol, priceCol, stockCol, descriptionCol, ttcCol);
 
         imageCol.setCellValueFactory(new PropertyValueFactory<Item, ImageView>("image"));
         codeCol.setCellValueFactory(new PropertyValueFactory<Item, String>("code"));
@@ -107,10 +105,8 @@ public class SelectItemDialogController implements Initializable {
         categoryCol.setCellValueFactory(new PropertyValueFactory<Item, String>("category"));
         priceCol.setCellValueFactory(new PropertyValueFactory<Item, String>("price"));
         stockCol.setCellValueFactory(new PropertyValueFactory<Item, Double>("stock"));
-        supplierCol.setCellValueFactory(new PropertyValueFactory<Item, String>("supplier"));
         descriptionCol.setCellValueFactory(new PropertyValueFactory<Item, String>("description"));
-        isServiceCol.setCellValueFactory(new PropertyValueFactory<Item, String>("isService"));
-        lastModifierCol.setCellValueFactory(new PropertyValueFactory<Item, String>("lastModified"));
+        ttcCol.setCellValueFactory(new PropertyValueFactory<Item, String>("priceIncludesTax"));
 
         itemsTable.setRowFactory(tv -> {
             TableRow<Item> row = new TableRow<>();
