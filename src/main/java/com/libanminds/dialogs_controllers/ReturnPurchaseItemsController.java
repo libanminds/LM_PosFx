@@ -1,9 +1,9 @@
 package com.libanminds.dialogs_controllers;
 
 import com.libanminds.models.Item;
-import com.libanminds.models.Receiving;
+import com.libanminds.models.Purchase;
 import com.libanminds.repositories.ItemsRepository;
-import com.libanminds.repositories.ReceivingsRepository;
+import com.libanminds.repositories.PurchasesRepository;
 import com.libanminds.utils.EditingCell;
 import com.libanminds.utils.HelperFunctions;
 import javafx.event.Event;
@@ -19,10 +19,10 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
-public class ReturnReceivingItemsController implements Initializable {
+public class ReturnPurchaseItemsController implements Initializable {
 
     @FXML
-    private TableView<Item> receivedItemsTable;
+    private TableView<Item> purchasedItemsTable;
 
     @FXML
     private TableView<Item> returnedItemsTable;
@@ -52,12 +52,12 @@ public class ReturnReceivingItemsController implements Initializable {
     private TextField discountField;
 
     @FXML
-    private Button saveReceiving;
+    private Button savePurchase;
 
-    private Receiving receiving;
+    private Purchase purchase;
 
     private double subtotal;
-    private double receivingDiscount;
+    private double purchaseDiscount;
     private double taxes;
     private double totalAmount;
     private double amountPaid;
@@ -69,8 +69,8 @@ public class ReturnReceivingItemsController implements Initializable {
         initButtonsClicks();
     }
 
-    public void setReceiving(Receiving receiving) {
-        this.receiving = receiving;
+    public void setPurchase(Purchase purchase) {
+        this.purchase = purchase;
         initNumbers();
         updateNumbersUI();
         initializeTables();
@@ -83,12 +83,12 @@ public class ReturnReceivingItemsController implements Initializable {
     }
 
     private void initButtonsClicks() {
-        saveReceiving.setOnMouseClicked((EventHandler<Event>) event -> SaveChanges());
+        savePurchase.setOnMouseClicked((EventHandler<Event>) event -> SaveChanges());
     }
 
     private void initializeTables() {
 
-        //RECEIVED ITEMS TABLE START
+        //PURCHASED ITEMS TABLE START
         TableColumn<Item, String> codeCol = new TableColumn<>("Code");
         TableColumn<Item, String> nameCol = new TableColumn<>("Name");
         TableColumn<Item, String> saleQuantityCol = new TableColumn<>("Quantity");
@@ -96,7 +96,7 @@ public class ReturnReceivingItemsController implements Initializable {
         TableColumn<Item, String> saleDiscountCol = new TableColumn<>("Discount");
         TableColumn<Item, String> totalPriceCol = new TableColumn<>("Total");
 
-        receivedItemsTable.getColumns().addAll(codeCol, nameCol, saleQuantityCol, priceCol, saleDiscountCol, totalPriceCol);
+        purchasedItemsTable.getColumns().addAll(codeCol, nameCol, saleQuantityCol, priceCol, saleDiscountCol, totalPriceCol);
 
         codeCol.setCellValueFactory(new PropertyValueFactory<>("code"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -106,7 +106,7 @@ public class ReturnReceivingItemsController implements Initializable {
         totalPriceCol.setCellValueFactory(new PropertyValueFactory<>("formattedTotal"));
 
 
-        receivedItemsTable.setRowFactory(tv -> {
+        purchasedItemsTable.setRowFactory(tv -> {
             TableRow<Item> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() >= 2 && (!row.isEmpty())) {
@@ -117,18 +117,18 @@ public class ReturnReceivingItemsController implements Initializable {
                         item.incrementReturnedQuantity();
                     } else {
                         item.incrementReturnedQuantity();
-                        receivedItemsTable.refresh();
+                        purchasedItemsTable.refresh();
                         returnedItemsTable.getItems().add(item);
                     }
                     returnedItemsTable.refresh();
-                    receivedItemsTable.refresh();
+                    purchasedItemsTable.refresh();
                     recalculateNumbers();
                 }
             });
             return row;
         });
 
-        receivedItemsTable.setItems(ItemsRepository.getItemsOfReceiving(receiving));
+        purchasedItemsTable.setItems(ItemsRepository.getItemsOfPurchase(purchase));
 
         //RETURNED ITEMS TABLE START
         codeCol = new TableColumn<>("Code");
@@ -156,7 +156,7 @@ public class ReturnReceivingItemsController implements Initializable {
 
                     item.setReturnedQuantity(newValue);
                     returnedItemsTable.refresh();
-                    receivedItemsTable.refresh();
+                    purchasedItemsTable.refresh();
                     recalculateNumbers();
                 }
         );
@@ -166,29 +166,29 @@ public class ReturnReceivingItemsController implements Initializable {
     }
 
     private void SaveChanges() {
-        receiving.setDiscount(receivingDiscount);
-        receiving.setPaidAmount(amountPaid - amountToRefund);
-        receiving.setTotalAmount(totalAmount);
-        ReceivingsRepository.returnReceivedItems(receiving, returnedItemsTable.getItems(), amountToRefund);
-        Stage currentStage = (Stage) saveReceiving.getScene().getWindow();
+        purchase.setDiscount(purchaseDiscount);
+        purchase.setPaidAmount(amountPaid - amountToRefund);
+        purchase.setTotalAmount(totalAmount);
+        PurchasesRepository.returnPurchasedItems(purchase, returnedItemsTable.getItems(), amountToRefund);
+        Stage currentStage = (Stage) savePurchase.getScene().getWindow();
         currentStage.close();
     }
 
     private void initNumbers() {
-        subtotal = receiving.getTotalAmount() + receiving.getDiscount();
-        receivingDiscount = receiving.getDiscount();
-        totalAmount = receiving.getTotalAmount();
-        amountPaid = receiving.getPaidAmount();
+        subtotal = purchase.getTotalAmount() + purchase.getDiscount();
+        purchaseDiscount = purchase.getDiscount();
+        totalAmount = purchase.getTotalAmount();
+        amountPaid = purchase.getPaidAmount();
         amountToRefund = 0;
         remainingAmount = totalAmount - amountPaid;
-        discountField.setText(receivingDiscount + "");
+        discountField.setText(purchaseDiscount + "");
     }
 
     private void setTextFieldsListeners() {
         discountField.textProperty().addListener((observable, oldValue, newValue) -> {
-            receivingDiscount = (newValue.isEmpty() ? 0 : Double.parseDouble(newValue));
+            purchaseDiscount = (newValue.isEmpty() ? 0 : Double.parseDouble(newValue));
 
-            if (receivingDiscount > subtotal) {
+            if (purchaseDiscount > subtotal) {
                 discountField.setText(oldValue);
             }
 
@@ -199,16 +199,16 @@ public class ReturnReceivingItemsController implements Initializable {
     private void recalculateNumbers() {
 
         subtotal = 0;
-        for (int i = 0; i < receivedItemsTable.getItems().size(); i++) {
-            subtotal += receivedItemsTable.getItems().get(i).getTotal();
+        for (int i = 0; i < purchasedItemsTable.getItems().size(); i++) {
+            subtotal += purchasedItemsTable.getItems().get(i).getTotal();
         }
 
-        if (receivingDiscount > subtotal) {
-            receivingDiscount = subtotal;
-            discountField.setText(receivingDiscount + "");
+        if (purchaseDiscount > subtotal) {
+            purchaseDiscount = subtotal;
+            discountField.setText(purchaseDiscount + "");
         }
 
-        totalAmount = subtotal - receivingDiscount + taxes;
+        totalAmount = subtotal - purchaseDiscount + taxes;
         remainingAmount = totalAmount - amountPaid;
 
         if (remainingAmount < 0) {
@@ -223,12 +223,12 @@ public class ReturnReceivingItemsController implements Initializable {
 
     private void updateNumbersUI() {
         DecimalFormat formatter = HelperFunctions.getDecimalFormatter();
-        subtotalText.setText(formatter.format(subtotal) + " " + receiving.getCurrency());
-        discountCurrencyText.setText(receiving.getCurrency());
-        taxesText.setText(formatter.format(taxes) + " " + receiving.getCurrency());
-        totalText.setText(formatter.format(totalAmount) + " " + receiving.getCurrency());
-        amountPaidText.setText(formatter.format(amountPaid) + " " + receiving.getCurrency());
-        refundAmountText.setText(formatter.format(amountToRefund) + " " + receiving.getCurrency());
-        remainingAmountLabel.setText(formatter.format(remainingAmount) + " " + receiving.getCurrency());
+        subtotalText.setText(formatter.format(subtotal) + " " + purchase.getCurrency());
+        discountCurrencyText.setText(purchase.getCurrency());
+        taxesText.setText(formatter.format(taxes) + " " + purchase.getCurrency());
+        totalText.setText(formatter.format(totalAmount) + " " + purchase.getCurrency());
+        amountPaidText.setText(formatter.format(amountPaid) + " " + purchase.getCurrency());
+        refundAmountText.setText(formatter.format(amountToRefund) + " " + purchase.getCurrency());
+        remainingAmountLabel.setText(formatter.format(remainingAmount) + " " + purchase.getCurrency());
     }
 }

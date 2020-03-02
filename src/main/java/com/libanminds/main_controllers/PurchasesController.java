@@ -1,10 +1,10 @@
 package com.libanminds.main_controllers;
 
-import com.libanminds.dialogs_controllers.CompleteReceivingController;
-import com.libanminds.dialogs_controllers.ReturnReceivingItemsController;
-import com.libanminds.dialogs_controllers.ViewReceivingController;
-import com.libanminds.models.Receiving;
-import com.libanminds.repositories.ReceivingsRepository;
+import com.libanminds.dialogs_controllers.CompletePurchaseController;
+import com.libanminds.dialogs_controllers.ReturnPurchaseItemsController;
+import com.libanminds.dialogs_controllers.ViewPurchaseController;
+import com.libanminds.models.Purchase;
+import com.libanminds.repositories.PurchasesRepository;
 import com.libanminds.utils.Authorization;
 import com.libanminds.utils.AuthorizationKeys;
 import com.libanminds.utils.Views;
@@ -27,7 +27,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ReceivingsController implements Initializable {
+public class PurchasesController implements Initializable {
 
     @FXML
     private HBox buttonsHolder;
@@ -39,15 +39,15 @@ public class ReceivingsController implements Initializable {
     private Button completePayment;
 
     @FXML
-    private Button viewReceiving;
+    private Button viewPurchase;
 
     @FXML
     private Button returnItems;
 
     @FXML
-    private TableView<Receiving> receivingsTable;
+    private TableView<Purchase> purchasesTable;
 
-    private Receiving selectedReceiving;
+    private Purchase selectedPurchase;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -59,61 +59,61 @@ public class ReceivingsController implements Initializable {
     }
 
     private void handleAuthorization() {
-        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_RECEIVING))
-            buttonsHolder.getChildren().remove(viewReceiving);
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_PURCHASE))
+            buttonsHolder.getChildren().remove(viewPurchase);
 
-        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_RETURN_RECEIVING_ITEMS))
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_RETURN_PURCHASE_ITEMS))
             buttonsHolder.getChildren().remove(returnItems);
 
-        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_COMPLETE_RECEIVING_PAYMENT))
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_COMPLETE_PURCHASE_PAYMENT))
             buttonsHolder.getChildren().remove(completePayment);
     }
 
     private void initButtons() {
         completePayment.setOnMouseClicked((EventHandler<Event>) event -> {
-            showCompleteReceivingDialog(selectedReceiving);
+            showCompletePurchaseDialog(selectedPurchase);
         });
 
-        viewReceiving.setOnMouseClicked((EventHandler<Event>) event -> {
-            showViewReceivingDialog(selectedReceiving);
+        viewPurchase.setOnMouseClicked((EventHandler<Event>) event -> {
+            showViewPurchaseDialog(selectedPurchase);
         });
 
         returnItems.setOnMouseClicked((EventHandler<Event>) event -> {
-            showReturnItemsDialog(selectedReceiving);
+            showReturnItemsDialog(selectedPurchase);
         });
-        viewReceiving.setDisable(true);
+        viewPurchase.setDisable(true);
         completePayment.setDisable(true);
         returnItems.setDisable(true);
     }
 
-    private void showViewReceivingDialog(Receiving receiving) {
+    private void showViewPurchaseDialog(Purchase purchase) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.VIEW_RECEIVING));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.VIEW_PURCHASE));
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(loader.load()));
-            ViewReceivingController controller = loader.getController();
-            controller.setReceiving(receiving);
+            ViewPurchaseController controller = loader.getController();
+            controller.setPurchase(purchase);
             stage.show();
             stage.setOnHidden(e -> {
-                receivingsTable.setItems(ReceivingsRepository.getReceivings());
+                purchasesTable.setItems(PurchasesRepository.getPurchases());
             });
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void showReturnItemsDialog(Receiving receiving) {
+    private void showReturnItemsDialog(Purchase purchase) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.RETURN_RECEIVING_ITEMS));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.RETURN_PURCHASE_ITEMS));
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(loader.load()));
-            ReturnReceivingItemsController controller = loader.getController();
-            controller.setReceiving(receiving);
+            ReturnPurchaseItemsController controller = loader.getController();
+            controller.setPurchase(purchase);
             stage.show();
             stage.setOnHidden(e -> {
-                receivingsTable.setItems(ReceivingsRepository.getReceivings());
+                purchasesTable.setItems(PurchasesRepository.getPurchases());
             });
         } catch (Exception e) {
             System.out.println(e.getCause());
@@ -122,17 +122,17 @@ public class ReceivingsController implements Initializable {
         }
     }
 
-    private void showCompleteReceivingDialog(Receiving receiving) {
+    private void showCompletePurchaseDialog(Purchase purchase) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.COMPLETE_RECEIVING));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.COMPLETE_PURCHASE));
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(loader.load()));
-            CompleteReceivingController controller = loader.getController();
-            controller.setReceiving(receiving);
+            CompletePurchaseController controller = loader.getController();
+            controller.setPurchase(purchase);
             stage.show();
             stage.setOnHidden(e -> {
-                receivingsTable.setItems(ReceivingsRepository.getReceivings());
+                purchasesTable.setItems(PurchasesRepository.getPurchases());
             });
         } catch (Exception e) {
 
@@ -142,19 +142,19 @@ public class ReceivingsController implements Initializable {
 
     private void initSearch() {
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            receivingsTable.setItems(ReceivingsRepository.getReceivingsLike(newValue));
+            purchasesTable.setItems(PurchasesRepository.getPurchasesLike(newValue));
         });
     }
 
     private void initializeTable() {
-        TableColumn<Receiving, String> customerName = new TableColumn<>("Supplier Name");
-        TableColumn<Receiving, String> totalAmount = new TableColumn<>("Total Amount");
-        TableColumn<Receiving, String> paidAmount = new TableColumn<>("Paid Amount");
-        TableColumn<Receiving, String> discount = new TableColumn<>("Discount");
-        TableColumn<Receiving, String> remainingAmount = new TableColumn<>("Remaining Amount");
-        TableColumn<Receiving, String> paymentType = new TableColumn<>("Payment Type");
+        TableColumn<Purchase, String> customerName = new TableColumn<>("Supplier Name");
+        TableColumn<Purchase, String> totalAmount = new TableColumn<>("Total Amount");
+        TableColumn<Purchase, String> paidAmount = new TableColumn<>("Paid Amount");
+        TableColumn<Purchase, String> discount = new TableColumn<>("Discount");
+        TableColumn<Purchase, String> remainingAmount = new TableColumn<>("Remaining Amount");
+        TableColumn<Purchase, String> paymentType = new TableColumn<>("Payment Type");
 
-        receivingsTable.getColumns().addAll(customerName, totalAmount, paidAmount, discount, remainingAmount, paymentType);
+        purchasesTable.getColumns().addAll(customerName, totalAmount, paidAmount, discount, remainingAmount, paymentType);
 
         customerName.setCellValueFactory(new PropertyValueFactory<>("supplierName"));
         totalAmount.setCellValueFactory(new PropertyValueFactory<>("totalAmountFormatted"));
@@ -163,15 +163,15 @@ public class ReceivingsController implements Initializable {
         remainingAmount.setCellValueFactory(new PropertyValueFactory<>("remainingAmountFormatted"));
         paymentType.setCellValueFactory(new PropertyValueFactory<>("paymentType"));
 
-        receivingsTable.setItems(ReceivingsRepository.getReceivings());
+        purchasesTable.setItems(PurchasesRepository.getPurchases());
     }
 
     private void setTableListener() {
-        receivingsTable.selectionModelProperty().get().selectedItemProperty().addListener((ChangeListener) (observable, oldValue, newValue) -> {
-            selectedReceiving = (Receiving) newValue;
-            completePayment.setDisable(selectedReceiving == null || selectedReceiving.isComplete());
-            viewReceiving.setDisable(selectedReceiving == null);
-            returnItems.setDisable(selectedReceiving == null);
+        purchasesTable.selectionModelProperty().get().selectedItemProperty().addListener((ChangeListener) (observable, oldValue, newValue) -> {
+            selectedPurchase = (Purchase) newValue;
+            completePayment.setDisable(selectedPurchase == null || selectedPurchase.isComplete());
+            viewPurchase.setDisable(selectedPurchase == null);
+            returnItems.setDisable(selectedPurchase == null);
         });
     }
 }

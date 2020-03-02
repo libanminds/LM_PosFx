@@ -6,9 +6,9 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public class Receiving {
+public class Purchase {
 
-    private SimpleIntegerProperty receivingID;
+    private SimpleIntegerProperty purchaseID;
     private SimpleIntegerProperty supplierID;
     private SimpleStringProperty supplierName;
     private SimpleDoubleProperty discount;
@@ -23,8 +23,8 @@ public class Receiving {
     //CAREFUL: This value is valid only when the 3rd constructor is called
     private SimpleDoubleProperty returnedAmount;
 
-    public Receiving(int receivingID, int supplierID, String supplierName, double discount, int taxID, double conversionRate, double totalAmount, String currency, double paidAmount, boolean isOfficial, String paymentType) {
-        this.receivingID = new SimpleIntegerProperty(receivingID);
+    public Purchase(int purchaseID, int supplierID, String supplierName, double discount, int taxID, double conversionRate, double totalAmount, String currency, double paidAmount, boolean isOfficial, String paymentType) {
+        this.purchaseID = new SimpleIntegerProperty(purchaseID);
         this.supplierID = new SimpleIntegerProperty(supplierID);
         this.supplierName = new SimpleStringProperty(supplierName);
         this.discount = new SimpleDoubleProperty(discount);
@@ -37,15 +37,15 @@ public class Receiving {
         this.paymentType = new SimpleStringProperty(paymentType);
     }
 
-    public Receiving(int receivingID, double totalAmount, double paidAmount, String currency) {
-        this.receivingID = new SimpleIntegerProperty(receivingID);
+    public Purchase(int purchaseID, double totalAmount, double paidAmount, String currency) {
+        this.purchaseID = new SimpleIntegerProperty(purchaseID);
         this.totalAmount = new SimpleDoubleProperty(totalAmount);
         this.paidAmount = new SimpleDoubleProperty(paidAmount);
         this.currency = new SimpleStringProperty(currency);
     }
 
-    public Receiving(int saleID, double totalAmount, double paidAmount, double returnedAmount, String currency) {
-        this.receivingID = new SimpleIntegerProperty(saleID);
+    public Purchase(int saleID, double totalAmount, double paidAmount, double returnedAmount, String currency) {
+        this.purchaseID = new SimpleIntegerProperty(saleID);
         this.totalAmount = new SimpleDoubleProperty(totalAmount);
         this.paidAmount = new SimpleDoubleProperty(paidAmount);
         this.returnedAmount = new SimpleDoubleProperty(returnedAmount);
@@ -53,15 +53,15 @@ public class Receiving {
     }
 
     public int getID() {
-        return receivingID.get();
+        return purchaseID.get();
     }
 
-    public SimpleIntegerProperty receivingIDProperty() {
-        return receivingID;
+    public SimpleIntegerProperty purchaseIDProperty() {
+        return purchaseID;
     }
 
-    public void setReceivingID(int receivingID) {
-        this.receivingID.set(receivingID);
+    public void setPurchaseID(int purchaseID) {
+        this.purchaseID.set(purchaseID);
     }
 
     public String getRemainingAmountFormatted() {

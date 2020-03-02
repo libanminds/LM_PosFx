@@ -1,7 +1,7 @@
 package com.libanminds.reports_controllers;
 
 import com.jfoenix.controls.JFXButton;
-import com.libanminds.models.Receiving;
+import com.libanminds.models.Purchase;
 import com.libanminds.repositories.ReportsRepository;
 import com.libanminds.utils.Constants;
 import javafx.fxml.FXML;
@@ -40,7 +40,7 @@ public class PurchasesReportController implements Initializable {
     }
 
     private void generatePurchasesReport() {
-        ArrayList<Receiving> purchases = ReportsRepository.getInfoOfPurchases(
+        ArrayList<Purchase> purchases = ReportsRepository.getInfoOfPurchases(
                 dateFrom.getValue().format(Constants.REPORT_DATE_FORMAT),
                 dateTo.getValue().format(Constants.REPORT_DATE_FORMAT)
         );

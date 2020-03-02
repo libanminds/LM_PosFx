@@ -11,19 +11,19 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="600.0" prefWidth="600.0" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.main_controllers.ReceivingsController">
+<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="600.0" prefWidth="600.0" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.main_controllers.PurchasesController">
    <content>
       <VBox minHeight="600.0" prefHeight="600.0" prefWidth="644.0">
          <children>
             <HBox alignment="CENTER_LEFT" spacing="8.0">
                <children>
-                  <Label text="Receivings" textFill="#006372">
+                  <Label text="Purchases" textFill="#006372">
                      <font>
                         <Font name="System Bold" size="30.0" />
                      </font>
                   </Label>
                   <Region HBox.hgrow="ALWAYS" />
-                  <TextField fx:id="searchField" prefWidth="300.0" promptText="Search Receivings">
+                  <TextField fx:id="searchField" prefWidth="300.0" promptText="Search Purchases">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -37,7 +37,7 @@
                </padding></HBox>
             <HBox fx:id="buttonsHolder" alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" spacing="20.0">
                <children>
-                  <Button fx:id="viewReceiving" mnemonicParsing="false" style="-fx-background-color: ecf0f4;" text="View Receiving" textFill="#5580aa">
+                  <Button fx:id="viewPurchase" mnemonicParsing="false" style="-fx-background-color: ecf0f4;" text="View Purchase" textFill="#5580aa">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -66,7 +66,7 @@
                   <Insets bottom="8.0" left="16.0" right="16.0" top="8.0" />
                </padding>
             </HBox>
-            <TableView fx:id="receivingsTable" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
+            <TableView fx:id="purchasesTable" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
                <VBox.margin>
                   <Insets bottom="8.0" left="16.0" right="16.0" top="8.0" />
                </VBox.margin>

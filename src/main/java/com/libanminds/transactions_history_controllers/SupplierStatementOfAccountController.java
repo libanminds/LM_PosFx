@@ -1,10 +1,10 @@
 package com.libanminds.transactions_history_controllers;
 
-import com.libanminds.dialogs_controllers.ViewReceivingController;
-import com.libanminds.models.Receiving;
+import com.libanminds.dialogs_controllers.ViewPurchaseController;
+import com.libanminds.models.Purchase;
 import com.libanminds.models.Supplier;
 import com.libanminds.models.SupplierTransaction;
-import com.libanminds.repositories.ReceivingsRepository;
+import com.libanminds.repositories.PurchasesRepository;
 import com.libanminds.repositories.TransactionsRepository;
 import com.libanminds.utils.Constants;
 import com.libanminds.utils.GlobalSettings;
@@ -99,7 +99,7 @@ public class SupplierStatementOfAccountController implements Initializable {
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() >= 2 && (!row.isEmpty())) {
                     SupplierTransaction transaction = row.getItem();
-                    showViewReceivingDialog(ReceivingsRepository.getReceiving(transaction.getInvoiceID()));
+                    showViewPurchaseDialog(PurchasesRepository.getPurchase(transaction.getInvoiceID()));
                 }
             });
             return row;
@@ -107,14 +107,14 @@ public class SupplierStatementOfAccountController implements Initializable {
     }
 
 
-    private void showViewReceivingDialog(Receiving receiving) {
+    private void showViewPurchaseDialog(Purchase purchase) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.VIEW_RECEIVING));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.VIEW_PURCHASE));
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(loader.load()));
-            ViewReceivingController controller = loader.getController();
-            controller.setReceiving(receiving);
+            ViewPurchaseController controller = loader.getController();
+            controller.setPurchase(purchase);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();

@@ -37,9 +37,9 @@ public class MainController implements Initializable {
     @FXML
     private JFXButton menuNewSale;
     @FXML
-    private JFXButton menuReceivings;
+    private JFXButton menuPurchases;
     @FXML
-    private JFXButton menuNewReceiving;
+    private JFXButton menuNewPurchase;
     @FXML
     private JFXButton menuExpenses;
     @FXML
@@ -105,15 +105,15 @@ public class MainController implements Initializable {
         } else if (initialView.isBlank()) {
             initialView = Views.NEW_SALE;
         }
-        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_RECEIVINGS)) {
-            menu.getChildren().remove(menuReceivings);
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_PURCHASES)) {
+            menu.getChildren().remove(menuPurchases);
         } else if (initialView.isBlank()) {
-            initialView = Views.RECEIVINGS;
+            initialView = Views.PURCHASES;
         }
-        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_CREATE_RECEIVING)) {
-            menu.getChildren().remove(menuNewReceiving);
+        if (!Authorization.authorized.contains(AuthorizationKeys.CAN_CREATE_PURCHASE)) {
+            menu.getChildren().remove(menuNewPurchase);
         } else if (initialView.isBlank()) {
-            initialView = Views.NEW_RECEIVING;
+            initialView = Views.NEW_PURCHASE;
         }
         if (!Authorization.authorized.contains(AuthorizationKeys.CAN_VIEW_EXPENSES)) {
             menu.getChildren().remove(menuExpenses);
@@ -147,8 +147,8 @@ public class MainController implements Initializable {
         menuReports.setOnAction(actionEvent -> onMenuClick(Views.REPORTS));
         menuSales.setOnAction(actionEvent -> onMenuClick(Views.SALES));
         menuNewSale.setOnAction(actionEvent -> onMenuClick(Views.NEW_SALE));
-        menuReceivings.setOnAction(actionEvent -> onMenuClick(Views.RECEIVINGS));
-        menuNewReceiving.setOnAction(actionEvent -> onMenuClick(Views.NEW_RECEIVING));
+        menuPurchases.setOnAction(actionEvent -> onMenuClick(Views.PURCHASES));
+        menuNewPurchase.setOnAction(actionEvent -> onMenuClick(Views.NEW_PURCHASE));
         menuExpenses.setOnAction(actionEvent -> onMenuClick(Views.EXPENSES));
         menuIncome.setOnAction(actionEvent -> onMenuClick(Views.INCOME));
         menuEmployees.setOnAction(actionEvent -> onMenuClick(Views.EMPLOYEES));
@@ -199,11 +199,11 @@ public class MainController implements Initializable {
             case Views.NEW_SALE:
                 menuNewSale.pseudoClassStateChanged(activeView, val);
                 break;
-            case Views.RECEIVINGS:
-                menuReceivings.pseudoClassStateChanged(activeView, val);
+            case Views.PURCHASES:
+                menuPurchases.pseudoClassStateChanged(activeView, val);
                 break;
-            case Views.NEW_RECEIVING:
-                menuNewReceiving.pseudoClassStateChanged(activeView, val);
+            case Views.NEW_PURCHASE:
+                menuNewPurchase.pseudoClassStateChanged(activeView, val);
                 break;
             case Views.EXPENSES:
                 menuExpenses.pseudoClassStateChanged(activeView, val);

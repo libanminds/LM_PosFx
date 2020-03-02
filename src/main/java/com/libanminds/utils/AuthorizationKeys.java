@@ -35,12 +35,12 @@ public class AuthorizationKeys {
     public static final String CAN_RETURN_SALE_ITEMS = "can_return_sale_items";
     public static final String CAN_COMPLETE_SALE_PAYMENT = "can_complete_sale_payment";
 
-    //Receivings
-    public static final String CAN_VIEW_RECEIVINGS = "can_view_receivings";
-    public static final String CAN_CREATE_RECEIVING = "can_create_receiving";
-    public static final String CAN_VIEW_RECEIVING = "can_view_receiving";
-    public static final String CAN_RETURN_RECEIVING_ITEMS = "can_return_receiving_items";
-    public static final String CAN_COMPLETE_RECEIVING_PAYMENT = "can_complete_receiving_payment";
+    //Purchases
+    public static final String CAN_VIEW_PURCHASES = "can_view_purchases";
+    public static final String CAN_CREATE_PURCHASE = "can_create_purchase";
+    public static final String CAN_VIEW_PURCHASE = "can_view_purchase";
+    public static final String CAN_RETURN_PURCHASE_ITEMS = "can_return_purchase_items";
+    public static final String CAN_COMPLETE_PURCHASE_PAYMENT = "can_complete_purchase_payment";
 
     //Expenses
     public static final String CAN_VIEW_EXPENSES = "can_view_expenses";

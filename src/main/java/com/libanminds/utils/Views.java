@@ -10,8 +10,8 @@ public final class Views {
     public static final String REPORTS = "/views/main/reports.fxml";
     public static final String SALES = "/views/main/sales.fxml";
     public static final String NEW_SALE = "/views/main/new_sale.fxml";
-    public static final String NEW_RECEIVING = "/views/main/new_receiving.fxml";
-    public static final String RECEIVINGS = "/views/main/receivings.fxml";
+    public static final String NEW_PURCHASE = "/views/main/new_purchase.fxml";
+    public static final String PURCHASES = "/views/main/purchases.fxml";
     public static final String EXPENSES = "/views/main/expenses.fxml";
     public static final String INCOME = "/views/main/income.fxml";
     public static final String EMPLOYEES = "/views/main/employees.fxml";
@@ -32,10 +32,10 @@ public final class Views {
     public static final String SELECT_SUPPLIER = "/views/dialogs/select_supplier.fxml";
     public static final String COMPLETE_SALE = "/views/dialogs/complete_sale.fxml";
     public static final String VIEW_SALE = "/views/dialogs/view_sale.fxml";
-    public static final String COMPLETE_RECEIVING = "/views/dialogs/complete_receiving.fxml";
-    public static final String VIEW_RECEIVING = "/views/dialogs/view_receiving.fxml";
+    public static final String COMPLETE_PURCHASE = "/views/dialogs/complete_purchase.fxml";
+    public static final String VIEW_PURCHASE = "/views/dialogs/view_purchase.fxml";
     public static final String RETURN_SALE_ITEMS = "/views/dialogs/return_sale_items.fxml";
-    public static final String RETURN_RECEIVING_ITEMS = "/views/dialogs/return_receiving_items.fxml";
+    public static final String RETURN_PURCHASE_ITEMS = "/views/dialogs/return_purchase_items.fxml";
 
     //Transactions History
     public static final String CUSTOMER_STATEMENT_OF_ACCOUNT = "/views/dialogs/customer_statement_of_account.fxml";

@@ -1,7 +1,6 @@
 package com.libanminds.dialogs_controllers;
 
-import com.libanminds.main_controllers.NewReceivingController;
-import com.libanminds.main_controllers.ReportsController;
+import com.libanminds.main_controllers.NewPurchaseController;
 import com.libanminds.models.Supplier;
 import com.libanminds.reports_controllers.SuppliersReportController;
 import com.libanminds.repositories.SupplierRepository;
@@ -35,7 +34,7 @@ public class SelectSupplierDialogController implements Initializable {
 
     private Supplier selectedSupplier;
 
-    private NewReceivingController receivingController;
+    private NewPurchaseController purchaseController;
 
     private SuppliersReportController reportsController;
 
@@ -50,8 +49,8 @@ public class SelectSupplierDialogController implements Initializable {
         fromReports = false;
     }
 
-    public void setReceivingController(NewReceivingController controller) {
-        receivingController = controller;
+    public void setPurchaseController(NewPurchaseController controller) {
+        purchaseController = controller;
     }
 
     private void handleAuthorization() {
@@ -131,7 +130,7 @@ public class SelectSupplierDialogController implements Initializable {
         if (fromReports) {
             reportsController.setSelectedSupplier(selectedSupplier);
         } else {
-            receivingController.setSelectedSupplier(selectedSupplier);
+            purchaseController.setSelectedSupplier(selectedSupplier);
         }
     }
 

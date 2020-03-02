@@ -1,6 +1,6 @@
 package com.libanminds.dialogs_controllers;
 
-import com.libanminds.main_controllers.NewReceivingController;
+import com.libanminds.main_controllers.NewPurchaseController;
 import com.libanminds.main_controllers.NewSaleController;
 import com.libanminds.models.Item;
 import com.libanminds.repositories.ItemsRepository;
@@ -36,7 +36,7 @@ public class SelectItemDialogController implements Initializable {
     private Item selectedItem;
 
     private NewSaleController hostControllerSale;
-    private NewReceivingController hostControllerReceiving;
+    private NewPurchaseController hostControllerPurchase;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -46,9 +46,9 @@ public class SelectItemDialogController implements Initializable {
         handleAuthorization();
     }
 
-    public void setHostController(NewSaleController controllerSales, NewReceivingController controllerReceivings) {
+    public void setHostController(NewSaleController controllerSales, NewPurchaseController controllerPurchases) {
         hostControllerSale = controllerSales;
-        hostControllerReceiving = controllerReceivings;
+        hostControllerPurchase = controllerPurchases;
     }
 
     private void handleAuthorization() {
@@ -133,8 +133,8 @@ public class SelectItemDialogController implements Initializable {
         if (hostControllerSale != null)
             hostControllerSale.setSelectedItem(selectedItem);
 
-        if (hostControllerReceiving != null)
-            hostControllerReceiving.setSelectedItem(selectedItem);
+        if (hostControllerPurchase != null)
+            hostControllerPurchase.setSelectedItem(selectedItem);
     }
 
     public void setSelectedItem(Item item) {

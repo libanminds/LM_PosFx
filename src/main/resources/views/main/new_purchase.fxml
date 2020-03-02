@@ -19,7 +19,7 @@
 <?import org.controlsfx.control.ToggleSwitch?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="673.0" prefWidth="730.0" stylesheets="@../../css/main.css" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.main_controllers.NewReceivingController">
+<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="673.0" prefWidth="730.0" stylesheets="@../../css/main.css" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.main_controllers.NewPurchaseController">
     <content>
         <SplitPane dividerPositions="0.9" minHeight="600.0" minWidth="600.0">
             <items>
@@ -85,7 +85,7 @@
                                 <VBox prefWidth="500.0" spacing="12.0">
                                     <children>
                                         <ComboBox maxWidth="1.7976931348623157E308" promptText="Taxes" style="-fx-background-color: b0c9e3;" />
-                                        <TextField fx:id="receivingsDiscountField" promptText="Discount">
+                                        <TextField fx:id="purchasesDiscountField" promptText="Discount">
                                             <VBox.margin>
                                                 <Insets />
                                             </VBox.margin>
@@ -179,7 +179,7 @@
                               <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
                            </padding>
                         </Button>
-                        <Button fx:id="saveReceiving" mnemonicParsing="false" style="-fx-background-color: #5580aa;" text="Save" textFill="WHITE">
+                        <Button fx:id="savePurchase" mnemonicParsing="false" style="-fx-background-color: #5580aa;" text="Save" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>

@@ -47,12 +47,12 @@
                               <FontIcon iconColor="WHITE" iconLiteral="ti-plus" iconSize="20" />
                           </graphic>
                       </JFXButton>
-                      <JFXButton fx:id="menuReceivings" graphicTextGap="8.0" text="Receivings" textFill="WHITE">
+                      <JFXButton fx:id="menuPurchases" graphicTextGap="8.0" text="Purchases" textFill="WHITE">
                           <graphic>
                               <FontIcon iconColor="WHITE" iconLiteral="ti-import" iconSize="20" />
                           </graphic>
                       </JFXButton>
-                  <JFXButton fx:id="menuNewReceiving" graphicTextGap="8.0" layoutX="10.0" layoutY="297.0" text="New Receiving" textFill="WHITE">
+                  <JFXButton fx:id="menuNewPurchase" graphicTextGap="8.0" layoutX="10.0" layoutY="297.0" text="New Purchase" textFill="WHITE">
                      <graphic>
                         <FontIcon iconColor="WHITE" iconLiteral="ti-plus" iconSize="20" />
                      </graphic>

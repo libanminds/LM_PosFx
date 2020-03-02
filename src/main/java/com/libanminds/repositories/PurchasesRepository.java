@@ -1,7 +1,7 @@
 package com.libanminds.repositories;
 
 import com.libanminds.models.Item;
-import com.libanminds.models.Receiving;
+import com.libanminds.models.Purchase;
 import com.libanminds.models.Supplier;
 import com.libanminds.utils.DBConnection;
 import com.libanminds.utils.GlobalSettings;
@@ -14,30 +14,30 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-public class ReceivingsRepository {
+public class PurchasesRepository {
 
-    public static ObservableList<Receiving> getReceivings() {
+    public static ObservableList<Purchase> getPurchases() {
         String query = "SELECT * FROM purchases LEFT JOIN suppliers on purchases.supplier_id = suppliers.id WHERE total_amount != 0 ORDER BY created_at DESC";
 
-        return getReceivingsFromQuery(query, false);
+        return getPurchasesFromQuery(query, false);
     }
 
-    public static Receiving getReceiving(int receivingID) {
-        String query = "SELECT * FROM purchases LEFT JOIN suppliers on purchases.supplier_id = suppliers.id WHERE purchases.id = " + receivingID;
+    public static Purchase getPurchase(int purchaseID) {
+        String query = "SELECT * FROM purchases LEFT JOIN suppliers on purchases.supplier_id = suppliers.id WHERE purchases.id = " + purchaseID;
 
-        return getReceivingsFromQuery(query, false).get(0);
+        return getPurchasesFromQuery(query, false).get(0);
     }
 
-    public static ObservableList<Receiving> getReceivingsLike(String value) {
+    public static ObservableList<Purchase> getPurchasesLike(String value) {
         String query = "SELECT * FROM purchases LEFT JOIN suppliers on purchases.supplier_id = suppliers.id where  total_amount != 0 and (" +
                 " first_name like '%" + value + "%' or" +
                 " last_name like '%" + value + "%' or" +
                 " type like '%" + value + "%') ORDER BY created_at DESC";
 
-        return getReceivingsFromQuery(query, false);
+        return getPurchasesFromQuery(query, false);
     }
 
-    public static boolean completeReceivingPayment(int receivingID, int supplierID, double discount, double totalAmount, double paidAmount, double newPayment, String currency) {
+    public static boolean completePurchasePayment(int purchaseID, int supplierID, double discount, double totalAmount, double paidAmount, double newPayment, String currency) {
 
         String query = "UPDATE purchases SET discount = ?, total_amount = ?, paid_amount = ? where id = ?";
         PreparedStatement salesStatement = DBConnection.instance.getPreparedStatement(query);
@@ -46,7 +46,7 @@ public class ReceivingsRepository {
             salesStatement.setDouble(1, discount);
             salesStatement.setDouble(2, totalAmount);
             salesStatement.setDouble(3, paidAmount);
-            salesStatement.setInt(4, receivingID);
+            salesStatement.setInt(4, purchaseID);
             salesStatement.executeUpdate();
             salesStatement.close();
         } catch (SQLException e) {
@@ -61,7 +61,7 @@ public class ReceivingsRepository {
 
             try {
                 salesStatement.setInt(1, supplierID);
-                salesStatement.setInt(2, receivingID);
+                salesStatement.setInt(2, purchaseID);
                 salesStatement.setDouble(3, newPayment);
                 salesStatement.setString(4, currency);
                 salesStatement.setBoolean(5, false);
@@ -77,33 +77,33 @@ public class ReceivingsRepository {
         return true;
     }
 
-    public static boolean createReceiving(List<Item> items, Supplier supplier, double discount, double totalAmount, String currency, double paidAmount, boolean isOfficial, String paymentType) {
+    public static boolean createPurchase(List<Item> items, Supplier supplier, double discount, double totalAmount, String currency, double paidAmount, boolean isOfficial, String paymentType) {
 
         String query = "INSERT INTO purchases(supplier_id,discount,tax_id,conversion_rate, total_amount,currency, paid_amount,is_official,type) VALUES (?,?,?,?,?,?,?,?,?)";
 
-        PreparedStatement receivingsStatement = DBConnection.instance.getPreparedStatement(query, Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement purchasesStatement = DBConnection.instance.getPreparedStatement(query, Statement.RETURN_GENERATED_KEYS);
 
-        int receivingID = -1;
+        int purchaseID = -1;
 
         try {
-            receivingsStatement.setInt(1, supplier.getID());
-            receivingsStatement.setDouble(2, discount);
-            receivingsStatement.setInt(3, 1);
-            receivingsStatement.setDouble(4, GlobalSettings.CONVERSION_RATE_FROM_DOLLAR);
-            receivingsStatement.setDouble(5, totalAmount);
-            receivingsStatement.setString(6, currency);
-            receivingsStatement.setDouble(7, paidAmount);
-            receivingsStatement.setBoolean(8, isOfficial);
-            receivingsStatement.setString(9, paymentType);
-            receivingsStatement.executeUpdate();
+            purchasesStatement.setInt(1, supplier.getID());
+            purchasesStatement.setDouble(2, discount);
+            purchasesStatement.setInt(3, 1);
+            purchasesStatement.setDouble(4, GlobalSettings.CONVERSION_RATE_FROM_DOLLAR);
+            purchasesStatement.setDouble(5, totalAmount);
+            purchasesStatement.setString(6, currency);
+            purchasesStatement.setDouble(7, paidAmount);
+            purchasesStatement.setBoolean(8, isOfficial);
+            purchasesStatement.setString(9, paymentType);
+            purchasesStatement.executeUpdate();
 
-            ResultSet rs = receivingsStatement.getGeneratedKeys();
+            ResultSet rs = purchasesStatement.getGeneratedKeys();
 
             if (rs.next())
-                receivingID = rs.getInt(1);
+                purchaseID = rs.getInt(1);
 
             rs.close();
-            receivingsStatement.close();
+            purchasesStatement.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -113,17 +113,17 @@ public class ReceivingsRepository {
         if (paidAmount > 0) {
             query = "INSERT INTO supplier_transactions(supplier_id,invoice_id,amount,currency, is_refund) VALUES (?,?,?,?,?)";
 
-            receivingsStatement = DBConnection.instance.getPreparedStatement(query);
+            purchasesStatement = DBConnection.instance.getPreparedStatement(query);
 
             try {
-                receivingsStatement.setInt(1, supplier.getID());
-                receivingsStatement.setInt(2, receivingID);
-                receivingsStatement.setDouble(3, paidAmount);
-                receivingsStatement.setString(4, currency);
-                receivingsStatement.setBoolean(5, false);
-                receivingsStatement.executeUpdate();
+                purchasesStatement.setInt(1, supplier.getID());
+                purchasesStatement.setInt(2, purchaseID);
+                purchasesStatement.setDouble(3, paidAmount);
+                purchasesStatement.setString(4, currency);
+                purchasesStatement.setBoolean(5, false);
+                purchasesStatement.executeUpdate();
 
-                receivingsStatement.close();
+                purchasesStatement.close();
             } catch (SQLException e) {
                 e.printStackTrace();
                 return false;
@@ -131,12 +131,12 @@ public class ReceivingsRepository {
         }
 
         for (Item item : items) {
-            query = "INSERT INTO purchase_items(item_id,item_properties_id,receiving_id,quantity,discount) VALUES (?,?,?,?,?)";
+            query = "INSERT INTO purchase_items(item_id,item_properties_id,purchase_id,quantity,discount) VALUES (?,?,?,?,?)";
             PreparedStatement statement = DBConnection.instance.getPreparedStatement(query);
             try {
                 statement.setInt(1, item.getID());
                 statement.setInt(2, item.getItemPropertiesID());
-                statement.setDouble(3, receivingID);
+                statement.setDouble(3, purchaseID);
                 statement.setInt(4, item.getSaleQuantityValue());
                 statement.setDouble(5, item.getDiscountValue());
                 statement.executeUpdate();
@@ -169,15 +169,15 @@ public class ReceivingsRepository {
     }
 
 
-    public static boolean returnReceivedItems(Receiving receiving, List<Item> items, double refundedAmount) {
+    public static boolean returnPurchasedItems(Purchase purchase, List<Item> items, double refundedAmount) {
         String query = "UPDATE purchases SET discount = ?, total_amount = ?, paid_amount = ? where id = ?";
         PreparedStatement purchasesStatement = DBConnection.instance.getPreparedStatement(query);
 
         try {
-            purchasesStatement.setDouble(1, receiving.getDiscount());
-            purchasesStatement.setDouble(2, receiving.getTotalAmount());
-            purchasesStatement.setDouble(3, receiving.getPaidAmount());
-            purchasesStatement.setInt(4, receiving.getID());
+            purchasesStatement.setDouble(1, purchase.getDiscount());
+            purchasesStatement.setDouble(2, purchase.getTotalAmount());
+            purchasesStatement.setDouble(3, purchase.getPaidAmount());
+            purchasesStatement.setInt(4, purchase.getID());
             purchasesStatement.executeUpdate();
             purchasesStatement.close();
         } catch (SQLException e) {
@@ -192,10 +192,10 @@ public class ReceivingsRepository {
             purchasesStatement = DBConnection.instance.getPreparedStatement(query);
 
             try {
-                purchasesStatement.setInt(1, receiving.getSupplierID());
-                purchasesStatement.setInt(2, receiving.getID());
+                purchasesStatement.setInt(1, purchase.getSupplierID());
+                purchasesStatement.setInt(2, purchase.getID());
                 purchasesStatement.setDouble(3, refundedAmount);
-                purchasesStatement.setString(4, receiving.getCurrency());
+                purchasesStatement.setString(4, purchase.getCurrency());
                 purchasesStatement.setBoolean(5, true);
                 purchasesStatement.executeUpdate();
 
@@ -207,12 +207,12 @@ public class ReceivingsRepository {
         }
 
         for (Item item : items) {
-            query = "UPDATE purchase_items SET returned_quantity = ? where receiving_id = ? AND item_id = ?";
+            query = "UPDATE purchase_items SET returned_quantity = ? where purchase_id = ? AND item_id = ?";
             PreparedStatement itemStatement = DBConnection.instance.getPreparedStatement(query);
 
             try {
                 itemStatement.setInt(1, item.getPreviouslyReturnedQuantity() + item.getReturnedQuantityValue());
-                itemStatement.setInt(2, receiving.getID());
+                itemStatement.setInt(2, purchase.getID());
                 itemStatement.setInt(3, item.getID());
                 itemStatement.executeUpdate();
                 itemStatement.close();
@@ -238,26 +238,26 @@ public class ReceivingsRepository {
         return true;
     }
 
-    public static ObservableList<Receiving> getCompactReceivingOfCustomer(int supplierID) {
+    public static ObservableList<Purchase> getCompactPurchaseOfCustomer(int supplierID) {
 
         String query = "SELECT id, total_amount, paid_amount, currency, (total_amount - paid_amount) AS balance FROM purchases where supplier_id = " + supplierID + " ORDER BY balance DESC";
 
-        return getReceivingsFromQuery(query, true);
+        return getPurchasesFromQuery(query, true);
     }
 
-    private static ObservableList<Receiving> getReceivingsFromQuery(String query, boolean isCompact) {
-        ObservableList<Receiving> data = FXCollections.observableArrayList();
+    private static ObservableList<Purchase> getPurchasesFromQuery(String query, boolean isCompact) {
+        ObservableList<Purchase> data = FXCollections.observableArrayList();
 
         try {
             Statement statement = DBConnection.instance.getStatement();
             ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
-                data.add(isCompact ? new Receiving(
+                data.add(isCompact ? new Purchase(
                                 rs.getInt(1),
                                 rs.getDouble(2),
                                 rs.getDouble(3),
                                 rs.getString(4)
-                        ) : new Receiving(
+                        ) : new Purchase(
                                 rs.getInt(1),
                                 rs.getInt("supplier_id"),
                                 rs.getString("first_name") + rs.getString("last_name"),

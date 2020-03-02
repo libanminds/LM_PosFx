@@ -1,12 +1,12 @@
 package com.libanminds.main_controllers;
 
-import com.libanminds.dialogs_controllers.CompleteReceivingController;
+import com.libanminds.dialogs_controllers.CompletePurchaseController;
 import com.libanminds.dialogs_controllers.SelectItemDialogController;
 import com.libanminds.dialogs_controllers.SelectSupplierDialogController;
 import com.libanminds.models.Item;
-import com.libanminds.models.Receiving;
+import com.libanminds.models.Purchase;
 import com.libanminds.models.Supplier;
-import com.libanminds.repositories.ReceivingsRepository;
+import com.libanminds.repositories.PurchasesRepository;
 import com.libanminds.utils.*;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
@@ -28,7 +28,7 @@ import java.text.DecimalFormat;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class NewReceivingController implements Initializable {
+public class NewPurchaseController implements Initializable {
 
 
     @FXML
@@ -53,7 +53,7 @@ public class NewReceivingController implements Initializable {
     private TableView<Item> itemsTable;
 
     @FXML
-    private TextField receivingsDiscountField;
+    private TextField purchasesDiscountField;
 
     @FXML
     private Label subtotalText;
@@ -77,20 +77,20 @@ public class NewReceivingController implements Initializable {
     private Label remainingAmountText;
 
     @FXML
-    private Button saveReceiving;
+    private Button savePurchase;
 
     @FXML
-    private TableView<Receiving> pastInvoicesTable;
+    private TableView<Purchase> pastInvoicesTable;
 
 
     private Supplier selectedSupplier;
     // The item returned from the select item window
     private Item selectedItem;
-    //The item selected in the Receiving table
-    private Item selectedReceivingItem;
+    //The item selected in the Purchase table
+    private Item selectedPurchaseItem;
 
     private double subtotal;
-    private double receivingDiscount;
+    private double purchaseDiscount;
     private double taxes;
     private double amountPaid;
     private double totalAmount;
@@ -107,16 +107,16 @@ public class NewReceivingController implements Initializable {
     }
 
     private void initFilters() {
-        receivingsDiscountField.setTextFormatter(HelperFunctions.getUnsignedNumberFilter());
+        purchasesDiscountField.setTextFormatter(HelperFunctions.getUnsignedNumberFilter());
         amountPaidField.setTextFormatter(HelperFunctions.getUnsignedNumberFilter());
     }
 
     private void initButtonsClicks() {
         selectSupplierBtn.setOnMouseClicked((EventHandler<Event>) event -> showSelectSupplierDialog());
         addItemBtn.setOnMouseClicked((EventHandler<Event>) event -> showSelectItemDialog());
-        saveReceiving.setOnMouseClicked((EventHandler<Event>) event -> createReceiving());
+        savePurchase.setOnMouseClicked((EventHandler<Event>) event -> createPurchase());
         deleteItemBtn.setOnMouseClicked((EventHandler<Event>) event -> showDeleteConfirmationDialog());
-        deleteItemBtn.setDisable(selectedReceivingItem == null);
+        deleteItemBtn.setDisable(selectedPurchaseItem == null);
     }
 
     private void showSelectSupplierDialog() {
@@ -126,7 +126,7 @@ public class NewReceivingController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(loader.load()));
             SelectSupplierDialogController controller = loader.getController();
-            controller.setReceivingController(this);
+            controller.setPurchaseController(this);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -150,7 +150,7 @@ public class NewReceivingController implements Initializable {
     private void showDeleteConfirmationDialog() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Delete Confirmation");
-        alert.setHeaderText("Are you sure you want to delete " + selectedReceivingItem.getName() + "?");
+        alert.setHeaderText("Are you sure you want to delete " + selectedPurchaseItem.getName() + "?");
 
         ButtonType yesButton = new ButtonType("Yes");
         ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
@@ -160,8 +160,8 @@ public class NewReceivingController implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.get() == yesButton) {
-            itemsTable.getItems().remove(selectedReceivingItem);
-            receivingsDiscountField.setText((receivingDiscount = 0) + "");
+            itemsTable.getItems().remove(selectedPurchaseItem);
+            purchasesDiscountField.setText((purchaseDiscount = 0) + "");
             amountPaidField.setText((amountPaid = 0) + "");
             calculateSubtotal();
             recalculateNumbers();
@@ -170,13 +170,13 @@ public class NewReceivingController implements Initializable {
         }
     }
 
-    private void createReceiving() {
+    private void createPurchase() {
         if (itemsTable.getItems().isEmpty()) return;
 
-        ReceivingsRepository.createReceiving(
+        PurchasesRepository.createPurchase(
                 itemsTable.getItems(),
                 selectedSupplier,
-                markAsDiscount.isSelected() ? remainingAmount + receivingDiscount : receivingDiscount,
+                markAsDiscount.isSelected() ? remainingAmount + purchaseDiscount : purchaseDiscount,
                 markAsDiscount.isSelected() ? totalAmount - remainingAmount : totalAmount,
                 currencyChoiceBox.getValue(),
                 amountPaid,
@@ -188,7 +188,7 @@ public class NewReceivingController implements Initializable {
 
     private void clearChanges() {
         subtotal = 0;
-        receivingDiscount = 0;
+        purchaseDiscount = 0;
         taxes = 0;
         amountPaid = 0;
         totalAmount = 0;
@@ -199,7 +199,7 @@ public class NewReceivingController implements Initializable {
         pastInvoicesTable.getItems().clear();
         amountPaidField.setText("");
         markAsDiscount.setSelected(false);
-        receivingsDiscountField.setText("");
+        purchasesDiscountField.setText("");
         isOfficialToggle.setSelected(false);
         updateNumbersUI();
     }
@@ -209,7 +209,7 @@ public class NewReceivingController implements Initializable {
         if (selectedSupplier != null) {
 
             supplierName.setText(selectedSupplier.getName());
-            pastInvoicesTable.setItems(ReceivingsRepository.getCompactReceivingOfCustomer(selectedSupplier.getID()));
+            pastInvoicesTable.setItems(PurchasesRepository.getCompactPurchaseOfCustomer(selectedSupplier.getID()));
         } else {
             supplierName.setText("Guest");
             pastInvoicesTable.getItems().clear();
@@ -285,8 +285,8 @@ public class NewReceivingController implements Initializable {
         //ITEMS TABLE ENDS
 
         //PAST INVOICES TABLE STARTS
-        TableColumn<Receiving, String> invoiceTotalAmountCol = new TableColumn<>("Total Amount");
-        TableColumn<Receiving, String> invoiceBalanceCol = new TableColumn<>("Balance");
+        TableColumn<Purchase, String> invoiceTotalAmountCol = new TableColumn<>("Total Amount");
+        TableColumn<Purchase, String> invoiceBalanceCol = new TableColumn<>("Balance");
 
         pastInvoicesTable.getColumns().addAll(invoiceTotalAmountCol, invoiceBalanceCol);
 
@@ -294,13 +294,13 @@ public class NewReceivingController implements Initializable {
         invoiceBalanceCol.setCellValueFactory(new PropertyValueFactory<>("formattedBalance"));
 
         pastInvoicesTable.setRowFactory(tv -> {
-            TableRow<Receiving> row = new TableRow<>();
+            TableRow<Purchase> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() >= 2 && (!row.isEmpty())) {
-                    if (!Authorization.authorized.contains(AuthorizationKeys.CAN_RETURN_RECEIVING_ITEMS))
+                    if (!Authorization.authorized.contains(AuthorizationKeys.CAN_RETURN_PURCHASE_ITEMS))
                         return;
-                    Receiving compactReceiving = row.getItem();
-                    showCompleteReceivingDialog(ReceivingsRepository.getReceiving(compactReceiving.getID()));
+                    Purchase compactPurchase = row.getItem();
+                    showCompletePurchaseDialog(PurchasesRepository.getPurchase(compactPurchase.getID()));
                 }
             });
             return row;
@@ -308,17 +308,17 @@ public class NewReceivingController implements Initializable {
         //PAST INVOICES TABLE ENDS
     }
 
-    private void showCompleteReceivingDialog(Receiving receiving) {
+    private void showCompletePurchaseDialog(Purchase purchase) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.COMPLETE_RECEIVING));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.COMPLETE_PURCHASE));
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(loader.load()));
-            CompleteReceivingController controller = loader.getController();
-            controller.setReceiving(receiving);
+            CompletePurchaseController controller = loader.getController();
+            controller.setPurchase(purchase);
             stage.show();
             stage.setOnHidden(e -> {
-                pastInvoicesTable.setItems(ReceivingsRepository.getCompactReceivingOfCustomer(selectedSupplier.getID()));
+                pastInvoicesTable.setItems(PurchasesRepository.getCompactPurchaseOfCustomer(selectedSupplier.getID()));
             });
         } catch (Exception e) {
 
@@ -328,8 +328,8 @@ public class NewReceivingController implements Initializable {
 
     private void setTableListener() {
         itemsTable.selectionModelProperty().get().selectedItemProperty().addListener((ChangeListener) (observable, oldValue, newValue) -> {
-            selectedReceivingItem = (Item) newValue;
-            deleteItemBtn.setDisable(selectedReceivingItem == null);
+            selectedPurchaseItem = (Item) newValue;
+            deleteItemBtn.setDisable(selectedPurchaseItem == null);
         });
     }
 
@@ -343,11 +343,11 @@ public class NewReceivingController implements Initializable {
             recalculateNumbers();
         });
 
-        receivingsDiscountField.textProperty().addListener((observable, oldValue, newValue) -> {
-            receivingDiscount = (newValue.isEmpty() ? 0 : Double.parseDouble(newValue));
+        purchasesDiscountField.textProperty().addListener((observable, oldValue, newValue) -> {
+            purchaseDiscount = (newValue.isEmpty() ? 0 : Double.parseDouble(newValue));
 
-            if (receivingDiscount > (subtotal - amountPaid)) {
-                receivingsDiscountField.setText(oldValue);
+            if (purchaseDiscount > (subtotal - amountPaid)) {
+                purchasesDiscountField.setText(oldValue);
             }
             recalculateNumbers();
         });
@@ -380,7 +380,7 @@ public class NewReceivingController implements Initializable {
     }
 
     private void recalculateNumbers() {
-        totalAmount = subtotal - receivingDiscount - taxes;
+        totalAmount = subtotal - purchaseDiscount - taxes;
         remainingAmount = totalAmount - amountPaid;
 
         updateNumbersUI();
@@ -389,7 +389,7 @@ public class NewReceivingController implements Initializable {
     private void updateNumbersUI() {
         DecimalFormat formatter = HelperFunctions.getDecimalFormatter();
         subtotalText.setText(formatter.format(subtotal) + " " + currencyChoiceBox.getValue());
-        discountText.setText(formatter.format(receivingDiscount) + " " + currencyChoiceBox.getValue());
+        discountText.setText(formatter.format(purchaseDiscount) + " " + currencyChoiceBox.getValue());
         taxesText.setText(formatter.format(taxes) + " " + currencyChoiceBox.getValue());
         totalText.setText(formatter.format(totalAmount) + " " + currencyChoiceBox.getValue());
         remainingAmountText.setText(formatter.format(remainingAmount) + " " + currencyChoiceBox.getValue());

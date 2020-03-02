@@ -1,7 +1,7 @@
 package com.libanminds.dialogs_controllers;
 
 import com.libanminds.models.Item;
-import com.libanminds.models.Receiving;
+import com.libanminds.models.Purchase;
 import com.libanminds.models.SupplierTransaction;
 import com.libanminds.repositories.ItemsRepository;
 import com.libanminds.repositories.TransactionsRepository;
@@ -17,7 +17,7 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
-public class ViewReceivingController implements Initializable {
+public class ViewPurchaseController implements Initializable {
 
     @FXML
     private TableView<Item> itemsTable;
@@ -50,31 +50,31 @@ public class ViewReceivingController implements Initializable {
     private Label supplierName;
 
     private double subtotal;
-    private double receivingDiscount;
+    private double purchaseDiscount;
     private double taxes;
     private double totalAmount;
     private double amountPaid;
     private double remainingAmount;
 
-    private Receiving receiving;
+    private Purchase purchase;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
 
-    public void setReceiving(Receiving receiving) {
-        this.receiving = receiving;
+    public void setPurchase(Purchase purchase) {
+        this.purchase = purchase;
         initNumbers();
         updateNumbersUI();
         initializeTable();
-        initLabels(receiving.getSupplierName());
+        initLabels(purchase.getSupplierName());
     }
 
     private void initNumbers() {
-        subtotal = receiving.getTotalAmount() + receiving.getDiscount();
-        receivingDiscount = receiving.getDiscount();
-        totalAmount = receiving.getTotalAmount();
-        amountPaid = receiving.getPaidAmount();
+        subtotal = purchase.getTotalAmount() + purchase.getDiscount();
+        purchaseDiscount = purchase.getDiscount();
+        totalAmount = purchase.getTotalAmount();
+        amountPaid = purchase.getPaidAmount();
         remainingAmount = totalAmount - amountPaid;
     }
 
@@ -99,7 +99,7 @@ public class ViewReceivingController implements Initializable {
         saleDiscountCol.setCellValueFactory(new PropertyValueFactory<>("formattedDiscount"));
         totalPriceCol.setCellValueFactory(new PropertyValueFactory<>("formattedTotal"));
 
-        itemsTable.setItems(ItemsRepository.getItemsOfReceiving(receiving));
+        itemsTable.setItems(ItemsRepository.getItemsOfPurchase(purchase));
 
 
         TableColumn<SupplierTransaction, String> transactionAmount = new TableColumn<>("Amount");
@@ -112,7 +112,7 @@ public class ViewReceivingController implements Initializable {
         transactionIsRefund.setCellValueFactory(new PropertyValueFactory<>("isRefund"));
         transactionDate.setCellValueFactory(new PropertyValueFactory<>("transactionDate"));
 
-        transactionsTable.setItems(TransactionsRepository.getReceivingTransactions(receiving));
+        transactionsTable.setItems(TransactionsRepository.getPurchaseTransactions(purchase));
 
         TableColumn<Item, String> itemCode = new TableColumn<>("Code");
         TableColumn<Item, String> itemName = new TableColumn<>("Name");
@@ -124,16 +124,16 @@ public class ViewReceivingController implements Initializable {
         itemName.setCellValueFactory(new PropertyValueFactory<>("name"));
         returnedQuantity.setCellValueFactory(new PropertyValueFactory<>("previouslyReturnedQuantity"));
 
-        returnedItemsTable.setItems(ItemsRepository.getReturnedItemsOfReceiving(receiving));
+        returnedItemsTable.setItems(ItemsRepository.getReturnedItemsOfPurchase(purchase));
     }
 
     private void updateNumbersUI() {
         DecimalFormat formatter = HelperFunctions.getDecimalFormatter();
-        subtotalText.setText(formatter.format(subtotal) + " " + receiving.getCurrency());
-        discountText.setText(formatter.format(receivingDiscount) + " " + receiving.getCurrency());
-        taxesText.setText(formatter.format(taxes) + " " + receiving.getCurrency());
-        amountPaidText.setText(formatter.format(amountPaid) + " " + receiving.getCurrency());
-        totalText.setText(formatter.format(totalAmount) + " " + receiving.getCurrency());
-        remainingAmountLabel.setText(formatter.format(remainingAmount) + " " + receiving.getCurrency());
+        subtotalText.setText(formatter.format(subtotal) + " " + purchase.getCurrency());
+        discountText.setText(formatter.format(purchaseDiscount) + " " + purchase.getCurrency());
+        taxesText.setText(formatter.format(taxes) + " " + purchase.getCurrency());
+        amountPaidText.setText(formatter.format(amountPaid) + " " + purchase.getCurrency());
+        totalText.setText(formatter.format(totalAmount) + " " + purchase.getCurrency());
+        remainingAmountLabel.setText(formatter.format(remainingAmount) + " " + purchase.getCurrency());
     }
 }

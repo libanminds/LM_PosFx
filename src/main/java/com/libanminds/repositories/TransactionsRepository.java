@@ -29,8 +29,8 @@ public class TransactionsRepository {
         return getCustomerTransactionsFromQuery(query);
     }
 
-    public static ObservableList<SupplierTransaction> getReceivingTransactions(Receiving receiving) {
-        String query = "SELECT * FROM supplier_transactions where invoice_id = " + receiving.getID() + " ORDER BY created_at DESC";
+    public static ObservableList<SupplierTransaction> getPurchaseTransactions(Purchase purchase) {
+        String query = "SELECT * FROM supplier_transactions where invoice_id = " + purchase.getID() + " ORDER BY created_at DESC";
 
         return getSupplierTransactionsFromQuery(query);
     }

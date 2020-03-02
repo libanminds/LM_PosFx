@@ -93,7 +93,7 @@ public class DashboardController implements Initializable {
 
     private void initQuickLinksCards() {
         startNewSale.setOnMouseClicked((EventHandler<Event>) event -> LaunchNewSale());
-        addNewPurchase.setOnMouseClicked((EventHandler<Event>) event -> LaunchNewReceiving());
+        addNewPurchase.setOnMouseClicked((EventHandler<Event>) event -> LaunchNewPurchase());
         viewReports.setOnMouseClicked((EventHandler<Event>) event -> LaunchReports());
     }
 
@@ -101,8 +101,8 @@ public class DashboardController implements Initializable {
         MainController.instance.onMenuClick(Views.NEW_SALE);
     }
 
-    private void LaunchNewReceiving() {
-        MainController.instance.onMenuClick(Views.NEW_RECEIVING);
+    private void LaunchNewPurchase() {
+        MainController.instance.onMenuClick(Views.NEW_PURCHASE);
     }
 
     private void LaunchReports() {

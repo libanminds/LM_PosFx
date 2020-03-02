@@ -47,10 +47,10 @@
                               <VBox spacing="8.0" styleClass="card-body">
                                  <children>
                                     <JFXCheckBox text="Choose Quantity After Adding Item In Sales" />
-                                    <JFXCheckBox text="Choose Quantity After Adding Item In Receivings" />
-                                    <JFXCheckBox text="Auto Focus On Item Field When Using Sales/Receivings Interfaces" />
+                                    <JFXCheckBox text="Choose Quantity After Adding Item In Purchases" />
+                                    <JFXCheckBox text="Auto Focus On Item Field When Using Sales/Purchases Interfaces" />
                                     <JFXCheckBox text="Disable Confirmation For Complete Sale" />
-                                    <JFXCheckBox text="Disable Confirmation For Complete Receiving" />
+                                    <JFXCheckBox text="Disable Confirmation For Complete Purchase" />
                                     <JFXCheckBox text="Group Items That Are The Same" />
                                     <JFXCheckBox text="Allow Items To Be Sold Below Cost Price" />
                                     <JFXCheckBox text="Allow Out Of Stock Items To Be Sold" />
@@ -101,7 +101,7 @@
                                             <children>
                                                 <JFXCheckBox text="Flat Discount Also Discounts Tax " />
                                                 <JFXCheckBox text="Prices Include Tax" />
-                                                <JFXCheckBox text="Charge Tax On Receivings" />
+                                                <JFXCheckBox text="Charge Tax On Purchases" />
                                             </children>
                                         </VBox>
                                         <HBox alignment="CENTER_RIGHT" spacing="8.0">

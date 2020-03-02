@@ -39,16 +39,16 @@ public class ItemsRepository {
         return getItemsOfSAPFromQuery(query, sale.getCurrency());
     }
 
-    public static ObservableList<Item> getItemsOfReceiving(Receiving receiving) {
-        String query = "SELECT * FROM items INNER JOIN purchase_items ON items.id = purchase_items.item_id LEFT JOIN item_properties ON items.item_properties_id = item_properties.id where receiving_id = " + receiving.getID();
+    public static ObservableList<Item> getItemsOfPurchase(Purchase purchase) {
+        String query = "SELECT * FROM items INNER JOIN purchase_items ON items.id = purchase_items.item_id LEFT JOIN item_properties ON items.item_properties_id = item_properties.id where purchase_id = " + purchase.getID();
 
-        return getItemsOfSAPFromQuery(query, receiving.getCurrency());
+        return getItemsOfSAPFromQuery(query, purchase.getCurrency());
     }
 
-    public static ObservableList<Item> getReturnedItemsOfReceiving(Receiving receiving) {
-        String query = "SELECT * FROM items INNER JOIN purchase_items ON items.id = purchase_items.item_id LEFT JOIN item_properties ON items.item_properties_id = item_properties.id where  returned_quantity > 0 and receiving_id = " + receiving.getID();
+    public static ObservableList<Item> getReturnedItemsOfPurchase(Purchase purchase) {
+        String query = "SELECT * FROM items INNER JOIN purchase_items ON items.id = purchase_items.item_id LEFT JOIN item_properties ON items.item_properties_id = item_properties.id where  returned_quantity > 0 and purchase_id = " + purchase.getID();
 
-        return getItemsOfSAPFromQuery(query, receiving.getCurrency());
+        return getItemsOfSAPFromQuery(query, purchase.getCurrency());
     }
 
     public static boolean addItem(Item item) {

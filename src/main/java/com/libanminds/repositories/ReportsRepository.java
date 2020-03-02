@@ -28,16 +28,17 @@ public class ReportsRepository {
     }
 
     //Returns for each sale the total amount, returned amount, paid amount, remaining amount and the discount that was made on the sale (not items individually)
-    public static ArrayList<Sale> getInfoOfSales(String dateFrom, String dateTo) {
-        String query = "SELECT sales.id, total_amount, paid_amount, sales.currency, sales.discount, SUM((returned_quantity * ((CASE WHEN sales.currency != item_properties.currency THEN (CASE WHEN sales.currency = '"+ Constants.DOLLAR_CURRENCY +"' THEN item_properties.price * "+ 1/GlobalSettings.CONVERSION_RATE_FROM_DOLLAR +" ELSE item_properties.price * "+ GlobalSettings.CONVERSION_RATE_FROM_DOLLAR +" END) ELSE item_properties.price END) - sale_items.discount))) AS returned_amount FROM sale_items LEFT JOIN sales ON sale_id = sales.id LEFT JOIN item_properties ON item_properties_id = item_properties.id WHERE date(sales.created_at) >= date('"+dateFrom+"') and date(sales.created_at) <= date('"+dateTo+"') GROUP BY sales.id";
+    //Returns for each purchase the total amount, returned amount, paid amount, remaining amount and the discount that was made on the purchase (not items individually)
+    public static ArrayList<Purchase> getInfoOfPurchases(String dateFrom, String dateTo) {
+        String query = "SELECT purchases.id, total_amount, paid_amount, purchases.currency, purchases.discount, SUM((returned_quantity * ((CASE WHEN purchases.currency != item_properties.currency THEN (CASE WHEN purchases.currency = '"+ Constants.DOLLAR_CURRENCY +"' THEN item_properties.price * "+ 1/GlobalSettings.CONVERSION_RATE_FROM_DOLLAR +" ELSE item_properties.price * "+ GlobalSettings.CONVERSION_RATE_FROM_DOLLAR +" END) ELSE item_properties.price END) - purchase_items.discount))) AS returned_amount FROM purchase_items LEFT JOIN purchases ON purchase_id = purchases.id LEFT JOIN item_properties ON item_properties_id = item_properties.id WHERE date(purchases.created_at) >= date('"+dateFrom+"') and date(purchases.created_at) <= date('"+dateTo+"') GROUP BY purchases.id";
 
-        ArrayList<Sale> data = new ArrayList<>();
+        ArrayList<Purchase> data = new ArrayList<>();
 
         try {
             Statement statement = DBConnection.instance.getStatement();
             ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
-                data.add(new Sale(
+                data.add(new Purchase(
                         rs.getInt(1),
                         rs.getDouble("total_amount"),
                         rs.getDouble("paid_amount"),
@@ -52,17 +53,16 @@ public class ReportsRepository {
         return data;
     }
 
-    //Returns for each receiving the total amount, returned amount, paid amount, remaining amount and the discount that was made on the receiving (not items individually)
-    public static ArrayList<Receiving> getInfoOfPurchases(String dateFrom, String dateTo) {
-        String query = "SELECT purchases.id, total_amount, paid_amount, purchases.currency, purchases.discount, SUM((returned_quantity * ((CASE WHEN purchases.currency != item_properties.currency THEN (CASE WHEN purchases.currency = '"+ Constants.DOLLAR_CURRENCY +"' THEN item_properties.price * "+ 1/GlobalSettings.CONVERSION_RATE_FROM_DOLLAR +" ELSE item_properties.price * "+ GlobalSettings.CONVERSION_RATE_FROM_DOLLAR +" END) ELSE item_properties.price END) - purchase_items.discount))) AS returned_amount FROM purchase_items LEFT JOIN purchases ON receiving_id = purchases.id LEFT JOIN item_properties ON item_properties_id = item_properties.id WHERE date(purchases.created_at) >= date('"+dateFrom+"') and date(purchases.created_at) <= date('"+dateTo+"') GROUP BY purchases.id";
+    public static ArrayList<Sale> getInfoOfSales(String dateFrom, String dateTo) {
+        String query = "SELECT sales.id, total_amount, paid_amount, sales.currency, sales.discount, SUM((returned_quantity * ((CASE WHEN sales.currency != item_properties.currency THEN (CASE WHEN sales.currency = '"+ Constants.DOLLAR_CURRENCY +"' THEN item_properties.price * "+ 1/GlobalSettings.CONVERSION_RATE_FROM_DOLLAR +" ELSE item_properties.price * "+ GlobalSettings.CONVERSION_RATE_FROM_DOLLAR +" END) ELSE item_properties.price END) - sale_items.discount))) AS returned_amount FROM sale_items LEFT JOIN sales ON sale_id = sales.id LEFT JOIN item_properties ON item_properties_id = item_properties.id WHERE date(sales.created_at) >= date('"+dateFrom+"') and date(sales.created_at) <= date('"+dateTo+"') GROUP BY sales.id";
 
-        ArrayList<Receiving> data = new ArrayList<>();
+        ArrayList<Sale> data = new ArrayList<>();
 
         try {
             Statement statement = DBConnection.instance.getStatement();
             ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
-                data.add(new Receiving(
+                data.add(new Sale(
                         rs.getInt(1),
                         rs.getDouble("total_amount"),
                         rs.getDouble("paid_amount"),
@@ -102,7 +102,7 @@ public class ReportsRepository {
     }
 
     public static ArrayList<CompactReportItem> getItemsBoughtFromSupplier(int supplierID, String dateFrom, String dateTo) {
-        String query = "SELECT items.code, items.name, SUM(purchase_items.quantity) AS quantity_bought, SUM(purchase_items.returned_quantity) AS quantity_returned FROM purchase_items LEFT JOIN items ON item_id = items.id LEFT JOIN purchases ON receiving_id = purchases.id WHERE supplier_id = "+ supplierID +" and date(purchase_items.created_at) >= date('"+dateFrom+"') and date(purchase_items.created_at) <= date('"+dateTo+"') GROUP BY item_id";
+        String query = "SELECT items.code, items.name, SUM(purchase_items.quantity) AS quantity_bought, SUM(purchase_items.returned_quantity) AS quantity_returned FROM purchase_items LEFT JOIN items ON item_id = items.id LEFT JOIN purchases ON purchase_id = purchases.id WHERE supplier_id = "+ supplierID +" and date(purchase_items.created_at) >= date('"+dateFrom+"') and date(purchase_items.created_at) <= date('"+dateTo+"') GROUP BY item_id";
 
         return getCompactReportItemsFromQuery(query, false);
     }
