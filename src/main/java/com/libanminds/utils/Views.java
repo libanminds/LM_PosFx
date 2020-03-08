@@ -18,6 +18,7 @@ public final class Views {
     public static final String SETTINGS = "/views/main/settings.fxml";
 
     //Dialogs
+    public static final String ADD_CAR = "/views/dialogs/add_car.fxml";
     public static final String ADD_CUSTOMER = "/views/dialogs/add_customer.fxml";
     public static final String ADD_SUPPLIER = "/views/dialogs/add_supplier.fxml";
     public static final String ADD_EXPENSE = "/views/dialogs/add_expense.fxml";
@@ -27,6 +28,7 @@ public final class Views {
     public static final String ADD_ITEM_CATEGORY = "/views/dialogs/add_item_category.fxml";
     public static final String ADD_INCOME_TYPE = "/views/dialogs/add_income_type.fxml";
     public static final String ADD_EXPENSE_TYPE = "/views/dialogs/add_expense_type.fxml";
+    public static final String SELECT_CAR = "/views/dialogs/select_car.fxml";
     public static final String SELECT_CUSTOMER = "/views/dialogs/select_customer.fxml";
     public static final String SELECT_ITEM = "/views/dialogs/select_item.fxml";
     public static final String SELECT_SUPPLIER = "/views/dialogs/select_supplier.fxml";

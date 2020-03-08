@@ -45,26 +45,29 @@
                                        <font>
                                           <Font name="System Bold" size="15.0" />
                                        </font></Button>
-                                    <Region prefHeight="31.0" prefWidth="80.0" />
+                                    <Region HBox.hgrow="ALWAYS" />
                                     <FontIcon iconColor="#006372" iconLiteral="ti-car" iconSize="18">
                                        <HBox.margin>
                                           <Insets />
                                        </HBox.margin>
                                     </FontIcon>
-                                    <ComboBox maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="94.0" promptText="Cars" style="-fx-background-color: b0c9e3;" />
+                                    <Label fx:id="carName" text="None" textFill="#006372">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="selectCarBtn" mnemonicParsing="false" style="-fx-background-color: #5580aa;" text="Select Car" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Button>
                                  </children>
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="26.0" prefWidth="166.0" spacing="8.0">
                                  <VBox.margin>
                                     <Insets />
                                  </VBox.margin>
                               </HBox>
                            </children>
                         </VBox>
-                        <VBox alignment="TOP_CENTER" prefWidth="400.0" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
@@ -72,18 +75,19 @@
                   </HBox>
                   <HBox alignment="BASELINE_LEFT" spacing="8.0">
                      <children>
-                        <Button fx:id="deleteItem" mnemonicParsing="false" style="-fx-background-color: ecf0f4;" text="Delete Item" textFill="#5580aa">
+                        <Button fx:id="deleteItem" minWidth="120.0" mnemonicParsing="false" style="-fx-background-color: ecf0f4;" text="Delete Item" textFill="#5580aa">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font></Button>
-                        <Button fx:id="selectItemBtn" mnemonicParsing="false" style="-fx-background-color: #5580aa;" text="Add Item" textFill="WHITE">
+                        <Button fx:id="selectItemBtn" minWidth="120.0" mnemonicParsing="false" style="-fx-background-color: #5580aa;" text="Add Item" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font></Button>
                         <Region prefHeight="44.0" prefWidth="177.0" HBox.hgrow="ALWAYS" />
-                        <ToggleSwitch fx:id="isOfficialToggle" text="Unofficial" />
+                        <ToggleSwitch fx:id="isOfficialToggle" minWidth="60.0" text="SA1" />
+                        <Label minWidth="30.0" text="SA2" />
                         <Region prefHeight="15.0" prefWidth="49.0" />
-                        <ComboBox fx:id="currencyChoiceBox" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="63.0" promptText="Currency" style="-fx-background-color: b0c9e3;" />
+                        <ComboBox fx:id="currencyChoiceBox" maxWidth="1.7976931348623157E308" minWidth="100.0" promptText="Currency" style="-fx-background-color: b0c9e3;" />
                      </children>
                      <VBox.margin>
                         <Insets left="8.0" right="8.0" />
@@ -104,7 +108,11 @@
                      <children>
                         <VBox prefHeight="170.0" prefWidth="381.0" spacing="12.0">
                            <children>
-                              <ComboBox maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="234.0" promptText="Taxes" style="-fx-background-color: b0c9e3;" />
+                              <Label text="Overall discount:" textFill="#5480a8">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
                               <TextField fx:id="saleDiscountTextField" promptText="Discount">
                                  <VBox.margin>
                                     <Insets />
@@ -194,7 +202,7 @@
                   </HBox>
                   <HBox alignment="CENTER_RIGHT" spacing="12.0">
                      <children>
-                        <Button fx:id="Clear" mnemonicParsing="false" style="-fx-background-color: ecf0f4;" text="Clear" textFill="#5580aa">
+                        <Button fx:id="clearSale" mnemonicParsing="false" style="-fx-background-color: ecf0f4;" text="Clear" textFill="#5580aa">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>

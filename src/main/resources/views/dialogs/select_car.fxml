@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="600.0" prefWidth="600.0" VBox.vgrow="ALWAYS"
+            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.libanminds.dialogs_controllers.SelectCarDialogController">
+    <VBox minHeight="600.0" prefHeight="600.0" prefWidth="644.0" stylesheets="@../../css/main.css">
+        <HBox alignment="CENTER_LEFT" spacing="8.0">
+            <padding>
+                <Insets bottom="8.0" left="16.0" right="16.0" top="8.0"/>
+            </padding>
+            <TextField fx:id="searchField" prefWidth="300.0" promptText="Search Cars">
+                <font>
+                    <Font size="14.0"/>
+                </font>
+            </TextField>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button fx:id="newCarBtn" graphicTextGap="8.0" mnemonicParsing="false"
+                    style="-fx-background-color: #5580aa;" text="Add Car" textFill="WHITE">
+                <font>
+                    <Font name="System Bold" size="15.0"/>
+                </font>
+                <padding>
+                    <Insets bottom="5.0" left="30.0" right="30.0" top="5.0"/>
+                </padding>
+            </Button>
+        </HBox>
+        <TableView fx:id="carsTable" editable="true" maxHeight="1.7976931348623157E308"
+                   maxWidth="1.7976931348623157E308" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
+            <VBox.margin>
+                <Insets bottom="8.0" left="16.0" right="16.0" top="8.0"/>
+            </VBox.margin>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+            </columnResizePolicy>
+        </TableView>
+    </VBox>
+</ScrollPane>

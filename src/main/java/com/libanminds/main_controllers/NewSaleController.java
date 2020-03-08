@@ -1,8 +1,10 @@
 package com.libanminds.main_controllers;
 
 import com.libanminds.dialogs_controllers.CompleteSaleController;
+import com.libanminds.dialogs_controllers.SelectCarDialogController;
 import com.libanminds.dialogs_controllers.SelectCustomerDialogController;
 import com.libanminds.dialogs_controllers.SelectItemDialogController;
+import com.libanminds.models.Car;
 import com.libanminds.models.Customer;
 import com.libanminds.models.Item;
 import com.libanminds.models.Sale;
@@ -31,56 +33,47 @@ import java.util.ResourceBundle;
 public class NewSaleController implements Initializable {
 
     @FXML
+    public Label carName;
+    @FXML
+    public Button selectCarBtn;
+    @FXML
     private Label customerName;
-
     @FXML
     private Button selectCustomerBtn;
-
     @FXML
     private Button selectItemBtn;
-
     @FXML
     private Button deleteItem;
-
     @FXML
     private Button saveSale;
-
+    @FXML
+    private Button clearSale;
     @FXML
     private TextField amountPaidField;
-
     @FXML
     private TableView<Item> itemsTable;
-
     @FXML
     private TableView<Sale> pastInvoicesTable;
-
     @FXML
     private TextField saleDiscountTextField;
-
     @FXML
     private Label subtotalText;
-
     @FXML
     private Label discountText;
-
     @FXML
     private Label taxesText;
-
     @FXML
     private Label totalText;
-
     @FXML
     private CheckBox markAsDiscount;
-
     @FXML
     private Label remainingAmountLabel;
-
     @FXML
     private ComboBox<String> currencyChoiceBox;
-
     @FXML
     private ToggleSwitch isOfficialToggle;
 
+    private Car selectedCar;
     private Customer selectedCustomer;
     // The item returned from the select item window
     private Item selectedItem;
@@ -111,10 +104,13 @@ public class NewSaleController implements Initializable {
 
     private void initButtonsClicks() {
         selectCustomerBtn.setOnMouseClicked((EventHandler<Event>) event -> showSelectCustomerDialog());
+        selectCarBtn.setOnMouseClicked((EventHandler<Event>) event -> showSelectCarDialog());
         selectItemBtn.setOnMouseClicked((EventHandler<Event>) event -> showSelectItemDialog());
         saveSale.setOnMouseClicked((EventHandler<Event>) event -> createSale());
+        clearSale.setOnMouseClicked((EventHandler<Event>) event -> clearChanges());
         deleteItem.setOnMouseClicked((EventHandler<Event>) event -> showDeleteConfirmationDialog());
         deleteItem.setDisable(selectedSaleItem == null);
+        selectCarBtn.setDisable(true);
     }
 
     //DIALOGS LAUNCHERS BEGINS
@@ -138,6 +134,21 @@ public class NewSaleController implements Initializable {
             recalculateNumbers();
         } else {
             alert.close();
+        }
+    }
+
+    private void showSelectCarDialog() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Views.SELECT_CAR));
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(loader.load()));
+            SelectCarDialogController controller = loader.getController();
+            controller.setSaleController(this);
+            controller.setOwnerId(selectedCustomer == null ? -1 : selectedCustomer.getID());
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -280,6 +291,7 @@ public class NewSaleController implements Initializable {
         SalesRepository.createSale(
                 itemsTable.getItems(),
                 selectedCustomer,
+                selectedCar == null ? -1 : selectedCar.getID(),
                 markAsDiscount.isSelected() ? remainingAmount + salesDiscount : salesDiscount,
                 markAsDiscount.isSelected() ? totalAmount - remainingAmount : totalAmount,
                 currencyChoiceBox.getValue(),
@@ -312,6 +324,15 @@ public class NewSaleController implements Initializable {
         }
     }
 
+    public void setSelectedCar(Car car) {
+        selectedCar = car;
+        if (selectedCar != null) {
+            carName.setText(selectedCar.getName());
+        } else {
+            customerName.setText("None");
+        }
+    }
+
     public void setSelectedCustomer(Customer customer) {
         selectedCustomer = customer;
         if (selectedCustomer != null) {
@@ -321,6 +342,9 @@ public class NewSaleController implements Initializable {
             customerName.setText("Guest");
             pastInvoicesTable.getItems().clear();
         }
+        selectedCar = null;
+        carName.setText("None");
+        selectCarBtn.setDisable(selectedCustomer == null);
     }
 
     public void setSelectedItem(Item item) {
@@ -357,7 +381,11 @@ public class NewSaleController implements Initializable {
         remainingAmount = 0;
 
         selectedCustomer = null;
-        customerName.setText("");
+        selectedCar = null;
+
+        selectCarBtn.setDisable(true);
+        customerName.setText("Guest");
+        carName.setText("None");
         itemsTable.getItems().clear();
         pastInvoicesTable.getItems().clear();
         amountPaidField.setText("");

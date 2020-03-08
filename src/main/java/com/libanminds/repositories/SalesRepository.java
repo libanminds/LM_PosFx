@@ -76,9 +76,9 @@ public class SalesRepository {
         return true;
     }
 
-    public static boolean createSale(List<Item> items, Customer customer, double discount, double totalAmount, String currency, double paidAmount, boolean isOfficial, String paymentType) {
+    public static boolean createSale(List<Item> items, Customer customer, int car_id, double discount, double totalAmount, String currency, double paidAmount, boolean isOfficial, String paymentType) {
 
-        String query = "INSERT INTO sales(customer_id,discount,tax_id,conversion_rate, total_amount,currency, paid_amount,is_official,type) VALUES (?,?,?,?,?,?,?,?,?)";
+        String query = "INSERT INTO sales(customer_id,car_id,discount,tax_id,conversion_rate, total_amount,currency, paid_amount,is_official,type) VALUES (?,?,?,?,?,?,?,?,?,?)";
 
         PreparedStatement salesStatement = DBConnection.instance.getPreparedStatement(query, Statement.RETURN_GENERATED_KEYS);
 
@@ -86,14 +86,15 @@ public class SalesRepository {
 
         try {
             salesStatement.setInt(1, customer.getID());
-            salesStatement.setDouble(2, discount);
-            salesStatement.setInt(3, 1);
-            salesStatement.setDouble(4, GlobalSettings.CONVERSION_RATE_FROM_DOLLAR);
-            salesStatement.setDouble(5, totalAmount);
-            salesStatement.setString(6, currency);
-            salesStatement.setDouble(7, paidAmount);
-            salesStatement.setBoolean(8, isOfficial);
-            salesStatement.setString(9, paymentType);
+            salesStatement.setInt(2, car_id);
+            salesStatement.setDouble(3, discount);
+            salesStatement.setInt(4, 1);
+            salesStatement.setDouble(5, GlobalSettings.CONVERSION_RATE_FROM_DOLLAR);
+            salesStatement.setDouble(6, totalAmount);
+            salesStatement.setString(7, currency);
+            salesStatement.setDouble(8, paidAmount);
+            salesStatement.setBoolean(9, isOfficial);
+            salesStatement.setString(10, paymentType);
             salesStatement.executeUpdate();
 
             ResultSet rs = salesStatement.getGeneratedKeys();
