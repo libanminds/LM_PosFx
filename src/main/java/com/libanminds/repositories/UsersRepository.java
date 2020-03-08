@@ -16,24 +16,33 @@ import java.util.ArrayList;
 public class UsersRepository {
 
     public static boolean login(String username, String password) {
-        //  TODO: check credentials.
-
-        String query = "SELECT * FROM permissions WHERE role_id = " + 1;
-
-        ArrayList<String> data = new ArrayList<>();
+        String authQuery = "SELECT * FROM users where username = '" + username + "' AND password = '" + password + "'";
+        Statement authStatement = DBConnection.instance.getStatement();
         try {
-            Statement statement = DBConnection.instance.getStatement();
-            ResultSet rs = statement.executeQuery(query);
-            while (rs.next()) {
-                data.add(rs.getString("permission"));
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            return false;
-        }
+            ResultSet res = authStatement.executeQuery(authQuery);
+            if (res.next()) {
+                int roleId = res.getInt("role_id");
+                String query = "SELECT * FROM permissions WHERE role_id = " + roleId;
 
-        Authorization.authorize(data);
-        return true;
+                ArrayList<String> data = new ArrayList<>();
+                try {
+                    Statement statement = DBConnection.instance.getStatement();
+                    ResultSet rs = statement.executeQuery(query);
+                    while (rs.next()) {
+                        data.add(rs.getString("permission"));
+                    }
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                    return false;
+                }
+
+                Authorization.authorize(data);
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public static ObservableList<User> getUsers() {

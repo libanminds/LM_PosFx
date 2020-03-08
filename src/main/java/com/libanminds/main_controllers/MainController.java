@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import com.libanminds.utils.Authorization;
 import com.libanminds.utils.AuthorizationKeys;
 import com.libanminds.utils.Views;
+import javafx.application.Platform;
 import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -173,7 +174,7 @@ public class MainController implements Initializable {
     }
 
     private void logout() {
-        //To implement
+        Platform.exit();
     }
 
     private void toggleActiveCss(Boolean val) {

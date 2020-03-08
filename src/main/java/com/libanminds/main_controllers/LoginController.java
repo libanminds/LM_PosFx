@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -19,6 +20,7 @@ public class LoginController {
     private JFXPasswordField password;
 
     private Stage stage;
+    private Alert authAlert = new Alert(Alert.AlertType.WARNING, "Wrong username or password!");
 
     public void setStage(Stage stage) {
         this.stage = stage;
@@ -29,11 +31,9 @@ public class LoginController {
         boolean isAuthenticated = UsersRepository.login(username.getText(), password.getText());
         System.out.println("Username: " + username.getText() + "\nPassword: " + password.getText());
         System.out.println("Authenticated: " + isAuthenticated);
-
-        //TODO: check isAuthentication
-
         try {
-            redirectToMain();
+            if (isAuthenticated) redirectToMain();
+            else authAlert.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
