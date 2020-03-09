@@ -7,6 +7,8 @@ import com.libanminds.utils.Constants;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -16,17 +18,22 @@ import java.util.ResourceBundle;
 public class PurchasesReportController implements Initializable {
     @FXML
     private DatePicker dateFrom;
-
     @FXML
     private DatePicker dateTo;
-
+    @FXML
+    private RadioButton sa1;
+    @FXML
+    private RadioButton sa2;
     @FXML
     private JFXButton generateReportBtn;
+
+    private ToggleGroup categoryToggle = new ToggleGroup();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initDates();
         initButtons();
+        initRadioButtons();
     }
 
     private void initDates() {
@@ -37,6 +44,12 @@ public class PurchasesReportController implements Initializable {
 
     private void initButtons() {
         generateReportBtn.setOnMouseClicked(event -> generatePurchasesReport());
+    }
+
+    private void initRadioButtons() {
+        sa1.setToggleGroup(categoryToggle);
+        sa2.setToggleGroup(categoryToggle);
+        sa1.fire();
     }
 
     private void generatePurchasesReport() {

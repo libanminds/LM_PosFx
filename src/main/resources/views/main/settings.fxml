@@ -15,347 +15,237 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<TabPane prefHeight="600.0" prefWidth="600.0" stylesheets="@../../css/main.css" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.main_controllers.SettingsController">
-    <tabs>
-        <Tab closable="false" text="General">
-            <content>
-                <ScrollPane fitToHeight="true" fitToWidth="true">
-                    <content>
-                        <VBox>
-                            <children>
-                                <VBox styleClass="card">
-                                    <children>
-                                        <HBox styleClass="card-header">
-                                            <children>
-                                                <Label text="Actions" />
-                                            </children>
-                                        </HBox>
-                                        <VBox styleClass="card-body">
-                                            <children>
-                                                <JFXButton styleClass="blue-btn" text="Backup Database" />
-                                            </children>
-                                        </VBox>
-                                    </children>
-                                </VBox>
-                        <VBox styleClass="card">
-                           <children>
-                              <HBox styleClass="card-header">
-                                 <children>
-                                    <Label text="Preferences" />
-                                 </children>
-                              </HBox>
-                              <VBox spacing="8.0" styleClass="card-body">
-                                 <children>
-                                    <JFXCheckBox text="Choose Quantity After Adding Item In Sales" />
-                                    <JFXCheckBox text="Choose Quantity After Adding Item In Purchases" />
-                                    <JFXCheckBox text="Auto Focus On Item Field When Using Sales/Purchases Interfaces" />
-                                    <JFXCheckBox text="Disable Confirmation For Complete Sale" />
-                                    <JFXCheckBox text="Disable Confirmation For Complete Purchase" />
-                                    <JFXCheckBox text="Group Items That Are The Same" />
-                                    <JFXCheckBox text="Allow Items To Be Sold Below Cost Price" />
-                                    <JFXCheckBox text="Allow Out Of Stock Items To Be Sold" />
-                                    <HBox alignment="CENTER_LEFT" spacing="12.0">
-                                       <children>
-                                          <Label text="Notify when items in stock fall below:" />
-                                          <TextField promptText="Item Count" />
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </VBox>
-                              <HBox alignment="CENTER_RIGHT" spacing="8.0">
-                                 <children>
-                                    <JFXButton styleClass="red-btn-outline" text="Discard Changes" />
-                                    <JFXButton text="Save">
-                                       <styleClass>
-                                          <String fx:value="green-btn" />
-                                          <String fx:value="btn-with-min-width" />
-                                       </styleClass>
-                                    </JFXButton>
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                                 </padding>
-                              </HBox>
-                           </children>
+<TabPane prefHeight="600.0" prefWidth="600.0" stylesheets="@../../css/main.css" tabClosingPolicy="UNAVAILABLE"
+         VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+         fx:controller="com.libanminds.main_controllers.SettingsController">
+    <Tab closable="false" text="General">
+        <ScrollPane fitToHeight="true" fitToWidth="true">
+            <VBox>
+                <VBox styleClass="card">
+                    <HBox styleClass="card-header">
+                        <Label text="Actions"/>
+                    </HBox>
+                    <VBox styleClass="card-body">
+                        <JFXButton fx:id="backupDbBtn" styleClass="blue-btn"
+                                   text="Backup Database"/>
+                    </VBox>
+                </VBox>
+                <VBox styleClass="card">
+                    <HBox styleClass="card-header">
+                        <Label text="Preferences"/>
+                    </HBox>
+                    <VBox spacing="8.0" styleClass="card-body">
+                        <JFXCheckBox fx:id="chooseQttyInSale"
+                                     text="Choose Quantity After Adding Item In Sales"/>
+                        <JFXCheckBox fx:id="chooseQttyInPurchases"
+                                     text="Choose Quantity After Adding Item In Purchases"/>
+                        <JFXCheckBox fx:id="disableCompleteSaleConfirmation"
+                                     text="Disable Confirmation For Complete Sale"/>
+                        <JFXCheckBox fx:id="disableCompletePurchaseConfirmation"
+                                     text="Disable Confirmation For Complete Purchase"/>
+                        <JFXCheckBox fx:id="sellOutOfStock"
+                                     text="Allow Out Of Stock Items To Be Sold"/>
+                        <HBox alignment="CENTER_LEFT" spacing="12.0">
+                            <Label text="Notify when items in stock fall below:"/>
+                            <TextField fx:id="minStockQtty" promptText="Item Count"/>
+                        </HBox>
+                    </VBox>
+                    <HBox alignment="CENTER_RIGHT" spacing="8.0">
+                        <padding>
+                            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                        </padding>
+                        <JFXButton fx:id="discardPrefsBtn" styleClass="red-btn-outline"
+                                   text="Discard Changes"/>
+                        <JFXButton fx:id="savePrefsBtn" text="Save">
+                            <styleClass>
+                                <String fx:value="green-btn"/>
+                                <String fx:value="btn-with-min-width"/>
+                            </styleClass>
+                        </JFXButton>
+                    </HBox>
+                </VBox>
+            </VBox>
+        </ScrollPane>
+    </Tab>
+    <Tab closable="false" text="Transactions">
+        <ScrollPane fitToHeight="true" fitToWidth="true">
+            <VBox>
+                <VBox styleClass="card">
+                    <HBox styleClass="card-header">
+                        <Label text="Taxes"/>
+                    </HBox>
+                    <VBox spacing="16.0" styleClass="card-body">
+                        <HBox alignment="CENTER_LEFT" spacing="8.0">
+                            <Label text="TVA">
+                                <font>
+                                    <Font name="System Bold" size="12.0"/>
+                                </font>
+                                <HBox.margin>
+                                    <Insets right="12.0"/>
+                                </HBox.margin>
+                            </Label>
+                            <TextField fx:id="tvaPercentage" promptText="10"/>
+                            <Label text="\%"/>
+                        </HBox>
+                    </VBox>
+                    <HBox alignment="CENTER_RIGHT" spacing="8.0">
+                        <padding>
+                            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                        </padding>
+                        <JFXButton fx:id="discardTaxesBtn" styleClass="red-btn-outline"
+                                   text="Discard Changes"/>
+                        <JFXButton fx:id="saveTaxesBtn" text="Save">
+                            <styleClass>
+                                <String fx:value="green-btn"/>
+                                <String fx:value="btn-with-min-width"/>
+                            </styleClass>
+                        </JFXButton>
+                    </HBox>
+                </VBox>
+                <VBox styleClass="card">
+                    <HBox styleClass="card-header">
+                        <Label text="Currencies"/>
+                    </HBox>
+                    <VBox spacing="16.0" styleClass="card-body">
+                        <HBox>
+                            <Label text="Available Currencies: ">
+                                <font>
+                                    <Font name="System Bold" size="12.0"/>
+                                </font>
+                                <HBox.margin>
+                                    <Insets right="12.0"/>
+                                </HBox.margin>
+                            </Label>
+                            <Label text="• LBP (L.L.) &#10;• USD ($)"/>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="8.0">
+                            <Label text="Conversion Rates:">
+                                <font>
+                                    <Font name="System Bold" size="12.0"/>
+                                </font>
+                                <HBox.margin>
+                                    <Insets right="12.0"/>
+                                </HBox.margin>
+                            </Label>
+                            <Label text="\$1 = "/>
+                            <TextField fx:id="dollarToLbp" promptText="1515"/>
+                            <Label text="L.L."/>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="12.0">
+                            <Label text="Default Currency:">
+                                <font>
+                                    <Font name="System Bold" size="12.0"/>
+                                </font>
+                                <HBox.margin>
+                                    <Insets right="12.0"/>
+                                </HBox.margin>
+                            </Label>
+                            <JFXRadioButton fx:id="defaultLbp" selected="true" text="LBP">
+                                <toggleGroup>
+                                    <ToggleGroup fx:id="defaultCurrency"/>
+                                </toggleGroup>
+                            </JFXRadioButton>
+                            <JFXRadioButton fx:id="defaultUsd" text="USD"
+                                            toggleGroup="$defaultCurrency"/>
+                        </HBox>
+                    </VBox>
+                    <HBox alignment="CENTER_RIGHT" spacing="8.0">
+                        <padding>
+                            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                        </padding>
+                        <JFXButton fx:id="discardCurrencyBtn" styleClass="red-btn-outline"
+                                   text="Discard Changes"/>
+                        <JFXButton fx:id="saveCurrencyBtn" text="Save">
+                            <styleClass>
+                                <String fx:value="green-btn"/>
+                                <String fx:value="btn-with-min-width"/>
+                            </styleClass>
+                        </JFXButton>
+                    </HBox>
+                </VBox>
+                <VBox>
+                    <VBox styleClass="card">
+                        <HBox styleClass="card-header">
+                            <Label text="Payments"/>
+                        </HBox>
+                        <VBox spacing="16.0" styleClass="card-body">
+                            <HBox>
+                                <Label text="Available Payment Methods: ">
+                                    <font>
+                                        <Font name="System Bold" size="12.0"/>
+                                    </font>
+                                    <HBox.margin>
+                                        <Insets right="12.0"/>
+                                    </HBox.margin>
+                                </Label>
+                                <Label text="• Cash&#10;• Check"/>
+                            </HBox>
+                            <HBox alignment="CENTER_LEFT" spacing="12.0">
+                                <Label text="Default Payment Method:">
+                                    <font>
+                                        <Font name="System Bold" size="12.0"/>
+                                    </font>
+                                    <HBox.margin>
+                                        <Insets right="12.0"/>
+                                    </HBox.margin>
+                                </Label>
+                                <JFXRadioButton fx:id="defaultCash" selected="true"
+                                                text="Cash">
+                                    <toggleGroup>
+                                        <ToggleGroup fx:id="defaultPaymentMethod"/>
+                                    </toggleGroup>
+                                </JFXRadioButton>
+                                <JFXRadioButton fx:id="defaultCheck" text="Check"
+                                                toggleGroup="$defaultPaymentMethod"/>
+                            </HBox>
                         </VBox>
-                            </children>
-                        </VBox>
-                    </content>
-                </ScrollPane>
-            </content>
-        </Tab>
-        <Tab closable="false" text="Taxes">
-            <content>
-                <ScrollPane fitToHeight="true" fitToWidth="true">
-                    <content>
-                        <VBox>
-                            <children>
-                                <VBox styleClass="card">
-                                    <children>
-                                        <HBox styleClass="card-header">
-                                            <children>
-                                                <Label text="Defaults" />
-                                            </children>
-                                        </HBox>
-                                        <VBox spacing="8.0" styleClass="card-body">
-                                            <children>
-                                                <JFXCheckBox text="Flat Discount Also Discounts Tax " />
-                                                <JFXCheckBox text="Prices Include Tax" />
-                                                <JFXCheckBox text="Charge Tax On Purchases" />
-                                            </children>
-                                        </VBox>
-                                        <HBox alignment="CENTER_RIGHT" spacing="8.0">
-                                            <children>
-                                                <JFXButton styleClass="red-btn-outline" text="Discard Changes" />
-                                                <JFXButton text="Save">
-                                                    <styleClass>
-                                                        <String fx:value="green-btn" />
-                                                        <String fx:value="btn-with-min-width" />
-                                                    </styleClass>
-                                                </JFXButton>
-                                            </children>
-                                            <padding>
-                                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                                            </padding>
-                                        </HBox>
-                                    </children>
-                                </VBox>
-                                <VBox styleClass="card">
-                                    <children>
-                                        <HBox styleClass="card-header">
-                                            <children>
-                                                <Label text="Tax types" />
-                                            </children>
-                                        </HBox>
-                                        <VBox>
-                                            <children>
-                                                <HBox alignment="CENTER_LEFT" spacing="12.0">
-                                                    <children>
-                                                        <Label text="Tax #">
-                                                            <font>
-                                                                <Font name="System Bold" size="14.0" />
-                                                            </font>
-                                                        </Label>
-                                                        <TextField promptText="Tax Name" HBox.hgrow="ALWAYS" />
-                                                        <TextField promptText="Tax Percentage" HBox.hgrow="ALWAYS" />
-                                                    </children>
-                                                    <VBox.margin>
-                                                        <Insets />
-                                                    </VBox.margin>
-                                                </HBox>
-                                            </children>
-                                            <padding>
-                                                <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
-                                            </padding>
-                                        </VBox>
-                                        <HBox alignment="CENTER_RIGHT" spacing="8.0">
-                                            <children>
-                                                <JFXButton text="New Tax">
-                                                    <styleClass>
-                                                        <String fx:value="blue-btn" />
-                                                        <String fx:value="btn-with-min-width" />
-                                                    </styleClass>
-                                                </JFXButton>
-                                            </children>
-                                            <padding>
-                                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                                            </padding>
-                                        </HBox>
-                                    </children>
-                                </VBox>
-                            </children>
-                        </VBox>
-                    </content>
-                </ScrollPane>
-            </content>
-        </Tab>
-        <Tab closable="false" text="Transactions">
-            <content>
-                <ScrollPane fitToHeight="true" fitToWidth="true">
-                    <content>
-                        <VBox>
-                            <children>
-                                <VBox styleClass="card">
-                                    <children>
-                                        <HBox styleClass="card-header">
-                                            <children>
-                                                <Label text="Currencies" />
-                                            </children>
-                                        </HBox>
-                                        <VBox spacing="16.0" styleClass="card-body">
-                                            <children>
-                                                <HBox>
-                                                    <children>
-                                                        <Label text="Available Currencies: ">
-                                                            <font>
-                                                                <Font name="System Bold" size="12.0" />
-                                                            </font>
-                                                            <HBox.margin>
-                                                                <Insets right="12.0" />
-                                                            </HBox.margin>
-                                                        </Label>
-                                                        <Label text="• LBP (L.L.) &#10;• USD ($)" />
-                                                    </children>
-                                                </HBox>
-                                                <HBox alignment="CENTER_LEFT" spacing="8.0">
-                                                    <children>
-                                                        <Label text="Conversion Rates:">
-                                                            <font>
-                                                                <Font name="System Bold" size="12.0" />
-                                                            </font>
-                                                            <HBox.margin>
-                                                                <Insets right="12.0" />
-                                                            </HBox.margin>
-                                                        </Label>
-                                                        <Label text="\$1 = " />
-                                                        <TextField promptText="1515" />
-                                                        <Label text="L.L." />
-                                                    </children>
-                                                </HBox>
-                                                <HBox alignment="CENTER_LEFT" spacing="12.0">
-                                                    <children>
-                                                        <Label text="Default Currency:">
-                                                            <font>
-                                                                <Font name="System Bold" size="12.0" />
-                                                            </font>
-                                                            <HBox.margin>
-                                                                <Insets right="12.0" />
-                                                            </HBox.margin>
-                                                        </Label>
-                                                        <JFXRadioButton selected="true" text="LBP">
-                                             <toggleGroup>
-                                                <ToggleGroup fx:id="defaultCurrency" />
-                                             </toggleGroup></JFXRadioButton>
-                                                        <JFXRadioButton text="USD" toggleGroup="$defaultCurrency" />
-                                                    </children>
-                                                </HBox>
-                                            </children>
-                                        </VBox>
-                                        <HBox alignment="CENTER_RIGHT" spacing="8.0">
-                                            <children>
-                                                <JFXButton styleClass="red-btn-outline" text="Discard Changes" />
-                                                <JFXButton text="Save">
-                                                    <styleClass>
-                                                        <String fx:value="green-btn" />
-                                                        <String fx:value="btn-with-min-width" />
-                                                    </styleClass>
-                                                </JFXButton>
-                                            </children>
-                                            <padding>
-                                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                                            </padding>
-                                        </HBox>
-                                    </children>
-                                </VBox>
-                                <VBox>
-                                    <children>
-                                        <VBox styleClass="card">
-                                            <children>
-                                                <HBox styleClass="card-header">
-                                                    <children>
-                                                        <Label text="Payments" />
-                                                    </children>
-                                                </HBox>
-                                                <VBox spacing="16.0" styleClass="card-body">
-                                                    <children>
-                                                        <HBox>
-                                                            <children>
-                                                                <Label text="Available Payment Methods: ">
-                                                                    <font>
-                                                                        <Font name="System Bold" size="12.0" />
-                                                                    </font>
-                                                                    <HBox.margin>
-                                                                        <Insets right="12.0" />
-                                                                    </HBox.margin>
-                                                                </Label>
-                                                                <Label text="• Cash&#10;• Check" />
-                                                            </children>
-                                                        </HBox>
-                                                        <HBox alignment="CENTER_LEFT" spacing="12.0">
-                                                            <children>
-                                                                <Label text="Default Payment Method:">
-                                                                    <font>
-                                                                        <Font name="System Bold" size="12.0" />
-                                                                    </font>
-                                                                    <HBox.margin>
-                                                                        <Insets right="12.0" />
-                                                                    </HBox.margin>
-                                                                </Label>
-                                                                <JFXRadioButton selected="true" text="Cash">
-                                                   <toggleGroup>
-                                                      <ToggleGroup fx:id="defaultPaymentMethod" />
-                                                   </toggleGroup></JFXRadioButton>
-                                                                <JFXRadioButton text="Check" toggleGroup="$defaultPaymentMethod" />
-                                                            </children>
-                                                        </HBox>
-                                                    </children>
-                                                </VBox>
-                                                <HBox alignment="CENTER_RIGHT" spacing="8.0">
-                                                    <children>
-                                                        <JFXButton styleClass="red-btn-outline" text="Discard Changes" />
-                                                        <JFXButton text="Save">
-                                                            <styleClass>
-                                                                <String fx:value="green-btn" />
-                                                                <String fx:value="btn-with-min-width" />
-                                                            </styleClass>
-                                                        </JFXButton>
-                                                    </children>
-                                                    <padding>
-                                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                                                    </padding>
-                                                </HBox>
-                                            </children>
-                                        </VBox>
-                                    </children>
-                                </VBox>
-                            </children>
-                        </VBox>
-                    </content>
-                </ScrollPane>
-            </content>
-        </Tab>
-        <Tab closable="false" text="Receipt">
-            <content>
-                <ScrollPane fitToHeight="true" fitToWidth="true">
-                    <content>
-                        <VBox>
-                            <children>
-                                <VBox styleClass="card">
-                                    <children>
-                                        <HBox styleClass="card-header">
-                                            <children>
-                                                <Label text="Config" />
-                                            </children>
-                                        </HBox>
-                                        <VBox spacing="8.0" styleClass="card-body">
-                                            <children>
-                                                <JFXCheckBox text="Show Tax Per Item On Receipt" />
-                                    <JFXCheckBox text="Remove Customer Name From Receipt" />
-                                    <JFXCheckBox text="Remove Employee Name From Receipt" />
-                                    <JFXCheckBox text="Hide Barcode On Receipts" />
-                                            </children>
-                                        </VBox>
-                                        <HBox alignment="CENTER_RIGHT" spacing="8.0">
-                                            <children>
-                                                <JFXButton styleClass="red-btn-outline" text="Discard Changes" />
-                                                <JFXButton text="Save">
-                                                    <styleClass>
-                                                        <String fx:value="green-btn" />
-                                                        <String fx:value="btn-with-min-width" />
-                                                    </styleClass>
-                                                </JFXButton>
-                                            </children>
-                                            <padding>
-                                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                                            </padding>
-                                        </HBox>
-                                    </children>
-                                </VBox>
-                            </children>
-                        </VBox>
-                    </content>
-                </ScrollPane>
-            </content>
-        </Tab>
-    </tabs>
+                        <HBox alignment="CENTER_RIGHT" spacing="8.0">
+                            <padding>
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                            </padding>
+                            <JFXButton fx:id="discardPaymentsBtn" styleClass="red-btn-outline"
+                                       text="Discard Changes"/>
+                            <JFXButton fx:id="savePaymentsBtn" text="Save">
+                                <styleClass>
+                                    <String fx:value="green-btn"/>
+                                    <String fx:value="btn-with-min-width"/>
+                                </styleClass>
+                            </JFXButton>
+                        </HBox>
+                    </VBox>
+                </VBox>
+            </VBox>
+        </ScrollPane>
+    </Tab>
+    <Tab closable="false" text="Receipt">
+        <ScrollPane fitToHeight="true" fitToWidth="true">
+            <VBox>
+                <VBox styleClass="card">
+                    <HBox styleClass="card-header">
+                        <Label text="Config"/>
+                    </HBox>
+                    <VBox spacing="8.0" styleClass="card-body">
+                        <JFXCheckBox fx:id="removeCustomerNameFromReceipt"
+                                     text="Remove Customer Name From Receipt"/>
+                        <JFXCheckBox fx:id="removeEmployeeNameFromReceipt"
+                                     text="Remove Employee Name From Receipt"/>
+                        <JFXCheckBox fx:id="hideBarcodeReceipt" text="Hide Barcode On Receipts"/>
+                    </VBox>
+                    <HBox alignment="CENTER_RIGHT" spacing="8.0">
+                        <padding>
+                            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                        </padding>
+                        <JFXButton fx:id="discardReceiptBtn" styleClass="red-btn-outline"
+                                   text="Discard Changes"/>
+                        <JFXButton fx:id="saveReceiptBtn" text="Save">
+                            <styleClass>
+                                <String fx:value="green-btn"/>
+                                <String fx:value="btn-with-min-width"/>
+                            </styleClass>
+                        </JFXButton>
+                    </HBox>
+                </VBox>
+            </VBox>
+        </ScrollPane>
+    </Tab>
 </TabPane>

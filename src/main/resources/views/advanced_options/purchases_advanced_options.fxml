@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.control.RadioButton?>
 <VBox prefWidth="600.0" spacing="24.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.libanminds.reports_controllers.PurchasesReportController">
     <HBox alignment="CENTER_LEFT">
@@ -23,6 +24,29 @@
             </font>
         </Label>
         <DatePicker fx:id="dateTo"/>
+    </HBox>
+    <HBox>
+        <Label text="Category">
+            <font>
+                <Font name="System Bold" size="16.0"/>
+            </font>
+            <HBox.margin>
+                <Insets right="24.0"/>
+            </HBox.margin>
+        </Label>
+        <RadioButton fx:id="sa1" mnemonicParsing="false" text="SA1">
+            <font>
+                <Font size="16.0"/>
+            </font>
+            <HBox.margin>
+                <Insets right="12.0"/>
+            </HBox.margin>
+        </RadioButton>
+        <RadioButton fx:id="sa2" mnemonicParsing="false" text="SA2">
+            <font>
+                <Font size="16.0"/>
+            </font>
+        </RadioButton>
     </HBox>
     <JFXButton fx:id="generateReportBtn" styleClass="green-btn" text="Generate Report">
         <font>
