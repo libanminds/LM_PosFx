@@ -78,5 +78,20 @@ public class SettingsController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        initGeneralTab();
+        initTransactionsTab();
+        initReceiptTab();
+    }
+
+    private void initReceiptTab() {
+
+    }
+
+    private void initTransactionsTab() {
+
+    }
+
+    private void initGeneralTab() {
+
     }
 }
