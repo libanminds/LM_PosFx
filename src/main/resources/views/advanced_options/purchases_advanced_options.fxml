@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <VBox prefWidth="600.0" spacing="24.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.libanminds.reports_controllers.PurchasesReportController">
+      fx:controller="com.libanminds.controllers.reports.PurchasesReportController">
     <HBox alignment="CENTER_LEFT">
         <Label minWidth="40.0" text="From: ">
             <font>

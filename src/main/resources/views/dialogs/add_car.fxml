@@ -1,83 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
-<AnchorPane stylesheets="@../../css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.dialogs_controllers.CarDialogController">
-   <children>
-      <GridPane alignment="CENTER" hgap="8.0" vgap="8.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<AnchorPane stylesheets="@../../css/main.css" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.controllers.dialogs.CarDialogController">
+    <GridPane alignment="CENTER" hgap="8.0" vgap="8.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
-          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="50.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
-            <ColumnConstraints halignment="RIGHT" minWidth="120.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
+            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="50.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0"/>
+            <ColumnConstraints halignment="RIGHT" minWidth="120.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0"/>
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
         </rowConstraints>
-         <children>
-            <Label text="Add Car" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets />
-               </GridPane.margin>
-            </Label>
-            <Label text="Make:" GridPane.rowIndex="1" />
-            <TextField fx:id="make" promptText="Make" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label text="Model:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <TextField fx:id="model" promptText="Model" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-            <Label text="Year:" GridPane.rowIndex="2" />
-            <TextField fx:id="year" promptText="Year" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label text="Plate Number:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <TextField fx:id="plate" promptText="Plate Number" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <Label text="Current Odometer:" GridPane.rowIndex="3" />
-            <TextField fx:id="currentOdometer" promptText="Current Odometer" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="nextServiceOdometer" promptText="Next Service Odometer" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-            <Label text="Next Service Odometer:" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <Label text="Vin Number:" GridPane.rowIndex="4" />
-            <TextField fx:id="vin" promptText="Vin Number"  GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <HBox alignment="BOTTOM_RIGHT" spacing="12.0" GridPane.columnIndex="2" GridPane.columnSpan="2147483647" GridPane.rowIndex="4">
-               <children>
-                  <Button fx:id="cancel" mnemonicParsing="false" style="-fx-background-color: ecf0f4;" text="Cancel" textFill="#5580aa">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                     <padding>
-                        <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
-                     </padding>
-                  </Button>
-                  <Button fx:id="save" layoutX="245.0" layoutY="35.0" mnemonicParsing="false" style="-fx-background-color: #5580aa;" text="Save" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                     <padding>
-                        <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
-                     </padding>
-                  </Button>
-               </children>
-            </HBox>
-            <Label fx:id="errorMessagesLabel" text="Error messages goes here" textFill="RED" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-         </children>
-         <padding>
-            <Insets bottom="24.0" left="24.0" right="24.0" top="8.0" />
-         </padding>
-      </GridPane>
-   </children>
+        <padding>
+            <Insets bottom="24.0" left="24.0" right="24.0" top="8.0"/>
+        </padding>
+        <Label text="Add Car" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER">
+            <font>
+                <Font name="System Bold" size="14.0"/>
+            </font>
+            <GridPane.margin>
+                <Insets/>
+            </GridPane.margin>
+        </Label>
+        <Label text="Make:" GridPane.rowIndex="1"/>
+        <TextField fx:id="make" promptText="Make" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+        <Label text="Model:" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+        <TextField fx:id="model" promptText="Model" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+        <Label text="Year:" GridPane.rowIndex="2"/>
+        <TextField fx:id="year" promptText="Year" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+        <Label text="Plate Number:" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+        <TextField fx:id="plate" promptText="Plate Number" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+        <Label text="Current Odometer:" GridPane.rowIndex="3"/>
+        <TextField fx:id="currentOdometer" promptText="Current Odometer" GridPane.columnIndex="1"
+                   GridPane.rowIndex="3"/>
+        <TextField fx:id="nextServiceOdometer" promptText="Next Service Odometer" GridPane.columnIndex="3"
+                   GridPane.rowIndex="3"/>
+        <Label text="Next Service Odometer:" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+        <Label text="Vin Number:" GridPane.rowIndex="4"/>
+        <TextField fx:id="vin" promptText="Vin Number" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+        <HBox alignment="BOTTOM_RIGHT" spacing="12.0" GridPane.columnIndex="2" GridPane.columnSpan="2147483647"
+              GridPane.rowIndex="4">
+            <Button fx:id="cancel" mnemonicParsing="false" style="-fx-background-color: ecf0f4;"
+                    text="Cancel" textFill="#5580aa">
+                <font>
+                    <Font name="System Bold" size="15.0"/>
+                </font>
+                <padding>
+                    <Insets bottom="10.0" left="30.0" right="30.0" top="10.0"/>
+                </padding>
+            </Button>
+            <Button fx:id="save" layoutX="245.0" layoutY="35.0" mnemonicParsing="false"
+                    style="-fx-background-color: #5580aa;" text="Save" textFill="WHITE">
+                <font>
+                    <Font name="System Bold" size="15.0"/>
+                </font>
+                <padding>
+                    <Insets bottom="10.0" left="30.0" right="30.0" top="10.0"/>
+                </padding>
+            </Button>
+        </HBox>
+        <Label fx:id="errorMessagesLabel" text="Error messages goes here" textFill="RED"
+               GridPane.columnIndex="3" GridPane.rowIndex="6"/>
+    </GridPane>
 </AnchorPane>

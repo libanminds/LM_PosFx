@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="600.0" prefWidth="600.0" VBox.vgrow="ALWAYS"
             xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.libanminds.dialogs_controllers.SelectCarDialogController">
+            fx:controller="com.libanminds.controllers.dialogs.SelectCarDialogController">
     <VBox minHeight="600.0" prefHeight="600.0" prefWidth="644.0" stylesheets="@../../css/main.css">
         <HBox alignment="CENTER_LEFT" spacing="8.0">
             <padding>
