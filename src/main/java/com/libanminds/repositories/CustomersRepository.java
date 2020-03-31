@@ -1,7 +1,7 @@
 package com.libanminds.repositories;
 
 import com.libanminds.models.Customer;
-import com.libanminds.utils.DBConnection;
+import com.libanminds.singletons.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -29,8 +29,8 @@ public class CustomersRepository {
 
     public static boolean addCustomer(Customer customer) {
         String query = "INSERT INTO customers(first_name,last_name,email,phone,address,company,notes) VALUES (?,?,?,?,?,?,?)";
-        PreparedStatement statement = DBConnection.instance.getPreparedStatement(query);
         try {
+            PreparedStatement statement = DBConnection.getInstance().getPreparedStatement(query);
             statement.setString(1, customer.getFirstName());
             statement.setString(2, customer.getLastName());
             statement.setString(3, customer.getEmail());
@@ -49,8 +49,8 @@ public class CustomersRepository {
     public static boolean updateCustomer(Customer customer) {
         String query = "UPDATE customers SET first_name = ? , last_name = ? , email = ?, phone = ?, address = ? , company = ?, notes = ? where id = ?";
 
-        PreparedStatement statement = DBConnection.instance.getPreparedStatement(query);
         try {
+            PreparedStatement statement = DBConnection.getInstance().getPreparedStatement(query);
             statement.setString(1, customer.getFirstName());
             statement.setString(2, customer.getLastName());
             statement.setString(3, customer.getEmail());
@@ -70,7 +70,7 @@ public class CustomersRepository {
     public static boolean deleteCustomer(Customer customer) {
         try {
             String query = "DELETE FROM customers where id = " + customer.getID();
-            Statement statement = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.getInstance().getStatement();
             statement.executeUpdate(query);
             return true;
         } catch (Exception e) {
@@ -81,7 +81,7 @@ public class CustomersRepository {
     public static boolean updateBalance(int customerID, double balance) {
         try {
             String query = "UPDATE customers SET balance = " + balance + " WHERE id = " + customerID;
-            Statement statement = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.getInstance().getStatement();
             statement.executeUpdate(query);
             return true;
         } catch (Exception e) {
@@ -93,7 +93,7 @@ public class CustomersRepository {
         ObservableList<Customer> data = FXCollections.observableArrayList();
 
         try {
-            Statement statement = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.getInstance().getStatement();
             ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
                 data.add(new Customer(

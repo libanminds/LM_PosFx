@@ -1,7 +1,7 @@
 package com.libanminds.repositories;
 
 import com.libanminds.models.Supplier;
-import com.libanminds.utils.DBConnection;
+import com.libanminds.singletons.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -29,8 +29,8 @@ public class SupplierRepository {
 
     public static boolean addSupplier(Supplier supplier) {
         String query = "INSERT INTO suppliers(first_name,last_name,email,phone,company,address,notes) VALUES (?,?,?,?,?,?,?)";
-        PreparedStatement statement = DBConnection.instance.getPreparedStatement(query);
         try {
+            PreparedStatement statement = DBConnection.getInstance().getPreparedStatement(query);
             statement.setString(1, supplier.getFirstName());
             statement.setString(2, supplier.getLastName());
             statement.setString(3, supplier.getEmail());
@@ -49,8 +49,8 @@ public class SupplierRepository {
     public static boolean updateSupplier(Supplier supplier) {
         String query = "UPDATE suppliers SET first_name = ? , last_name = ? , email = ?, phone = ?, company = ? , address = ?, notes = ? where id = ?";
 
-        PreparedStatement statement = DBConnection.instance.getPreparedStatement(query);
         try {
+            PreparedStatement statement = DBConnection.getInstance().getPreparedStatement(query);
             statement.setString(1, supplier.getFirstName());
             statement.setString(2, supplier.getLastName());
             statement.setString(3, supplier.getEmail());
@@ -71,7 +71,7 @@ public class SupplierRepository {
     public static boolean updateBalance(int supplierID, double balance) {
         try {
             String query = "UPDATE suppliers SET balance = " + balance + " WHERE id = " + supplierID;
-            Statement statement = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.getInstance().getStatement();
             statement.executeUpdate(query);
             return true;
         } catch (Exception e) {
@@ -83,7 +83,7 @@ public class SupplierRepository {
     public static boolean deleteSupplier(Supplier supplier) {
         try {
             String query = "DELETE FROM suppliers where id = " + supplier.getID();
-            Statement statement = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.getInstance().getStatement();
             statement.executeUpdate(query);
             return true;
         } catch (Exception e) {
@@ -94,7 +94,7 @@ public class SupplierRepository {
     private static ObservableList<Supplier> getSuppliersFromQuery(String query) {
         ObservableList<Supplier> data = FXCollections.observableArrayList();
         try {
-            Statement statement = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.getInstance().getStatement();
             ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
                 data.add(new Supplier(

@@ -1,7 +1,7 @@
 package com.libanminds.repositories;
 
 import com.libanminds.models.*;
-import com.libanminds.utils.DBConnection;
+import com.libanminds.singletons.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -39,7 +39,7 @@ public class TransactionsRepository {
         ObservableList<CustomerTransaction> data = FXCollections.observableArrayList();
 
         try {
-            Statement statement = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.getInstance().getStatement();
             ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
                 data.add(new CustomerTransaction(
@@ -63,7 +63,7 @@ public class TransactionsRepository {
         ObservableList<SupplierTransaction> data = FXCollections.observableArrayList();
 
         try {
-            Statement statement = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.getInstance().getStatement();
             ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
                 data.add(new SupplierTransaction(

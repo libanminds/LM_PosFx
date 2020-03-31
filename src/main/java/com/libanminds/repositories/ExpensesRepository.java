@@ -2,7 +2,7 @@ package com.libanminds.repositories;
 
 import com.libanminds.models.Expense;
 import com.libanminds.models.Type;
-import com.libanminds.utils.DBConnection;
+import com.libanminds.singletons.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -31,8 +31,8 @@ public class ExpensesRepository {
 
     public static boolean addExpense(Expense expense) {
         String query = "INSERT INTO expenses(type_id,description,amount,currency,payment_type,recipient,notes) VALUES (?,?,?,?,?,?,?)";
-        PreparedStatement statement = DBConnection.instance.getPreparedStatement(query);
         try {
+            PreparedStatement statement = DBConnection.getInstance().getPreparedStatement(query);
             statement.setInt(1, expense.getTypeObject().getID());
             statement.setString(2, expense.getDescription());
             statement.setDouble(3, expense.getAmount());
@@ -50,9 +50,8 @@ public class ExpensesRepository {
 
     public static boolean updateExpense(Expense expense) {
         String query = "UPDATE expenses SET type_id = ? , description = ? , amount = ?, currency = ?, payment_type = ? , recipient = ?, notes = ? where id = ?";
-
-        PreparedStatement statement = DBConnection.instance.getPreparedStatement(query);
         try {
+            PreparedStatement statement = DBConnection.getInstance().getPreparedStatement(query);
             statement.setInt(1, expense.getTypeObject().getID());
             statement.setString(2, expense.getDescription());
             statement.setDouble(3, expense.getAmount());
@@ -72,7 +71,7 @@ public class ExpensesRepository {
     public static boolean deleteExpense(Expense expense) {
         try {
             String query = "DELETE FROM expenses where id = " + expense.getID();
-            Statement statement = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.getInstance().getStatement();
             statement.executeUpdate(query);
             return true;
         } catch (Exception e) {
@@ -83,7 +82,7 @@ public class ExpensesRepository {
     private static ObservableList<Expense> getExpensesFromQuery(String query) {
         ObservableList<Expense> data = FXCollections.observableArrayList();
         try {
-            Statement statement = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.getInstance().getStatement();
             ResultSet rs = statement.executeQuery(query);
 
             while (rs.next()) {

@@ -1,7 +1,7 @@
 package com.libanminds.repositories;
 
 import com.libanminds.models.*;
-import com.libanminds.utils.DBConnection;
+import com.libanminds.singletons.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -54,11 +54,11 @@ public class ItemsRepository {
     public static boolean addItem(Item item) {
         String query = "INSERT INTO item_properties(cost, price, currency) VALUES (?,?,?)";
 
-        PreparedStatement propertyStatement = DBConnection.instance.getPreparedStatement(query, Statement.RETURN_GENERATED_KEYS);
 
         int item_properties_id = -1;
 
         try {
+            PreparedStatement propertyStatement = DBConnection.getInstance().getPreparedStatement(query, Statement.RETURN_GENERATED_KEYS);
             propertyStatement.setDouble(1, item.getCost());
             propertyStatement.setDouble(2, item.getInitialPrice());
             propertyStatement.setString(3, item.getCurrency());
@@ -80,8 +80,8 @@ public class ItemsRepository {
         int item_id = -1;
 
         query = "INSERT INTO items(code, item_properties_id,image,name,category_id,quantity,description,min_stock,ttc) VALUES (?,?,?,?,?,?,?,?,?)";
-        PreparedStatement itemStatement = DBConnection.instance.getPreparedStatement(query, Statement.RETURN_GENERATED_KEYS);
         try {
+            PreparedStatement itemStatement = DBConnection.getInstance().getPreparedStatement(query, Statement.RETURN_GENERATED_KEYS);
             itemStatement.setInt(1, item.getCode()); // code
             itemStatement.setInt(2, item_properties_id); // item_properties_id
             itemStatement.setString(3, item.getImageUrl()); // imagePath
@@ -107,9 +107,9 @@ public class ItemsRepository {
 
         query = "INSERT INTO item_property_history VALUES (?,?)";
 
-        PreparedStatement statement = DBConnection.instance.getPreparedStatement(query);
 
         try {
+            PreparedStatement statement = DBConnection.getInstance().getPreparedStatement(query);
             statement.setDouble(1, item_id);
             statement.setDouble(2, item_properties_id);
             statement.executeUpdate();
@@ -127,7 +127,7 @@ public class ItemsRepository {
 
         int item_properties_id = item.getItemPropertiesID();
         try {
-            Statement statement = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.getInstance().getStatement();
             ResultSet rs = statement.executeQuery(query);
             if (rs.next()) {
                 ItemProperties properties = new ItemProperties(
@@ -139,7 +139,7 @@ public class ItemsRepository {
                 if (properties.getCost() != item.getCost() || properties.getPrice() != item.getInitialPrice() || !properties.getCurrency().equals(item.getCurrency())) {
                     query = "INSERT INTO item_properties(cost, price, currency) VALUES (?,?,?)";
 
-                    PreparedStatement salesStatement = DBConnection.instance.getPreparedStatement(query, Statement.RETURN_GENERATED_KEYS);
+                    PreparedStatement salesStatement = DBConnection.getInstance().getPreparedStatement(query, Statement.RETURN_GENERATED_KEYS);
 
                     try {
                         salesStatement.setDouble(1, item.getCost());
@@ -161,7 +161,7 @@ public class ItemsRepository {
 
                     query = "INSERT INTO item_property_history VALUES (?,?)";
 
-                    PreparedStatement historyStatement = DBConnection.instance.getPreparedStatement(query);
+                    PreparedStatement historyStatement = DBConnection.getInstance().getPreparedStatement(query);
 
                     try {
                         historyStatement.setDouble(1, item.getID());
@@ -180,8 +180,8 @@ public class ItemsRepository {
 
         query = "UPDATE items SET code = ?, item_properties_id = ? , image = ? , name = ?, category_id = ?, quantity = ?, description = ?, min_stock = ?, ttc = ? where id = ?";
 
-        PreparedStatement statement = DBConnection.instance.getPreparedStatement(query);
         try {
+            PreparedStatement statement = DBConnection.getInstance().getPreparedStatement(query);
             statement.setInt(1, item.getCode()); // code
             statement.setInt(2, item_properties_id); //
             statement.setString(3, item.getImageUrl()); // imagePath
@@ -203,15 +203,15 @@ public class ItemsRepository {
     public static boolean deleteItem(Item item) {
         try {
             String query = "DELETE FROM item_properties WHERE id IN(SELECT property_id from item_property_history WHERE item_id = " + item.getID() + ")";
-            Statement statement = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.getInstance().getStatement();
             statement.executeUpdate(query);
 
             query = "DELETE FROM item_property_history where item_id = " + item.getID();
-            statement = DBConnection.instance.getStatement();
+            statement = DBConnection.getInstance().getStatement();
             statement.executeUpdate(query);
 
             query = "DELETE FROM items where id = " + item.getID();
-            statement = DBConnection.instance.getStatement();
+            statement = DBConnection.getInstance().getStatement();
             statement.executeUpdate(query);
             return true;
         } catch (Exception e) {
@@ -224,7 +224,7 @@ public class ItemsRepository {
     private static ObservableList<Item> getItemsFromQuery(String query) {
         ObservableList<Item> data = FXCollections.observableArrayList();
         try {
-            Statement statement = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.getInstance().getStatement();
             ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
                 data.add(new Item(
@@ -256,7 +256,7 @@ public class ItemsRepository {
     private static ObservableList<Item> getItemsOfSAPFromQuery(String query, String currency) {
         ObservableList<Item> data = FXCollections.observableArrayList();
         try {
-            Statement statement = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.getInstance().getStatement();
             ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
 

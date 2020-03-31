@@ -1,6 +1,6 @@
 package com.libanminds.models;
 
-import com.libanminds.utils.GlobalSettings;
+import com.libanminds.singletons.GlobalSettings;
 import com.libanminds.utils.HelperFunctions;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
@@ -119,9 +119,9 @@ public class Item {
             price.setValue(initialPrice.getValue());
         } else {
             if (currency.get().equals("$"))
-                price.setValue(initialPrice.getValue() * GlobalSettings.CONVERSION_RATE_FROM_DOLLAR);
+                price.setValue(initialPrice.getValue() * GlobalSettings.fetch().dollarToLbp);
             else
-                price.setValue(initialPrice.getValue() / GlobalSettings.CONVERSION_RATE_FROM_DOLLAR);
+                price.setValue(initialPrice.getValue() / GlobalSettings.fetch().dollarToLbp);
         }
     }
 

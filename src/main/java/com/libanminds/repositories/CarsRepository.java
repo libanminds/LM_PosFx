@@ -1,7 +1,7 @@
 package com.libanminds.repositories;
 
 import com.libanminds.models.Car;
-import com.libanminds.utils.DBConnection;
+import com.libanminds.singletons.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -46,8 +46,8 @@ public class CarsRepository {
 
     public static boolean addCar(Car car) {
         String query = "INSERT INTO cars(owner_id,make,model,year,current_odometer,next_service_odometer,vin,plate) VALUES (?,?,?,?,?,?,?,?)";
-        PreparedStatement statement = DBConnection.instance.getPreparedStatement(query);
         try {
+            PreparedStatement statement = DBConnection.getInstance().getPreparedStatement(query);
             statement.setInt(1, car.getOwnerID());
             statement.setString(2, car.getMake());
             statement.setString(3, car.getModel());
@@ -67,8 +67,8 @@ public class CarsRepository {
     public static boolean updateCar(Car car) {
         String query = "UPDATE cars SET make = ? , model = ? , year = ?, current_odometer = ?, next_service_odometer = ? , vin = ?, plate = ? where id = ?";
 
-        PreparedStatement statement = DBConnection.instance.getPreparedStatement(query);
         try {
+            PreparedStatement statement = DBConnection.getInstance().getPreparedStatement(query);
             statement.setString(1, car.getMake());
             statement.setString(2, car.getModel());
             statement.setString(3, car.getYear());
@@ -88,7 +88,7 @@ public class CarsRepository {
     public static boolean deleteCar(Car car) {
         try {
             String query = "DELETE FROM cars where id = " + car.getID();
-            Statement statement = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.getInstance().getStatement();
             statement.executeUpdate(query);
             return true;
         } catch (Exception e) {
@@ -101,7 +101,7 @@ public class CarsRepository {
         ObservableList<Car> data = FXCollections.observableArrayList();
 
         try {
-            Statement statement = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.getInstance().getStatement();
             ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
                 data.add(new Car(

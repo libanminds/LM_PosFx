@@ -6,7 +6,7 @@
 <?import javafx.scene.text.*?>
 <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="600.0" prefWidth="600.0" VBox.vgrow="ALWAYS"
             xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.libanminds.controllers.transactions_history.CustomerStatementOfAccountController">
+            fx:controller="com.libanminds.controllers.transaction_history.CustomerStatementOfAccountController">
     <VBox minHeight="600.0" prefHeight="600.0" prefWidth="644.0" stylesheets="@../../css/main.css">
         <Label fx:id="title" text="Customer's Statement of account" textFill="#006372">
             <font>

@@ -3,8 +3,8 @@ package com.libanminds.repositories;
 import com.libanminds.models.Customer;
 import com.libanminds.models.Item;
 import com.libanminds.models.Sale;
-import com.libanminds.utils.DBConnection;
-import com.libanminds.utils.GlobalSettings;
+import com.libanminds.singletons.DBConnection;
+import com.libanminds.singletons.GlobalSettings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -40,9 +40,8 @@ public class SalesRepository {
     public static boolean completeSalePayment(int saleID, int customerID, double discount, double totalAmount, double paidAmount, double newPayment, String currency) {
 
         String query = "UPDATE sales SET discount = ?, total_amount = ?, paid_amount = ? where id = ?";
-        PreparedStatement salesStatement = DBConnection.instance.getPreparedStatement(query);
-
         try {
+            PreparedStatement salesStatement = DBConnection.getInstance().getPreparedStatement(query);
             salesStatement.setDouble(1, discount);
             salesStatement.setDouble(2, totalAmount);
             salesStatement.setDouble(3, paidAmount);
@@ -57,9 +56,8 @@ public class SalesRepository {
         if (newPayment > 0) {
             query = "INSERT INTO customer_transactions(customer_id,invoice_id,amount,currency, is_refund) VALUES (?,?,?,?,?)";
 
-            salesStatement = DBConnection.instance.getPreparedStatement(query);
-
             try {
+                PreparedStatement salesStatement = DBConnection.getInstance().getPreparedStatement(query);
                 salesStatement.setInt(1, customerID);
                 salesStatement.setInt(2, saleID);
                 salesStatement.setDouble(3, newPayment);
@@ -80,16 +78,15 @@ public class SalesRepository {
 
         String query = "INSERT INTO sales(customer_id,car_id,discount,tax_id,conversion_rate, total_amount,currency, paid_amount,is_official,type) VALUES (?,?,?,?,?,?,?,?,?,?)";
 
-        PreparedStatement salesStatement = DBConnection.instance.getPreparedStatement(query, Statement.RETURN_GENERATED_KEYS);
-
         int saleID = -1;
 
         try {
+            PreparedStatement salesStatement = DBConnection.getInstance().getPreparedStatement(query, Statement.RETURN_GENERATED_KEYS);
             salesStatement.setInt(1, customer.getID());
             salesStatement.setInt(2, car_id);
             salesStatement.setDouble(3, discount);
             salesStatement.setInt(4, 1);
-            salesStatement.setDouble(5, GlobalSettings.CONVERSION_RATE_FROM_DOLLAR);
+            salesStatement.setDouble(5, GlobalSettings.fetch().dollarToLbp);
             salesStatement.setDouble(6, totalAmount);
             salesStatement.setString(7, currency);
             salesStatement.setDouble(8, paidAmount);
@@ -113,9 +110,8 @@ public class SalesRepository {
         if (paidAmount > 0) {
             query = "INSERT INTO customer_transactions(customer_id,invoice_id,amount,currency, is_refund) VALUES (?,?,?,?,?)";
 
-            salesStatement = DBConnection.instance.getPreparedStatement(query);
-
             try {
+                PreparedStatement salesStatement = DBConnection.getInstance().getPreparedStatement(query);
                 salesStatement.setInt(1, customer.getID());
                 salesStatement.setInt(2, saleID);
                 salesStatement.setDouble(3, paidAmount);
@@ -133,8 +129,8 @@ public class SalesRepository {
 
         for (Item item : items) {
             query = "INSERT INTO sale_items(item_id,item_properties_id,sale_id,quantity,discount) VALUES (?,?,?,?,?)";
-            PreparedStatement statement = DBConnection.instance.getPreparedStatement(query);
             try {
+                PreparedStatement statement = DBConnection.getInstance().getPreparedStatement(query);
                 statement.setInt(1, item.getID());
                 statement.setInt(2, item.getItemPropertiesID());
                 statement.setDouble(3, saleID);
@@ -149,8 +145,8 @@ public class SalesRepository {
                 return false;
             }
             query = "UPDATE items SET quantity = quantity - ? WHERE id = ?";
-            statement = DBConnection.instance.getPreparedStatement(query);
             try {
+                PreparedStatement statement = DBConnection.getInstance().getPreparedStatement(query);
                 statement.setInt(1, (item.getStock() - item.getSaleQuantityValue()) < 0 ? item.getStock() : item.getSaleQuantityValue());
                 statement.setInt(2, item.getID());
                 statement.executeUpdate();
@@ -172,9 +168,9 @@ public class SalesRepository {
 
     public static boolean returnSoldItems(Sale sale, List<Item> items, double refundedAmount) {
         String query = "UPDATE sales SET discount = ?, total_amount = ?, paid_amount = ? where id = ?";
-        PreparedStatement salesStatement = DBConnection.instance.getPreparedStatement(query);
 
         try {
+            PreparedStatement salesStatement = DBConnection.getInstance().getPreparedStatement(query);
             salesStatement.setDouble(1, sale.getDiscount());
             salesStatement.setDouble(2, sale.getTotalAmount());
             salesStatement.setDouble(3, sale.getPaidAmount());
@@ -189,9 +185,8 @@ public class SalesRepository {
         if (refundedAmount > 0) {
             query = "INSERT INTO customer_transactions(customer_id,invoice_id,amount,currency, is_refund) VALUES (?,?,?,?,?)";
 
-            salesStatement = DBConnection.instance.getPreparedStatement(query);
-
             try {
+                PreparedStatement salesStatement = DBConnection.getInstance().getPreparedStatement(query);
                 salesStatement.setInt(1, sale.getCustomerID());
                 salesStatement.setInt(2, sale.getID());
                 salesStatement.setDouble(3, refundedAmount);
@@ -208,9 +203,8 @@ public class SalesRepository {
 
         for (Item item : items) {
             query = "UPDATE sale_items SET returned_quantity = ? where sale_id = ? AND item_id = ?";
-            PreparedStatement itemStatement = DBConnection.instance.getPreparedStatement(query);
-
             try {
+                PreparedStatement itemStatement = DBConnection.getInstance().getPreparedStatement(query);
                 itemStatement.setInt(1, item.getPreviouslyReturnedQuantity() + item.getReturnedQuantityValue());
                 itemStatement.setInt(2, sale.getID());
                 itemStatement.setInt(3, item.getID());
@@ -222,8 +216,8 @@ public class SalesRepository {
             }
 
             query = "UPDATE items SET quantity = quantity + ? WHERE id = ?";
-            itemStatement = DBConnection.instance.getPreparedStatement(query);
             try {
+                PreparedStatement itemStatement = DBConnection.getInstance().getPreparedStatement(query);
                 itemStatement.setInt(1, item.getReturnedQuantityValue());
                 itemStatement.setInt(2, item.getID());
                 itemStatement.executeUpdate();
@@ -250,7 +244,7 @@ public class SalesRepository {
         ObservableList<Sale> data = FXCollections.observableArrayList();
 
         try {
-            Statement statement = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.getInstance().getStatement();
             ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
                 data.add(isCompact ? new Sale(

@@ -1,7 +1,7 @@
 package com.libanminds.repositories;
 
 import com.libanminds.models.Type;
-import com.libanminds.utils.DBConnection;
+import com.libanminds.singletons.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -26,8 +26,8 @@ public class ExpenseTypesRepository {
 
     public static boolean addExpenseType(Type type) {
         String query = "INSERT INTO expense_types(name) VALUES (?)";
-        PreparedStatement statement = DBConnection.instance.getPreparedStatement(query);
         try {
+            PreparedStatement statement = DBConnection.getInstance().getPreparedStatement(query);
             statement.setString(1, type.getName());
             statement.executeUpdate();
             return true;
@@ -39,8 +39,8 @@ public class ExpenseTypesRepository {
 
     public static boolean updateExpenseType(Type type) {
         String query = "UPDATE expense_types SET name = ? WHERE id = ?";
-        PreparedStatement statement = DBConnection.instance.getPreparedStatement(query);
         try {
+            PreparedStatement statement = DBConnection.getInstance().getPreparedStatement(query);
             statement.setString(1, type.getName());
             statement.setInt(2, type.getID());
             statement.executeUpdate();
@@ -54,7 +54,7 @@ public class ExpenseTypesRepository {
     public static boolean deleteExpenseType(Type type) {
         try {
             String query = "DELETE FROM expense_types where id = " + type.getID();
-            Statement statement = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.getInstance().getStatement();
             statement.executeUpdate(query);
             return true;
         } catch (Exception e) {
@@ -67,7 +67,7 @@ public class ExpenseTypesRepository {
         ObservableList<Type> data = FXCollections.observableArrayList();
 
         try {
-            Statement statement = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.getInstance().getStatement();
             ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
                 data.add(new Type(

@@ -36,6 +36,10 @@ public class Car {
         return ownerID.get();
     }
 
+    public void setOwnerID(int ownerID) {
+        this.ownerID.set(ownerID);
+    }
+
     public String getName() {
         return make.get() + " " + model.get() + " " + year.get();
     }
@@ -44,91 +48,87 @@ public class Car {
         return ownerID;
     }
 
-    public void setOwnerID(int ownerID) {
-        this.ownerID.set(ownerID);
-    }
-
     public String getMake() {
         return make.get();
-    }
-
-    public SimpleStringProperty makeProperty() {
-        return make;
     }
 
     public void setMake(String make) {
         this.make.set(make);
     }
 
-    public String getModel() {
-        return model.get();
+    public SimpleStringProperty makeProperty() {
+        return make;
     }
 
-    public SimpleStringProperty modelProperty() {
-        return model;
+    public String getModel() {
+        return model.get();
     }
 
     public void setModel(String model) {
         this.model.set(model);
     }
 
-    public String getYear() {
-        return year.get();
+    public SimpleStringProperty modelProperty() {
+        return model;
     }
 
-    public SimpleStringProperty yearProperty() {
-        return year;
+    public String getYear() {
+        return year.get();
     }
 
     public void setYear(String year) {
         this.year.set(year);
     }
 
-    public String getCurrentOdometer() {
-        return currentOdometer.get();
+    public SimpleStringProperty yearProperty() {
+        return year;
     }
 
-    public SimpleStringProperty currentOdometerProperty() {
-        return currentOdometer;
+    public String getCurrentOdometer() {
+        return currentOdometer.get();
     }
 
     public void setCurrentOdometer(String currentOdometer) {
         this.currentOdometer.set(currentOdometer);
     }
 
-    public String getNextServiceOdometer() {
-        return nextServiceOdometer.get();
+    public SimpleStringProperty currentOdometerProperty() {
+        return currentOdometer;
     }
 
-    public SimpleStringProperty nextServiceOdometerProperty() {
-        return nextServiceOdometer;
+    public String getNextServiceOdometer() {
+        return nextServiceOdometer.get();
     }
 
     public void setNextServiceOdometer(String nextServiceOdometer) {
         this.nextServiceOdometer.set(nextServiceOdometer);
     }
 
-    public String getVin() {
-        return vin.get();
+    public SimpleStringProperty nextServiceOdometerProperty() {
+        return nextServiceOdometer;
     }
 
-    public SimpleStringProperty vinProperty() {
-        return vin;
+    public String getVin() {
+        return vin.get();
     }
 
     public void setVin(String vin) {
         this.vin.set(vin);
     }
 
+    public SimpleStringProperty vinProperty() {
+        return vin;
+    }
+
     public String getPlate() {
         return plate.get();
     }
 
-    public SimpleStringProperty plateProperty() {
-        return plate;
-    }
-
     public void setPlate(String plate) {
         this.plate.set(plate);
+    }
+
+    public SimpleStringProperty plateProperty() {
+        return plate;
     }
 }

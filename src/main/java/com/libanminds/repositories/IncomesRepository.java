@@ -2,7 +2,7 @@ package com.libanminds.repositories;
 
 import com.libanminds.models.Income;
 import com.libanminds.models.Type;
-import com.libanminds.utils.DBConnection;
+import com.libanminds.singletons.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -31,8 +31,8 @@ public class IncomesRepository {
 
     public static boolean addIncome(Income income) {
         String query = "INSERT INTO incomes(type_id,description,amount,currency,payment_type,taken_from,notes) VALUES (?,?,?,?,?,?,?)";
-        PreparedStatement statement = DBConnection.instance.getPreparedStatement(query);
         try {
+            PreparedStatement statement = DBConnection.getInstance().getPreparedStatement(query);
             statement.setInt(1, income.getTypeObject().getID());
             statement.setString(2, income.getDescription());
             statement.setDouble(3, income.getAmount());
@@ -51,8 +51,8 @@ public class IncomesRepository {
     public static boolean updateIncome(Income income) {
         String query = "UPDATE incomes SET type_id = ? , description = ? , amount = ?, currency = ?, payment_type = ? , taken_from = ?, notes = ? where id = ?";
 
-        PreparedStatement statement = DBConnection.instance.getPreparedStatement(query);
         try {
+            PreparedStatement statement = DBConnection.getInstance().getPreparedStatement(query);
             statement.setInt(1, income.getTypeObject().getID());
             statement.setString(2, income.getDescription());
             statement.setDouble(3, income.getAmount());
@@ -72,7 +72,7 @@ public class IncomesRepository {
     public static boolean deleteIncome(Income income) {
         try {
             String query = "DELETE FROM incomes where id = " + income.getID();
-            Statement statement = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.getInstance().getStatement();
             statement.executeUpdate(query);
             return true;
         } catch (Exception e) {
@@ -83,7 +83,7 @@ public class IncomesRepository {
     private static ObservableList<Income> getIncomesFromQuery(String query) {
         ObservableList<Income> data = FXCollections.observableArrayList();
         try {
-            Statement statement = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.getInstance().getStatement();
             ResultSet rs = statement.executeQuery(query);
 
             while (rs.next()) {
