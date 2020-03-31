@@ -6,91 +6,90 @@
 <?import javafx.scene.layout.VBox?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.main_controllers.MainController">
-   <children>
-      <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" minWidth="50.0" styleClass="bg-dark" HBox.hgrow="NEVER">
-         <content>
-              <VBox fx:id="menu" styleClass="bg-dark">
-                  <children>
-                      <JFXButton fx:id="menuDashboard" graphicTextGap="8.0" text="Dashboard" textFill="WHITE">
-                          <graphic>
-                              <FontIcon iconColor="WHITE" iconLiteral="ti-dashboard" iconSize="20" />
-                          </graphic>
-                      </JFXButton>
-                      <JFXButton fx:id="menuCustomers" graphicTextGap="8.0" text="Customers" textFill="WHITE">
-                          <graphic>
-                              <FontIcon iconColor="WHITE" iconLiteral="ti-user" iconSize="20" />
-                          </graphic>
-                      </JFXButton>
-                      <JFXButton fx:id="menuSuppliers" graphicTextGap="8.0" text="Suppliers" textFill="WHITE">
-                          <graphic>
-                              <FontIcon iconColor="WHITE" iconLiteral="ti-cloud-down" iconSize="20" />
-                          </graphic>
-                      </JFXButton>
-                      <JFXButton fx:id="menuItems" graphicTextGap="8.0" text="Items" textFill="WHITE">
-                          <graphic>
-                              <FontIcon iconColor="WHITE" iconLiteral="ti-harddrive" iconSize="20" />
-                          </graphic>
-                      </JFXButton>
-                      <JFXButton fx:id="menuReports" graphicTextGap="8.0" text="Reports" textFill="WHITE">
-                          <graphic>
-                              <FontIcon iconColor="WHITE" iconLiteral="ti-bar-chart" iconSize="20" />
-                          </graphic>
-                      </JFXButton>
-                  <JFXButton fx:id="menuSales" graphicTextGap="8.0" layoutX="10.0" layoutY="215.0" text="Sales" textFill="WHITE">
-                     <graphic>
-                        <FontIcon iconColor="WHITE" iconLiteral="ti-shopping-cart" iconSize="20" />
-                     </graphic>
-                  </JFXButton>
-                      <JFXButton fx:id="menuNewSale" graphicTextGap="8.0" text="New Sale" textFill="WHITE">
-                          <graphic>
-                              <FontIcon iconColor="WHITE" iconLiteral="ti-plus" iconSize="20" />
-                          </graphic>
-                      </JFXButton>
-                      <JFXButton fx:id="menuPurchases" graphicTextGap="8.0" text="Purchases" textFill="WHITE">
-                          <graphic>
-                              <FontIcon iconColor="WHITE" iconLiteral="ti-import" iconSize="20" />
-                          </graphic>
-                      </JFXButton>
-                  <JFXButton fx:id="menuNewPurchase" graphicTextGap="8.0" layoutX="10.0" layoutY="297.0" text="New Purchase" textFill="WHITE">
-                     <graphic>
-                        <FontIcon iconColor="WHITE" iconLiteral="ti-plus" iconSize="20" />
-                     </graphic>
-                  </JFXButton>
-                      <JFXButton fx:id="menuExpenses" graphicTextGap="8.0" text="Expenses" textFill="WHITE">
-                          <graphic>
-                              <FontIcon iconColor="WHITE" iconLiteral="ti-money" iconSize="20" />
-                          </graphic>
-                      </JFXButton>
-                      <JFXButton fx:id="menuIncome" graphicTextGap="8.0" text="Income" textFill="WHITE">
-                          <graphic>
-                              <FontIcon iconColor="WHITE" iconLiteral="ti-stats-up" iconSize="20" />
-                          </graphic>
-                      </JFXButton>
-<!--                      <JFXButton fx:id="menuAppointments" graphicTextGap="8.0" text="Appointments" textFill="WHITE">-->
-<!--                          <graphic>-->
-<!--                              <FontIcon iconColor="WHITE" iconLiteral="ti-calendar" iconSize="20" />-->
-<!--                          </graphic>-->
-<!--                      </JFXButton>-->
-                      <JFXButton fx:id="menuEmployees" graphicTextGap="8.0" text="Employees" textFill="WHITE">
-                          <graphic>
-                              <FontIcon iconColor="WHITE" iconLiteral="ti-id-badge" iconSize="20" />
-                          </graphic>
-                      </JFXButton>
-                      <JFXButton fx:id="menuSettings" graphicTextGap="8.0" text="Settings" textFill="WHITE">
-                          <graphic>
-                              <FontIcon iconColor="WHITE" iconLiteral="ti-settings" iconSize="20" />
-                          </graphic>
-                      </JFXButton>
-                      <JFXButton fx:id="menuLogout" graphicTextGap="8.0" text="Logout" textFill="WHITE">
-                          <graphic>
-                              <FontIcon iconColor="WHITE" iconLiteral="ti-power-off" iconSize="20" />
-                          </graphic>
-                      </JFXButton>
-                  </children>
-              </VBox>
-         </content>
-      </ScrollPane>
-      <VBox fx:id="body" minWidth="100.0" HBox.hgrow="ALWAYS" />
-   </children>
+<HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@../css/main.css"
+      xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.libanminds.controllers.main.MainController">
+    <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" minWidth="50.0" styleClass="bg-dark"
+                HBox.hgrow="NEVER">
+        <VBox fx:id="menu" styleClass="bg-dark">
+            <JFXButton fx:id="menuDashboard" graphicTextGap="8.0" text="Dashboard" textFill="WHITE">
+                <graphic>
+                    <FontIcon iconColor="WHITE" iconLiteral="ti-dashboard" iconSize="20"/>
+                </graphic>
+            </JFXButton>
+            <JFXButton fx:id="menuCustomers" graphicTextGap="8.0" text="Customers" textFill="WHITE">
+                <graphic>
+                    <FontIcon iconColor="WHITE" iconLiteral="ti-user" iconSize="20"/>
+                </graphic>
+            </JFXButton>
+            <JFXButton fx:id="menuSuppliers" graphicTextGap="8.0" text="Suppliers" textFill="WHITE">
+                <graphic>
+                    <FontIcon iconColor="WHITE" iconLiteral="ti-cloud-down" iconSize="20"/>
+                </graphic>
+            </JFXButton>
+            <JFXButton fx:id="menuItems" graphicTextGap="8.0" text="Items" textFill="WHITE">
+                <graphic>
+                    <FontIcon iconColor="WHITE" iconLiteral="ti-harddrive" iconSize="20"/>
+                </graphic>
+            </JFXButton>
+            <JFXButton fx:id="menuReports" graphicTextGap="8.0" text="Reports" textFill="WHITE">
+                <graphic>
+                    <FontIcon iconColor="WHITE" iconLiteral="ti-bar-chart" iconSize="20"/>
+                </graphic>
+            </JFXButton>
+            <JFXButton fx:id="menuSales" graphicTextGap="8.0" layoutX="10.0" layoutY="215.0" text="Sales"
+                       textFill="WHITE">
+                <graphic>
+                    <FontIcon iconColor="WHITE" iconLiteral="ti-shopping-cart" iconSize="20"/>
+                </graphic>
+            </JFXButton>
+            <JFXButton fx:id="menuNewSale" graphicTextGap="8.0" text="New Sale" textFill="WHITE">
+                <graphic>
+                    <FontIcon iconColor="WHITE" iconLiteral="ti-plus" iconSize="20"/>
+                </graphic>
+            </JFXButton>
+            <JFXButton fx:id="menuPurchases" graphicTextGap="8.0" text="Purchases" textFill="WHITE">
+                <graphic>
+                    <FontIcon iconColor="WHITE" iconLiteral="ti-import" iconSize="20"/>
+                </graphic>
+            </JFXButton>
+            <JFXButton fx:id="menuNewPurchase" graphicTextGap="8.0" layoutX="10.0" layoutY="297.0"
+                       text="New Purchase" textFill="WHITE">
+                <graphic>
+                    <FontIcon iconColor="WHITE" iconLiteral="ti-plus" iconSize="20"/>
+                </graphic>
+            </JFXButton>
+            <JFXButton fx:id="menuExpenses" graphicTextGap="8.0" text="Expenses" textFill="WHITE">
+                <graphic>
+                    <FontIcon iconColor="WHITE" iconLiteral="ti-money" iconSize="20"/>
+                </graphic>
+            </JFXButton>
+            <JFXButton fx:id="menuIncome" graphicTextGap="8.0" text="Income" textFill="WHITE">
+                <graphic>
+                    <FontIcon iconColor="WHITE" iconLiteral="ti-stats-up" iconSize="20"/>
+                </graphic>
+            </JFXButton>
+            <!--                      <JFXButton fx:id="menuAppointments" graphicTextGap="8.0" text="Appointments" textFill="WHITE">-->
+            <!--                          <graphic>-->
+            <!--                              <FontIcon iconColor="WHITE" iconLiteral="ti-calendar" iconSize="20" />-->
+            <!--                          </graphic>-->
+            <!--                      </JFXButton>-->
+            <JFXButton fx:id="menuEmployees" graphicTextGap="8.0" text="Employees" textFill="WHITE">
+                <graphic>
+                    <FontIcon iconColor="WHITE" iconLiteral="ti-id-badge" iconSize="20"/>
+                </graphic>
+            </JFXButton>
+            <JFXButton fx:id="menuSettings" graphicTextGap="8.0" text="Settings" textFill="WHITE">
+                <graphic>
+                    <FontIcon iconColor="WHITE" iconLiteral="ti-settings" iconSize="20"/>
+                </graphic>
+            </JFXButton>
+            <JFXButton fx:id="menuLogout" graphicTextGap="8.0" text="Logout" textFill="WHITE">
+                <graphic>
+                    <FontIcon iconColor="WHITE" iconLiteral="ti-power-off" iconSize="20"/>
+                </graphic>
+            </JFXButton>
+        </VBox>
+    </ScrollPane>
+    <VBox fx:id="body" minWidth="100.0" HBox.hgrow="ALWAYS"/>
 </HBox>

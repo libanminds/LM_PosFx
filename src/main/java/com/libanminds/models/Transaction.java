@@ -1,7 +1,7 @@
 package com.libanminds.models;
 
-import com.libanminds.utils.Constants;
-import com.libanminds.utils.GlobalSettings;
+import com.libanminds.constants.Constants;
+import com.libanminds.singletons.GlobalSettings;
 import com.libanminds.utils.HelperFunctions;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -66,10 +66,10 @@ public class Transaction {
         if (this.currency.get().equals(currency)) {
             return amount.get();
         } else {
-            if (this.currency.get().equals(Constants.DOLLAR_CURRENCY))
-                return amount.get() * GlobalSettings.CONVERSION_RATE_FROM_DOLLAR;
+            if (this.currency.get().equals(Constants.USD_CURRENCY))
+                return amount.get() * GlobalSettings.fetch().dollarToLbp;
             else
-                return amount.get() / GlobalSettings.CONVERSION_RATE_FROM_DOLLAR;
+                return amount.get() / GlobalSettings.fetch().dollarToLbp;
         }
     }
 

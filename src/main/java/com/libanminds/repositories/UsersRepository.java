@@ -2,8 +2,8 @@ package com.libanminds.repositories;
 
 import com.libanminds.models.Role;
 import com.libanminds.models.User;
+import com.libanminds.singletons.DBConnection;
 import com.libanminds.utils.Authorization;
-import com.libanminds.utils.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -17,8 +17,8 @@ public class UsersRepository {
 
     public static boolean login(String username, String password) {
         String authQuery = "SELECT * FROM users where username = '" + username + "' AND password = '" + password + "'";
-        Statement authStatement = DBConnection.instance.getStatement();
         try {
+            Statement authStatement = DBConnection.getInstance().getStatement();
             ResultSet res = authStatement.executeQuery(authQuery);
             if (res.next()) {
                 int roleId = res.getInt("role_id");
@@ -26,7 +26,7 @@ public class UsersRepository {
 
                 ArrayList<String> data = new ArrayList<>();
                 try {
-                    Statement statement = DBConnection.instance.getStatement();
+                    Statement statement = DBConnection.getInstance().getStatement();
                     ResultSet rs = statement.executeQuery(query);
                     while (rs.next()) {
                         data.add(rs.getString("permission"));
@@ -65,8 +65,8 @@ public class UsersRepository {
 
     public static boolean usernameExists(String username) {
         String query = "SELECT * FROM users where username = '" + username + "'";
-        Statement statement = DBConnection.instance.getStatement();
         try {
+            Statement statement = DBConnection.getInstance().getStatement();
             return statement.executeQuery(query).next();
         } catch (Exception e) {
             e.printStackTrace();
@@ -77,8 +77,8 @@ public class UsersRepository {
 
     public static boolean addUser(User user) {
         String query = "INSERT INTO users(username,first_name,last_name,password,email,phone,role_id,address) VALUES (?,?,?,?,?,?,?,?)";
-        PreparedStatement statement = DBConnection.instance.getPreparedStatement(query);
         try {
+            PreparedStatement statement = DBConnection.getInstance().getPreparedStatement(query);
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getFirstName());
             statement.setString(3, user.getLastName());
@@ -98,8 +98,8 @@ public class UsersRepository {
     public static boolean updateUser(User user) {
         String query = "UPDATE users SET username = ?, first_name = ? , last_name = ?, password = ?  , email = ?, phone = ?, role_id = ? , address = ? where id = ?";
 
-        PreparedStatement statement = DBConnection.instance.getPreparedStatement(query);
         try {
+            PreparedStatement statement = DBConnection.getInstance().getPreparedStatement(query);
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getFirstName());
             statement.setString(3, user.getLastName());
@@ -120,7 +120,7 @@ public class UsersRepository {
     public static boolean deleteUser(User user) {
         try {
             String query = "DELETE FROM users where id = " + user.getID();
-            Statement statement = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.getInstance().getStatement();
             statement.executeUpdate(query);
             return true;
         } catch (Exception e) {
@@ -131,7 +131,7 @@ public class UsersRepository {
     private static ObservableList<User> getUsersFromQuery(String query) {
         ObservableList<User> data = FXCollections.observableArrayList();
         try {
-            Statement statement = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.getInstance().getStatement();
             ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
                 data.add(new User(

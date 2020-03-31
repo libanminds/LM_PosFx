@@ -1,10 +1,10 @@
 package com.libanminds.repositories;
 
+import com.libanminds.constants.Constants;
 import com.libanminds.models.*;
 import com.libanminds.models.reports_models.CompactReportItem;
-import com.libanminds.utils.Constants;
-import com.libanminds.utils.DBConnection;
-import com.libanminds.utils.GlobalSettings;
+import com.libanminds.singletons.DBConnection;
+import com.libanminds.singletons.GlobalSettings;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,14 +15,14 @@ public class ReportsRepository {
 
     //Returns for each item the following: Amount sold, amount returned to customer, and the item's name
     public static ArrayList<CompactReportItem> getQuantitiesOfSoldItems(String dateFrom, String dateTo) {
-        String query = "SELECT code, name, SUM(sale_items.quantity) AS quantity_sold, SUM(returned_quantity) AS quantity_returned FROM sale_items LEFT JOIN items ON item_id = items.id WHERE date(sale_items.created_at) >= date('"+dateFrom+"') and date(sale_items.created_at) <= date('"+dateTo+"') GROUP BY item_id ORDER BY name";
+        String query = "SELECT code, name, SUM(sale_items.quantity) AS quantity_sold, SUM(returned_quantity) AS quantity_returned FROM sale_items LEFT JOIN items ON item_id = items.id WHERE date(sale_items.created_at) >= date('" + dateFrom + "') and date(sale_items.created_at) <= date('" + dateTo + "') GROUP BY item_id ORDER BY name";
 
         return getCompactReportItemsFromQuery(query, true);
     }
 
     //Returns for each item the following: Amount bought, amount returned to supplier, and the item's name
-    public static ArrayList<CompactReportItem>  getQuantitiesOfPurchasedItems(String dateFrom, String dateTo) {
-        String query = "SELECT code, name, SUM(purchase_items.quantity) AS quantity_bought, SUM(returned_quantity) AS quantity_returned FROM purchase_items LEFT JOIN items ON item_id = items.id WHERE date(purchase_items.created_at) >= date('"+ dateFrom+"') and date(purchase_items.created_at) <= date('"+ dateTo+"') GROUP BY item_id ORDER BY name";
+    public static ArrayList<CompactReportItem> getQuantitiesOfPurchasedItems(String dateFrom, String dateTo) {
+        String query = "SELECT code, name, SUM(purchase_items.quantity) AS quantity_bought, SUM(returned_quantity) AS quantity_returned FROM purchase_items LEFT JOIN items ON item_id = items.id WHERE date(purchase_items.created_at) >= date('" + dateFrom + "') and date(purchase_items.created_at) <= date('" + dateTo + "') GROUP BY item_id ORDER BY name";
 
         return getCompactReportItemsFromQuery(query, false);
     }
@@ -30,12 +30,12 @@ public class ReportsRepository {
     //Returns for each sale the total amount, returned amount, paid amount, remaining amount and the discount that was made on the sale (not items individually)
     //Returns for each purchase the total amount, returned amount, paid amount, remaining amount and the discount that was made on the purchase (not items individually)
     public static ArrayList<Purchase> getInfoOfPurchases(String dateFrom, String dateTo) {
-        String query = "SELECT purchases.id, total_amount, paid_amount, purchases.currency, purchases.discount, SUM((returned_quantity * ((CASE WHEN purchases.currency != item_properties.currency THEN (CASE WHEN purchases.currency = '"+ Constants.DOLLAR_CURRENCY +"' THEN item_properties.price * "+ 1/GlobalSettings.CONVERSION_RATE_FROM_DOLLAR +" ELSE item_properties.price * "+ GlobalSettings.CONVERSION_RATE_FROM_DOLLAR +" END) ELSE item_properties.price END) - purchase_items.discount))) AS returned_amount FROM purchase_items LEFT JOIN purchases ON purchase_id = purchases.id LEFT JOIN item_properties ON item_properties_id = item_properties.id WHERE date(purchases.created_at) >= date('"+dateFrom+"') and date(purchases.created_at) <= date('"+dateTo+"') GROUP BY purchases.id";
+        String query = "SELECT purchases.id, total_amount, paid_amount, purchases.currency, purchases.discount, SUM((returned_quantity * ((CASE WHEN purchases.currency != item_properties.currency THEN (CASE WHEN purchases.currency = '" + Constants.USD_CURRENCY + "' THEN item_properties.price * " + 1 / GlobalSettings.fetch().dollarToLbp + " ELSE item_properties.price * " + GlobalSettings.fetch().dollarToLbp + " END) ELSE item_properties.price END) - purchase_items.discount))) AS returned_amount FROM purchase_items LEFT JOIN purchases ON purchase_id = purchases.id LEFT JOIN item_properties ON item_properties_id = item_properties.id WHERE date(purchases.created_at) >= date('" + dateFrom + "') and date(purchases.created_at) <= date('" + dateTo + "') GROUP BY purchases.id";
 
         ArrayList<Purchase> data = new ArrayList<>();
 
         try {
-            Statement statement = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.getInstance().getStatement();
             ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
                 data.add(new Purchase(
@@ -54,12 +54,12 @@ public class ReportsRepository {
     }
 
     public static ArrayList<Sale> getInfoOfSales(String dateFrom, String dateTo) {
-        String query = "SELECT sales.id, total_amount, paid_amount, sales.currency, sales.discount, SUM((returned_quantity * ((CASE WHEN sales.currency != item_properties.currency THEN (CASE WHEN sales.currency = '"+ Constants.DOLLAR_CURRENCY +"' THEN item_properties.price * "+ 1/GlobalSettings.CONVERSION_RATE_FROM_DOLLAR +" ELSE item_properties.price * "+ GlobalSettings.CONVERSION_RATE_FROM_DOLLAR +" END) ELSE item_properties.price END) - sale_items.discount))) AS returned_amount FROM sale_items LEFT JOIN sales ON sale_id = sales.id LEFT JOIN item_properties ON item_properties_id = item_properties.id WHERE date(sales.created_at) >= date('"+dateFrom+"') and date(sales.created_at) <= date('"+dateTo+"') GROUP BY sales.id";
+        String query = "SELECT sales.id, total_amount, paid_amount, sales.currency, sales.discount, SUM((returned_quantity * ((CASE WHEN sales.currency != item_properties.currency THEN (CASE WHEN sales.currency = '" + Constants.USD_CURRENCY + "' THEN item_properties.price * " + 1 / GlobalSettings.fetch().dollarToLbp + " ELSE item_properties.price * " + GlobalSettings.fetch().dollarToLbp + " END) ELSE item_properties.price END) - sale_items.discount))) AS returned_amount FROM sale_items LEFT JOIN sales ON sale_id = sales.id LEFT JOIN item_properties ON item_properties_id = item_properties.id WHERE date(sales.created_at) >= date('" + dateFrom + "') and date(sales.created_at) <= date('" + dateTo + "') GROUP BY sales.id";
 
         ArrayList<Sale> data = new ArrayList<>();
 
         try {
-            Statement statement = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.getInstance().getStatement();
             ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
                 data.add(new Sale(
@@ -78,31 +78,31 @@ public class ReportsRepository {
     }
 
     public static ArrayList<Customer> getCustomers(String dateFrom, String dateTo) {
-        String query = "SELECT * FROM customers WHERE date(created_at) >= date('"+dateFrom+"') and date(created_at) <= date('"+dateTo+"') ORDER BY created_at";
+        String query = "SELECT * FROM customers WHERE date(created_at) >= date('" + dateFrom + "') and date(created_at) <= date('" + dateTo + "') ORDER BY created_at";
 
         return getCustomersFromQuery(query);
     }
 
     public static ArrayList<Customer> getRegularCustomers(String dateFrom, String dateTo) {
-        String query = "SELECT customers.*, COUNT(customer_id) as sales_count FROM sales LEFT JOIN customers ON customers.id = sales.customer_id WHERE date(sales.created_at) >= date('"+dateFrom+"') and date(sales.created_at) <= date('"+dateTo+"') GROUP BY customer_id ORDER BY sales_count DESC";
+        String query = "SELECT customers.*, COUNT(customer_id) as sales_count FROM sales LEFT JOIN customers ON customers.id = sales.customer_id WHERE date(sales.created_at) >= date('" + dateFrom + "') and date(sales.created_at) <= date('" + dateTo + "') GROUP BY customer_id ORDER BY sales_count DESC";
 
         return getCustomersFromQuery(query);
     }
 
     public static ArrayList<CompactReportItem> getItemsBoughtByCustomer(int customerID, String dateFrom, String dateTo) {
-        String query = "SELECT items.code, items.name, SUM(sale_items.quantity) AS quantity_bought, SUM(sale_items.returned_quantity) AS quantity_returned FROM sale_items LEFT JOIN items ON item_id = items.id LEFT JOIN sales ON sale_id = sales.id WHERE customer_id = " + customerID + " and date(sale_items.created_at) >= date('"+dateFrom+"') and date(sale_items.created_at) <= date('"+dateTo+"') GROUP BY item_id";
+        String query = "SELECT items.code, items.name, SUM(sale_items.quantity) AS quantity_bought, SUM(sale_items.returned_quantity) AS quantity_returned FROM sale_items LEFT JOIN items ON item_id = items.id LEFT JOIN sales ON sale_id = sales.id WHERE customer_id = " + customerID + " and date(sale_items.created_at) >= date('" + dateFrom + "') and date(sale_items.created_at) <= date('" + dateTo + "') GROUP BY item_id";
 
         return getCompactReportItemsFromQuery(query, false);
     }
 
     public static ArrayList<Supplier> getSuppliers(String dateFrom, String dateTo) {
-        String query = "SELECT * FROM suppliers WHERE date(created_at) >= date('"+dateFrom+"') and date(created_at) <= date('"+dateTo+"') ORDER BY created_at";
+        String query = "SELECT * FROM suppliers WHERE date(created_at) >= date('" + dateFrom + "') and date(created_at) <= date('" + dateTo + "') ORDER BY created_at";
 
         return getSuppliersFromQuery(query);
     }
 
     public static ArrayList<CompactReportItem> getItemsBoughtFromSupplier(int supplierID, String dateFrom, String dateTo) {
-        String query = "SELECT items.code, items.name, SUM(purchase_items.quantity) AS quantity_bought, SUM(purchase_items.returned_quantity) AS quantity_returned FROM purchase_items LEFT JOIN items ON item_id = items.id LEFT JOIN purchases ON purchase_id = purchases.id WHERE supplier_id = "+ supplierID +" and date(purchase_items.created_at) >= date('"+dateFrom+"') and date(purchase_items.created_at) <= date('"+dateTo+"') GROUP BY item_id";
+        String query = "SELECT items.code, items.name, SUM(purchase_items.quantity) AS quantity_bought, SUM(purchase_items.returned_quantity) AS quantity_returned FROM purchase_items LEFT JOIN items ON item_id = items.id LEFT JOIN purchases ON purchase_id = purchases.id WHERE supplier_id = " + supplierID + " and date(purchase_items.created_at) >= date('" + dateFrom + "') and date(purchase_items.created_at) <= date('" + dateTo + "') GROUP BY item_id";
 
         return getCompactReportItemsFromQuery(query, false);
     }
@@ -112,7 +112,7 @@ public class ReportsRepository {
 
         ArrayList<Expense> data = new ArrayList<>();
         try {
-            Statement statement = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.getInstance().getStatement();
             ResultSet rs = statement.executeQuery(query);
 
             while (rs.next()) {
@@ -139,7 +139,7 @@ public class ReportsRepository {
 
         ArrayList<Income> data = new ArrayList<>();
         try {
-            Statement statement = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.getInstance().getStatement();
             ResultSet rs = statement.executeQuery(query);
 
             while (rs.next()) {
@@ -165,7 +165,7 @@ public class ReportsRepository {
         ArrayList<Customer> data = new ArrayList<>();
 
         try {
-            Statement statement = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.getInstance().getStatement();
             ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
                 data.add(new Customer(
@@ -191,7 +191,7 @@ public class ReportsRepository {
         ArrayList<Supplier> data = new ArrayList<>();
 
         try {
-            Statement statement = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.getInstance().getStatement();
             ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
                 data.add(new Supplier(
@@ -216,7 +216,7 @@ public class ReportsRepository {
     private static ArrayList<CompactReportItem> getCompactReportItemsFromQuery(String query, boolean isSold) {
         ArrayList<CompactReportItem> data = new ArrayList<>();
         try {
-            Statement statement = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.getInstance().getStatement();
             ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
                 data.add(new CompactReportItem(

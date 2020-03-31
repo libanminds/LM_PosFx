@@ -1,7 +1,7 @@
 package com.libanminds.repositories;
 
 import com.libanminds.models.ItemCategory;
-import com.libanminds.utils.DBConnection;
+import com.libanminds.singletons.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -26,8 +26,8 @@ public class ItemsCategoriesRepository {
 
     public static boolean addItemCategory(ItemCategory category) {
         String query = "INSERT INTO item_categories(name) VALUES (?)";
-        PreparedStatement statement = DBConnection.instance.getPreparedStatement(query);
         try {
+            PreparedStatement statement = DBConnection.getInstance().getPreparedStatement(query);
             statement.setString(1, category.getName());
             statement.executeUpdate();
             return true;
@@ -39,8 +39,8 @@ public class ItemsCategoriesRepository {
 
     public static boolean updateItemCategory(ItemCategory category) {
         String query = "UPDATE item_categories SET name = ? WHERE id = ?";
-        PreparedStatement statement = DBConnection.instance.getPreparedStatement(query);
         try {
+            PreparedStatement statement = DBConnection.getInstance().getPreparedStatement(query);
             statement.setString(1, category.getName());
             statement.setInt(2, category.getID());
             statement.executeUpdate();
@@ -54,7 +54,7 @@ public class ItemsCategoriesRepository {
     public static boolean deleteItemCategory(ItemCategory category) {
         try {
             String query = "DELETE FROM item_categories where id = " + category.getID();
-            Statement statement = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.getInstance().getStatement();
             statement.executeUpdate(query);
             return true;
         } catch (Exception e) {
@@ -67,7 +67,7 @@ public class ItemsCategoriesRepository {
         ObservableList<ItemCategory> data = FXCollections.observableArrayList();
 
         try {
-            Statement statement = DBConnection.instance.getStatement();
+            Statement statement = DBConnection.getInstance().getStatement();
             ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
                 data.add(new ItemCategory(

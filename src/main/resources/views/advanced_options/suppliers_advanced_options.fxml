@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <VBox prefWidth="600.0" spacing="24.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.libanminds.reports_controllers.SuppliersReportController">
+      fx:controller="com.libanminds.controllers.reports.SuppliersReportController">
     <HBox alignment="CENTER_LEFT">
         <Label minWidth="40.0" text="From: ">
             <font>

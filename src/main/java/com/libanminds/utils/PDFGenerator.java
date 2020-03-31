@@ -93,11 +93,10 @@ public class PDFGenerator {
                 content.close();
 
 
-
                 final DirectoryChooser directoryChooser = new DirectoryChooser();
                 final File selectedDirectory = directoryChooser.showDialog(stage);
                 if (selectedDirectory != null) {
-                    doc.save(selectedDirectory.getAbsolutePath() + "/" + title +".pdf");
+                    doc.save(selectedDirectory.getAbsolutePath() + "/" + title + ".pdf");
                 }
             }
 

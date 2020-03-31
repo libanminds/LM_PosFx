@@ -12,77 +12,80 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="600.0" prefWidth="600.0" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.libanminds.main_controllers.CustomersController">
-   <content>
-      <VBox minHeight="600.0" prefHeight="600.0" prefWidth="644.0">
-         <children>
-            <HBox alignment="CENTER_LEFT" spacing="8.0">
-               <children>
-                  <Label text="Customers" textFill="#006372">
-                     <font>
-                        <Font name="System Bold" size="30.0" />
-                     </font>
-                  </Label>
-                  <Region HBox.hgrow="ALWAYS" />
-                  <TextField fx:id="searchField" prefWidth="300.0" promptText="Search Customers">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </TextField>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </VBox.margin>
-               <padding>
-                  <Insets bottom="8.0" top="8.0" />
-               </padding></HBox>
-            <HBox fx:id="buttonsHolder" alignment="CENTER_LEFT" spacing="20.0">
-               <padding>
-                  <Insets bottom="8.0" left="16.0" right="16.0" top="8.0" />
-               </padding>
-               <children>
-                  <Button fx:id="deleteCustomer" mnemonicParsing="false" style="-fx-background-color: ecf0f4;" text="Delete Customer" textFill="#5580aa">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                     <padding>
-                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
-                     </padding></Button>
-                  <Button fx:id="editCustomer" mnemonicParsing="false" style="-fx-background-color: d8e1ea;" text="Edit Customer" textFill="#5580aa">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                     <padding>
-                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
-                     </padding></Button>
-                  <Button fx:id="newCustomerBtn" graphicTextGap="8.0" mnemonicParsing="false" style="-fx-background-color: #5580aa;" text="Add Customer" textFill="WHITE">
-                     <graphic>
-                        <FontIcon iconColor="WHITE" iconLiteral="ti-plus" />
-                     </graphic>
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                     <padding>
-                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
-                     </padding>
-                  </Button>
-                  <Region prefHeight="13.0" prefWidth="122.0" HBox.hgrow="ALWAYS" />
-                  <Button fx:id="accountStatementBtn" mnemonicParsing="false" style="-fx-background-color: #5580aa;" text="View Statement of Account" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Button>
-               </children>
-            </HBox>
-            <TableView fx:id="customersTable" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@../../css/main.css" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
-               <VBox.margin>
-                  <Insets bottom="8.0" left="16.0" right="16.0" top="8.0" />
-               </VBox.margin>
-               <columnResizePolicy>
-                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy>
-            </TableView>
-         </children>
-      </VBox>
-   </content>
+<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="600.0" prefWidth="600.0" VBox.vgrow="ALWAYS"
+            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.libanminds.controllers.main.CustomersController">
+   <VBox minHeight="600.0" prefHeight="600.0" prefWidth="644.0">
+      <HBox alignment="CENTER_LEFT" spacing="8.0">
+         <VBox.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+         </VBox.margin>
+         <padding>
+            <Insets bottom="8.0" top="8.0"/>
+         </padding>
+         <Label text="Customers" textFill="#006372">
+            <font>
+               <Font name="System Bold" size="30.0"/>
+            </font>
+         </Label>
+         <Region HBox.hgrow="ALWAYS"/>
+         <TextField fx:id="searchField" prefWidth="300.0" promptText="Search Customers">
+            <font>
+               <Font size="14.0"/>
+            </font>
+         </TextField>
+      </HBox>
+      <HBox fx:id="buttonsHolder" alignment="CENTER_LEFT" spacing="20.0">
+         <padding>
+            <Insets bottom="8.0" left="16.0" right="16.0" top="8.0"/>
+         </padding>
+         <Button fx:id="deleteCustomer" mnemonicParsing="false" style="-fx-background-color: ecf0f4;"
+                 text="Delete Customer" textFill="#5580aa">
+            <font>
+               <Font name="System Bold" size="15.0"/>
+            </font>
+            <padding>
+               <Insets bottom="10.0" left="20.0" right="20.0" top="10.0"/>
+            </padding>
+         </Button>
+         <Button fx:id="editCustomer" mnemonicParsing="false" style="-fx-background-color: d8e1ea;"
+                 text="Edit Customer" textFill="#5580aa">
+            <font>
+               <Font name="System Bold" size="15.0"/>
+            </font>
+            <padding>
+               <Insets bottom="10.0" left="20.0" right="20.0" top="10.0"/>
+            </padding>
+         </Button>
+         <Button fx:id="newCustomerBtn" graphicTextGap="8.0" mnemonicParsing="false"
+                 style="-fx-background-color: #5580aa;" text="Add Customer" textFill="WHITE">
+            <graphic>
+               <FontIcon iconColor="WHITE" iconLiteral="ti-plus"/>
+            </graphic>
+            <font>
+               <Font name="System Bold" size="15.0"/>
+            </font>
+            <padding>
+               <Insets bottom="10.0" left="20.0" right="20.0" top="10.0"/>
+            </padding>
+         </Button>
+         <Region prefHeight="13.0" prefWidth="122.0" HBox.hgrow="ALWAYS"/>
+         <Button fx:id="accountStatementBtn" mnemonicParsing="false" style="-fx-background-color: #5580aa;"
+                 text="View Statement of Account" textFill="WHITE">
+            <font>
+               <Font name="System Bold" size="14.0"/>
+            </font>
+         </Button>
+      </HBox>
+      <TableView fx:id="customersTable" editable="true" maxHeight="1.7976931348623157E308"
+                 maxWidth="1.7976931348623157E308" stylesheets="@../../css/main.css" tableMenuButtonVisible="true"
+                 VBox.vgrow="ALWAYS">
+         <VBox.margin>
+            <Insets bottom="8.0" left="16.0" right="16.0" top="8.0"/>
+         </VBox.margin>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+         </columnResizePolicy>
+      </TableView>
+   </VBox>
 </ScrollPane>
